@@ -66,6 +66,15 @@
   const footer = document.querySelector('.wrap > footer');
   if (footer) footer.before(section);
   else document.querySelector('.wrap').append(section);
+  const verificationBubble = document.createElement('div');
+  verificationBubble.id = 'adcSC01VerifyBubble';
+  verificationBubble.className = 'adc-sc01-verify-bubble';
+  verificationBubble.setAttribute('role','status');
+  verificationBubble.setAttribute('aria-live','polite');
+  verificationBubble.setAttribute('aria-atomic','true');
+  verificationBubble.textContent = 'Verificá que estos datos estén correctos antes de imprimir o presentar.';
+  verificationBubble.hidden = true;
+  document.body.append(verificationBubble);
   const sheet = section.querySelector('form');
   const status = section.querySelector('#adcSC01Status');
   let initialized = false;
@@ -102,15 +111,53 @@
   sheet.append(surnameNote);
   const contactBadges = {};
   for (const field of fields.filter(field => ['direccionInstitucion','telefonoInstitucion','correoInstitucion'].includes(field.key))) {
-    const badge = document.createElement('a');
+    const badge = document.createElement('button');
+    badge.type = 'button';
     badge.className = 'adc-sc01-verify';
-    badge.textContent = '⚠ Verificar';
-    badge.target = '_blank';badge.rel = 'noopener';badge.hidden = true;
+    badge.textContent = '⚠ Verificá antes de presentar';
+    badge.hidden = true;
     badge.setAttribute('aria-label',`Verificar ${field.label.toLowerCase()} en el padrón oficial`);
-    position(badge,{x:field.x+field.width-55,y:field.y,width:55,height:field.height});
+    badge.setAttribute('aria-controls',verificationBubble.id);
+    badge.setAttribute('aria-expanded','false');
+    position(badge,{x:field.x+field.width-105,y:field.y,width:105,height:field.height});
     sheet.append(badge);
     contactBadges[field.key] = badge;
   }
+  let activeVerifyButton;
+  function closeVerificationBubble() {
+    verificationBubble.hidden = true;
+    for (const badge of Object.values(contactBadges)) badge.setAttribute('aria-expanded','false');
+    activeVerifyButton = null;
+  }
+  section.addEventListener('click',event => {
+    const badge = event.target.closest('.adc-sc01-verify');
+    if (!badge) return;
+    if (activeVerifyButton === badge && !verificationBubble.hidden) {
+      closeVerificationBubble();
+      return;
+    }
+    closeVerificationBubble();
+    activeVerifyButton = badge;
+    badge.setAttribute('aria-expanded','true');
+    verificationBubble.hidden = false;
+    const anchor = badge.getBoundingClientRect();
+    const left = Math.max(8,Math.min(anchor.left,window.innerWidth-verificationBubble.offsetWidth-8));
+    const above = anchor.top-verificationBubble.offsetHeight-8;
+    const top = above >= 8 ? above : anchor.bottom+8;
+    verificationBubble.style.left = `${left}px`;
+    verificationBubble.style.top = `${Math.max(8,Math.min(top,window.innerHeight-verificationBubble.offsetHeight-8))}px`;
+  });
+  document.addEventListener('click',event => {
+    if (activeVerifyButton && !event.target.closest('.adc-sc01-verify')) closeVerificationBubble();
+  });
+  document.addEventListener('keydown',event => {
+    if (event.key !== 'Escape' || !activeVerifyButton) return;
+    const button = activeVerifyButton;
+    closeVerificationBubble();
+    button.focus();
+  });
+  window.addEventListener('resize',closeVerificationBubble);
+  window.addEventListener('scroll',closeVerificationBubble,true);
   for (const choice of choices) {
     for (const [value,x,y] of choice.options) {
       const input = document.createElement('input');
@@ -166,8 +213,7 @@
     for (const [key,badge] of Object.entries(contactBadges)) {
       const field = fields.find(field => field.key === key);
       badge.hidden = !contactOrigin[key];
-      if (contactOrigin[key]) badge.href = contactOrigin[key];
-      position(sheet.elements[key],{...field,width:field.width-(contactOrigin[key]?55:0)});
+      position(sheet.elements[key],{...field,width:field.width-(contactOrigin[key]?105:0)});
     }
     for (const [key,label] of [['direccionInstitucion','Dirección'],['telefonoInstitucion','Teléfono'],['correoInstitucion','Correo electrónico']]) {
       if (!contactOrigin[key]) continue;

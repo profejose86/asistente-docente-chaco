@@ -126,12 +126,34 @@
 
 #adcSC01Sheet .adc-sc01-verify {
   position: absolute;
+  margin: 0;
   padding-inline: 2px;
-  color: #704b13 !important;
-  background: #fff3cd;
-  font: 1.1cqw Arial, sans-serif;
-  text-decoration: none;
+  border: 0;
+  border-radius: 0;
+  text-align: left;
+  cursor: pointer;
+  color: #9b682c !important;
+  background: #fff8ec;
+  font: .9cqw Arial, sans-serif;
   white-space: nowrap;
+}
+
+.adc-sc01-verify-bubble {
+  position: fixed;
+  z-index: 1200;
+  max-width: min(340px, calc(100vw - 16px));
+  padding: 8px 12px;
+  border-radius: 9px;
+  background: #17345c;
+  color: #fff;
+  font-size: .85rem;
+  font-weight: 700;
+  line-height: 1.4;
+  box-shadow: 0 3px 12px #13284740;
+}
+
+.adc-sc01-verify-bubble[hidden] {
+  display: none;
 }
 
 #adcSC01Sheet [hidden] {
