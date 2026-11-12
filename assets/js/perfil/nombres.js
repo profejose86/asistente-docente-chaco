@@ -1,0 +1,5 @@
+
+function adcUpdateFullName(){const a=document.getElementById('perfilApellidos'),n=document.getElementById('perfilNombres'),full=document.getElementById('nombre');if(a&&n&&full)full.value=[a.value.trim(),n.value.trim()].filter(Boolean).join(', ')}
+function adcSplitSavedName(d){const a=document.getElementById('perfilApellidos'),n=document.getElementById('perfilNombres');if(!a||!n)return;let surname=d.apellidos||'',given=d.nombres||'';if(!surname&&!given){const raw=String(d.nombre||'');const comma=raw.indexOf(',');if(comma>=0){surname=raw.slice(0,comma).trim();given=raw.slice(comma+1).trim()}else{given=raw.trim()}}a.value=surname;n.value=given;adcUpdateFullName()}
+for(const id of ['perfilApellidos','perfilNombres']){const el=document.getElementById(id);if(el)el.addEventListener('input',()=>{adcUpdateFullName();if(typeof dj02SyncProfile==='function'&&document.getElementById('dj02')&&!document.getElementById('dj02').classList.contains('hide')){dj02SyncProfile();dj02Preview()}})}
+try{const saved=JSON.parse(localStorage.getItem('adc_v08')||'null');if(saved)adcSplitSavedName(saved)}catch(e){}

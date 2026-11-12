@@ -1,0 +1,132 @@
+
+body:has(#adcCalendar:not(.hide)) > .wrap{max-width:1510px}
+#adcCalendar{--ink:#243a3c;--muted:#526568;background:#f4f6f2;border:1px solid #dce3dc;padding:clamp(12px,2vw,28px);color:var(--ink)}
+#adcCalendar .adc-cal-heading h2{font:500 clamp(1.75rem,3vw,2.65rem)/1.1 Georgia,serif;margin:6px 0 8px}
+#adcCalendar .adc-cal-kicker{font-size:.7rem;text-transform:uppercase;letter-spacing:.17em;font-weight:750;color:#42605d}
+#adcCalendar .adc-cal-layout{display:grid;grid-template-columns:minmax(440px,1fr) minmax(390px,1.16fr);gap:clamp(14px,2vw,28px);align-items:start}
+#adcCalendar .adc-cal-panel{min-width:0}
+#adcCalendar .adc-cal-nav{display:flex;align-items:center;justify-content:space-between;min-height:42px;margin-bottom:10px}
+#adcCalendar .adc-cal-nav button{min-width:38px;padding:6px 10px}
+#adcCalendar .adc-cal-legend{display:flex;flex-wrap:wrap;gap:8px 16px;margin:16px 0 20px;font-size:.77rem;color:var(--muted)}
+#adcCalendar .adc-cal-legend span{display:inline-flex;align-items:center;gap:6px}
+#adcCalendar .adc-cal-dot{width:6px;height:6px;border-radius:50%;background:var(--tone);display:inline-block;flex:none}
+#adcCalendar [data-cat=patria]{--tone:#0878a5;--tint:#e0f1f8;--label:#075573}
+#adcCalendar [data-cat=examen]{--tone:#7652a1;--tint:#f0e7f8;--label:#55367a}
+#adcCalendar [data-cat=tramite]{--tone:#19766b;--tint:#dff2ed;--label:#155d55}
+#adcCalendar [data-cat=institucional]{--tone:#a56312;--tint:#fbedd6;--label:#754708}
+#adcCalendar [data-cat=ciclo]{--tone:#587084;--tint:#e7eef4;--label:#3e556a}
+#adcCalYear{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+#adcCalYear article{border:1px solid #dbe3dc;border-radius:9px;padding:8px 5px;background:#fff}
+#adcCalYear h3{text-align:center;margin:2px 0 8px;font:600 1rem Georgia,serif;text-transform:capitalize}
+#adcCalYear .adc-cal-days{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));text-align:center;gap:1px}
+#adcCalYear .adc-cal-days button{display:grid;place-content:center;justify-items:center;min-width:0;min-height:27px;padding:2px 0;border:1px solid transparent;border-radius:5px;font-size:.73rem;font-variant-numeric:tabular-nums;background:#fff;color:#283b3e;line-height:1}
+#adcCalYear .adc-cal-days button:hover{background:#edf4ef}
+#adcCalYear .adc-cal-days button[aria-pressed=true]{border-color:#263e3c;background:#e5efe7;font-weight:800}
+#adcCalYear .adc-cal-weekday{font-size:.6rem;color:#5c6c69;padding-bottom:4px}
+#adcCalYear .adc-cal-dots{display:flex;flex-wrap:wrap;justify-content:center;gap:2px;min-height:4px;margin-top:3px;max-width:100%}
+#adcCalYear .adc-cal-dot{width:4px;height:4px}
+#adcCalAgenda{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));border:1px solid #cfc6b5;border-radius:11px;overflow:hidden;box-shadow:0 4px 0 -1px #e9e1d4,0 8px 0 -2px #d4c6b2,0 14px 23px #23382e18}
+#adcCalAgenda article{min-width:0;min-height:360px;display:flex;flex-direction:column;padding:clamp(12px,2vw,23px);background:#fffdf6}
+#adcCalAgenda article:first-child{background:linear-gradient(90deg,#fffdf6 94%,#eee7da)}
+#adcCalAgenda article+article{border-left:1px solid #c6b9a5;background:linear-gradient(90deg,#ece4d6,#fffdf6 7%)}
+#adcCalAgenda h3{display:flex;align-items:center;gap:9px;margin:0 0 14px;padding-bottom:11px;border-bottom:1px solid #ddd4c5;font:500 1.05rem Georgia,serif}
+#adcCalAgenda h3 strong{font:500 clamp(1.9rem,3vw,3rem)/1 Georgia,serif;font-variant-numeric:lining-nums}
+#adcCalAgenda ul{padding:0;margin:0;list-style:none}
+#adcCalAgenda li{margin-bottom:12px;padding-left:8px;border-left:2px solid var(--tone);font-size:.84rem;line-height:1.4;overflow-wrap:anywhere}
+#adcCalAgenda .adc-cal-tag{display:table;font-size:.66rem;font-weight:700;padding:2px 6px;border-radius:4px;color:var(--label);background:var(--tint);margin-bottom:4px}
+#adcCalAgenda small,#adcCalAgenda p{color:var(--muted);font-size:.76rem}
+#adcCalAgenda small{display:block;margin-top:3px}
+#adcCalAgenda .adc-cal-lines{flex:1;min-height:68px;margin-top:8px;background:repeating-linear-gradient(transparent 0 22px,#eae3d7 22px 23px)}
+#adcCalendar .adc-cal-source{margin-top:18px}
+@media(max-width:940px){#adcCalendar .adc-cal-layout{grid-template-columns:1fr}}
+@media(max-width:540px){#adcCalYear{grid-template-columns:repeat(2,minmax(0,1fr))}#adcCalAgenda{grid-template-columns:1fr}#adcCalAgenda article{min-height:185px}#adcCalAgenda article+article{border-left:0;border-top:1px solid #c6b9a5}}
+
+#adcCalendar .adc-cal-layout{grid-template-columns:minmax(0,var(--calendar-width,48%)) 20px minmax(0,1fr);gap:0}
+#adcCalendar .adc-cal-divider{align-self:stretch;cursor:col-resize;touch-action:none;background:linear-gradient(#aebdb5,#aebdb5) center/2px 100% no-repeat}
+#adcCalendar .adc-cal-divider:focus-visible{outline:2px solid #234d70}
+#adcCalAgenda{container-type:inline-size}
+#adcCalendar .adc-cal-sheet{min-height:520px}
+@container (max-width: 480px){
+ #adcCalendar .adc-cal-sheet:first-child{grid-column:1/-1;background:#fffdf6}
+ #adcCalendar .adc-cal-sheet:nth-child(2){display:none}
+}
+#adcCalYear .adc-cal-month-name{background:transparent;color:inherit;font:inherit;text-transform:capitalize;padding:3px}
+#adcCalendar .adc-cal-year-panel{position:relative}
+#adcCalMonth{position:absolute;inset:0;z-index:2;background:#fffdf6;border:1px solid #bac8be;border-radius:12px;box-shadow:0 12px 28px #213b3038;padding:16px;overflow:auto}
+#adcCalMonth .adc-cal-days{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:4px;text-align:center}
+#adcCalMonth .adc-cal-days button{min-width:0;padding:6px 0}
+#adcCalMonth .adc-cal-dots{display:flex;justify-content:center;gap:2px}
+#adcCalMonth li{margin:.55rem 0}
+#adcCalAgenda .adc-cal-lines{width:100%;box-sizing:border-box;min-height:145px;line-height:23px;padding:0 6px;resize:vertical}
+#adcCalAgenda .adc-cal-personal{margin-top:16px}
+#adcCalAgenda .adc-cal-entry{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+#adcCalAgenda .adc-cal-entry input:not([type=color]){flex:1;min-width:90px}
+@media(max-width:940px){
+ #adcCalendar .adc-cal-layout{grid-template-columns:1fr;gap:14px}
+ #adcCalendar .adc-cal-divider{display:none}
+}
+
+#adcCalMonth{background:#fff;color:#26323a;border-color:#cbd3d8;padding:clamp(12px,3vw,26px)}
+#adcCalMonth .adc-cal-month-header{display:grid;justify-items:center;gap:8px;margin-bottom:18px}
+#adcCalMonth h3{margin:0;font:600 clamp(2rem,4vw,3.2rem)/1.1 Georgia,serif;text-transform:capitalize}
+#adcCalMonth button{background:#f3f5f6;color:#26323a;border:1px solid #d6dde1;border-radius:6px}
+#adcCalMonth button:hover,#adcCalMonth button[aria-pressed=true]{background:#e1e8e9}
+#adcCalMonth .adc-cal-days{max-width:590px;margin:auto}
+#adcCalMonth ul{padding:0;list-style:none}
+#adcCalMonth li{border-top:1px solid #e0e5e8;padding:8px 0;display:grid;grid-template-columns:3em minmax(0,1fr);align-items:start;gap:10px}
+#adcCalMonth .adc-cal-month-event{display:block;border-left:3px solid var(--tone);background:var(--tint,#f5f6f7);padding:5px 8px;margin-bottom:4px;overflow-wrap:anywhere}
+#adcCalendar .adc-cal-sheet{min-height:640px}
+#adcCalAgenda .adc-cal-lines{min-height:240px}
+#adcCalAgenda .adc-cal-personal{display:flex;flex-direction:column;gap:6px}
+#adcCalAgenda .adc-cal-chips,#adcCalAgenda .adc-cal-palette{display:flex;flex-wrap:wrap;gap:6px}
+#adcCalAgenda .adc-cal-chip{display:inline-flex;align-items:center;gap:5px;border:1px solid #d7dddc;border-left:5px solid var(--tone);border-radius:8px;padding:2px 6px;background:#f7f8f7;overflow-wrap:anywhere}
+#adcCalAgenda .adc-cal-chip button,#adcCalAgenda .adc-cal-label-toggle{background:#eef1f1;color:#253630;padding:3px 7px}
+#adcCalAgenda .adc-cal-picker{padding:8px;border:1px solid #d7dddc;background:#fff;border-radius:8px}
+#adcCalAgenda .adc-cal-picker input:not([type=color]){width:100%;box-sizing:border-box}
+#adcCalAgenda .adc-cal-palette button{width:26px;height:26px;padding:0;background:var(--tone);border:2px solid #fff}
+#adcCalAgenda .adc-cal-palette button[aria-pressed=true]{outline:2px solid #26323a}
+#adcCalendar .adc-cal-index-controls{margin:-8px 0 12px}
+#adcCalIndexChoices:not([hidden]){display:flex;flex-wrap:wrap;gap:7px;padding-top:8px}
+#adcCalDailyNav[hidden]{display:none}
+#adcCalAgenda .adc-cal-chip,#adcCalIndexChoices .adc-cal-chip{color:#26323a;background:#f7f8f7;border:1px solid #d7dddc;border-left:9px solid var(--tone);border-radius:8px;padding:4px 8px;font-size:.8rem;white-space:normal;text-align:left}
+#adcCalAgenda button.adc-cal-chip:hover,#adcCalIndexChoices button.adc-cal-chip:hover{color:#17243a;background:#e7edeb}
+#adcCalAgenda .adc-cal-index-sheet{grid-column:1/-1;margin:0;padding:20px;min-width:0;background:#fffdf6}
+#adcCalAgenda .adc-cal-index-sheet h3{border-left:9px solid var(--tone);padding-left:10px}
+#adcCalAgenda .adc-cal-index-row{margin-top:12px;padding-top:10px;border-top:1px solid #e1dbcf}
+#adcCalAgenda .adc-cal-index-row p{white-space:pre-wrap;overflow-wrap:anywhere;margin:6px 0 0}
+#adcTransferNotice[hidden],#adcTransferNoticeLink[hidden]{display:none!important}
+#adcTransferNotice{padding:12px;margin-bottom:12px;background:#fff3d8;border:1px solid #d6af63;border-radius:8px}
+#adcTransferOrigins{display:grid;gap:5px}
+#adcTransferOrigins input,#adcTransferNotice input{width:auto}
+#adcTransferPreview{overflow:auto}
+@media print{
+ body.adc-transfer-print .wrap>*:not(#adcTransfer),body.adc-transfer-print #adcTransfer>*:not(#adcTransferPreview){display:none!important}
+ body.adc-transfer-print .wrap,body.adc-transfer-print #adcTransfer,body.adc-transfer-print #adcTransferPreview{max-width:none;overflow:visible;margin:0;padding:0;border:0}
+ body.adc-transfer-print .dj-sheet-label{display:none}
+ body.adc-transfer-print .dj-sheet-two{break-before:page}
+}
+#adcTransferForm[hidden],#adcTransferStatus[hidden]{display:none!important}
+#adcTransferForm{margin:10px 0;padding:10px;border:1px solid #cdd9e7;border-radius:8px}
+#adcTransferForm .fields{grid-template-columns:1fr}
+#adcTransferForm select[multiple]{width:100%}
+.adc-dj-transfer #djCargoList input[type=checkbox]{display:none}
+#profile .adc-course-number{display:grid;position:relative}
+#profile .adc-course-number>input,#profile .adc-course-suffix{grid-area:1/1;font:inherit;font-variant-numeric:tabular-nums;padding:8px 10px}
+#profile .adc-course-number>input{width:100%;margin:0}
+#profile .adc-course-suffix{pointer-events:none;align-self:stretch;display:flex;align-items:center;border:1px solid transparent;color:#64748b}
+#profile .adc-course-suffix span{visibility:hidden;white-space:pre}
+#profile .adc-course-suffix b{font-weight:normal}
+#profile .adc-subject-fields{grid-template-columns:repeat(2,minmax(0,1fr))}
+@media(max-width:560px){#profile .adc-subject-fields{grid-template-columns:minmax(0,1fr)}}
+#adcTramitesMenu button[data-adc-tramite][aria-pressed="true"]{background:#174b89;color:#fff;box-shadow:inset 0 0 0 2px #8dc3ff}
+#adcTramitesMenu button[data-adc-tramite][aria-pressed="true"] small{color:inherit}
+#adcTramiteBubble{position:fixed;z-index:1000;pointer-events:none;max-width:min(340px,calc(100vw - 16px));padding:7px 11px;border-radius:9px;background:#17345c;color:#fff;font-size:.85rem;font-weight:700;box-shadow:0 3px 12px #13284740}
+#adcTramiteBubble:empty{display:none}
+
+#adcPendingForms{margin:.65rem 0;border:1px solid #afc7bb;border-radius:8px;padding:.65rem}
+#adcPendingForms label{display:flex;align-items:center;gap:.5rem;padding:.35rem .5rem;border-radius:6px}
+#adcPendingForms label:has(:checked){background:#c9e5d5;font-weight:700}
+#adcPendingForms input{width:auto;margin:0}
+#adcPendingForms label:has(:disabled){opacity:.65}
+#adcPendingFormPreview img{display:block;max-width:min(100%,560px);margin:.5rem 0;border:1px solid #afc7bb}
+#adcConfiguredDL01[hidden],#pdfResult[hidden],#adcDJ02FromSelector[hidden]{display:none!important}

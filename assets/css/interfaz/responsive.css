@@ -1,0 +1,39 @@
+@media screen and (max-width: 1100px) {
+  [data-adc-design-x],
+  [data-adc-design-y] {
+    translate: none !important;
+    width: auto !important;
+    max-width: 100% !important;
+    height: auto !important;
+    min-width: 0 !important;
+    min-height: 0 !important;
+  }
+
+  .wrap,
+  .wrap > *,
+  .fields > *,
+  .adc-main-nav > *,
+  .adc-theme-header > * {
+    min-width: 0;
+  }
+
+  input,
+  select,
+  textarea,
+  button,
+  img,
+  iframe,
+  canvas,
+  svg {
+    max-width: 100%;
+  }
+
+  h1,
+  h2,
+  h3,
+  p,
+  label,
+  small {
+    overflow-wrap: anywhere;
+  }
+}

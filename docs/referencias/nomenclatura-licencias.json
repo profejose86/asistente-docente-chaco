@@ -1,0 +1,3484 @@
+{
+  "fuente": "Nomenclatura.pdf",
+  "sha256": "8d3f21a9758d0a7349b70b3adf4062511e103804681e132e71b871451ccedbfa",
+  "paginas": 7,
+  "fechaIncorporacion": "2026-11-11",
+  "agrupaciones": {
+    "1": "Licencias por razones de salud",
+    "2": "Otras licencias",
+    "3": "Permisos",
+    "4": "Sanciones (descripción editorial; encabezado no identificado)"
+  },
+  "advertencias": [
+    "Código de nomenclatura y encuadre legal son columnas diferentes. No equivalen automáticamente a número de ley.",
+    "Se conservan los tres componentes, incluido un componente de dos dígitos; usar clave con separadores como identificador.",
+    "No inferir la variante únicamente de la situación de revista: también existen prórrogas, porcentajes y grados de parentesco.",
+    "Texto recortado en traslado transitorio; Interno en 2-21-2 se normaliza a Interino y se conserva original.",
+    "No se acredita fecha de actualización ni vigencia normativa. El grupo 2 salta del motivo 11 al 13 en el original.",
+    "Grupo 4 documental adicional, no ofrecer como licencia solicitada por docente.",
+    "Campos vacíos se mantienen; celdas combinadas se propagan dentro del mismo motivo."
+  ],
+  "aclaracionDuelo": "--- PAGINA 6 ---\nAclaraciones:\nDuelo: 1º (padres,hijos,hermanos,suegros o hijos politicos) - 2º (abuelos,nietos y hermanos politicos) - 3º y 4º (pimos hermanos,tios,sobrinos,bisabuelos y tio abuelos)",
+  "registros": [
+    {
+      "pagina": 1,
+      "agrupacion": "1",
+      "componentesCodigo": [
+        "1",
+        "1",
+        "1"
+      ],
+      "codigo": "111",
+      "clave": "1-1-1",
+      "motivoClave": "1-1",
+      "denominacion": "ENFERMEDAD O LESION COMUN",
+      "encuadreLegal": "309-B 1)",
+      "situacionRevistaOriginal": "Titular",
+      "formaPago": "Con goce de haberes",
+      "otorgadoPor": "Director",
+      "observaciones": "Cuarenta y cinco (45) días corridos o no por año",
+      "estado": "referencia documental; pendiente de integración y validación normativa",
+      "situacionRevista": "Titular"
+    },
+    {
+      "pagina": 1,
+      "agrupacion": "1",
+      "componentesCodigo": [
+        "1",
+        "1",
+        "2"
+      ],
+      "codigo": "112",
+      "clave": "1-1-2",
+      "motivoClave": "1-1",
+      "denominacion": "ENFERMEDAD O LESION COMUN",
+      "encuadreLegal": "309-B1)",
+      "situacionRevistaOriginal": "Funcionario Político",
+      "formaPago": "Con goce de haberes",
+      "otorgadoPor": "",
+      "observaciones": "Cuarenta y cinco (45) días corridos o no por año",
+      "estado": "referencia documental; pendiente de integración y validación normativa",
+      "situacionRevista": "Funcionario Político"
+    },
+    {
+      "pagina": 1,
+      "agrupacion": "1",
+      "componentesCodigo": [
+        "1",
+        "1",
+        "3"
+      ],
+      "codigo": "113",
+      "clave": "1-1-3",
+      "motivoClave": "1-1",
+      "denominacion": "ENFERMEDAD O LESION COMUN",
+      "encuadreLegal": "331-A",
+      "situacionRevistaOriginal": "Interino",
+      "formaPago": "Con goce de haberes",
+      "otorgadoPor": "Director",
+      "observaciones": "Treinta (30) días por año, antig. > 4 meses; 10 días otros casos",
+      "estado": "referencia documental; pendiente de integración y validación normativa",
+      "situacionRevista": "Interino"
+    },
+    {
+      "pagina": 1,
+      "agrupacion": "1",
+      "componentesCodigo": [
+        "1",
+        "1",
+        "4"
+      ],
+      "codigo": "114",
+      "clave": "1-1-4",
+      "motivoClave": "1-1",
+      "denominacion": "ENFERMEDAD O LESION COMUN",
+      "encuadreLegal": "340-A",
+      "situacionRevistaOriginal": "Suplente",
+      "formaPago": "Con goce de haberes",
+      "otorgadoPor": "Director",
+      "observaciones": "Quince (15) días por año, antig. > 4 meses; 5 días otros casos",
+      "estado": "referencia documental; pendiente de integración y validación normativa",
+      "situacionRevista": "Suplente"
+    },
+    {
+      "pagina": 1,
+      "agrupacion": "1",
+      "componentesCodigo": [
+        "1",
+        "2",
+        "1"
+      ],
+      "codigo": "121",
+      "clave": "1-2-1",
+      "motivoClave": "1-2",
+      "denominacion": "ENFERMEDAD LARGO TRATAMIENTO",
+      "encuadreLegal": "309 B-2)",
+      "situacionRevistaOriginal": "Titular",
+      "formaPago": "Con goce de haberes",
+      "otorgadoPor": "Director",
+      "observaciones": "Dos (2) años",
+      "estado": "referencia documental; pendiente de integración y validación normativa",
+      "situacionRevista": "Titular"
+    },
+    {
+      "pagina": 1,
+      "agrupacion": "1",
+      "componentesCodigo": [
+        "1",
+        "2",
+        "2"
+      ],
+      "codigo": "122",
+      "clave": "1-2-2",
+      "motivoClave": "1-2",
+      "denominacion": "ENFERMEDAD LARGO TRATAMIENTO",
+      "encuadreLegal": "309 B-2)",
+      "situacionRevistaOriginal": "Titular",
+      "formaPago": "Con 50% de haberes",
+      "otorgadoPor": "Director",
+      "observaciones": "Un (1) año",
+      "estado": "referencia documental; pendiente de integración y validación normativa",
+      "situacionRevista": "Titular"
+    },
+    {
+      "pagina": 1,
+      "agrupacion": "1",
+      "componentesCodigo": [
+        "1",
+        "2",
+        "3"
+      ],
+      "codigo": "123",
+      "clave": "1-2-3",
+      "motivoClave": "1-2",
+      "denominacion": "ENFERMEDAD LARGO TRATAMIENTO",
+      "encuadreLegal": "309 B-2)",
+      "situacionRevistaOriginal": "Funcionario Político",
+      "formaPago": "Con goce de haberes",
+      "otorgadoPor": "",
+      "observaciones": "Dos (2) años",
+      "estado": "referencia documental; pendiente de integración y validación normativa",
+      "situacionRevista": "Funcionario Político"
+    },
+    {
+      "pagina": 1,
+      "agrupacion": "1",
+      "componentesCodigo": [
+        "1",
+        "2",
+        "4"
+      ],
+      "codigo": "124",
+      "clave": "1-2-4",
+      "motivoClave": "1-2",
+      "denominacion": "ENFERMEDAD LARGO TRATAMIENTO",
+      "encuadreLegal": "309 B-2)",
+      "situacionRevistaOriginal": "Funcionario Político",
+      "formaPago": "Con 50% de haberes",
+      "otorgadoPor": "",
+      "observaciones": "Un (1) año",
+      "estado": "referencia documental; pendiente de integración y validación normativa",
+      "situacionRevista": "Funcionario Político"
+    },
+    {
+      "pagina": 1,
+      "agrupacion": "1",
+      "componentesCodigo": [
+        "1",
+        "2",
+        "5"
+      ],
+      "codigo": "125",
+      "clave": "1-2-5",
+      "motivoClave": "1-2",
+      "denominacion": "ENFERMEDAD LARGO TRATAMIENTO",
+      "encuadreLegal": "331- B",
+      "situacionRevistaOriginal": "Interino",
+      "formaPago": "Con goce de haberes",
+      "otorgadoPor": "Director",
+      "observaciones": "Dos (2) años ( 6meses de antigüedad)",
+      "estado": "referencia documental; pendiente de integración y validación normativa",
+      "situacionRevista": "Interino"
+    },
+    {
+      "pagina": 1,
+      "agrupacion": "1",
+      "componentesCodigo": [
+        "1",
+        "2",
+        "6"
+      ],
+      "codigo": "126",
+      "clave": "1-2-6",
+      "motivoClave": "1-2",
+      "denominacion": "ENFERMEDAD LARGO TRATAMIENTO",
+      "encuadreLegal": "331 B",
+      "situacionRevistaOriginal": "Interino",
+      "formaPago": "Con 50% de haberes",
+      "otorgadoPor": "Director",
+      "observaciones": "Un (1) año",
+      "estado": "referencia documental; pendiente de integración y validación normativa",
+      "situacionRevista": "Interino"
+    },
+    {
+      "pagina": 1,
+      "agrupacion": "1",
+      "componentesCodigo": [
+        "1",
+        "2",
+        "7"
+      ],
+      "codigo": "127",
+      "clave": "1-2-7",
+      "motivoClave": "1-2",
+      "denominacion": "ENFERMEDAD LARGO TRATAMIENTO",
+      "encuadreLegal": "340 B",
+      "situacionRevistaOriginal": "Suplente",
+      "formaPago": "Con goce de haberes",
+      "otorgadoPor": "Director",
+      "observaciones": "Dos (2) años (Desig. Sin termino y 1 año de antigüedad)",
+      "estado": "referencia documental; pendiente de integración y validación normativa",
+      "situacionRevista": "Suplente"
+    },
+    {
+      "pagina": 1,
+      "agrupacion": "1",
+      "componentesCodigo": [
+        "1",
+        "2",
+        "8"
+      ],
+      "codigo": "128",
+      "clave": "1-2-8",
+      "motivoClave": "1-2",
+      "denominacion": "ENFERMEDAD LARGO TRATAMIENTO",
+      "encuadreLegal": "340 B",
+      "situacionRevistaOriginal": "Suplente",
+      "formaPago": "Con 50% de haberes",
+      "otorgadoPor": "Director",
+      "observaciones": "Un (1) año",
+      "estado": "referencia documental; pendiente de integración y validación normativa",
+      "situacionRevista": "Suplente"
+    },
+    {
+      "pagina": 1,
+      "agrupacion": "1",
+      "componentesCodigo": [
+        "1",
+        "3",
+        "1"
+      ],
+      "codigo": "131",
+      "clave": "1-3-1",
+      "motivoClave": "1-3",
+      "denominacion": "ENFERMEDAD OCUPACIONAL O ACC. TRAB.",
+      "encuadreLegal": "309 B-3)",
+      "situacionRevistaOriginal": "Titular",
+      "formaPago": "Con goce de haberes",
+      "otorgadoPor": "Ministro",
+      "observaciones": "Dos (2) años",
+      "estado": "referencia documental; pendiente de integración y validación normativa",
+      "situacionRevista": "Titular"
+    },
+    {
+      "pagina": 1,
+      "agrupacion": "1",
+      "componentesCodigo": [
+        "1",
+        "3",
+        "2"
+      ],
+      "codigo": "132",
+      "clave": "1-3-2",
+      "motivoClave": "1-3",
+      "denominacion": "ENFERMEDAD OCUPACIONAL O ACC. TRAB.",
+      "encuadreLegal": "309 B-3)",
+      "situacionRevistaOriginal": "Titular",
+      "formaPago": "Con 50% de haberes",
+      "otorgadoPor": "Ministro",
+      "observaciones": "Un (1) año",
+      "estado": "referencia documental; pendiente de integración y validación normativa",
+      "situacionRevista": "Titular"
+    },
+    {
+      "pagina": 1,
+      "agrupacion": "1",
+      "componentesCodigo": [
+        "1",
+        "3",
+        "3"
+      ],
+      "codigo": "133",
+      "clave": "1-3-3",
+      "motivoClave": "1-3",
+      "denominacion": "ENFERMEDAD OCUPACIONAL O ACC. TRAB.",
+      "encuadreLegal": "309 B-3)",
+      "situacionRevistaOriginal": "Funcionario Político",
+      "formaPago": "Con goce de haberes",
+      "otorgadoPor": "",
+      "observaciones": "Dos (2) años",
+      "estado": "referencia documental; pendiente de integración y validación normativa",
+      "situacionRevista": "Funcionario Político"
+    },
+    {
+      "pagina": 1,
+      "agrupacion": "1",
+      "componentesCodigo": [
+        "1",
+        "3",
+        "4"
+      ],
+      "codigo": "134",
+      "clave": "1-3-4",
+      "motivoClave": "1-3",
+      "denominacion": "ENFERMEDAD OCUPACIONAL O ACC. TRAB.",
+      "encuadreLegal": "309 B-3)",
+      "situacionRevistaOriginal": "Funcionario Político",
+      "formaPago": "Con 50% de haberes",
+      "otorgadoPor": "",
+      "observaciones": "Un (1) año",
+      "estado": "referencia documental; pendiente de integración y validación normativa",
+      "situacionRevista": "Funcionario Político"
+    },
+    {
+      "pagina": 1,
+      "agrupacion": "1",
+      "componentesCodigo": [
+        "1",
+        "3",
+        "5"
+      ],
+      "codigo": "135",
+      "clave": "1-3-5",
+      "motivoClave": "1-3",
+      "denominacion": "ENFERMEDAD OCUPACIONAL O ACC. TRAB.",
+      "encuadreLegal": "331-C",
+      "situacionRevistaOriginal": "Interino",
+      "formaPago": "Con goce de haberes",
+      "otorgadoPor": "Ministro",
+      "observaciones": "Dos (2) años",
+      "estado": "referencia documental; pendiente de integración y validación normativa",
+      "situacionRevista": "Interino"
+    },
+    {
+      "pagina": 1,
+      "agrupacion": "1",
+      "componentesCodigo": [
+        "1",
+        "3",
+        "6"
+      ],
+      "codigo": "136",
+      "clave": "1-3-6",
+      "motivoClave": "1-3",
+      "denominacion": "ENFERMEDAD OCUPACIONAL O ACC. TRAB.",
+      "encuadreLegal": "331-C",
+      "situacionRevistaOriginal": "Interino",
+      "formaPago": "Con 50% de haberes",
+      "otorgadoPor": "Ministro",
+      "observaciones": "Un (1) año",
+      "estado": "referencia documental; pendiente de integración y validación normativa",
+      "situacionRevista": "Interino"
+    },
+    {
+      "pagina": 1,
+      "agrupacion": "1",
+      "componentesCodigo": [
+        "1",
+        "3",
+        "7"
+      ],
+      "codigo": "137",
+      "clave": "1-3-7",
+      "motivoClave": "1-3",
+      "denominacion": "ENFERMEDAD OCUPACIONAL O ACC. TRAB.",
+      "encuadreLegal": "340 -C",
+      "situacionRevistaOriginal": "Suplente",
+      "formaPago": "Con goce de haberes",
+      "otorgadoPor": "Ministro",
+      "observaciones": "Seis (6) meses",
+      "estado": "referencia documental; pendiente de integración y validación normativa",
+      "situacionRevista": "Suplente"
+    },
+    {
+      "pagina": 1,
+      "agrupacion": "1",
+      "componentesCodigo": [
+        "1",
+        "3",
+        "8"
+      ],
+      "codigo": "138",
+      "clave": "1-3-8",
+      "motivoClave": "1-3",
+      "denominacion": "ENFERMEDAD OCUPACIONAL O ACC. TRAB.",
+      "encuadreLegal": "340 -C",
+      "situacionRevistaOriginal": "Suplente",
+      "formaPago": "Con 50% de haberes",
+      "otorgadoPor": "Ministro",
+      "observaciones": "Tres (3) meses",
+      "estado": "referencia documental; pendiente de integración y validación normativa",
+      "situacionRevista": "Suplente"
+    },
+    {
+      "pagina": 1,
+      "agrupacion": "1",
+      "componentesCodigo": [
+        "1",
+        "4",
+        "1"
+      ],
+      "codigo": "141",
+      "clave": "1-4-1",
+      "motivoClave": "1-4",
+      "denominacion": "GRAVIDEZ Y MATERNIDAD",
+      "encuadreLegal": "309-C",
+      "situacionRevistaOriginal": "Titular",
+      "formaPago": "Con goce de haberes",
+      "otorgadoPor": "Director",
+      "observaciones": "180 días corridos",
+      "estado": "referencia documental; pendiente de integración y validación normativa",
+      "situacionRevista": "Titular"
+    },
+    {
+      "pagina": 1,
+      "agrupacion": "1",
+      "componentesCodigo": [
+        "1",
+        "4",
+        "2"
+      ],
+      "codigo": "142",
+      "clave": "1-4-2",
+      "motivoClave": "1-4",
+      "denominacion": "GRAVIDEZ Y MATERNIDAD",
+      "encuadreLegal": "309-C",
+      "situacionRevistaOriginal": "Titular",
+      "formaPago": "Con goce de haberes",
+      "otorgadoPor": "Director",
+      "observaciones": "30 días corridos | Prórroga",
+      "estado": "referencia documental; pendiente de integración y validación normativa",
+      "situacionRevista": "Titular"
+    },
+    {
+      "pagina": 1,
+      "agrupacion": "1",
+      "componentesCodigo": [
+        "1",
+        "4",
+        "3"
+      ],
+      "codigo": "143",
+      "clave": "1-4-3",
+      "motivoClave": "1-4",
+      "denominacion": "GRAVIDEZ Y MATERNIDAD",
+      "encuadreLegal": "309-C",
+      "situacionRevistaOriginal": "Funcionario Político",
+      "formaPago": "Con goce de haberes",
+      "otorgadoPor": "",
+      "observaciones": "180 días corridos",
+      "estado": "referencia documental; pendiente de integración y validación normativa",
+      "situacionRevista": "Funcionario Político"
+    },
+    {
+      "pagina": 1,
+      "agrupacion": "1",
+      "componentesCodigo": [
+        "1",
+        "4",
+        "4"
+      ],
+      "codigo": "144",
+      "clave": "1-4-4",
+      "motivoClave": "1-4",
+      "denominacion": "GRAVIDEZ Y MATERNIDAD",
+      "encuadreLegal": "309-C",
+      "situacionRevistaOriginal": "Funcionario Político",
+      "formaPago": "Con goce de haberes",
+      "otorgadoPor": "",
+      "observaciones": "30 días corridos | Prórroga",
+      "estado": "referencia documental; pendiente de integración y validación normativa",
+      "situacionRevista": "Funcionario Político"
+    },
+    {
+      "pagina": 1,
+      "agrupacion": "1",
+      "componentesCodigo": [
+        "1",
+        "4",
+        "5"
+      ],
+      "codigo": "145",
+      "clave": "1-4-5",
+      "motivoClave": "1-4",
+      "denominacion": "GRAVIDEZ Y MATERNIDAD",
+      "encuadreLegal": "331-D",
+      "situacionRevistaOriginal": "Interino",
+      "formaPago": "Con goce de haberes",
+      "otorgadoPor": "Director",
+      "observaciones": "180 días corridos",
+      "estado": "referencia documental; pendiente de integración y validación normativa",
+      "situacionRevista": "Interino"
+    },
+    {
+      "pagina": 1,
+      "agrupacion": "1",
+      "componentesCodigo": [
+        "1",
+        "4",
+        "6"
+      ],
+      "codigo": "146",
+      "clave": "1-4-6",
+      "motivoClave": "1-4",
+      "denominacion": "GRAVIDEZ Y MATERNIDAD",
+      "encuadreLegal": "331-D",
+      "situacionRevistaOriginal": "Interino",
+      "formaPago": "Con goce de haberes",
+      "otorgadoPor": "Director",
+      "observaciones": "30 días corridos | Prórroga",
+      "estado": "referencia documental; pendiente de integración y validación normativa",
+      "situacionRevista": "Interino"
+    },
+    {
+      "pagina": 1,
+      "agrupacion": "1",
+      "componentesCodigo": [
+        "1",
+        "4",
+        "7"
+      ],
+      "codigo": "147",
+      "clave": "1-4-7",
+      "motivoClave": "1-4",
+      "denominacion": "GRAVIDEZ Y MATERNIDAD",
+      "encuadreLegal": "340-D",
+      "situacionRevistaOriginal": "Suplente",
+      "formaPago": "Con goce de haberes",
+      "otorgadoPor": "Director",
+      "observaciones": "180 días corridos",
+      "estado": "referencia documental; pendiente de integración y validación normativa",
+      "situacionRevista": "Suplente"
+    },
+    {
+      "pagina": 1,
+      "agrupacion": "1",
+      "componentesCodigo": [
+        "1",
+        "4",
+        "8"
+      ],
+      "codigo": "148",
+      "clave": "1-4-8",
+      "motivoClave": "1-4",
+      "denominacion": "GRAVIDEZ Y MATERNIDAD",
+      "encuadreLegal": "340-D",
+      "situacionRevistaOriginal": "Suplente",
+      "formaPago": "Con goce de haberes",
+      "otorgadoPor": "Director",
+      "observaciones": "30 días corridos | Prórroga",
+      "estado": "referencia documental; pendiente de integración y validación normativa",
+      "situacionRevista": "Suplente"
+    },
+    {
+      "pagina": 1,
+      "agrupacion": "1",
+      "componentesCodigo": [
+        "1",
+        "5",
+        "1"
+      ],
+      "codigo": "151",
+      "clave": "1-5-1",
+      "motivoClave": "1-5",
+      "denominacion": "ENFER. DE UN MIEMBRO DEL GRUPO FAMILIAR",
+      "encuadreLegal": "309-D",
+      "situacionRevistaOriginal": "Titular",
+      "formaPago": "Con goce de haberes",
+      "otorgadoPor": "Director",
+      "observaciones": "28 días por año",
+      "estado": "referencia documental; pendiente de integración y validación normativa",
+      "situacionRevista": "Titular"
+    },
+    {
+      "pagina": 1,
+      "agrupacion": "1",
+      "componentesCodigo": [
+        "1",
+        "5",
+        "2"
+      ],
+      "codigo": "152",
+      "clave": "1-5-2",
+      "motivoClave": "1-5",
+      "denominacion": "ENFER. DE UN MIEMBRO DEL GRUPO FAMILIAR",
+      "encuadreLegal": "309-D",
+      "situacionRevistaOriginal": "Titular",
+      "formaPago": "Con goce de haberes",
+      "otorgadoPor": "Director",
+      "observaciones": "30 días por año | Prórroga",
+      "estado": "referencia documental; pendiente de integración y validación normativa",
+      "situacionRevista": "Titular"
+    },
+    {
+      "pagina": 1,
+      "agrupacion": "1",
+      "componentesCodigo": [
+        "1",
+        "5",
+        "3"
+      ],
+      "codigo": "153",
+      "clave": "1-5-3",
+      "motivoClave": "1-5",
+      "denominacion": "ENFER. DE UN MIEMBRO DEL GRUPO FAMILIAR",
+      "encuadreLegal": "309-D",
+      "situacionRevistaOriginal": "Funcionario Político",
+      "formaPago": "Con goce de haberes",
+      "otorgadoPor": "",
+      "observaciones": "28 días por año",
+      "estado": "referencia documental; pendiente de integración y validación normativa",
+      "situacionRevista": "Funcionario Político"
+    },
+    {
+      "pagina": 1,
+      "agrupacion": "1",
+      "componentesCodigo": [
+        "1",
+        "5",
+        "4"
+      ],
+      "codigo": "154",
+      "clave": "1-5-4",
+      "motivoClave": "1-5",
+      "denominacion": "ENFER. DE UN MIEMBRO DEL GRUPO FAMILIAR",
+      "encuadreLegal": "309-D",
+      "situacionRevistaOriginal": "Funcionario Político",
+      "formaPago": "Con goce de haberes",
+      "otorgadoPor": "",
+      "observaciones": "30 días por año | Prórroga",
+      "estado": "referencia documental; pendiente de integración y validación normativa",
+      "situacionRevista": "Funcionario Político"
+    },
+    {
+      "pagina": 1,
+      "agrupacion": "1",
+      "componentesCodigo": [
+        "1",
+        "5",
+        "5"
+      ],
+      "codigo": "155",
+      "clave": "1-5-5",
+      "motivoClave": "1-5",
+      "denominacion": "ENFER. DE UN MIEMBRO DEL GRUPO FAMILIAR",
+      "encuadreLegal": "331-E",
+      "situacionRevistaOriginal": "Interino",
+      "formaPago": "Con goce de haberes",
+      "otorgadoPor": "Director",
+      "observaciones": "10 días por año (4 Meses de antigüedad en el cargo y establ.)",
+      "estado": "referencia documental; pendiente de integración y validación normativa",
+      "situacionRevista": "Interino"
+    },
+    {
+      "pagina": 1,
+      "agrupacion": "1",
+      "componentesCodigo": [
+        "1",
+        "5",
+        "6"
+      ],
+      "codigo": "156",
+      "clave": "1-5-6",
+      "motivoClave": "1-5",
+      "denominacion": "ENFER. DE UN MIEMBRO DEL GRUPO FAMILIAR",
+      "encuadreLegal": "340-E",
+      "situacionRevistaOriginal": "Suplente",
+      "formaPago": "Con goce de haberes",
+      "otorgadoPor": "Director",
+      "observaciones": "5 días por año (4 Meses de antigüedad en el cargo y establ.)",
+      "estado": "referencia documental; pendiente de integración y validación normativa",
+      "situacionRevista": "Suplente"
+    },
+    {
+      "pagina": 1,
+      "agrupacion": "1",
+      "componentesCodigo": [
+        "1",
+        "6",
+        "1"
+      ],
+      "codigo": "161",
+      "clave": "1-6-1",
+      "motivoClave": "1-6",
+      "denominacion": "PRORROGA LIC. POR RAZONES DE SALUD",
+      "encuadreLegal": "347",
+      "situacionRevistaOriginal": "Titular",
+      "formaPago": "Con goce de haberes",
+      "otorgadoPor": "Ministro",
+      "observaciones": "Según prescripción médica, por período escolar",
+      "estado": "referencia documental; pendiente de integración y validación normativa",
+      "situacionRevista": "Titular"
+    },
+    {
+      "pagina": 1,
+      "agrupacion": "1",
+      "componentesCodigo": [
+        "1",
+        "6",
+        "2"
+      ],
+      "codigo": "162",
+      "clave": "1-6-2",
+      "motivoClave": "1-6",
+      "denominacion": "PRORROGA LIC. POR RAZONES DE SALUD",
+      "encuadreLegal": "347",
+      "situacionRevistaOriginal": "Titular",
+      "formaPago": "Con 50% de haberes",
+      "otorgadoPor": "Ministro",
+      "observaciones": "Según prescripción médica, por período escolar",
+      "estado": "referencia documental; pendiente de integración y validación normativa",
+      "situacionRevista": "Titular"
+    },
+    {
+      "pagina": 1,
+      "agrupacion": "1",
+      "componentesCodigo": [
+        "1",
+        "6",
+        "3"
+      ],
+      "codigo": "163",
+      "clave": "1-6-3",
+      "motivoClave": "1-6",
+      "denominacion": "PRORROGA LIC. POR RAZONES DE SALUD",
+      "encuadreLegal": "347",
+      "situacionRevistaOriginal": "Titular",
+      "formaPago": "Con 25% de haberes",
+      "otorgadoPor": "Ministro",
+      "observaciones": "Según prescripción médica, por período escolar",
+      "estado": "referencia documental; pendiente de integración y validación normativa",
+      "situacionRevista": "Titular"
+    },
+    {
+      "pagina": 1,
+      "agrupacion": "1",
+      "componentesCodigo": [
+        "1",
+        "6",
+        "4"
+      ],
+      "codigo": "164",
+      "clave": "1-6-4",
+      "motivoClave": "1-6",
+      "denominacion": "PRORROGA LIC. POR RAZONES DE SALUD",
+      "encuadreLegal": "347",
+      "situacionRevistaOriginal": "Titular",
+      "formaPago": "Sin goce de haberes",
+      "otorgadoPor": "Ministro",
+      "observaciones": "Según prescripción médica, por período escolar",
+      "estado": "referencia documental; pendiente de integración y validación normativa",
+      "situacionRevista": "Titular"
+    },
+    {
+      "pagina": 1,
+      "agrupacion": "1",
+      "componentesCodigo": [
+        "1",
+        "6",
+        "5"
+      ],
+      "codigo": "165",
+      "clave": "1-6-5",
+      "motivoClave": "1-6",
+      "denominacion": "PRORROGA LIC. POR RAZONES DE SALUD",
+      "encuadreLegal": "347",
+      "situacionRevistaOriginal": "Interino",
+      "formaPago": "Con goce de haberes",
+      "otorgadoPor": "Ministro",
+      "observaciones": "Según prescripción médica, por período escolar",
+      "estado": "referencia documental; pendiente de integración y validación normativa",
+      "situacionRevista": "Interino"
+    },
+    {
+      "pagina": 1,
+      "agrupacion": "1",
+      "componentesCodigo": [
+        "1",
+        "6",
+        "6"
+      ],
+      "codigo": "166",
+      "clave": "1-6-6",
+      "motivoClave": "1-6",
+      "denominacion": "PRORROGA LIC. POR RAZONES DE SALUD",
+      "encuadreLegal": "347",
+      "situacionRevistaOriginal": "Interino",
+      "formaPago": "Con 50% de haberes",
+      "otorgadoPor": "Ministro",
+      "observaciones": "Según prescripción médica, por período escolar",
+      "estado": "referencia documental; pendiente de integración y validación normativa",
+      "situacionRevista": "Interino"
+    },
+    {
+      "pagina": 2,
+      "agrupacion": "1",
+      "componentesCodigo": [
+        "1",
+        "6",
+        "7"
+      ],
+      "codigo": "167",
+      "clave": "1-6-7",
+      "motivoClave": "1-6",
+      "denominacion": "PRORROGA LIC. POR RAZONES DE SALUD",
+      "encuadreLegal": "347",
+      "situacionRevistaOriginal": "Interino",
+      "formaPago": "Con 25% de haberes",
+      "otorgadoPor": "Ministro",
+      "observaciones": "Según prescripción médica, por período escolar",
+      "estado": "referencia documental; pendiente de integración y validación normativa",
+      "situacionRevista": "Interino"
+    },
+    {
+      "pagina": 2,
+      "agrupacion": "1",
+      "componentesCodigo": [
+        "1",
+        "6",
+        "8"
+      ],
+      "codigo": "168",
+      "clave": "1-6-8",
+      "motivoClave": "1-6",
+      "denominacion": "PRORROGA LIC. POR RAZONES DE SALUD",
+      "encuadreLegal": "347",
+      "situacionRevistaOriginal": "Interino",
+      "formaPago": "Sin goce de haberes",
+      "otorgadoPor": "Ministro",
+      "observaciones": "Según prescripción médica, por período escolar",
+      "estado": "referencia documental; pendiente de integración y validación normativa",
+      "situacionRevista": "Interino"
+    },
+    {
+      "pagina": 2,
+      "agrupacion": "1",
+      "componentesCodigo": [
+        "1",
+        "6",
+        "9"
+      ],
+      "codigo": "169",
+      "clave": "1-6-9",
+      "motivoClave": "1-6",
+      "denominacion": "PRORROGA LIC. POR RAZONES DE SALUD",
+      "encuadreLegal": "347",
+      "situacionRevistaOriginal": "Suplente",
+      "formaPago": "Con goce de haberes",
+      "otorgadoPor": "Ministro",
+      "observaciones": "Según prescripción médica, por período escolar",
+      "estado": "referencia documental; pendiente de integración y validación normativa",
+      "situacionRevista": "Suplente"
+    },
+    {
+      "pagina": 2,
+      "agrupacion": "1",
+      "componentesCodigo": [
+        "1",
+        "6",
+        "10"
+      ],
+      "codigo": "1610",
+      "clave": "1-6-10",
+      "motivoClave": "1-6",
+      "denominacion": "PRORROGA LIC. POR RAZONES DE SALUD",
+      "encuadreLegal": "347",
+      "situacionRevistaOriginal": "Suplente",
+      "formaPago": "Con 50% de haberes",
+      "otorgadoPor": "Ministro",
+      "observaciones": "Según prescripción médica, por período escolar",
+      "estado": "referencia documental; pendiente de integración y validación normativa",
+      "situacionRevista": "Suplente"
+    },
+    {
+      "pagina": 2,
+      "agrupacion": "1",
+      "componentesCodigo": [
+        "1",
+        "6",
+        "11"
+      ],
+      "codigo": "1611",
+      "clave": "1-6-11",
+      "motivoClave": "1-6",
+      "denominacion": "PRORROGA LIC. POR RAZONES DE SALUD",
+      "encuadreLegal": "347",
+      "situacionRevistaOriginal": "Suplente",
+      "formaPago": "Con 25% de haberes",
+      "otorgadoPor": "Ministro",
+      "observaciones": "Según prescripción médica, por período escolar",
+      "estado": "referencia documental; pendiente de integración y validación normativa",
+      "situacionRevista": "Suplente"
+    },
+    {
+      "pagina": 2,
+      "agrupacion": "1",
+      "componentesCodigo": [
+        "1",
+        "6",
+        "12"
+      ],
+      "codigo": "1612",
+      "clave": "1-6-12",
+      "motivoClave": "1-6",
+      "denominacion": "PRORROGA LIC. POR RAZONES DE SALUD",
+      "encuadreLegal": "347",
+      "situacionRevistaOriginal": "Suplente",
+      "formaPago": "Sin goce de haberes",
+      "otorgadoPor": "Ministro",
+      "observaciones": "Según prescripción médica, por período escolar",
+      "estado": "referencia documental; pendiente de integración y validación normativa",
+      "situacionRevista": "Suplente"
+    },
+    {
+      "pagina": 2,
+      "agrupacion": "1",
+      "componentesCodigo": [
+        "1",
+        "7",
+        "1"
+      ],
+      "codigo": "171",
+      "clave": "1-7-1",
+      "motivoClave": "1-7",
+      "denominacion": "TAREAS PASIVAS",
+      "encuadreLegal": "7-D",
+      "situacionRevistaOriginal": "Titular",
+      "formaPago": "Con goce de haberes",
+      "otorgadoPor": "Director Regional",
+      "observaciones": "Según prescripción médica",
+      "estado": "referencia documental; pendiente de integración y validación normativa",
+      "situacionRevista": "Titular"
+    },
+    {
+      "pagina": 2,
+      "agrupacion": "1",
+      "componentesCodigo": [
+        "1",
+        "7",
+        "2"
+      ],
+      "codigo": "172",
+      "clave": "1-7-2",
+      "motivoClave": "1-7",
+      "denominacion": "TAREAS PASIVAS",
+      "encuadreLegal": "7-D",
+      "situacionRevistaOriginal": "Interino",
+      "formaPago": "Con goce de haberes",
+      "otorgadoPor": "Director Regional",
+      "observaciones": "Según prescripción médica",
+      "estado": "referencia documental; pendiente de integración y validación normativa",
+      "situacionRevista": "Interino"
+    },
+    {
+      "pagina": 2,
+      "agrupacion": "1",
+      "componentesCodigo": [
+        "1",
+        "7",
+        "3"
+      ],
+      "codigo": "173",
+      "clave": "1-7-3",
+      "motivoClave": "1-7",
+      "denominacion": "TAREAS PASIVAS",
+      "encuadreLegal": "7-D",
+      "situacionRevistaOriginal": "Suplente",
+      "formaPago": "Con goce de haberes",
+      "otorgadoPor": "Director Regional",
+      "observaciones": "Según prescripción médica",
+      "estado": "referencia documental; pendiente de integración y validación normativa",
+      "situacionRevista": "Suplente"
+    },
+    {
+      "pagina": 2,
+      "agrupacion": "1",
+      "componentesCodigo": [
+        "1",
+        "8",
+        "1"
+      ],
+      "codigo": "181",
+      "clave": "1-8-1",
+      "motivoClave": "1-8",
+      "denominacion": "TRASLADO TRANSITORIO (RAZONES [texto recortado en el PDF])",
+      "encuadreLegal": "30",
+      "situacionRevistaOriginal": "Titular",
+      "formaPago": "Con goce de haberes",
+      "otorgadoPor": "",
+      "observaciones": "",
+      "estado": "referencia documental; pendiente de integración y validación normativa",
+      "situacionRevista": "Titular"
+    },
+    {
+      "pagina": 3,
+      "agrupacion": "2",
+      "componentesCodigo": [
+        "2",
+        "1",
+        "1"
+      ],
+      "codigo": "211",
+      "clave": "2-1-1",
+      "motivoClave": "2-1",
+      "denominacion": "ANUAL",
+      "encuadreLegal": "309-A",
+      "situacionRevistaOriginal": "Titular",
+      "formaPago": "Con goce de haberes",
+      "otorgadoPor": "Director",
+      "observaciones": "60 días corridos por año",
+      "estado": "referencia documental; pendiente de integración y validación normativa",
+      "situacionRevista": "Titular"
+    },
+    {
+      "pagina": 3,
+      "agrupacion": "2",
+      "componentesCodigo": [
+        "2",
+        "1",
+        "2"
+      ],
+      "codigo": "212",
+      "clave": "2-1-2",
+      "motivoClave": "2-1",
+      "denominacion": "ANUAL",
+      "encuadreLegal": "309-A",
+      "situacionRevistaOriginal": "Funcionario Político",
+      "formaPago": "Con goce de haberes",
+      "otorgadoPor": "Director",
+      "observaciones": "60 días corridos por año",
+      "estado": "referencia documental; pendiente de integración y validación normativa",
+      "situacionRevista": "Funcionario Político"
+    },
+    {
+      "pagina": 3,
+      "agrupacion": "2",
+      "componentesCodigo": [
+        "2",
+        "1",
+        "3"
+      ],
+      "codigo": "213",
+      "clave": "2-1-3",
+      "motivoClave": "2-1",
+      "denominacion": "ANUAL",
+      "encuadreLegal": "330",
+      "situacionRevistaOriginal": "Interino",
+      "formaPago": "Con goce de haberes",
+      "otorgadoPor": "Director",
+      "observaciones": "60 días corridos por año",
+      "estado": "referencia documental; pendiente de integración y validación normativa",
+      "situacionRevista": "Interino"
+    },
+    {
+      "pagina": 3,
+      "agrupacion": "2",
+      "componentesCodigo": [
+        "2",
+        "1",
+        "4"
+      ],
+      "codigo": "214",
+      "clave": "2-1-4",
+      "motivoClave": "2-1",
+      "denominacion": "ANUAL",
+      "encuadreLegal": "339",
+      "situacionRevistaOriginal": "Suplente",
+      "formaPago": "Con goce de haberes",
+      "otorgadoPor": "Director",
+      "observaciones": "60 días corridos por año",
+      "estado": "referencia documental; pendiente de integración y validación normativa",
+      "situacionRevista": "Suplente"
+    },
+    {
+      "pagina": 3,
+      "agrupacion": "2",
+      "componentesCodigo": [
+        "2",
+        "2",
+        "1"
+      ],
+      "codigo": "221",
+      "clave": "2-2-1",
+      "motivoClave": "2-2",
+      "denominacion": "ADOPCION",
+      "encuadreLegal": "309-E",
+      "situacionRevistaOriginal": "Titular",
+      "formaPago": "Con goce de haberes",
+      "otorgadoPor": "Director",
+      "observaciones": "180 días corridos sin importar la edad",
+      "estado": "referencia documental; pendiente de integración y validación normativa",
+      "situacionRevista": "Titular"
+    },
+    {
+      "pagina": 3,
+      "agrupacion": "2",
+      "componentesCodigo": [
+        "2",
+        "2",
+        "2"
+      ],
+      "codigo": "222",
+      "clave": "2-2-2",
+      "motivoClave": "2-2",
+      "denominacion": "ADOPCION",
+      "encuadreLegal": "309-E",
+      "situacionRevistaOriginal": "Funcionario Político",
+      "formaPago": "Con goce de haberes",
+      "otorgadoPor": "",
+      "observaciones": "180 días corridos sin importar la edad",
+      "estado": "referencia documental; pendiente de integración y validación normativa",
+      "situacionRevista": "Funcionario Político"
+    },
+    {
+      "pagina": 3,
+      "agrupacion": "2",
+      "componentesCodigo": [
+        "2",
+        "2",
+        "3"
+      ],
+      "codigo": "223",
+      "clave": "2-2-3",
+      "motivoClave": "2-2",
+      "denominacion": "ADOPCION",
+      "encuadreLegal": "331-F",
+      "situacionRevistaOriginal": "Interino",
+      "formaPago": "Con goce de haberes",
+      "otorgadoPor": "Director",
+      "observaciones": "180 días corridos sin importar la edad",
+      "estado": "referencia documental; pendiente de integración y validación normativa",
+      "situacionRevista": "Interino"
+    },
+    {
+      "pagina": 3,
+      "agrupacion": "2",
+      "componentesCodigo": [
+        "2",
+        "2",
+        "4"
+      ],
+      "codigo": "224",
+      "clave": "2-2-4",
+      "motivoClave": "2-2",
+      "denominacion": "ADOPCION",
+      "encuadreLegal": "340-F",
+      "situacionRevistaOriginal": "Suplente",
+      "formaPago": "Con goce de haberes",
+      "otorgadoPor": "Director",
+      "observaciones": "180 días corridos sin importar la edad",
+      "estado": "referencia documental; pendiente de integración y validación normativa",
+      "situacionRevista": "Suplente"
+    },
+    {
+      "pagina": 3,
+      "agrupacion": "2",
+      "componentesCodigo": [
+        "2",
+        "3",
+        "1"
+      ],
+      "codigo": "231",
+      "clave": "2-3-1",
+      "motivoClave": "2-3",
+      "denominacion": "ASUNTOS PARTICULARES",
+      "encuadreLegal": "318-A",
+      "situacionRevistaOriginal": "Titular",
+      "formaPago": "Sin goce de haberes",
+      "otorgadoPor": "Supervisor",
+      "observaciones": "Un (1) año por decenio de trabajo",
+      "estado": "referencia documental; pendiente de integración y validación normativa",
+      "situacionRevista": "Titular"
+    },
+    {
+      "pagina": 3,
+      "agrupacion": "2",
+      "componentesCodigo": [
+        "2",
+        "4",
+        "1"
+      ],
+      "codigo": "241",
+      "clave": "2-4-1",
+      "motivoClave": "2-4",
+      "denominacion": "CAUSA DE FZA. MAY. O GVE. ASUN. FLIA.",
+      "encuadreLegal": "318-B",
+      "situacionRevistaOriginal": "Titular",
+      "formaPago": "Sin goce de haberes",
+      "otorgadoPor": "Supervisor",
+      "observaciones": "Noventa (90) días por año (contínuos o discontínuos)",
+      "estado": "referencia documental; pendiente de integración y validación normativa",
+      "situacionRevista": "Titular"
+    },
+    {
+      "pagina": 3,
+      "agrupacion": "2",
+      "componentesCodigo": [
+        "2",
+        "5",
+        "1"
+      ],
+      "codigo": "251",
+      "clave": "2-5-1",
+      "motivoClave": "2-5",
+      "denominacion": "ESTUDIO O PERFECCIONAMIENTO DOCENTE",
+      "encuadreLegal": "318-C",
+      "situacionRevistaOriginal": "Titular",
+      "formaPago": "Con goce de haberes",
+      "otorgadoPor": "Subsecretario",
+      "observaciones": "Tres (3) años | mas de 1 año otorga el subsecretario y el Regional hasta un 1 año",
+      "estado": "referencia documental; pendiente de integración y validación normativa",
+      "situacionRevista": "Titular"
+    },
+    {
+      "pagina": 3,
+      "agrupacion": "2",
+      "componentesCodigo": [
+        "2",
+        "5",
+        "2"
+      ],
+      "codigo": "252",
+      "clave": "2-5-2",
+      "motivoClave": "2-5",
+      "denominacion": "ESTUDIO O PERFECCIONAMIENTO DOCENTE",
+      "encuadreLegal": "333-A",
+      "situacionRevistaOriginal": "Interino",
+      "formaPago": "Con goce de haberes",
+      "otorgadoPor": "Director Regional",
+      "observaciones": "Veinte (20) días por año | (antigüedad minima 4 meses)",
+      "estado": "referencia documental; pendiente de integración y validación normativa",
+      "situacionRevista": "Interino"
+    },
+    {
+      "pagina": 3,
+      "agrupacion": "2",
+      "componentesCodigo": [
+        "2",
+        "5",
+        "3"
+      ],
+      "codigo": "253",
+      "clave": "2-5-3",
+      "motivoClave": "2-5",
+      "denominacion": "ESTUDIO O PERFECCIONAMIENTO DOCENTE",
+      "encuadreLegal": "342-A",
+      "situacionRevistaOriginal": "Suplente",
+      "formaPago": "Con goce de haberes",
+      "otorgadoPor": "Director Regional",
+      "observaciones": "Diez (10) días por año | (antigüedad minima 4 meses)",
+      "estado": "referencia documental; pendiente de integración y validación normativa",
+      "situacionRevista": "Suplente"
+    },
+    {
+      "pagina": 3,
+      "agrupacion": "2",
+      "componentesCodigo": [
+        "2",
+        "6",
+        "1"
+      ],
+      "codigo": "261",
+      "clave": "2-6-1",
+      "motivoClave": "2-6",
+      "denominacion": "REPRESENTACIÓN GREMIAL,MUTUAL O DOCENTE",
+      "encuadreLegal": "318-D",
+      "situacionRevistaOriginal": "Titular",
+      "formaPago": "Con goce de haberes",
+      "otorgadoPor": "Ministro",
+      "observaciones": "Según mandato - represent. Gremial con sueldo",
+      "estado": "referencia documental; pendiente de integración y validación normativa",
+      "situacionRevista": "Titular"
+    },
+    {
+      "pagina": 3,
+      "agrupacion": "2",
+      "componentesCodigo": [
+        "2",
+        "6",
+        "2"
+      ],
+      "codigo": "262",
+      "clave": "2-6-2",
+      "motivoClave": "2-6",
+      "denominacion": "REPRESENTACIÓN GREMIAL,MUTUAL O DOCENTE",
+      "encuadreLegal": "318-D",
+      "situacionRevistaOriginal": "Titular",
+      "formaPago": "Sin goce de haberes",
+      "otorgadoPor": "Ministro",
+      "observaciones": "Según mandato - represent. Mutual - Sin sueldo",
+      "estado": "referencia documental; pendiente de integración y validación normativa",
+      "situacionRevista": "Titular"
+    },
+    {
+      "pagina": 3,
+      "agrupacion": "2",
+      "componentesCodigo": [
+        "2",
+        "7",
+        "1"
+      ],
+      "codigo": "271",
+      "clave": "2-7-1",
+      "motivoClave": "2-7",
+      "denominacion": "DESEM. CARGO ELEC. O REPRES. POLITICA",
+      "encuadreLegal": "318-E",
+      "situacionRevistaOriginal": "Titular",
+      "formaPago": "Sin goce de haberes",
+      "otorgadoPor": "Ministro/Subsec",
+      "observaciones": "Cargos en la Jurisdicción otorga Ministro; fuera Subsecretario",
+      "estado": "referencia documental; pendiente de integración y validación normativa",
+      "situacionRevista": "Titular"
+    },
+    {
+      "pagina": 3,
+      "agrupacion": "2",
+      "componentesCodigo": [
+        "2",
+        "7",
+        "2"
+      ],
+      "codigo": "272",
+      "clave": "2-7-2",
+      "motivoClave": "2-7",
+      "denominacion": "DESEM. CARGO ELEC. O REPRES. POLITICA",
+      "encuadreLegal": "333-F",
+      "situacionRevistaOriginal": "Interino",
+      "formaPago": "Sin goce de haberes",
+      "otorgadoPor": "Ministro/Subsec",
+      "observaciones": "Cargos en la Jurisdicción otorga Ministro; fuera Subsecretario",
+      "estado": "referencia documental; pendiente de integración y validación normativa",
+      "situacionRevista": "Interino"
+    },
+    {
+      "pagina": 3,
+      "agrupacion": "2",
+      "componentesCodigo": [
+        "2",
+        "7",
+        "3"
+      ],
+      "codigo": "273",
+      "clave": "2-7-3",
+      "motivoClave": "2-7",
+      "denominacion": "DESEM. CARGO ELEC. O REPRES. POLITICA",
+      "encuadreLegal": "342-D",
+      "situacionRevistaOriginal": "Suplente",
+      "formaPago": "Sin goce de haberes",
+      "otorgadoPor": "Ministro/Subsec",
+      "observaciones": "Cargos en la Jurisdicción otorga Ministro; fuera Subsecretario",
+      "estado": "referencia documental; pendiente de integración y validación normativa",
+      "situacionRevista": "Suplente"
+    },
+    {
+      "pagina": 3,
+      "agrupacion": "2",
+      "componentesCodigo": [
+        "2",
+        "8",
+        "1"
+      ],
+      "codigo": "281",
+      "clave": "2-8-1",
+      "motivoClave": "2-8",
+      "denominacion": "MATRIMONIO",
+      "encuadreLegal": "318-F",
+      "situacionRevistaOriginal": "Titular",
+      "formaPago": "Con goce de haberes",
+      "otorgadoPor": "Director",
+      "observaciones": "Diez (10) días hábiles",
+      "estado": "referencia documental; pendiente de integración y validación normativa",
+      "situacionRevista": "Titular"
+    },
+    {
+      "pagina": 3,
+      "agrupacion": "2",
+      "componentesCodigo": [
+        "2",
+        "8",
+        "2"
+      ],
+      "codigo": "282",
+      "clave": "2-8-2",
+      "motivoClave": "2-8",
+      "denominacion": "MATRIMONIO",
+      "encuadreLegal": "333-B",
+      "situacionRevistaOriginal": "Interino",
+      "formaPago": "Con goce de haberes",
+      "otorgadoPor": "Director",
+      "observaciones": "Diez (10) días hábiles",
+      "estado": "referencia documental; pendiente de integración y validación normativa",
+      "situacionRevista": "Interino"
+    },
+    {
+      "pagina": 3,
+      "agrupacion": "2",
+      "componentesCodigo": [
+        "2",
+        "8",
+        "3"
+      ],
+      "codigo": "283",
+      "clave": "2-8-3",
+      "motivoClave": "2-8",
+      "denominacion": "MATRIMONIO",
+      "encuadreLegal": "342-B",
+      "situacionRevistaOriginal": "Suplente",
+      "formaPago": "Con goce de haberes",
+      "otorgadoPor": "Director",
+      "observaciones": "Dos (2) días hábiles",
+      "estado": "referencia documental; pendiente de integración y validación normativa",
+      "situacionRevista": "Suplente"
+    },
+    {
+      "pagina": 3,
+      "agrupacion": "2",
+      "componentesCodigo": [
+        "2",
+        "9",
+        "1"
+      ],
+      "codigo": "291",
+      "clave": "2-9-1",
+      "motivoClave": "2-9",
+      "denominacion": "EXAMENES",
+      "encuadreLegal": "318-H",
+      "situacionRevistaOriginal": "Titular",
+      "formaPago": "Con goce de haberes",
+      "otorgadoPor": "Director",
+      "observaciones": "Treinta (30) días laborables por año",
+      "estado": "referencia documental; pendiente de integración y validación normativa",
+      "situacionRevista": "Titular"
+    },
+    {
+      "pagina": 3,
+      "agrupacion": "2",
+      "componentesCodigo": [
+        "2",
+        "9",
+        "2"
+      ],
+      "codigo": "292",
+      "clave": "2-9-2",
+      "motivoClave": "2-9",
+      "denominacion": "EXAMENES",
+      "encuadreLegal": "333-D",
+      "situacionRevistaOriginal": "Interino",
+      "formaPago": "Con goce de haberes",
+      "otorgadoPor": "Director",
+      "observaciones": "Dieciseis (16) días laborables por año",
+      "estado": "referencia documental; pendiente de integración y validación normativa",
+      "situacionRevista": "Interino"
+    },
+    {
+      "pagina": 3,
+      "agrupacion": "2",
+      "componentesCodigo": [
+        "2",
+        "10",
+        "1"
+      ],
+      "codigo": "2101",
+      "clave": "2-10-1",
+      "motivoClave": "2-10",
+      "denominacion": "INCOMPATIBILIDAD",
+      "encuadreLegal": "318-I",
+      "situacionRevistaOriginal": "Titular",
+      "formaPago": "Sin goce de haberes",
+      "otorgadoPor": "Supervisor",
+      "observaciones": "Tres (3) años en toda su carrera docente",
+      "estado": "referencia documental; pendiente de integración y validación normativa",
+      "situacionRevista": "Titular"
+    },
+    {
+      "pagina": 3,
+      "agrupacion": "2",
+      "componentesCodigo": [
+        "2",
+        "11",
+        "1"
+      ],
+      "codigo": "2111",
+      "clave": "2-11-1",
+      "motivoClave": "2-11",
+      "denominacion": "ASCENSO DE JERARQUIA",
+      "encuadreLegal": "319",
+      "situacionRevistaOriginal": "Titular",
+      "formaPago": "Sin goce de haberes",
+      "otorgadoPor": "Super. Inmediato",
+      "observaciones": "Según designación",
+      "estado": "referencia documental; pendiente de integración y validación normativa",
+      "situacionRevista": "Titular"
+    },
+    {
+      "pagina": 3,
+      "agrupacion": "2",
+      "componentesCodigo": [
+        "2",
+        "11",
+        "2"
+      ],
+      "codigo": "2112",
+      "clave": "2-11-2",
+      "motivoClave": "2-11",
+      "denominacion": "ASCENSO DE JERARQUIA",
+      "encuadreLegal": "333-E",
+      "situacionRevistaOriginal": "Interino",
+      "formaPago": "Sin goce de haberes",
+      "otorgadoPor": "Super. Inmediato",
+      "observaciones": "Según designación",
+      "estado": "referencia documental; pendiente de integración y validación normativa",
+      "situacionRevista": "Interino"
+    },
+    {
+      "pagina": 3,
+      "agrupacion": "2",
+      "componentesCodigo": [
+        "2",
+        "11",
+        "3"
+      ],
+      "codigo": "2113",
+      "clave": "2-11-3",
+      "motivoClave": "2-11",
+      "denominacion": "ASCENSO DE JERARQUIA",
+      "encuadreLegal": "342-E",
+      "situacionRevistaOriginal": "Suplente",
+      "formaPago": "Sin goce de haberes",
+      "otorgadoPor": "Super. Inmediato",
+      "observaciones": "Según designación",
+      "estado": "referencia documental; pendiente de integración y validación normativa",
+      "situacionRevista": "Suplente"
+    },
+    {
+      "pagina": 3,
+      "agrupacion": "2",
+      "componentesCodigo": [
+        "2",
+        "13",
+        "1"
+      ],
+      "codigo": "2131",
+      "clave": "2-13-1",
+      "motivoClave": "2-13",
+      "denominacion": "INASISTENCIAS",
+      "encuadreLegal": "323",
+      "situacionRevistaOriginal": "Titular",
+      "formaPago": "Con goce de haberes",
+      "otorgadoPor": "Director",
+      "observaciones": "Diez (10) días por año",
+      "estado": "referencia documental; pendiente de integración y validación normativa",
+      "situacionRevista": "Titular"
+    },
+    {
+      "pagina": 3,
+      "agrupacion": "2",
+      "componentesCodigo": [
+        "2",
+        "13",
+        "2"
+      ],
+      "codigo": "2132",
+      "clave": "2-13-2",
+      "motivoClave": "2-13",
+      "denominacion": "INASISTENCIAS",
+      "encuadreLegal": "323",
+      "situacionRevistaOriginal": "Titular",
+      "formaPago": "Sin goce de haberes",
+      "otorgadoPor": "Director",
+      "observaciones": "Cuatro (4) días por año",
+      "estado": "referencia documental; pendiente de integración y validación normativa",
+      "situacionRevista": "Titular"
+    },
+    {
+      "pagina": 3,
+      "agrupacion": "2",
+      "componentesCodigo": [
+        "2",
+        "13",
+        "3"
+      ],
+      "codigo": "2133",
+      "clave": "2-13-3",
+      "motivoClave": "2-13",
+      "denominacion": "INASISTENCIAS",
+      "encuadreLegal": "336",
+      "situacionRevistaOriginal": "Interino",
+      "formaPago": "Con goce de haberes",
+      "otorgadoPor": "Director",
+      "observaciones": "Cinco (5) días por año",
+      "estado": "referencia documental; pendiente de integración y validación normativa",
+      "situacionRevista": "Interino"
+    },
+    {
+      "pagina": 3,
+      "agrupacion": "2",
+      "componentesCodigo": [
+        "2",
+        "13",
+        "4"
+      ],
+      "codigo": "2134",
+      "clave": "2-13-4",
+      "motivoClave": "2-13",
+      "denominacion": "INASISTENCIAS",
+      "encuadreLegal": "345",
+      "situacionRevistaOriginal": "Suplente",
+      "formaPago": "Con goce de haberes",
+      "otorgadoPor": "Director",
+      "observaciones": "Tres (3) días por año",
+      "estado": "referencia documental; pendiente de integración y validación normativa",
+      "situacionRevista": "Suplente"
+    },
+    {
+      "pagina": 3,
+      "agrupacion": "2",
+      "componentesCodigo": [
+        "2",
+        "14",
+        "1"
+      ],
+      "codigo": "2141",
+      "clave": "2-14-1",
+      "motivoClave": "2-14",
+      "denominacion": "CAMBIO DE FUNCIONES POR GRAVIDEZ",
+      "encuadreLegal": "311-312",
+      "situacionRevistaOriginal": "Titular",
+      "formaPago": "Con goce de haberes",
+      "otorgadoPor": "Director",
+      "observaciones": "Según prescripción médica maestros o profesores de educacion fisica",
+      "estado": "referencia documental; pendiente de integración y validación normativa",
+      "situacionRevista": "Titular"
+    },
+    {
+      "pagina": 3,
+      "agrupacion": "2",
+      "componentesCodigo": [
+        "2",
+        "14",
+        "2"
+      ],
+      "codigo": "2142",
+      "clave": "2-14-2",
+      "motivoClave": "2-14",
+      "denominacion": "CAMBIO DE FUNCIONES POR GRAVIDEZ",
+      "encuadreLegal": "332",
+      "situacionRevistaOriginal": "Interino",
+      "formaPago": "Con goce de haberes",
+      "otorgadoPor": "Director",
+      "observaciones": "Según prescripción médica maestros o profesores de educacion fisica",
+      "estado": "referencia documental; pendiente de integración y validación normativa",
+      "situacionRevista": "Interino"
+    },
+    {
+      "pagina": 3,
+      "agrupacion": "2",
+      "componentesCodigo": [
+        "2",
+        "14",
+        "3"
+      ],
+      "codigo": "2143",
+      "clave": "2-14-3",
+      "motivoClave": "2-14",
+      "denominacion": "CAMBIO DE FUNCIONES POR GRAVIDEZ",
+      "encuadreLegal": "341",
+      "situacionRevistaOriginal": "Suplente",
+      "formaPago": "Con goce de haberes",
+      "otorgadoPor": "Director",
+      "observaciones": "Según prescripción médica maestros o profesores de educacion fisica",
+      "estado": "referencia documental; pendiente de integración y validación normativa",
+      "situacionRevista": "Suplente"
+    },
+    {
+      "pagina": 3,
+      "agrupacion": "2",
+      "componentesCodigo": [
+        "2",
+        "15",
+        "1"
+      ],
+      "codigo": "2151",
+      "clave": "2-15-1",
+      "motivoClave": "2-15",
+      "denominacion": "DONACION DE ORGANOS",
+      "encuadreLegal": "318-J",
+      "situacionRevistaOriginal": "Titular",
+      "formaPago": "Con goce de haberes",
+      "otorgadoPor": "Director",
+      "observaciones": "Según prescripción médica",
+      "estado": "referencia documental; pendiente de integración y validación normativa",
+      "situacionRevista": "Titular"
+    },
+    {
+      "pagina": 3,
+      "agrupacion": "2",
+      "componentesCodigo": [
+        "2",
+        "15",
+        "2"
+      ],
+      "codigo": "2152",
+      "clave": "2-15-2",
+      "motivoClave": "2-15",
+      "denominacion": "DONACION DE ORGANOS",
+      "encuadreLegal": "318-J",
+      "situacionRevistaOriginal": "Interino",
+      "formaPago": "Con goce de haberes",
+      "otorgadoPor": "Director",
+      "observaciones": "Según prescripción médica",
+      "estado": "referencia documental; pendiente de integración y validación normativa",
+      "situacionRevista": "Interino"
+    },
+    {
+      "pagina": 3,
+      "agrupacion": "2",
+      "componentesCodigo": [
+        "2",
+        "15",
+        "3"
+      ],
+      "codigo": "2153",
+      "clave": "2-15-3",
+      "motivoClave": "2-15",
+      "denominacion": "DONACION DE ORGANOS",
+      "encuadreLegal": "318-J",
+      "situacionRevistaOriginal": "Suplente",
+      "formaPago": "Con goce de haberes",
+      "otorgadoPor": "Director",
+      "observaciones": "Según prescripción médica",
+      "estado": "referencia documental; pendiente de integración y validación normativa",
+      "situacionRevista": "Suplente"
+    },
+    {
+      "pagina": 3,
+      "agrupacion": "2",
+      "componentesCodigo": [
+        "2",
+        "16",
+        "1"
+      ],
+      "codigo": "2161",
+      "clave": "2-16-1",
+      "motivoClave": "2-16",
+      "denominacion": "LICENCIA EXTRAORDINARIA (PAPANICOLAU - COLCOSPIA - MAMOGRAFIA)",
+      "encuadreLegal": "318-G",
+      "situacionRevistaOriginal": "Titular",
+      "formaPago": "Con goce de haberes",
+      "otorgadoPor": "Director",
+      "observaciones": "Un (1) día",
+      "estado": "referencia documental; pendiente de integración y validación normativa",
+      "situacionRevista": "Titular"
+    },
+    {
+      "pagina": 3,
+      "agrupacion": "2",
+      "componentesCodigo": [
+        "2",
+        "16",
+        "2"
+      ],
+      "codigo": "2162",
+      "clave": "2-16-2",
+      "motivoClave": "2-16",
+      "denominacion": "LICENCIA EXTRAORDINARIA (PAPANICOLAU - COLCOSPIA - MAMOGRAFIA)",
+      "encuadreLegal": "333-C",
+      "situacionRevistaOriginal": "Interino",
+      "formaPago": "Con goce de haberes",
+      "otorgadoPor": "Director",
+      "observaciones": "Un (1) día",
+      "estado": "referencia documental; pendiente de integración y validación normativa",
+      "situacionRevista": "Interino"
+    },
+    {
+      "pagina": 3,
+      "agrupacion": "2",
+      "componentesCodigo": [
+        "2",
+        "16",
+        "3"
+      ],
+      "codigo": "2163",
+      "clave": "2-16-3",
+      "motivoClave": "2-16",
+      "denominacion": "LICENCIA EXTRAORDINARIA (PAPANICOLAU - COLCOSPIA - MAMOGRAFIA)",
+      "encuadreLegal": "342-C",
+      "situacionRevistaOriginal": "Suplente",
+      "formaPago": "Con goce de haberes",
+      "otorgadoPor": "Director",
+      "observaciones": "Un (1) día",
+      "estado": "referencia documental; pendiente de integración y validación normativa",
+      "situacionRevista": "Suplente"
+    },
+    {
+      "pagina": 3,
+      "agrupacion": "2",
+      "componentesCodigo": [
+        "2",
+        "17",
+        "1"
+      ],
+      "codigo": "2171",
+      "clave": "2-17-1",
+      "motivoClave": "2-17",
+      "denominacion": "LICENCIAS ESPECIALES",
+      "encuadreLegal": "RES.1280/00 Y SU AMPLIATORIA",
+      "situacionRevistaOriginal": "Titular",
+      "formaPago": "Sin goce de haberes",
+      "otorgadoPor": "",
+      "observaciones": "Según designación",
+      "estado": "referencia documental; pendiente de integración y validación normativa",
+      "situacionRevista": "Titular"
+    },
+    {
+      "pagina": 3,
+      "agrupacion": "2",
+      "componentesCodigo": [
+        "2",
+        "17",
+        "2"
+      ],
+      "codigo": "2172",
+      "clave": "2-17-2",
+      "motivoClave": "2-17",
+      "denominacion": "LICENCIAS ESPECIALES",
+      "encuadreLegal": "RES.1280/00 Y SU AMPLIATORIA",
+      "situacionRevistaOriginal": "Interino",
+      "formaPago": "Sin goce de haberes",
+      "otorgadoPor": "",
+      "observaciones": "Según designación",
+      "estado": "referencia documental; pendiente de integración y validación normativa",
+      "situacionRevista": "Interino"
+    },
+    {
+      "pagina": 3,
+      "agrupacion": "2",
+      "componentesCodigo": [
+        "2",
+        "17",
+        "3"
+      ],
+      "codigo": "2173",
+      "clave": "2-17-3",
+      "motivoClave": "2-17",
+      "denominacion": "LICENCIAS ESPECIALES",
+      "encuadreLegal": "RES.1280/00 Y SU AMPLIATORIA",
+      "situacionRevistaOriginal": "Suplente",
+      "formaPago": "Sin goce de haberes",
+      "otorgadoPor": "",
+      "observaciones": "Según designación",
+      "estado": "referencia documental; pendiente de integración y validación normativa",
+      "situacionRevista": "Suplente"
+    },
+    {
+      "pagina": 3,
+      "agrupacion": "2",
+      "componentesCodigo": [
+        "2",
+        "18",
+        "1"
+      ],
+      "codigo": "2181",
+      "clave": "2-18-1",
+      "motivoClave": "2-18",
+      "denominacion": "LICENCIA ESPECIAL DEPORTIVA",
+      "encuadreLegal": "Ley 3656 RES.5128/07",
+      "situacionRevistaOriginal": "Titular",
+      "formaPago": "Con goce de haberes",
+      "otorgadoPor": "Director Regional",
+      "observaciones": "certificado que acredite su carácter de afisionado",
+      "estado": "referencia documental; pendiente de integración y validación normativa",
+      "situacionRevista": "Titular"
+    },
+    {
+      "pagina": 3,
+      "agrupacion": "2",
+      "componentesCodigo": [
+        "2",
+        "18",
+        "2"
+      ],
+      "codigo": "2182",
+      "clave": "2-18-2",
+      "motivoClave": "2-18",
+      "denominacion": "LICENCIA ESPECIAL DEPORTIVA",
+      "encuadreLegal": "Ley 3656 RES.5128/07",
+      "situacionRevistaOriginal": "Titular",
+      "formaPago": "Sin goce de haberes",
+      "otorgadoPor": "Director Regional",
+      "observaciones": "(competidor, dirigente, representante, juez, arbitro, jurado, DT y entrenador)",
+      "estado": "referencia documental; pendiente de integración y validación normativa",
+      "situacionRevista": "Titular"
+    },
+    {
+      "pagina": 3,
+      "agrupacion": "2",
+      "componentesCodigo": [
+        "2",
+        "18",
+        "3"
+      ],
+      "codigo": "2183",
+      "clave": "2-18-3",
+      "motivoClave": "2-18",
+      "denominacion": "LICENCIA ESPECIAL DEPORTIVA",
+      "encuadreLegal": "Ley 3656 RES.5128/07",
+      "situacionRevistaOriginal": "Interino",
+      "formaPago": "Con goce de haberes",
+      "otorgadoPor": "Director Regional",
+      "observaciones": "certificado que acredite su carácter de afisionado",
+      "estado": "referencia documental; pendiente de integración y validación normativa",
+      "situacionRevista": "Interino"
+    },
+    {
+      "pagina": 3,
+      "agrupacion": "2",
+      "componentesCodigo": [
+        "2",
+        "18",
+        "4"
+      ],
+      "codigo": "2184",
+      "clave": "2-18-4",
+      "motivoClave": "2-18",
+      "denominacion": "LICENCIA ESPECIAL DEPORTIVA",
+      "encuadreLegal": "Ley 3656 RES.5128/07",
+      "situacionRevistaOriginal": "Interino",
+      "formaPago": "Sin goce de haberes",
+      "otorgadoPor": "Director Regional",
+      "observaciones": "(competidor, dirigente, representante, juez, arbitro, jurado, DT y entrenador)",
+      "estado": "referencia documental; pendiente de integración y validación normativa",
+      "situacionRevista": "Interino"
+    },
+    {
+      "pagina": 4,
+      "agrupacion": "2",
+      "componentesCodigo": [
+        "2",
+        "18",
+        "5"
+      ],
+      "codigo": "2185",
+      "clave": "2-18-5",
+      "motivoClave": "2-18",
+      "denominacion": "LICENCIA ESPECIAL DEPORTIVA",
+      "encuadreLegal": "Ley 3656 RES.5128/07",
+      "situacionRevistaOriginal": "Suplente",
+      "formaPago": "Con goce de haberes",
+      "otorgadoPor": "Director Regional",
+      "observaciones": "certificado que acredite su carácter de afisionado",
+      "estado": "referencia documental; pendiente de integración y validación normativa",
+      "situacionRevista": "Suplente"
+    },
+    {
+      "pagina": 4,
+      "agrupacion": "2",
+      "componentesCodigo": [
+        "2",
+        "18",
+        "6"
+      ],
+      "codigo": "2186",
+      "clave": "2-18-6",
+      "motivoClave": "2-18",
+      "denominacion": "LICENCIA ESPECIAL DEPORTIVA",
+      "encuadreLegal": "Ley 3656 RES.5128/07",
+      "situacionRevistaOriginal": "Suplente",
+      "formaPago": "Sin goce de haberes",
+      "otorgadoPor": "Director Regional",
+      "observaciones": "(competidor, dirigente, representante, juez, arbitro, jurado, DT y entrenador)",
+      "estado": "referencia documental; pendiente de integración y validación normativa",
+      "situacionRevista": "Suplente"
+    },
+    {
+      "pagina": 4,
+      "agrupacion": "2",
+      "componentesCodigo": [
+        "2",
+        "19",
+        "1"
+      ],
+      "codigo": "2191",
+      "clave": "2-19-1",
+      "motivoClave": "2-19",
+      "denominacion": "Comité Prov. De Prev. De la Tortura y Otros Tratos y Penas Crueles y/o Degradante",
+      "encuadreLegal": "318-K",
+      "situacionRevistaOriginal": "Titular",
+      "formaPago": "Con goce de haberes",
+      "otorgadoPor": "Ministro",
+      "observaciones": "Según designación (no debe exceder las 5 afectaciones)",
+      "estado": "referencia documental; pendiente de integración y validación normativa",
+      "situacionRevista": "Titular"
+    },
+    {
+      "pagina": 4,
+      "agrupacion": "2",
+      "componentesCodigo": [
+        "2",
+        "19",
+        "2"
+      ],
+      "codigo": "2192",
+      "clave": "2-19-2",
+      "motivoClave": "2-19",
+      "denominacion": "Comité Prov. De Prev. De la Tortura y Otros Tratos y Penas Crueles y/o Degradante",
+      "encuadreLegal": "333 -G",
+      "situacionRevistaOriginal": "Interino",
+      "formaPago": "Con goce de haberes",
+      "otorgadoPor": "Ministro",
+      "observaciones": "Según designación (no debe exceder las 5 afectaciones)",
+      "estado": "referencia documental; pendiente de integración y validación normativa",
+      "situacionRevista": "Interino"
+    },
+    {
+      "pagina": 4,
+      "agrupacion": "2",
+      "componentesCodigo": [
+        "2",
+        "19",
+        "3"
+      ],
+      "codigo": "2193",
+      "clave": "2-19-3",
+      "motivoClave": "2-19",
+      "denominacion": "Comité Prov. De Prev. De la Tortura y Otros Tratos y Penas Crueles y/o Degradante",
+      "encuadreLegal": "342-F",
+      "situacionRevistaOriginal": "Suplente",
+      "formaPago": "Con goce de haberes",
+      "otorgadoPor": "Ministro",
+      "observaciones": "Según designación (no debe exceder las 5 afectaciones)",
+      "estado": "referencia documental; pendiente de integración y validación normativa",
+      "situacionRevista": "Suplente"
+    },
+    {
+      "pagina": 4,
+      "agrupacion": "2",
+      "componentesCodigo": [
+        "2",
+        "20",
+        "1"
+      ],
+      "codigo": "2201",
+      "clave": "2-20-1",
+      "motivoClave": "2-20",
+      "denominacion": "Violencia de Genero",
+      "encuadreLegal": "318 - L",
+      "situacionRevistaOriginal": "Titular",
+      "formaPago": "Con goce de haberes",
+      "otorgadoPor": "Director",
+      "observaciones": "(denuncia ante organismo judicial o extrajudicial de proteccion de derechos en la materia) - (el plazo sera evalucado por la autoridad de aplicacion)",
+      "estado": "referencia documental; pendiente de integración y validación normativa",
+      "situacionRevista": "Titular"
+    },
+    {
+      "pagina": 4,
+      "agrupacion": "2",
+      "componentesCodigo": [
+        "2",
+        "20",
+        "2"
+      ],
+      "codigo": "2202",
+      "clave": "2-20-2",
+      "motivoClave": "2-20",
+      "denominacion": "Violencia de Genero",
+      "encuadreLegal": "333- H",
+      "situacionRevistaOriginal": "Interino",
+      "formaPago": "Con goce de haberes",
+      "otorgadoPor": "Director",
+      "observaciones": "(denuncia ante organismo judicial o extrajudicial de proteccion de derechos en la materia) - (el plazo sera evalucado por la autoridad de aplicacion)",
+      "estado": "referencia documental; pendiente de integración y validación normativa",
+      "situacionRevista": "Interino"
+    },
+    {
+      "pagina": 4,
+      "agrupacion": "2",
+      "componentesCodigo": [
+        "2",
+        "20",
+        "3"
+      ],
+      "codigo": "2203",
+      "clave": "2-20-3",
+      "motivoClave": "2-20",
+      "denominacion": "Violencia de Genero",
+      "encuadreLegal": "342- G",
+      "situacionRevistaOriginal": "Suplente",
+      "formaPago": "Con goce de haberes",
+      "otorgadoPor": "Director",
+      "observaciones": "(denuncia ante organismo judicial o extrajudicial de proteccion de derechos en la materia) - (el plazo sera evalucado por la autoridad de aplicacion)",
+      "estado": "referencia documental; pendiente de integración y validación normativa",
+      "situacionRevista": "Suplente"
+    },
+    {
+      "pagina": 4,
+      "agrupacion": "2",
+      "componentesCodigo": [
+        "2",
+        "21",
+        "1"
+      ],
+      "codigo": "2211",
+      "clave": "2-21-1",
+      "motivoClave": "2-21",
+      "denominacion": "Tramite Jubiltorio",
+      "encuadreLegal": "318- M",
+      "situacionRevistaOriginal": "Titular",
+      "formaPago": "Con goce de haberes",
+      "otorgadoPor": "Subsecretario",
+      "observaciones": "(tendra derecho a una licencia luego de haber transcurrido 60 dias habiles de iniciar el tramite por el SGT)",
+      "estado": "referencia documental; pendiente de integración y validación normativa",
+      "situacionRevista": "Titular"
+    },
+    {
+      "pagina": 4,
+      "agrupacion": "2",
+      "componentesCodigo": [
+        "2",
+        "21",
+        "2"
+      ],
+      "codigo": "2212",
+      "clave": "2-21-2",
+      "motivoClave": "2-21",
+      "denominacion": "Tramite Jubiltorio",
+      "encuadreLegal": "333-I",
+      "situacionRevistaOriginal": "Interno",
+      "formaPago": "Con goce de haberes",
+      "otorgadoPor": "Subsecretario",
+      "observaciones": "(tendra derecho a una licencia luego de haber transcurrido 60 dias habiles de iniciar el tramite por el SGT)",
+      "estado": "referencia documental; pendiente de integración y validación normativa",
+      "situacionRevista": "Interino"
+    },
+    {
+      "pagina": 4,
+      "agrupacion": "2",
+      "componentesCodigo": [
+        "2",
+        "21",
+        "3"
+      ],
+      "codigo": "2213",
+      "clave": "2-21-3",
+      "motivoClave": "2-21",
+      "denominacion": "Tramite Jubiltorio",
+      "encuadreLegal": "342 - H",
+      "situacionRevistaOriginal": "Suplente",
+      "formaPago": "Con goce de haberes",
+      "otorgadoPor": "Subsecretario",
+      "observaciones": "(tendra derecho a una licencia luego de haber transcurrido 60 dias habiles de iniciar el tramite por el SGT)",
+      "estado": "referencia documental; pendiente de integración y validación normativa",
+      "situacionRevista": "Suplente"
+    },
+    {
+      "pagina": 4,
+      "agrupacion": "2",
+      "componentesCodigo": [
+        "2",
+        "22",
+        "1"
+      ],
+      "codigo": "2221",
+      "clave": "2-22-1",
+      "motivoClave": "2-22",
+      "denominacion": "Especial (Aplicación Ley 7616)",
+      "encuadreLegal": "Especial (R. 839/16)",
+      "situacionRevistaOriginal": "Titular",
+      "formaPago": "Con goce de haberes",
+      "otorgadoPor": "Director",
+      "observaciones": "",
+      "estado": "referencia documental; pendiente de integración y validación normativa",
+      "situacionRevista": "Titular"
+    },
+    {
+      "pagina": 4,
+      "agrupacion": "2",
+      "componentesCodigo": [
+        "2",
+        "22",
+        "2"
+      ],
+      "codigo": "2222",
+      "clave": "2-22-2",
+      "motivoClave": "2-22",
+      "denominacion": "Especial (Aplicación Ley 7616)",
+      "encuadreLegal": "Especial (R. 7365/16)",
+      "situacionRevistaOriginal": "Titular",
+      "formaPago": "Sin goce de haberes",
+      "otorgadoPor": "Director",
+      "observaciones": "",
+      "estado": "referencia documental; pendiente de integración y validación normativa",
+      "situacionRevista": "Titular"
+    },
+    {
+      "pagina": 4,
+      "agrupacion": "2",
+      "componentesCodigo": [
+        "2",
+        "22",
+        "3"
+      ],
+      "codigo": "2223",
+      "clave": "2-22-3",
+      "motivoClave": "2-22",
+      "denominacion": "Especial (Aplicación Ley 7616)",
+      "encuadreLegal": "Especial (R. 839/16)",
+      "situacionRevistaOriginal": "Interino",
+      "formaPago": "Con goce de haberes",
+      "otorgadoPor": "Director",
+      "observaciones": "",
+      "estado": "referencia documental; pendiente de integración y validación normativa",
+      "situacionRevista": "Interino"
+    },
+    {
+      "pagina": 4,
+      "agrupacion": "2",
+      "componentesCodigo": [
+        "2",
+        "22",
+        "4"
+      ],
+      "codigo": "2224",
+      "clave": "2-22-4",
+      "motivoClave": "2-22",
+      "denominacion": "Especial (Aplicación Ley 7616)",
+      "encuadreLegal": "Especial (R.7063/16)",
+      "situacionRevistaOriginal": "Interino",
+      "formaPago": "Sin goce de haberes",
+      "otorgadoPor": "Director",
+      "observaciones": "",
+      "estado": "referencia documental; pendiente de integración y validación normativa",
+      "situacionRevista": "Interino"
+    },
+    {
+      "pagina": 4,
+      "agrupacion": "2",
+      "componentesCodigo": [
+        "2",
+        "23",
+        "1"
+      ],
+      "codigo": "2231",
+      "clave": "2-23-1",
+      "motivoClave": "2-23",
+      "denominacion": "Donacion de Plasma sangüinea",
+      "encuadreLegal": "318- N",
+      "situacionRevistaOriginal": "Titular",
+      "formaPago": "Con goce de haberes",
+      "otorgadoPor": "Director",
+      "observaciones": "(2 dias de licencia por cada donacion que realice, debera acreditar constancia medica)",
+      "estado": "referencia documental; pendiente de integración y validación normativa",
+      "situacionRevista": "Titular"
+    },
+    {
+      "pagina": 4,
+      "agrupacion": "2",
+      "componentesCodigo": [
+        "2",
+        "23",
+        "2"
+      ],
+      "codigo": "2232",
+      "clave": "2-23-2",
+      "motivoClave": "2-23",
+      "denominacion": "Donacion de Plasma sangüinea",
+      "encuadreLegal": "333- J",
+      "situacionRevistaOriginal": "interino",
+      "formaPago": "Con goce de haberes",
+      "otorgadoPor": "Director",
+      "observaciones": "(2 dias de licencia por cada donacion que realice, debera acreditar constancia medica)",
+      "estado": "referencia documental; pendiente de integración y validación normativa",
+      "situacionRevista": "Interino"
+    },
+    {
+      "pagina": 4,
+      "agrupacion": "2",
+      "componentesCodigo": [
+        "2",
+        "23",
+        "3"
+      ],
+      "codigo": "2233",
+      "clave": "2-23-3",
+      "motivoClave": "2-23",
+      "denominacion": "Donacion de Plasma sangüinea",
+      "encuadreLegal": "342- I",
+      "situacionRevistaOriginal": "Suplente",
+      "formaPago": "Con goce de haberes",
+      "otorgadoPor": "Director",
+      "observaciones": "(2 dias de licencia por cada donacion que realice, debera acreditar constancia medica)",
+      "estado": "referencia documental; pendiente de integración y validación normativa",
+      "situacionRevista": "Suplente"
+    },
+    {
+      "pagina": 4,
+      "agrupacion": "2",
+      "componentesCodigo": [
+        "2",
+        "24",
+        "1"
+      ],
+      "codigo": "2241",
+      "clave": "2-24-1",
+      "motivoClave": "2-24",
+      "denominacion": "Violencia Laboral (LEY 3718-E)",
+      "encuadreLegal": "318- Ñ",
+      "situacionRevistaOriginal": "Titular",
+      "formaPago": "Con goce de haberes",
+      "otorgadoPor": "Direccion de Bien estar Educativo",
+      "observaciones": "(Plazo según periodo establecido en la ley 2023- A hasta emitir su dictamen)",
+      "estado": "referencia documental; pendiente de integración y validación normativa",
+      "situacionRevista": "Titular"
+    },
+    {
+      "pagina": 4,
+      "agrupacion": "2",
+      "componentesCodigo": [
+        "2",
+        "24",
+        "2"
+      ],
+      "codigo": "2242",
+      "clave": "2-24-2",
+      "motivoClave": "2-24",
+      "denominacion": "Violencia Laboral (LEY 3718-E)",
+      "encuadreLegal": "333- K",
+      "situacionRevistaOriginal": "interino",
+      "formaPago": "Con goce de haberes",
+      "otorgadoPor": "Direccion de Bien estar Educativo",
+      "observaciones": "(Plazo según periodo establecido en la ley 2023- A hasta emitir su dictamen)",
+      "estado": "referencia documental; pendiente de integración y validación normativa",
+      "situacionRevista": "Interino"
+    },
+    {
+      "pagina": 4,
+      "agrupacion": "2",
+      "componentesCodigo": [
+        "2",
+        "24",
+        "3"
+      ],
+      "codigo": "2243",
+      "clave": "2-24-3",
+      "motivoClave": "2-24",
+      "denominacion": "Violencia Laboral (LEY 3718-E)",
+      "encuadreLegal": "342- J",
+      "situacionRevistaOriginal": "Suplente",
+      "formaPago": "Con goce de haberes",
+      "otorgadoPor": "Direccion de Bien estar Educativo",
+      "observaciones": "(Plazo según periodo establecido en la ley 2023- A hasta emitir su dictamen)",
+      "estado": "referencia documental; pendiente de integración y validación normativa",
+      "situacionRevista": "Suplente"
+    },
+    {
+      "pagina": 5,
+      "agrupacion": "3",
+      "componentesCodigo": [
+        "3",
+        "1",
+        "1"
+      ],
+      "codigo": "311",
+      "clave": "3-1-1",
+      "motivoClave": "3-1",
+      "denominacion": "NACIMIENTO DE HIJO (CONYUGUE O CONVIVIENTE)",
+      "encuadreLegal": "320-A",
+      "situacionRevistaOriginal": "Titular",
+      "formaPago": "Con goce de haberes",
+      "otorgadoPor": "Director",
+      "observaciones": "(15) dias habiles por 1 hijo // (30) dias habiles por nacimiento prematuro / multiples o con trastornos congenitos.",
+      "estado": "referencia documental; pendiente de integración y validación normativa",
+      "situacionRevista": "Titular"
+    },
+    {
+      "pagina": 5,
+      "agrupacion": "3",
+      "componentesCodigo": [
+        "3",
+        "1",
+        "2"
+      ],
+      "codigo": "312",
+      "clave": "3-1-2",
+      "motivoClave": "3-1",
+      "denominacion": "NACIMIENTO DE HIJO (CONYUGUE O CONVIVIENTE)",
+      "encuadreLegal": "320-A",
+      "situacionRevistaOriginal": "Titular",
+      "formaPago": "Con goce de haberes",
+      "otorgadoPor": "Director",
+      "observaciones": "(15) dias habiles por 1 hijo // (30) dias habiles por nacimiento prematuro / multiples o con trastornos congenitos.",
+      "estado": "referencia documental; pendiente de integración y validación normativa",
+      "situacionRevista": "Titular"
+    },
+    {
+      "pagina": 5,
+      "agrupacion": "3",
+      "componentesCodigo": [
+        "3",
+        "1",
+        "3"
+      ],
+      "codigo": "313",
+      "clave": "3-1-3",
+      "motivoClave": "3-1",
+      "denominacion": "NACIMIENTO DE HIJO (CONYUGUE O CONVIVIENTE)",
+      "encuadreLegal": "334-A",
+      "situacionRevistaOriginal": "Interino",
+      "formaPago": "Con goce de haberes",
+      "otorgadoPor": "Director",
+      "observaciones": "(15) dias habiles por 1 hijo // (30) dias habiles por nacimiento prematuro / multiples o con trastornos congenitos.",
+      "estado": "referencia documental; pendiente de integración y validación normativa",
+      "situacionRevista": "Interino"
+    },
+    {
+      "pagina": 5,
+      "agrupacion": "3",
+      "componentesCodigo": [
+        "3",
+        "1",
+        "4"
+      ],
+      "codigo": "314",
+      "clave": "3-1-4",
+      "motivoClave": "3-1",
+      "denominacion": "NACIMIENTO DE HIJO (CONYUGUE O CONVIVIENTE)",
+      "encuadreLegal": "343-A",
+      "situacionRevistaOriginal": "Suplente",
+      "formaPago": "Con goce de haberes",
+      "otorgadoPor": "Director",
+      "observaciones": "(15) dias habiles por 1 hijo // (30) dias habiles por nacimiento prematuro / multiples o con trastornos congenitos.",
+      "estado": "referencia documental; pendiente de integración y validación normativa",
+      "situacionRevista": "Suplente"
+    },
+    {
+      "pagina": 5,
+      "agrupacion": "3",
+      "componentesCodigo": [
+        "3",
+        "2",
+        "1"
+      ],
+      "codigo": "321",
+      "clave": "3-2-1",
+      "motivoClave": "3-2",
+      "denominacion": "ADOPCION (CONYUGE-PERMISO)",
+      "encuadreLegal": "320-B",
+      "situacionRevistaOriginal": "Titular",
+      "formaPago": "Con goce de haberes",
+      "otorgadoPor": "Director",
+      "observaciones": "Treinta (30) días CORRIDOS - Hijo discapacitado/Enf. con Tratamieno prolongado (extencion 30 dias)",
+      "estado": "referencia documental; pendiente de integración y validación normativa",
+      "situacionRevista": "Titular"
+    },
+    {
+      "pagina": 5,
+      "agrupacion": "3",
+      "componentesCodigo": [
+        "3",
+        "2",
+        "2"
+      ],
+      "codigo": "322",
+      "clave": "3-2-2",
+      "motivoClave": "3-2",
+      "denominacion": "ADOPCION (CONYUGE-PERMISO)",
+      "encuadreLegal": "334-G",
+      "situacionRevistaOriginal": "Interino",
+      "formaPago": "Con goce de haberes",
+      "otorgadoPor": "Director",
+      "observaciones": "Treinta (30) días CORRIDOS",
+      "estado": "referencia documental; pendiente de integración y validación normativa",
+      "situacionRevista": "Interino"
+    },
+    {
+      "pagina": 5,
+      "agrupacion": "3",
+      "componentesCodigo": [
+        "3",
+        "2",
+        "3"
+      ],
+      "codigo": "323",
+      "clave": "3-2-3",
+      "motivoClave": "3-2",
+      "denominacion": "ADOPCION (CONYUGE-PERMISO)",
+      "encuadreLegal": "343-F",
+      "situacionRevistaOriginal": "Suplente",
+      "formaPago": "Con goce de haberes",
+      "otorgadoPor": "Director",
+      "observaciones": "Treinta (30) días CORRIDOS",
+      "estado": "referencia documental; pendiente de integración y validación normativa",
+      "situacionRevista": "Suplente"
+    },
+    {
+      "pagina": 5,
+      "agrupacion": "3",
+      "componentesCodigo": [
+        "3",
+        "3",
+        "1"
+      ],
+      "codigo": "331",
+      "clave": "3-3-1",
+      "motivoClave": "3-3",
+      "denominacion": "MATRIMONIO DE HIJO",
+      "encuadreLegal": "320-E",
+      "situacionRevistaOriginal": "Titular",
+      "formaPago": "Con goce de haberes",
+      "otorgadoPor": "Director",
+      "observaciones": "Cinco (5) días hábiles",
+      "estado": "referencia documental; pendiente de integración y validación normativa",
+      "situacionRevista": "Titular"
+    },
+    {
+      "pagina": 5,
+      "agrupacion": "3",
+      "componentesCodigo": [
+        "3",
+        "3",
+        "2"
+      ],
+      "codigo": "332",
+      "clave": "3-3-2",
+      "motivoClave": "3-3",
+      "denominacion": "MATRIMONIO DE HIJO",
+      "encuadreLegal": "334-D",
+      "situacionRevistaOriginal": "Interino",
+      "formaPago": "Con goce de haberes",
+      "otorgadoPor": "Director",
+      "observaciones": "Cinco (5) días hábiles",
+      "estado": "referencia documental; pendiente de integración y validación normativa",
+      "situacionRevista": "Interino"
+    },
+    {
+      "pagina": 5,
+      "agrupacion": "3",
+      "componentesCodigo": [
+        "3",
+        "3",
+        "3"
+      ],
+      "codigo": "333",
+      "clave": "3-3-3",
+      "motivoClave": "3-3",
+      "denominacion": "MATRIMONIO DE HIJO",
+      "encuadreLegal": "343-D",
+      "situacionRevistaOriginal": "Suplente",
+      "formaPago": "Con goce de haberes",
+      "otorgadoPor": "Director",
+      "observaciones": "Cinco (5) días hábiles",
+      "estado": "referencia documental; pendiente de integración y validación normativa",
+      "situacionRevista": "Suplente"
+    },
+    {
+      "pagina": 5,
+      "agrupacion": "3",
+      "componentesCodigo": [
+        "3",
+        "4",
+        "1"
+      ],
+      "codigo": "341",
+      "clave": "3-4-1",
+      "motivoClave": "3-4",
+      "denominacion": "DUELO",
+      "encuadreLegal": "320-F",
+      "situacionRevistaOriginal": "Titular",
+      "formaPago": "Con goce de haberes",
+      "otorgadoPor": "Director",
+      "observaciones": "Ocho (8) días laborables por familiar de 1º.",
+      "estado": "referencia documental; pendiente de integración y validación normativa",
+      "situacionRevista": "Titular"
+    },
+    {
+      "pagina": 5,
+      "agrupacion": "3",
+      "componentesCodigo": [
+        "3",
+        "4",
+        "2"
+      ],
+      "codigo": "342",
+      "clave": "3-4-2",
+      "motivoClave": "3-4",
+      "denominacion": "DUELO",
+      "encuadreLegal": "320-F",
+      "situacionRevistaOriginal": "Titular",
+      "formaPago": "Con goce de haberes",
+      "otorgadoPor": "Director",
+      "observaciones": "Dos (2) días laborables por familiar de 2º / extancion de Dos (2) dias laborables por traslado.",
+      "estado": "referencia documental; pendiente de integración y validación normativa",
+      "situacionRevista": "Titular"
+    },
+    {
+      "pagina": 5,
+      "agrupacion": "3",
+      "componentesCodigo": [
+        "3",
+        "4",
+        "3"
+      ],
+      "codigo": "343",
+      "clave": "3-4-3",
+      "motivoClave": "3-4",
+      "denominacion": "DUELO",
+      "encuadreLegal": "320-F",
+      "situacionRevistaOriginal": "Titular",
+      "formaPago": "Con goce de haberes",
+      "otorgadoPor": "Director",
+      "observaciones": "Un (1) días laborables por familiar de 3º / extancion de Dos (2) dias laborables por traslado.",
+      "estado": "referencia documental; pendiente de integración y validación normativa",
+      "situacionRevista": "Titular"
+    },
+    {
+      "pagina": 5,
+      "agrupacion": "3",
+      "componentesCodigo": [
+        "3",
+        "4",
+        "4"
+      ],
+      "codigo": "344",
+      "clave": "3-4-4",
+      "motivoClave": "3-4",
+      "denominacion": "DUELO",
+      "encuadreLegal": "334-E",
+      "situacionRevistaOriginal": "Interino",
+      "formaPago": "Con goce de haberes",
+      "otorgadoPor": "Director",
+      "observaciones": "Ocho (8) días laborables por familiar de 1er. Grado",
+      "estado": "referencia documental; pendiente de integración y validación normativa",
+      "situacionRevista": "Interino"
+    },
+    {
+      "pagina": 5,
+      "agrupacion": "3",
+      "componentesCodigo": [
+        "3",
+        "4",
+        "5"
+      ],
+      "codigo": "345",
+      "clave": "3-4-5",
+      "motivoClave": "3-4",
+      "denominacion": "DUELO",
+      "encuadreLegal": "334-E",
+      "situacionRevistaOriginal": "Interino",
+      "formaPago": "Con goce de haberes",
+      "otorgadoPor": "Director",
+      "observaciones": "Dos (2) días laborables por familiar de 2do. Grado",
+      "estado": "referencia documental; pendiente de integración y validación normativa",
+      "situacionRevista": "Interino"
+    },
+    {
+      "pagina": 5,
+      "agrupacion": "3",
+      "componentesCodigo": [
+        "3",
+        "4",
+        "6"
+      ],
+      "codigo": "346",
+      "clave": "3-4-6",
+      "motivoClave": "3-4",
+      "denominacion": "DUELO",
+      "encuadreLegal": "334-E",
+      "situacionRevistaOriginal": "Interino",
+      "formaPago": "Con goce de haberes",
+      "otorgadoPor": "Director",
+      "observaciones": "Un (1) días laborables por familiar de 3er. Grado y 4to. Grado",
+      "estado": "referencia documental; pendiente de integración y validación normativa",
+      "situacionRevista": "Interino"
+    },
+    {
+      "pagina": 5,
+      "agrupacion": "3",
+      "componentesCodigo": [
+        "3",
+        "4",
+        "7"
+      ],
+      "codigo": "347",
+      "clave": "3-4-7",
+      "motivoClave": "3-4",
+      "denominacion": "DUELO",
+      "encuadreLegal": "343-E",
+      "situacionRevistaOriginal": "Suplente",
+      "formaPago": "Con goce de haberes",
+      "otorgadoPor": "Director",
+      "observaciones": "Ocho (8) días laborables por familiar de 1er. Grado",
+      "estado": "referencia documental; pendiente de integración y validación normativa",
+      "situacionRevista": "Suplente"
+    },
+    {
+      "pagina": 5,
+      "agrupacion": "3",
+      "componentesCodigo": [
+        "3",
+        "4",
+        "8"
+      ],
+      "codigo": "348",
+      "clave": "3-4-8",
+      "motivoClave": "3-4",
+      "denominacion": "DUELO",
+      "encuadreLegal": "343-E",
+      "situacionRevistaOriginal": "Suplente",
+      "formaPago": "Con goce de haberes",
+      "otorgadoPor": "Director",
+      "observaciones": "Dos (2) días laborables por familiar de 2do. Grado",
+      "estado": "referencia documental; pendiente de integración y validación normativa",
+      "situacionRevista": "Suplente"
+    },
+    {
+      "pagina": 5,
+      "agrupacion": "3",
+      "componentesCodigo": [
+        "3",
+        "4",
+        "9"
+      ],
+      "codigo": "349",
+      "clave": "3-4-9",
+      "motivoClave": "3-4",
+      "denominacion": "DUELO",
+      "encuadreLegal": "343-E",
+      "situacionRevistaOriginal": "Suplente",
+      "formaPago": "Con goce de haberes",
+      "otorgadoPor": "Director",
+      "observaciones": "Un (1) días laborables por familiar de 3er. Grado y 4to. Grado",
+      "estado": "referencia documental; pendiente de integración y validación normativa",
+      "situacionRevista": "Suplente"
+    },
+    {
+      "pagina": 5,
+      "agrupacion": "3",
+      "componentesCodigo": [
+        "3",
+        "5",
+        "1"
+      ],
+      "codigo": "351",
+      "clave": "3-5-1",
+      "motivoClave": "3-5",
+      "denominacion": "CANDIDATO PARTIDARIOS Y CANDIDATOS DOCENTES",
+      "encuadreLegal": "321",
+      "situacionRevistaOriginal": "Titular",
+      "formaPago": "Con goce de haberes",
+      "otorgadoPor": "Director",
+      "observaciones": "24 horas de oficializada la lista, y hasta 5 días después de las elecciones",
+      "estado": "referencia documental; pendiente de integración y validación normativa",
+      "situacionRevista": "Titular"
+    },
+    {
+      "pagina": 5,
+      "agrupacion": "3",
+      "componentesCodigo": [
+        "3",
+        "5",
+        "2"
+      ],
+      "codigo": "352",
+      "clave": "3-5-2",
+      "motivoClave": "3-5",
+      "denominacion": "CANDIDATO PARTIDARIOS Y CANDIDATOS DOCENTES",
+      "encuadreLegal": "334-F",
+      "situacionRevistaOriginal": "Interino",
+      "formaPago": "Con goce de haberes",
+      "otorgadoPor": "Director",
+      "observaciones": "24 horas de oficializada la lista, y hasta 5 días después de las elecciones",
+      "estado": "referencia documental; pendiente de integración y validación normativa",
+      "situacionRevista": "Interino"
+    },
+    {
+      "pagina": 5,
+      "agrupacion": "3",
+      "componentesCodigo": [
+        "3",
+        "5",
+        "3"
+      ],
+      "codigo": "353",
+      "clave": "3-5-3",
+      "motivoClave": "3-5",
+      "denominacion": "CANDIDATO PARTIDARIOS Y CANDIDATOS DOCENTES",
+      "encuadreLegal": "343-I",
+      "situacionRevistaOriginal": "Suplente",
+      "formaPago": "Con goce de haberes",
+      "otorgadoPor": "Director",
+      "observaciones": "24 horas de oficializada la lista, y hasta 5 días después de las elecciones",
+      "estado": "referencia documental; pendiente de integración y validación normativa",
+      "situacionRevista": "Suplente"
+    },
+    {
+      "pagina": 5,
+      "agrupacion": "3",
+      "componentesCodigo": [
+        "3",
+        "6",
+        "1"
+      ],
+      "codigo": "361",
+      "clave": "3-6-1",
+      "motivoClave": "3-6",
+      "denominacion": "ACOMPAÑAR ALUMNOS A EXCURSIONES",
+      "encuadreLegal": "324",
+      "situacionRevistaOriginal": "Titular",
+      "formaPago": "Con goce de haberes",
+      "otorgadoPor": "Director",
+      "observaciones": "No se computaran las inasistencias incurridas designados por la direccion general de nivel, cubre a todos los establecimientos.-",
+      "estado": "referencia documental; pendiente de integración y validación normativa",
+      "situacionRevista": "Titular"
+    },
+    {
+      "pagina": 5,
+      "agrupacion": "3",
+      "componentesCodigo": [
+        "3",
+        "6",
+        "2"
+      ],
+      "codigo": "362",
+      "clave": "3-6-2",
+      "motivoClave": "3-6",
+      "denominacion": "ACOMPAÑAR ALUMNOS A EXCURSIONES",
+      "encuadreLegal": "337",
+      "situacionRevistaOriginal": "Interino",
+      "formaPago": "Con goce de haberes",
+      "otorgadoPor": "Director",
+      "observaciones": "No se computaran las inasistencias incurridas designados por la direccion general de nivel, cubre a todos los establecimientos.-",
+      "estado": "referencia documental; pendiente de integración y validación normativa",
+      "situacionRevista": "Interino"
+    },
+    {
+      "pagina": 5,
+      "agrupacion": "3",
+      "componentesCodigo": [
+        "3",
+        "6",
+        "3"
+      ],
+      "codigo": "363",
+      "clave": "3-6-3",
+      "motivoClave": "3-6",
+      "denominacion": "ACOMPAÑAR ALUMNOS A EXCURSIONES",
+      "encuadreLegal": "346",
+      "situacionRevistaOriginal": "Suplente",
+      "formaPago": "Con goce de haberes",
+      "otorgadoPor": "Director",
+      "observaciones": "No se computaran las inasistencias incurridas designados por la direccion general de nivel, cubre a todos los establecimientos.-",
+      "estado": "referencia documental; pendiente de integración y validación normativa",
+      "situacionRevista": "Suplente"
+    },
+    {
+      "pagina": 5,
+      "agrupacion": "3",
+      "componentesCodigo": [
+        "3",
+        "7",
+        "1"
+      ],
+      "codigo": "371",
+      "clave": "3-7-1",
+      "motivoClave": "3-7",
+      "denominacion": "CREDO NO CATÓLICO",
+      "encuadreLegal": "325",
+      "situacionRevistaOriginal": "Titular",
+      "formaPago": "Con goce de haberes",
+      "otorgadoPor": "Director",
+      "observaciones": "No se computaran las inasistencias incurridas designados por el Miniserio de Relaciones Exteriores y Cultas.-",
+      "estado": "referencia documental; pendiente de integración y validación normativa",
+      "situacionRevista": "Titular"
+    },
+    {
+      "pagina": 5,
+      "agrupacion": "3",
+      "componentesCodigo": [
+        "3",
+        "7",
+        "2"
+      ],
+      "codigo": "372",
+      "clave": "3-7-2",
+      "motivoClave": "3-7",
+      "denominacion": "CREDO NO CATÓLICO",
+      "encuadreLegal": "337",
+      "situacionRevistaOriginal": "Interino",
+      "formaPago": "Con goce de haberes",
+      "otorgadoPor": "Director",
+      "observaciones": "No se computaran las inasistencias incurridas designados por el Miniserio de Relaciones Exteriores y Cultas.-",
+      "estado": "referencia documental; pendiente de integración y validación normativa",
+      "situacionRevista": "Interino"
+    },
+    {
+      "pagina": 5,
+      "agrupacion": "3",
+      "componentesCodigo": [
+        "3",
+        "7",
+        "3"
+      ],
+      "codigo": "373",
+      "clave": "3-7-3",
+      "motivoClave": "3-7",
+      "denominacion": "CREDO NO CATÓLICO",
+      "encuadreLegal": "346",
+      "situacionRevistaOriginal": "Suplente",
+      "formaPago": "Con goce de haberes",
+      "otorgadoPor": "Director",
+      "observaciones": "No se computaran las inasistencias incurridas designados por el Miniserio de Relaciones Exteriores y Cultas.-",
+      "estado": "referencia documental; pendiente de integración y validación normativa",
+      "situacionRevista": "Suplente"
+    },
+    {
+      "pagina": 5,
+      "agrupacion": "3",
+      "componentesCodigo": [
+        "3",
+        "8",
+        "1"
+      ],
+      "codigo": "381",
+      "clave": "3-8-1",
+      "motivoClave": "3-8",
+      "denominacion": "DONACIÓN DE SANGRE",
+      "encuadreLegal": "320-C",
+      "situacionRevistaOriginal": "Titular",
+      "formaPago": "Con goce de haberes",
+      "otorgadoPor": "Director",
+      "observaciones": "Un (1) día",
+      "estado": "referencia documental; pendiente de integración y validación normativa",
+      "situacionRevista": "Titular"
+    },
+    {
+      "pagina": 5,
+      "agrupacion": "3",
+      "componentesCodigo": [
+        "3",
+        "8",
+        "2"
+      ],
+      "codigo": "382",
+      "clave": "3-8-2",
+      "motivoClave": "3-8",
+      "denominacion": "DONACIÓN DE SANGRE",
+      "encuadreLegal": "334-B",
+      "situacionRevistaOriginal": "Interino",
+      "formaPago": "Con goce de haberes",
+      "otorgadoPor": "Director",
+      "observaciones": "Un (1) día",
+      "estado": "referencia documental; pendiente de integración y validación normativa",
+      "situacionRevista": "Interino"
+    },
+    {
+      "pagina": 5,
+      "agrupacion": "3",
+      "componentesCodigo": [
+        "3",
+        "8",
+        "3"
+      ],
+      "codigo": "383",
+      "clave": "3-8-3",
+      "motivoClave": "3-8",
+      "denominacion": "DONACIÓN DE SANGRE",
+      "encuadreLegal": "343-B",
+      "situacionRevistaOriginal": "Suplente",
+      "formaPago": "Con goce de haberes",
+      "otorgadoPor": "Director",
+      "observaciones": "Un (1) día",
+      "estado": "referencia documental; pendiente de integración y validación normativa",
+      "situacionRevista": "Suplente"
+    },
+    {
+      "pagina": 5,
+      "agrupacion": "3",
+      "componentesCodigo": [
+        "3",
+        "9",
+        "1"
+      ],
+      "codigo": "391",
+      "clave": "3-9-1",
+      "motivoClave": "3-9",
+      "denominacion": "LACTANCIA",
+      "encuadreLegal": "320-D",
+      "situacionRevistaOriginal": "Titular",
+      "formaPago": "Con goce de haberes",
+      "otorgadoPor": "Director",
+      "observaciones": "60´ durante tres (3) meses prorrogable por tres (3) más (Pres. Méd.)",
+      "estado": "referencia documental; pendiente de integración y validación normativa",
+      "situacionRevista": "Titular"
+    },
+    {
+      "pagina": 5,
+      "agrupacion": "3",
+      "componentesCodigo": [
+        "3",
+        "9",
+        "2"
+      ],
+      "codigo": "392",
+      "clave": "3-9-2",
+      "motivoClave": "3-9",
+      "denominacion": "LACTANCIA",
+      "encuadreLegal": "334-C",
+      "situacionRevistaOriginal": "Interino",
+      "formaPago": "Con goce de haberes",
+      "otorgadoPor": "Director",
+      "observaciones": "60´ durante tres (3) meses prorrogable por tres (3) más (Pres. Méd.)",
+      "estado": "referencia documental; pendiente de integración y validación normativa",
+      "situacionRevista": "Interino"
+    },
+    {
+      "pagina": 5,
+      "agrupacion": "3",
+      "componentesCodigo": [
+        "3",
+        "9",
+        "3"
+      ],
+      "codigo": "393",
+      "clave": "3-9-3",
+      "motivoClave": "3-9",
+      "denominacion": "LACTANCIA",
+      "encuadreLegal": "343-C",
+      "situacionRevistaOriginal": "Suplente",
+      "formaPago": "Con goce de haberes",
+      "otorgadoPor": "Director",
+      "observaciones": "60´ durante tres (3) meses prorrogable por tres (3) más (Pres. Méd.)",
+      "estado": "referencia documental; pendiente de integración y validación normativa",
+      "situacionRevista": "Suplente"
+    },
+    {
+      "pagina": 5,
+      "agrupacion": "3",
+      "componentesCodigo": [
+        "3",
+        "10",
+        "1"
+      ],
+      "codigo": "3101",
+      "clave": "3-10-1",
+      "motivoClave": "3-10",
+      "denominacion": "EXÁMEN ANTÍGENO PROSTÁTICO ESPESÍFICO (PSA)",
+      "encuadreLegal": "320-G",
+      "situacionRevistaOriginal": "Titular",
+      "formaPago": "Con goce de haberes",
+      "otorgadoPor": "Director",
+      "observaciones": "Un (1) dia al año con certificado medico.-",
+      "estado": "referencia documental; pendiente de integración y validación normativa",
+      "situacionRevista": "Titular"
+    },
+    {
+      "pagina": 5,
+      "agrupacion": "3",
+      "componentesCodigo": [
+        "3",
+        "10",
+        "2"
+      ],
+      "codigo": "3102",
+      "clave": "3-10-2",
+      "motivoClave": "3-10",
+      "denominacion": "EXÁMEN ANTÍGENO PROSTÁTICO ESPESÍFICO (PSA)",
+      "encuadreLegal": "334-H",
+      "situacionRevistaOriginal": "Interino",
+      "formaPago": "Con goce de haberes",
+      "otorgadoPor": "Director",
+      "observaciones": "Un (1) dia al año con certificado medico.-",
+      "estado": "referencia documental; pendiente de integración y validación normativa",
+      "situacionRevista": "Interino"
+    },
+    {
+      "pagina": 5,
+      "agrupacion": "3",
+      "componentesCodigo": [
+        "3",
+        "10",
+        "3"
+      ],
+      "codigo": "3103",
+      "clave": "3-10-3",
+      "motivoClave": "3-10",
+      "denominacion": "EXÁMEN ANTÍGENO PROSTÁTICO ESPESÍFICO (PSA)",
+      "encuadreLegal": "343-G",
+      "situacionRevistaOriginal": "Suplente",
+      "formaPago": "Con goce de haberes",
+      "otorgadoPor": "Director",
+      "observaciones": "Un (1) dia al año con certificado medico.-",
+      "estado": "referencia documental; pendiente de integración y validación normativa",
+      "situacionRevista": "Suplente"
+    },
+    {
+      "pagina": 5,
+      "agrupacion": "3",
+      "componentesCodigo": [
+        "3",
+        "11",
+        "1"
+      ],
+      "codigo": "3111",
+      "clave": "3-11-1",
+      "motivoClave": "3-11",
+      "denominacion": "NATALICIO",
+      "encuadreLegal": "320-H",
+      "situacionRevistaOriginal": "Titular",
+      "formaPago": "Con goce de haberes",
+      "otorgadoPor": "Director",
+      "observaciones": "Un (1) dia laborable.-",
+      "estado": "referencia documental; pendiente de integración y validación normativa",
+      "situacionRevista": "Titular"
+    },
+    {
+      "pagina": 5,
+      "agrupacion": "3",
+      "componentesCodigo": [
+        "3",
+        "11",
+        "2"
+      ],
+      "codigo": "3112",
+      "clave": "3-11-2",
+      "motivoClave": "3-11",
+      "denominacion": "NATALICIO",
+      "encuadreLegal": "334-I",
+      "situacionRevistaOriginal": "Interino",
+      "formaPago": "Con goce de haberes",
+      "otorgadoPor": "Director",
+      "observaciones": "Un (1) dia laborable.-",
+      "estado": "referencia documental; pendiente de integración y validación normativa",
+      "situacionRevista": "Interino"
+    },
+    {
+      "pagina": 5,
+      "agrupacion": "3",
+      "componentesCodigo": [
+        "3",
+        "11",
+        "3"
+      ],
+      "codigo": "3113",
+      "clave": "3-11-3",
+      "motivoClave": "3-11",
+      "denominacion": "NATALICIO",
+      "encuadreLegal": "343-H",
+      "situacionRevistaOriginal": "Suplente",
+      "formaPago": "Con goce de haberes",
+      "otorgadoPor": "Director",
+      "observaciones": "Un (1) dia laborable.-",
+      "estado": "referencia documental; pendiente de integración y validación normativa",
+      "situacionRevista": "Suplente"
+    },
+    {
+      "pagina": 5,
+      "agrupacion": "3",
+      "componentesCodigo": [
+        "3",
+        "12",
+        "1"
+      ],
+      "codigo": "3121",
+      "clave": "3-12-1",
+      "motivoClave": "3-12",
+      "denominacion": "CITACION JUDICIAL",
+      "encuadreLegal": "320-I",
+      "situacionRevistaOriginal": "Titular",
+      "formaPago": "Con goce de haberes",
+      "otorgadoPor": "Director",
+      "observaciones": "Permiso cuando sea citado por el Poder Judicial",
+      "estado": "referencia documental; pendiente de integración y validación normativa",
+      "situacionRevista": "Titular"
+    },
+    {
+      "pagina": 5,
+      "agrupacion": "3",
+      "componentesCodigo": [
+        "3",
+        "12",
+        "2"
+      ],
+      "codigo": "3122",
+      "clave": "3-12-2",
+      "motivoClave": "3-12",
+      "denominacion": "CITACION JUDICIAL",
+      "encuadreLegal": "334-J",
+      "situacionRevistaOriginal": "Interina",
+      "formaPago": "Con goce de haberes",
+      "otorgadoPor": "Director",
+      "observaciones": "Permiso cuando sea citado por el Poder Judicial",
+      "estado": "referencia documental; pendiente de integración y validación normativa",
+      "situacionRevista": "Interino"
+    },
+    {
+      "pagina": 5,
+      "agrupacion": "3",
+      "componentesCodigo": [
+        "3",
+        "12",
+        "3"
+      ],
+      "codigo": "3123",
+      "clave": "3-12-3",
+      "motivoClave": "3-12",
+      "denominacion": "CITACION JUDICIAL",
+      "encuadreLegal": "343-J",
+      "situacionRevistaOriginal": "Suplente",
+      "formaPago": "Con goce de haberes",
+      "otorgadoPor": "Director",
+      "observaciones": "Permiso cuando sea citado por el Poder Judicial",
+      "estado": "referencia documental; pendiente de integración y validación normativa",
+      "situacionRevista": "Suplente"
+    },
+    {
+      "pagina": 7,
+      "agrupacion": "4",
+      "componentesCodigo": [
+        "4",
+        "1",
+        "1"
+      ],
+      "codigo": "411",
+      "clave": "4-1-1",
+      "motivoClave": "4-1",
+      "denominacion": "APERCIBIMIENTO",
+      "encuadreLegal": "330 - I-B-3) DTO. 1217/91",
+      "situacionRevistaOriginal": "Titular",
+      "formaPago": "Con goce de haberes",
+      "otorgadoPor": "",
+      "observaciones": "",
+      "estado": "referencia documental; pendiente de integración y validación normativa",
+      "situacionRevista": "Titular"
+    },
+    {
+      "pagina": 7,
+      "agrupacion": "4",
+      "componentesCodigo": [
+        "4",
+        "1",
+        "2"
+      ],
+      "codigo": "412",
+      "clave": "4-1-2",
+      "motivoClave": "4-1",
+      "denominacion": "APERCIBIMIENTO",
+      "encuadreLegal": "330-I-B-3) DTO. 1217/91",
+      "situacionRevistaOriginal": "Interino",
+      "formaPago": "Con goce de haberes",
+      "otorgadoPor": "",
+      "observaciones": "",
+      "estado": "referencia documental; pendiente de integración y validación normativa",
+      "situacionRevista": "Interino"
+    },
+    {
+      "pagina": 7,
+      "agrupacion": "4",
+      "componentesCodigo": [
+        "4",
+        "1",
+        "3"
+      ],
+      "codigo": "413",
+      "clave": "4-1-3",
+      "motivoClave": "4-1",
+      "denominacion": "APERCIBIMIENTO",
+      "encuadreLegal": "330-I-B-3) DTO. 1217/91",
+      "situacionRevistaOriginal": "Suplente",
+      "formaPago": "Con goce de haberes",
+      "otorgadoPor": "",
+      "observaciones": "",
+      "estado": "referencia documental; pendiente de integración y validación normativa",
+      "situacionRevista": "Suplente"
+    },
+    {
+      "pagina": 7,
+      "agrupacion": "4",
+      "componentesCodigo": [
+        "4",
+        "2",
+        "1"
+      ],
+      "codigo": "421",
+      "clave": "4-2-1",
+      "motivoClave": "4-2",
+      "denominacion": "SUSPENSIÓN",
+      "encuadreLegal": "54-C Y D",
+      "situacionRevistaOriginal": "Titular",
+      "formaPago": "Sin goce de haberes",
+      "otorgadoPor": "",
+      "observaciones": "",
+      "estado": "referencia documental; pendiente de integración y validación normativa",
+      "situacionRevista": "Titular"
+    },
+    {
+      "pagina": 7,
+      "agrupacion": "4",
+      "componentesCodigo": [
+        "4",
+        "2",
+        "2"
+      ],
+      "codigo": "422",
+      "clave": "4-2-2",
+      "motivoClave": "4-2",
+      "denominacion": "SUSPENSIÓN",
+      "encuadreLegal": "54- C Y D",
+      "situacionRevistaOriginal": "Interino",
+      "formaPago": "Sin goce de haberes",
+      "otorgadoPor": "",
+      "observaciones": "",
+      "estado": "referencia documental; pendiente de integración y validación normativa",
+      "situacionRevista": "Interino"
+    },
+    {
+      "pagina": 7,
+      "agrupacion": "4",
+      "componentesCodigo": [
+        "4",
+        "2",
+        "3"
+      ],
+      "codigo": "423",
+      "clave": "4-2-3",
+      "motivoClave": "4-2",
+      "denominacion": "SUSPENSIÓN",
+      "encuadreLegal": "54 C Y D",
+      "situacionRevistaOriginal": "Suplente",
+      "formaPago": "Sin goce de haberes",
+      "otorgadoPor": "",
+      "observaciones": "",
+      "estado": "referencia documental; pendiente de integración y validación normativa",
+      "situacionRevista": "Suplente"
+    },
+    {
+      "pagina": 7,
+      "agrupacion": "4",
+      "componentesCodigo": [
+        "4",
+        "3",
+        "1"
+      ],
+      "codigo": "431",
+      "clave": "4-3-1",
+      "motivoClave": "4-3",
+      "denominacion": "SUSPENSIÓN PREVENTIVA DE FUNCIONES",
+      "encuadreLegal": "3 a) DTO. 1311/99",
+      "situacionRevistaOriginal": "Titular",
+      "formaPago": "Con goce de haberes",
+      "otorgadoPor": "",
+      "observaciones": "",
+      "estado": "referencia documental; pendiente de integración y validación normativa",
+      "situacionRevista": "Titular"
+    },
+    {
+      "pagina": 7,
+      "agrupacion": "4",
+      "componentesCodigo": [
+        "4",
+        "3",
+        "2"
+      ],
+      "codigo": "432",
+      "clave": "4-3-2",
+      "motivoClave": "4-3",
+      "denominacion": "SUSPENSIÓN PREVENTIVA DE FUNCIONES",
+      "encuadreLegal": "3 a) DTO. 1311/99",
+      "situacionRevistaOriginal": "Titular",
+      "formaPago": "Sin goce de haberes",
+      "otorgadoPor": "",
+      "observaciones": "",
+      "estado": "referencia documental; pendiente de integración y validación normativa",
+      "situacionRevista": "Titular"
+    },
+    {
+      "pagina": 7,
+      "agrupacion": "4",
+      "componentesCodigo": [
+        "4",
+        "3",
+        "3"
+      ],
+      "codigo": "433",
+      "clave": "4-3-3",
+      "motivoClave": "4-3",
+      "denominacion": "SUSPENSIÓN PREVENTIVA DE FUNCIONES",
+      "encuadreLegal": "3 a) DTO. 1311/99",
+      "situacionRevistaOriginal": "Interino",
+      "formaPago": "Con goce de haberes",
+      "otorgadoPor": "",
+      "observaciones": "",
+      "estado": "referencia documental; pendiente de integración y validación normativa",
+      "situacionRevista": "Interino"
+    },
+    {
+      "pagina": 7,
+      "agrupacion": "4",
+      "componentesCodigo": [
+        "4",
+        "3",
+        "4"
+      ],
+      "codigo": "434",
+      "clave": "4-3-4",
+      "motivoClave": "4-3",
+      "denominacion": "SUSPENSIÓN PREVENTIVA DE FUNCIONES",
+      "encuadreLegal": "3 a) DTO. 1311/99",
+      "situacionRevistaOriginal": "Interino",
+      "formaPago": "Sin goce de haberes",
+      "otorgadoPor": "",
+      "observaciones": "",
+      "estado": "referencia documental; pendiente de integración y validación normativa",
+      "situacionRevista": "Interino"
+    },
+    {
+      "pagina": 7,
+      "agrupacion": "4",
+      "componentesCodigo": [
+        "4",
+        "3",
+        "5"
+      ],
+      "codigo": "435",
+      "clave": "4-3-5",
+      "motivoClave": "4-3",
+      "denominacion": "SUSPENSIÓN PREVENTIVA DE FUNCIONES",
+      "encuadreLegal": "3 a) DTO.1311/99",
+      "situacionRevistaOriginal": "Suplente",
+      "formaPago": "Con goce de haberes",
+      "otorgadoPor": "",
+      "observaciones": "",
+      "estado": "referencia documental; pendiente de integración y validación normativa",
+      "situacionRevista": "Suplente"
+    },
+    {
+      "pagina": 7,
+      "agrupacion": "4",
+      "componentesCodigo": [
+        "4",
+        "3",
+        "6"
+      ],
+      "codigo": "436",
+      "clave": "4-3-6",
+      "motivoClave": "4-3",
+      "denominacion": "SUSPENSIÓN PREVENTIVA DE FUNCIONES",
+      "encuadreLegal": "3 a) DTO. 1311/99",
+      "situacionRevistaOriginal": "Suplente",
+      "formaPago": "Sin goce de haberes",
+      "otorgadoPor": "",
+      "observaciones": "",
+      "estado": "referencia documental; pendiente de integración y validación normativa",
+      "situacionRevista": "Suplente"
+    }
+  ]
+}

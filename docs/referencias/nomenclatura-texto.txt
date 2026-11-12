@@ -1,0 +1,223 @@
+--- PAGINA 1 ---
+AGRUPACIÓN: 1 - LICENCIAS POR RAZONES DE SALUD
+Denominación del Motivo Código Encuadre LegaSituación de Revista Forma de Pago: Otorgado por: Observaciones
+1 1 1 309-B 1) Titular Con goce de haberes Director Cuarenta y cinco (45) días corridos o no por año
+1 1 2 309-B1) Funcionario Político Con goce de haberes Cuarenta y cinco (45) días corridos o no por año
+ENFERMEDAD O LESION COMUN
+1 1 3 331-A Interino Con goce de haberes Director Treinta (30) días por año, antig. > 4 meses; 10 días otros casos
+1 1 4 340-A Suplente Con goce de haberes Director Quince (15) días por año, antig. > 4 meses; 5 días otros casos
+1 2 1 309 B-2) Titular Con goce de haberes Director Dos (2) años
+1 2 2 309 B-2) Titular Con 50% de haberes Director Un (1) año
+1 2 3 309 B-2) Funcionario Político Con goce de haberes Dos (2) años
+1 2 4 309 B-2) Funcionario Político Con 50% de haberes Un (1) año
+ENFERMEDAD LARGO TRATAMIENTO
+1 2 5 331- B Interino Con goce de haberes Director Dos (2) años ( 6meses de antigüedad)
+1 2 6 331 B Interino Con 50% de haberes Director Un (1) año
+1 2 7 340 B Suplente Con goce de haberes Director Dos (2) años (Desig. Sin termino y 1 año de antigüedad)
+1 2 8 340 B Suplente Con 50% de haberes Director Un (1) año
+1 3 1 309 B-3) Titular Con goce de haberes Ministro Dos (2) años
+1 3 2 309 B-3) Titular Con 50% de haberes Ministro Un (1) año
+1 3 3 309 B-3) Funcionario Político Con goce de haberes Dos (2) años
+ENFERMEDAD OCUPACIONAL O ACC. 1 3 4 309 B-3) Funcionario Político Con 50% de haberes Un (1) año
+TRAB. 1 3 5 331-C Interino Con goce de haberes Ministro Dos (2) años
+1 3 6 331-C Interino Con 50% de haberes Ministro Un (1) año
+1 3 7 340 -C Suplente Con goce de haberes Ministro Seis (6) meses
+1 3 8 340 -C Suplente Con 50% de haberes Ministro Tres (3) meses
+1 4 1 309-C Titular Con goce de haberes Director 180 días corridos
+1 4 2 309-C Titular Con goce de haberes Director 30 días corridos Prórroga
+1 4 3 309-C Funcionario Político Con goce de haberes 180 días corridos
+1 4 4 309-C Funcionario Político Con goce de haberes 30 días corridos Prórroga
+GRAVIDEZ Y MATERNIDAD
+1 4 5 331-D Interino Con goce de haberes Director 180 días corridos
+1 4 6 331-D Interino Con goce de haberes Director 30 días corridos Prórroga
+1 4 7 340-D Suplente Con goce de haberes Director 180 días corridos
+1 4 8 340-D Suplente Con goce de haberes Director 30 días corridos Prórroga
+1 5 1 309-D Titular Con goce de haberes Director 28 días por año
+1 5 2 309-D Titular Con goce de haberes Director 30 días por año Prórroga
+ENFER. DE UN MIEMBRO DEL GRUPO 1 5 3 309-D Funcionario Político Con goce de haberes 28 días por año
+FAMILIAR 1 5 4 309-D Funcionario Político Con goce de haberes 30 días por año Prórroga
+1 5 5 331-E Interino Con goce de haberes Director 10 días por año (4 Meses de antigüedad en el cargo y establ.)
+1 5 6 340-E Suplente Con goce de haberes Director 5 días por año (4 Meses de antigüedad en el cargo y establ.)
+1 6 1 347 Titular Con goce de haberes Ministro Según prescripción médica, por período escolar
+1 6 2 347 Titular Con 50% de haberes Ministro Según prescripción médica, por período escolar
+1 6 3 347 Titular Con 25% de haberes Ministro Según prescripción médica, por período escolar
+1 6 4 347 Titular Sin goce de haberes Ministro Según prescripción médica, por período escolar
+1 6 5 347 Interino Con goce de haberes Ministro Según prescripción médica, por período escolar
+PRORROGA LIC. POR RAZONES DE 1 6 6 347 Interino Con 50% de haberes Ministro Según prescripción médica, por período escolar
+
+--- PAGINA 2 ---
+SALUD 1 6 7 347 Interino Con 25% de haberes Ministro Según prescripción médica, por período escolar
+1 6 8 347 Interino Sin goce de haberes Ministro Según prescripción médica, por período escolar
+1 6 9 347 Suplente Con goce de haberes Ministro Según prescripción médica, por período escolar
+1 6 10 347 Suplente Con 50% de haberes Ministro Según prescripción médica, por período escolar
+1 6 11 347 Suplente Con 25% de haberes Ministro Según prescripción médica, por período escolar
+1 6 12 347 Suplente Sin goce de haberes Ministro Según prescripción médica, por período escolar
+1 7 1 7-D Titular Con goce de haberes Director Regional Según prescripción médica
+TAREAS PASIVAS 1 7 2 7-D Interino Con goce de haberes Director Regional Según prescripción médica
+1 7 3 7-D Suplente Con goce de haberes Director Regional Según prescripción médica
+TRASLADO TRANSITORIO (RAZONES 1 8 1 30 Titular Con goce de haberes
+
+--- PAGINA 3 ---
+AGRUPACIÓN: 2-OTRAS LICENCIAS
+Denominación del Motivo Código Encuadre Legal Situación de Revista Forma de Pago: Otorgado por: Observaciones
+2 1 1 309-A Titular Con goce de haberes Director 60 días corridos por año
+2 1 2 309-A Funcionario Político Con goce de haberes Director 60 días corridos por año
+ANUAL
+2 1 3 330 Interino Con goce de haberes Director 60 días corridos por año
+2 1 4 339 Suplente Con goce de haberes Director 60 días corridos por año
+2 2 1 309-E Titular Con goce de haberes Director
+ADOPCION 2 2 2 309-E Funcionario Político Con goce de haberes 180 días corridos sin importar la edad
+2 2 3 331-F Interino Con goce de haberes Director
+2 2 4 340-F Suplente Con goce de haberes Director
+ASUNTOS PARTICULARES 2 3 1 318-A Titular Sin goce de haberes Supervisor Un (1) año por decenio de trabajo
+CAUSA DE FZA. MAY. O GVE. ASUN. FLIA. 2 4 1 318-B Titular Sin goce de haberes Supervisor Noventa (90) días por año (contínuos o discontínuos)
+2 5 1 318-C Titular Con goce de haberes Subsecretario Tres (3) años mas de 1 año otorga el subsecretario y el Regional hasta un 1 año
+ESTUDIO O PERFECCIONAMIENTO
+2 5 2 333-A Interino Con goce de haberes Director Regional Veinte (20) días por año (antigüedad minima 4 meses)
+DOCENTE
+2 5 3 342-A Suplente Con goce de haberes Director Regional Diez (10) días por año (antigüedad minima 4 meses)
+REPRESENTACIÓN GREMIAL,MUTUAL O 2 6 1 318-D Titular Con goce de haberes Ministro Según mandato - represent. Gremial con sueldo
+DOCENTE 2 6 2 318-D Titular Sin goce de haberes Ministro Según mandato - represent. Mutual - Sin sueldo
+2 7 1 318-E Titular Sin goce de haberes Ministro/Subsec Cargos en la Jurisdicción otorga Ministro; fuera Subsecretario
+DESEM. CARGO ELEC. O REPRES.
+2 7 2 333-F Interino Sin goce de haberes Ministro/Subsec Cargos en la Jurisdicción otorga Ministro; fuera Subsecretario
+POLITICA
+2 7 3 342-D Suplente Sin goce de haberes Ministro/Subsec Cargos en la Jurisdicción otorga Ministro; fuera Subsecretario
+2 8 1 318-F Titular Con goce de haberes Director Diez (10) días hábiles
+MATRIMONIO 2 8 2 333-B Interino Con goce de haberes Director Diez (10) días hábiles
+2 8 3 342-B Suplente Con goce de haberes Director Dos (2) días hábiles
+2 9 1 318-H Titular Con goce de haberes Director Treinta (30) días laborables por año
+EXAMENES
+2 9 2 333-D Interino Con goce de haberes Director Dieciseis (16) días laborables por año
+INCOMPATIBILIDAD 2 10 1 318-I Titular Sin goce de haberes Supervisor Tres (3) años en toda su carrera docente
+2 11 1 319 Titular Sin goce de haberes Super. Inmediato Según designación
+ASCENSO DE JERARQUIA 2 11 2 333-E Interino Sin goce de haberes Super. Inmediato Según designación
+2 11 3 342-E Suplente Sin goce de haberes Super. Inmediato Según designación
+2 13 1 323 Titular Con goce de haberes Director Diez (10) días por año
+2 13 2 323 Titular Sin goce de haberes Director Cuatro (4) días por año
+INASISTENCIAS
+2 13 3 336 Interino Con goce de haberes Director Cinco (5) días por año
+2 13 4 345 Suplente Con goce de haberes Director Tres (3) días por año
+2 14 1 311-312 Titular Con goce de haberes Director Según prescripción médica maestros o profesores de educacion fisica
+CAMBIO DE FUNCIONES POR GRAVIDEZ 2 14 2 332 Interino Con goce de haberes Director Según prescripción médica maestros o profesores de educacion fisica
+2 14 3 341 Suplente Con goce de haberes Director Según prescripción médica maestros o profesores de educacion fisica
+2 15 1 Titular Con goce de haberes Director Según prescripción médica
+DONACION DE ORGANOS 2 15 2 318-J Interino Con goce de haberes Director Según prescripción médica
+2 15 3 Suplente Con goce de haberes Director Según prescripción médica
+LICENCIA EXTRAORDINARIA 2 16 1 318-G Titular Con goce de haberes Director Un (1) día
+(PAPANICOLAU - COLCOSPIA - 2 16 2 333-C Interino Con goce de haberes Director Un (1) día
+MAMOGRAFIA) 2 16 3 342-C Suplente Con goce de haberes Director Un (1) día
+2 17 1 Titular Sin goce de haberes Según designación
+LICENCIAS ESPECIALES 2 17 2 RES.1280/00 Y SU Interino Sin goce de haberes Según designación
+AMPLIATORIA
+2 17 3 Suplente Sin goce de haberes Según designación
+2 18 1 Titular Con goce de haberes Director Regional certificado que acredite su carácter de afisionado
+2 18 2 Titular Sin goce de haberes Director Regional (competidor, dirigente, representante, juez, arbitro, jurado, DT y entrenador)
+2 18 3 Interino Con goce de haberes Director Regional certificado que acredite su carácter de afisionado
+LICENCIA ESPECIAL DEPORTIVA Ley 3656 RES.5128/07
+2 18 4 Interino Sin goce de haberes Director Regional (competidor, dirigente, representante, juez, arbitro, jurado, DT y entrenador)
+
+--- PAGINA 4 ---
+2 18 5 Suplente Con goce de haberes Director Regional certificado que acredite su carácter de afisionado
+2 18 6 Suplente Sin goce de haberes Director Regional (competidor, dirigente, representante, juez, arbitro, jurado, DT y entrenador)
+Comité Prov. De Prev. De la Tortura 2 19 1 318-K Titular Con goce de haberes Ministro Según designación (no debe exceder las 5 afectaciones)
+y Otros Tratos y Penas Crueles y/o Degradante 2 19 2 333 -G Interino Con goce de haberes Ministro Según designación (no debe exceder las 5 afectaciones)
+2 19 3 342-F Suplente Con goce de haberes Ministro Según designación (no debe exceder las 5 afectaciones)
+2 20 1 318 - L Titular Con goce de haberes Director
+(denuncia ante organismo judicial o extrajudicial de proteccion de derechos en la
+Violencia de Genero 2 20 2 333- H Interino Con goce de haberes Director
+materia) - (el plazo sera evalucado por la autoridad de aplicacion)
+2 20 3 342- G Suplente Con goce de haberes Director
+2 21 1 318- M Titular Con goce de haberes Subsecretario
+(tendra derecho a una licencia luego de haber transcurrido 60 dias habiles de iniciar
+Tramite Jubiltorio 2 21 2 333-I Interno Con goce de haberes Subsecretario
+el tramite por el SGT)
+2 21 3 342 - H Suplente Con goce de haberes Subsecretario
+2 22 1 Especial (R. 839/16) Titular Con goce de haberes Director
+2 22 2 Especial (R. 7365/16) Titular Sin goce de haberes Director
+Especial (Aplicación Ley 7616)
+2 22 3 Especial (R. 839/16) Interino Con goce de haberes Director
+2 22 4 Especial (R.7063/16) Interino Sin goce de haberes Director
+2 23 1 318- N Titular Con goce de haberes Director
+(2 dias de licencia por cada donacion que realice, debera acreditar constancia
+Donacion de Plasma sangüinea 2 23 2 333- J interino Con goce de haberes Director
+medica)
+2 23 3 342- I Suplente Con goce de haberes Director
+2 24 1 318- Ñ Titular Con goce de haberes
+Direccion de Bien
+Violencia Laboral (LEY 3718-E) 2 24 2 333- K interino Con goce de haberes (Plazo según periodo establecido en la ley 2023- A hasta emitir su dictamen)
+estar Educativo
+2 24 3 342- J Suplente Con goce de haberes
+
+--- PAGINA 5 ---
+AGRUPACIÓN: 3-PERMISOS
+Denominación del Motivo Código Encuadre LegaSituación de Revista Forma de Pago: Otorgado por: Observaciones
+3 1 1 320-A Titular Con goce de haberes Director
+NACIMIENTO DE HIJO (CONYUGUE 3 1 2 320-A Titular Con goce de haberes Director (15) dias habiles por 1 hijo // (30) dias habiles por nacimiento prematuro / multiples o con trastornos
+O CONVIVIENTE) 3 1 3 334-A Interino Con goce de haberes Director congenitos.
+3 1 4 343-A Suplente Con goce de haberes Director
+3 2 1 320-B Titular Con goce de haberes Director Treinta (30) días CORRIDOS - Hijo discapacitado/Enf. con Tratamieno prolongado (extencion 30 dias)
+ADOPCION (CONYUGE-PERMISO) 3 2 2 334-G Interino Con goce de haberes Director Treinta (30) días CORRIDOS
+3 2 3 343-F Suplente Con goce de haberes Director Treinta (30) días CORRIDOS
+3 3 1 320-E Titular Con goce de haberes Director Cinco (5) días hábiles
+MATRIMONIO DE HIJO 3 3 2 334-D Interino Con goce de haberes Director Cinco (5) días hábiles
+3 3 3 343-D Suplente Con goce de haberes Director Cinco (5) días hábiles
+3 4 1 320-F Titular Con goce de haberes Director Ocho (8) días laborables por familiar de 1º.
+3 4 2 320-F Titular Con goce de haberes Director Dos (2) días laborables por familiar de 2º / extancion de Dos (2) dias laborables por traslado.
+3 4 3 320-F Titular Con goce de haberes Director Un (1) días laborables por familiar de 3º / extancion de Dos (2) dias laborables por traslado.
+3 4 4 334-E Interino Con goce de haberes Director Ocho (8) días laborables por familiar de 1er. Grado
+DUELO 3 4 5 334-E Interino Con goce de haberes Director Dos (2) días laborables por familiar de 2do. Grado
+3 4 6 334-E Interino Con goce de haberes Director Un (1) días laborables por familiar de 3er. Grado y 4to. Grado
+3 4 7 343-E Suplente Con goce de haberes Director Ocho (8) días laborables por familiar de 1er. Grado
+3 4 8 343-E Suplente Con goce de haberes Director Dos (2) días laborables por familiar de 2do. Grado
+3 4 9 343-E Suplente Con goce de haberes Director Un (1) días laborables por familiar de 3er. Grado y 4to. Grado
+3 5 1 321 Titular Con goce de haberes Director 24 horas de oficializada la lista, y hasta 5 días después de las elecciones
+CANDIDATO PARTIDARIOS Y
+3 5 2 334-F Interino Con goce de haberes Director 24 horas de oficializada la lista, y hasta 5 días después de las elecciones
+CANDIDATOS DOCENTES
+3 5 3 343-I Suplente Con goce de haberes Director 24 horas de oficializada la lista, y hasta 5 días después de las elecciones
+3 6 1 324 Titular Con goce de haberes Director
+ACOMPAÑAR ALUMNOS A No se computaran las inasistencias incurridas designados por la direccion general de nivel, cubre a
+EXCURSIONES 3 6 2 337 Interino Con goce de haberes Director todos los establecimientos.-
+3 6 3 346 Suplente Con goce de haberes Director
+3 7 1 325 Titular Con goce de haberes Director
+No se computaran las inasistencias incurridas designados por el Miniserio de Relaciones Exteriores y
+CREDO NO CATÓLICO 3 7 2 337 Interino Con goce de haberes Director Cultas.-
+3 7 3 346 Suplente Con goce de haberes Director
+3 8 1 320-C Titular Con goce de haberes Director Un (1) día
+DONACIÓN DE SANGRE 3 8 2 334-B Interino Con goce de haberes Director Un (1) día
+3 8 3 343-B Suplente Con goce de haberes Director Un (1) día
+3 9 1 320-D Titular Con goce de haberes Director 60´ durante tres (3) meses prorrogable por tres (3) más (Pres. Méd.)
+LACTANCIA 3 9 2 334-C Interino Con goce de haberes Director 60´ durante tres (3) meses prorrogable por tres (3) más (Pres. Méd.)
+3 9 3 343-C Suplente Con goce de haberes Director 60´ durante tres (3) meses prorrogable por tres (3) más (Pres. Méd.)
+3 10 1 320-G Titular Con goce de haberes Director Un (1) dia al año con certificado medico.-
+EXÁMEN ANTÍGENO PROSTÁTICO
+3 10 2 334-H Interino Con goce de haberes Director Un (1) dia al año con certificado medico.-
+ESPESÍFICO (PSA)
+3 10 3 343-G Suplente Con goce de haberes Director Un (1) dia al año con certificado medico.-
+3 11 1 320-H Titular Con goce de haberes Director Un (1) dia laborable.-
+NATALICIO 3 11 2 334-I Interino Con goce de haberes Director Un (1) dia laborable.-
+3 11 3 343-H Suplente Con goce de haberes Director Un (1) dia laborable.-
+3 12 1 320-I Titular Con goce de haberes Director Permiso cuando sea citado por el Poder Judicial
+CITACION JUDICIAL 3 12 2 334-J Interina Con goce de haberes Director Permiso cuando sea citado por el Poder Judicial
+3 12 3 343-J Suplente Con goce de haberes Director Permiso cuando sea citado por el Poder Judicial
+
+--- PAGINA 6 ---
+Aclaraciones:
+Duelo: 1º (padres,hijos,hermanos,suegros o hijos politicos) - 2º (abuelos,nietos y hermanos politicos) - 3º y 4º (pimos hermanos,tios,sobrinos,bisabuelos y tio abuelos)
+
+--- PAGINA 7 ---
+,kk
+Denominación del Motivo Código Encuadre Legal uación de Revis Forma de Pago: Otorgado por: Observaciones
+4 1 1 330 - I-B-3) DTO. 1217/91 Titular Con goce de haberes
+APERCIBIMIENTO 4 1 2 330-I-B-3) DTO. 1217/91 Interino Con goce de haberes
+4 1 3 330-I-B-3) DTO. 1217/91 Suplente Con goce de haberes
+4 2 1 54-C Y D Titular Sin goce de haberes
+SUSPENSIÓN 4 2 2 54- C Y D Interino Sin goce de haberes
+4 2 3 54 C Y D Suplente Sin goce de haberes
+4 3 1 3 a) DTO. 1311/99 Titular Con goce de haberes
+4 3 2 3 a) DTO. 1311/99 Titular Sin goce de haberes
+SUSPENSIÓN PREVENTIVA DE 4 3 3 3 a) DTO. 1311/99 Interino Con goce de haberes
+FUNCIONES 4 3 4 3 a) DTO. 1311/99 Interino Sin goce de haberes
+4 3 5 3 a) DTO.1311/99 Suplente Con goce de haberes
+4 3 6 3 a) DTO. 1311/99 Suplente Sin goce de haberes

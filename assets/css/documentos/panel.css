@@ -1,0 +1,33 @@
+
+#adcDocsDock{position:fixed;z-index:30;left:0;top:20vh;bottom:8vh;display:flex;align-items:stretch;pointer-events:none}
+#adcDocsDock[hidden],#adcDocsPanel[hidden]{display:none}
+#adcDocsPanel{pointer-events:auto;width:min(21rem,calc(100vw - 3.5rem));overflow:auto;background:#fff;border:1px solid #cbd6e4;border-radius:0 .8rem .8rem 0;padding:1rem;box-shadow:0 6px 22px #14203433;animation:adcDocsIn .18s ease-out}
+@keyframes adcDocsIn{from{transform:translateX(-18px);opacity:.55}to{transform:none;opacity:1}}
+@media(prefers-reduced-motion:reduce){#adcDocsPanel{animation:none}}
+#adcDocsRail{pointer-events:auto;width:22px;display:flex;align-items:flex-start}
+#adcDocsToggle{padding:.45rem;min-width:34px}
+#adcDocsPanel h3{margin:.75rem 0 .35rem}
+#adcDocsRows ul{padding:0;list-style:none}
+#adcDocsRows li{display:grid;grid-template-columns:minmax(0,1fr) 8.2rem;align-items:center;gap:.55rem;margin:.55rem 0}
+#adcDocsRows li>span{text-align:left;overflow-wrap:anywhere}
+#adcDocsRows li>.adc-doc-action{justify-self:end;text-align:right}
+#adcDocsRows li>a.adc-doc-action{display:inline-block;padding:.55rem .65rem;border-radius:.5rem;background:#234f98;color:#fff;text-decoration:none}
+#adcDocsRows .adc-doc-config{display:none;grid-column:1/-1;justify-self:start}
+#adcDocsPanel:has(#adcDocsEditor[open]) .adc-doc-config{display:inline-block}
+#adcDocsReason{overflow-wrap:anywhere}
+#adcDocsMove{cursor:grab;touch-action:none;user-select:none}
+#adcDocsMove:active{cursor:grabbing}
+#adcDocsDock{max-height:100dvh}
+#adcDocsPanel{box-sizing:border-box}
+#adcDocsTools{display:flex;gap:.4rem;flex-wrap:wrap}
+.adc-doc-edge{position:absolute;z-index:1;touch-action:none;pointer-events:auto;background:#7794c0;opacity:.35;padding:0;border:0;border-radius:3px}
+.adc-doc-edge:hover,.adc-doc-edge:focus-visible{opacity:1}
+.adc-doc-edge[data-edge=top],.adc-doc-edge[data-edge=bottom]{left:8px;right:42px;height:8px;cursor:ns-resize}
+.adc-doc-edge[data-edge=top]{top:0}
+.adc-doc-edge[data-edge=bottom]{bottom:0}
+.adc-doc-edge[data-edge=right]{right:22px;top:10px;bottom:10px;width:8px;cursor:ew-resize}
+#adcDocsDock:has(#adcDocsPanel[hidden]) .adc-doc-edge{display:none}
+
+#adcDocsRows [aria-current=true]{font-weight:bold}
+#adcDocsEditor .fields{margin:.55rem 0}
+#adcOLPreview iframe{width:100%;height:32rem;border:1px solid #cbd6e4}

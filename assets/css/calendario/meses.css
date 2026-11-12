@@ -1,0 +1,9 @@
+#adcCalMonths{display:grid;grid-template-columns:repeat(auto-fit,minmax(215px,1fr));gap:.75rem;margin:.75rem 0}
+#adcCalMonths section{min-width:0;padding:.55rem;margin:0}
+.adc-date-grid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:.15rem;text-align:center}
+.adc-date-grid button{padding:.2rem;font-size:.8rem;background:#eef2f7;color:#142034}
+.adc-date-grid button[aria-pressed=true]{outline:2px solid #233b62;outline-offset:-2px}
+#adcSharedCalendar .adc-holiday{background:#fde4e0;color:#74281d}
+#adcSharedCalendar .adc-closure{background:#fff1bb;color:#604000}
+#adcSharedCalendar .adc-school-event{background:#dfeee3;color:#184c31}
+#adcCalDayInfo{white-space:pre-line}

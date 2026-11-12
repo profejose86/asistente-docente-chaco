@@ -1,0 +1,38 @@
+
+@media screen{
+.adc43-work,.adc43-catalog-layout{display:grid;grid-template-columns:minmax(210px,280px) minmax(0,1fr);gap:16px;align-items:start}
+.adc43-work,.adc43-catalog-layout{width:min(1240px,calc(100vw - 48px));margin-inline:calc((100% - min(1240px,100vw - 48px))/2)}
+@media(min-width:1450px){
+ .adc43-catalog-layout,.adc43-work{width:min(1850px,calc(100vw - 32px));margin-inline:calc((100% - min(1850px,100vw - 32px))/2)}
+ .adc43-catalog-layout{grid-template-columns:minmax(310px,429px) minmax(0,994px)}
+ .adc43-work{grid-template-columns:minmax(310px,441px) minmax(0,1fr)}
+}
+.adc43-zoom{justify-content:center;margin-top:10px;align-items:center}
+.adc43-work:not(:has(#adcDocsDock:not([hidden]))){display:block;width:auto;margin-inline:0}
+.adc43-work>:is(#license,#dj02,#adcOL){grid-column:2;grid-row:1;min-width:0}
+#adcDocsDock{display:block;position:static;grid-column:1;grid-row:1;pointer-events:auto;max-height:none;margin-top:var(--adc43-align,0px)}
+#adcDocsDock[hidden]{display:none}
+#adcDocsPanel{width:auto;overflow:visible;box-shadow:none;border-radius:14px;animation:none}
+#adcDocsReason{background:#2453a3;color:#fff;padding:10px;border-radius:7px;font-weight:650}
+#adcDocsRows li{display:block}
+#adcDocsRows li>.adc-doc-action{display:block;width:100%;text-align:left;margin:5px 0;box-sizing:border-box}
+#adcDocsRows li>.adc-doc-action::before{content:'○';margin-right:.45em}
+#adcDocsRows li[aria-current=true]>.adc-doc-action::before{content:'●'}
+#adcDocsRows li[aria-current=true]>.adc-doc-action{outline:2px solid #769fdd;outline-offset:1px}
+#adc43Frequent .frecuentes{grid-template-columns:1fr;margin-bottom:0}
+.adc43-catalog-layout>.adc-form-catalog{grid-column:2}
+.adc-present-school{grid-column:1/-1;color:#2453a3}
+html[data-theme=dark] .adc-present-school{color:#a9d0ff}
+@media(max-width:790px){
+ .adc43-work,.adc43-catalog-layout{display:block;width:auto;margin-inline:0}
+ #adcDocsDock{margin-top:0}
+}
+}
+@media print{
+ #adcDocsDock,.adc43-zoom,#adc43Frequent{display:none!important}
+ .adc43-work{display:block!important;width:auto!important;margin:0!important}
+ body.dj02-print-mode .wrap:has(>.adc43-work>#dj02:not(.hide)){display:block!important;max-width:none;padding:0}
+ body.dj02-print-mode .wrap:has(>.adc43-work>#dj02:not(.hide))>*:not(.adc43-work),
+ body.dj02-print-mode .adc43-work>*:not(#dj02){display:none!important}
+ body.dj02-print-mode .adc43-work .dj02-paper{zoom:1!important}
+}

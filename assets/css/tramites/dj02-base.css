@@ -1,0 +1,7 @@
+/* v0.9.16.19m — DJ-02 aislado del DJ-01 y DL-01. */
+#dj02 .dj02-entry{display:grid;grid-template-columns:90px 75px minmax(130px,1.4fr) 130px 130px minmax(110px,1fr) minmax(140px,1.3fr) 45px;gap:7px;align-items:end;padding:10px;border:1px solid #dce2eb;border-radius:9px;margin:9px 0;overflow-x:auto}
+#dj02 .dj02-entry label{font-size:11px}#dj02 .dj02-entry input{padding:7px;font-size:12px}#dj02 .dj02-entry button{padding:7px}
+#dj02 .dj02-preview{border:1px solid #cbd5e1;padding:16px;overflow-x:auto;background:#fff;color:#111}
+#dj02 .dj02-preview table{min-width:850px;font-size:11px}#dj02 .dj02-preview th,#dj02 .dj02-preview td{padding:6px}
+@media(max-width:1000px){#dj02 .dj02-entry{display:flex;flex-wrap:wrap}#dj02 .dj02-entry label{flex:1 1 125px}}
+@media print{body.dj02-print-mode .wrap,body.dj02-print-mode #dj,body.dj02-print-mode #license{display:none!important}body.dj02-print-mode #dj02{display:block!important}body.dj02-print-mode #dj02>section>*:not(.dj02-preview){display:none!important}body.dj02-print-mode #dj02 .dj02-preview{border:0;padding:0;overflow:visible}body.dj02-print-mode #dj02 .dj02-preview table{min-width:0;font-size:9pt}body.dj02-print-mode #dj02 .dj02-preview:before{content:'BORRADOR DE REVISIÓN — NO ES FORMULARIO OFICIAL CALIBRADO';display:block;font-weight:700;margin-bottom:10px}}

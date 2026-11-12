@@ -1,0 +1,9 @@
+
+.adc-form-catalog details+details{margin-top:1rem}
+.adc-form-catalog summary{cursor:pointer;font-weight:750;color:#183857;padding:.45rem 0}
+.adc-form-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,185px),1fr));gap:.55rem}
+.adc-form-grid>*{min-width:0;text-align:left;padding:.65rem .8rem;border-radius:.6rem}
+.adc-form-grid small{display:block;margin-top:.2rem;font-size:.78rem}
+.adc-catalog-pending{border:1px solid #dce3ec;background:#f4f6fa;color:#465871}
+#adcTramiteBack{margin:0 0 .7rem}
+#adcRequestTitle{margin-top:.65rem}

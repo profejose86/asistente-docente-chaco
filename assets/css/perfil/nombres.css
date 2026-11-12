@@ -1,0 +1,10 @@
+
+.adc-name-line{display:grid;grid-template-columns:1fr 1fr 170px;gap:10px;grid-column:1/-1}.adc-name-line label{min-width:0}
+#dj02 .dj02-paper{min-width:1180px}
+#dj02 .dj02-overlay{background:transparent;justify-content:center;white-space:nowrap;text-overflow:clip;font-size:clamp(10px,1vw,15px);font-weight:500;line-height:1.1}
+#dj02 .dj02-overlay.dj02-person{font-size:clamp(11px,1.1vw,16px);justify-content:center;text-align:center}
+#dj02 .dj02-overlay.dj02-row{font-size:clamp(9px,.83vw,12px)}
+#dj02 .dj02-draggable{outline:1px dashed #c94d28;background:rgba(255,220,170,.22);cursor:move;touch-action:none;z-index:2}
+#dj02 .dj02-draggable:empty:after{content:'·';color:#b24e32}
+@media(max-width:740px){.adc-name-line{grid-template-columns:1fr}}
+@media print{#dj02 .dj02-cal-controls{display:none!important}#dj02 .dj02-draggable{outline:none!important;background:transparent!important}#dj02 .dj02-draggable:empty:after{content:none!important}}

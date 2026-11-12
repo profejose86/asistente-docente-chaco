@@ -1,0 +1,5 @@
+
+.adc-school-month-arrows{display:grid;grid-template-columns:auto minmax(0,1fr) auto;align-items:center;gap:.5rem;width:100%}
+.adc-school-month-arrows button{font-size:1.35rem;padding:.15rem .65rem}
+.adc-school-month-arrows button:disabled{opacity:.45}
+#adcClearRequest{margin-inline-start:.5rem}

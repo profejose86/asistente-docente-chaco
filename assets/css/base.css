@@ -1,0 +1,223 @@
+
+:root{font-family:system-ui,-apple-system,Segoe UI,sans-serif;color:#17243a;background:#f4f6fa}*{box-sizing:border-box}body{margin:0}.wrap{max-width:950px;margin:auto;padding:24px}header{background:#142642;color:white;padding:24px;border-radius:16px;margin-bottom:20px}h1{font-size:1.6rem;margin:.2rem 0}h2{font-size:1.12rem;margin:0 0 12px}h3{font-size:1rem}.small{font-size:.86rem;color:#566579}.hint{color:#c8d6ef}section{background:white;padding:20px;border:1px solid #dce2eb;border-radius:14px;margin-bottom:16px}.fields{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}label{display:block;font-weight:600;font-size:.88rem}input,select{display:block;width:100%;padding:10px;border:1px solid #b9c6d7;border-radius:8px;margin-top:5px;font:inherit;background:white}button{border:0;background:#2453a3;color:white;border-radius:9px;padding:12px 15px;cursor:pointer;font-weight:650;margin:4px 6px 4px 0}button.alt{background:#e8eef8;color:#19396f}button.danger{background:#fff0f0;color:#a12222}nav{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 18px}nav button{margin:0}.inst{border:1px solid #dce2eb;border-radius:12px;padding:15px;margin:12px 0;background:#fafcff}.inst h3{margin:0 0 8px}.toolbar{display:flex;gap:8px;flex-wrap:wrap}.status{background:#e9f7ef;padding:12px;border-radius:9px}.warning{background:#fff5dc;padding:12px;border-radius:9px}.hide{display:none!important}.wide{grid-column:1/-1}.frecuentes{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px;margin:12px 0 20px}.frecuentes button{text-align:left;background:#eaf1fd;color:#163c76;margin:0;min-height:65px}.tramites{max-height:245px;overflow:auto;border:1px solid #dde3ea;border-radius:10px}.tramites button{display:flex;justify-content:space-between;gap:8px;width:100%;border-radius:0;background:white;color:#17243a;border-bottom:1px solid #e7ebf1;text-align:left;margin:0}.tramites small{color:#65748b}.daygrid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:5px;margin-top:12px}.daygrid label{font-size:.76rem}.daygrid input{padding:7px}.mini{padding:8px;background:#edf3fc;border-radius:7px;margin-top:8px}.muted{color:#64748b}footer{font-size:.85rem;color:#526072;margin:30px 0}#preview{background:white;border:1px solid #dce2eb;border-radius:10px;width:100%;height:550px;margin-top:12px}table{width:100%;border-collapse:collapse;margin-top:12px;font-size:.9rem}td,th{border:1px solid #dde3ea;padding:8px;text-align:left}th{background:#e9edf4}@media(max-width:650px){.fields,.frecuentes{grid-template-columns:1fr}.wrap{padding:12px}.daygrid{grid-template-columns:repeat(4,1fr)}}
+
+.dj-layout{display:grid;grid-template-columns:minmax(210px,1fr) minmax(0,3fr);gap:14px}.dj-side{max-height:78vh;overflow:auto;background:#f7f9fd;border:1px solid #dce2eb;padding:12px;border-radius:12px}.dj-preview{min-width:0;overflow:auto;border:1px solid #dce2eb;padding:12px;border-radius:12px;background:white}.dj-item{background:white;border:1px solid #dce2eb;border-radius:10px;padding:10px;margin:8px 0}.dj-item input,.dj-item select{padding:6px;font-size:.82rem}.dj-item label{font-size:.76rem;margin-top:7px}.dj-page{min-width:650px;font-size:11px;color:#111}.dj-page table{font-size:10px}.dj-page td,.dj-page th{border:1px solid #444;padding:5px;vertical-align:top}.dj-page th{background:#f0f0f0}.dj-tabs{display:flex;gap:8px;margin-bottom:15px}.dj-toast{position:fixed;bottom:20px;right:20px;background:#14532d;color:white;padding:14px 18px;border-radius:9px;z-index:999;box-shadow:0 4px 16px #0003}.dj-hours{display:flex;gap:5px;align-items:center;margin:5px 0}.dj-hours select,.dj-hours input{min-width:0}.dj-hours button{padding:5px 8px;margin:0}.dj-pagebreak{page-break-before:always;margin-top:30px}.dj-group{border:1px solid #b9c6d7;border-radius:10px;margin:10px 0;padding:7px;background:#edf3fc}.dj-group-header{display:flex;align-items:center;gap:5px}.dj-group-header b{flex:1;font-size:.82rem}.dj-group-header button{padding:5px 8px;margin:0}.dj-group .dj-item{margin:6px 0}@media(max-width:850px){.dj-layout{grid-template-columns:1fr}.dj-side{max-height:350px}}@media print{body.dj-print-mode .wrap>header,body.dj-print-mode nav,body.dj-print-mode #profile,body.dj-print-mode #license,body.dj-print-mode #dj>section>div:not(.dj-layout),body.dj-print-mode .dj-side,body.dj-print-mode .dj-toolbar{display:none!important}body.dj-print-mode .wrap{max-width:none;padding:0}body.dj-print-mode #dj{display:block!important}body.dj-print-mode .dj-layout{display:block}body.dj-print-mode .dj-preview{border:0;padding:0}body.dj-print-mode .dj-page{min-width:0}body.dj-print-mode .dj-pagebreak{page-break-before:always}}
+/* v0.9.16: DJ-01 table alignment and content-aware column sizing. */
+.dj-page .dj-table{width:100%;min-width:980px;table-layout:fixed;border-collapse:collapse}
+.dj-page .dj-table td,.dj-page .dj-table th{overflow-wrap:anywhere;word-break:normal;vertical-align:middle}
+.dj-page .dj-table .dj-day-cell,.dj-page .dj-table .dj-day-head{text-align:center;white-space:nowrap;overflow-wrap:normal}
+.dj-page .dj-table .dj-signature{min-width:145px}
+.dj-copy-tools{display:flex;gap:4px;flex-wrap:wrap;margin:5px 0}
+.dj-copy-tools button,.dj-hours .dj-copy-one{font-size:.72rem;padding:5px 7px;margin:0}
+.dj-hours:focus-within{outline:1px solid #8eaddc;outline-offset:2px;border-radius:5px}
+@media print{body.dj-print-mode .dj-page .dj-table{min-width:0;width:100%;font-size:8px}body.dj-print-mode .dj-page .dj-table td,body.dj-print-mode .dj-page .dj-table th{padding:3px 2px}body.dj-print-mode .dj-page .dj-table .dj-day-cell{white-space:normal;overflow-wrap:anywhere}}
+
+/* v0.9.16.04: vista de dos hojas y hoja 2 fiel al PDF aportado. */
+.dj-sheet{width:100%;max-width:1120px;margin:12px auto 24px;background:white;color:#111;box-sizing:border-box}
+.dj-sheet-label{font-size:12px;color:#526072;margin:12px 0 4px}
+.dj-sheet-one{font-size:9pt;overflow-x:auto}
+.dj-sheet-one .dj-table{font-size:9pt;min-width:980px}
+.dj-sheet-one .dj-table td,.dj-sheet-one .dj-table th{text-align:center;padding:4px 2px}
+.dj-sheet-one .dj-table td.adc-dj-cargo-name{text-align:left;padding-left:5px}
+.dj-sheet-two{position:relative;width:100%;aspect-ratio:1008 / 612;border:1px solid #aaa}
+.dj-sheet-two img{width:100%;height:100%;display:block}
+.dj-over{position:absolute;font:clamp(7px,0.85vw,12px) Arial,sans-serif;background:#fff;white-space:nowrap;overflow:hidden}
+.dj-over-name{left:2.7%;top:56.7%;width:37%;height:2.5%;font-weight:bold}
+.dj-over-last{left:56.4%;top:22%;width:31%;height:2.5%}
+.dj-over-first{left:56.4%;top:27.3%;width:31%;height:2.5%}
+.dj-over-dni{left:57.8%;top:32.4%;width:10%;height:2.5%}
+.dj-over-presented{left:63%;top:73.5%;width:29%;height:2.5%}
+.dj-page-nav{display:flex;gap:8px;flex-wrap:wrap}
+.dj-p2-fields{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px;padding:8px;background:#f5f7fa;margin:10px 0}
+.dj-p2-fields label{font-size:11px}.dj-p2-fields input{padding:6px}
+@page{size:legal landscape;margin:8mm}
+@media print{body.dj-print-mode .dj-p2-fields,body.dj-print-mode .dj-page-nav,body.dj-print-mode .dj-sheet-label{display:none!important}body.dj-print-mode .dj-sheet{width:100%;max-width:none;margin:0;break-after:page;page-break-after:always}body.dj-print-mode .dj-sheet:last-child{break-after:auto;page-break-after:auto}body.dj-print-mode .dj-sheet-one{overflow:visible}body.dj-print-mode .dj-sheet-one .dj-table{min-width:0;font-size:8pt}body.dj-print-mode .dj-sheet-two{border:0}body.dj-print-mode .dj-over{font-size:9pt}body.dj-print-mode .dj-preview{overflow:visible}body.dj-print-mode .dj-pagebreak{page-break-before:auto;margin-top:0}}
+
+/* v0.9.16.05: calibracion hoja 2 con PDF sin recuadros */
+.dj-sheet-two{aspect-ratio:1008/612;overflow:hidden}
+.dj-over{position:absolute;background:white;display:flex;align-items:center;white-space:nowrap;overflow:hidden;padding:0 2px;font:clamp(8px,0.88vw,12px) Arial,sans-serif;color:#111}
+.dj-over.center{justify-content:center;text-align:center}
+.dj-over.left{justify-content:flex-start;text-align:left}
+.dj-over[data-box="apellido"]{left:56.65%;top:25.8%;width:26.8%;height:3.6%}
+.dj-over[data-box="nombre"]{left:56.65%;top:31.0%;width:26.8%;height:3.6%}
+.dj-over[data-box="dni"]{left:56.45%;top:37.1%;width:8.3%;height:3.6%}
+.dj-over[data-box="clase"]{left:68.85%;top:37.1%;width:6.9%;height:3.6%}
+.dj-over[data-box="sexo"]{left:79.35%;top:37.1%;width:8.4%;height:3.6%}
+.dj-over[data-box="domicilio"]{left:56.65%;top:42.6%;width:30.4%;height:3.7%}
+.dj-over[data-box="localidad"]{left:56.65%;top:48.0%;width:30.4%;height:3.7%}
+.dj-over[data-box="titulo"]{left:60.1%;top:53.3%;width:27.5%;height:3.7%}
+.dj-over[data-box="otorgado"]{left:58.85%;top:59.7%;width:28.3%;height:3.7%}
+.dj-over[data-box="registro"]{left:59.15%;top:65.8%;width:10.2%;height:3.5%}
+.dj-over[data-box="antiguedad"]{left:76.55%;top:65.8%;width:4.5%;height:3.5%}
+.dj-over[data-box="presentada"]{left:60.75%;top:73.4%;width:23.2%;height:3.8%}
+.dj-over[data-box="lugarfecha"]{left:62.0%;top:83.7%;width:25.9%;height:3.8%}
+.dj-over[data-box="nombreizq"]{left:2.7%;top:69.8%;width:10.5%;height:3.5%}
+.dj-over[data-box="diaizq"]{left:32.0%;top:78.4%;width:4.8%;height:3.6%}
+.dj-over[data-box="mesizq"]{left:4.5%;top:87.2%;width:8.2%;height:3.6%}
+.dj-over[data-box="anioizq"]{left:17.7%;top:87.2%;width:7.7%;height:3.6%}
+.dj-p2-editor{margin-top:18px!important;background:#f5f7fa;border:1px solid #dce2eb;padding:12px;border-radius:9px;margin:12px 0}
+.dj-p2-editor .fields{grid-template-columns:repeat(2,minmax(0,1fr))}.dj-p2-editor .dj-datecheck{grid-column:1/-1;justify-content:flex-start;padding:8px 0}
+.dj-p2-editor label{font-size:12px}
+.dj-p2-editor .dj-datecheck{display:flex;align-items:center;gap:8px}
+.dj-p2-editor .dj-datecheck input{width:auto;margin:0}
+@media(max-width:700px){.dj-p2-editor .fields{grid-template-columns:1fr}}
+@media print{
+ @page{size:legal landscape;margin:5mm}
+ body.dj-print-mode .wrap{display:none!important}
+ body.dj-print-mode #dj{display:block!important;position:static!important;margin:0!important;padding:0!important;border:0!important;background:white!important}
+ body.dj-print-mode #dj>section>#djNew{display:block!important}
+ body.dj-print-mode #dj>section{margin:0!important;padding:0!important;border:0!important}
+ body.dj-print-mode #dj>section>h2,body.dj-print-mode .dj-tabs,body.dj-print-mode #djNew>p,body.dj-print-mode .dj-side,body.dj-print-mode .dj-toolbar,body.dj-print-mode .dj-page-nav,body.dj-print-mode .dj-preview>p,body.dj-print-mode .dj-sheet-label,body.dj-print-mode .dj-p2-editor{display:none!important}
+ body.dj-print-mode .dj-layout,body.dj-print-mode .dj-preview,body.dj-print-mode #djNew{display:block!important;overflow:visible!important;margin:0!important;padding:0!important;border:0!important}
+ body.dj-print-mode .dj-page{min-width:0!important}
+ body.dj-print-mode .dj-sheet{break-after:page;page-break-after:always;width:100%!important;max-width:none!important;margin:0!important}
+ body.dj-print-mode .dj-sheet:last-child{break-after:auto;page-break-after:auto}
+ body.dj-print-mode .dj-sheet-one{height:197mm;overflow:hidden!important}
+ body.dj-print-mode .dj-sheet-two{width:100%!important;aspect-ratio:1008/612!important;height:auto!important}
+ body.dj-print-mode .dj-over{font-size:8pt!important}
+}
+
+/* v0.9.16.06: PDF-aligned SVG coordinates. Image and data share one viewBox. */
+.dj-sheet-two{height:auto!important;aspect-ratio:1008/612!important;overflow:hidden!important}
+.dj-sheet-two .dj-p2-svg{display:block;width:100%;height:auto;aspect-ratio:1008/612}
+@media print{body.dj-print-mode .dj-sheet-two .dj-p2-svg{display:block;width:100%;height:auto}}
+#profile .perfil-toggle{display:flex;align-items:center;justify-content:space-between;width:100%;text-align:left;font-weight:700;margin-bottom:8px;gap:12px}
+#profile .perfil-toggle-label{overflow-wrap:anywhere}
+#profile .perfil-horarios-toggle{font-size:13px;background:#eaf1f9;color:#17324e;margin-top:12px}
+#profile .perfil-cargo-toggle{font-size:13px;background:#f1f5fa;color:#172b4d}
+#profile [data-inst-panel],#profile [data-cargo-panel]{padding-top:6px}
+#profile [hidden]{display:none!important}
+
+/* v0.9.16.11 — Etapa 3: hoja 1 y exactamente dos hojas oficio horizontales. */
+@media print {
+ @page {size:legal landscape;margin:5mm}
+ html,body{margin:0!important;padding:0!important}
+ body.dj-print-mode #dj,body.dj-print-mode #dj>section,body.dj-print-mode #djNew,body.dj-print-mode .dj-layout,body.dj-print-mode .dj-preview,body.dj-print-mode #djPreview{margin:0!important;padding:0!important;border:0!important;box-shadow:none!important;overflow:visible!important}
+ body.dj-print-mode #djPreview{display:block!important}
+ body.dj-print-mode .dj-sheet-label,body.dj-print-mode #djP2Editor{display:none!important}
+ body.dj-print-mode .dj-sheet{margin:0!important;padding:0!important;break-inside:avoid!important;page-break-inside:avoid!important}
+ body.dj-print-mode #djSheet1{box-sizing:border-box!important;width:100%!important;height:190mm!important;max-height:190mm!important;overflow:hidden!important;break-after:page!important;page-break-after:always!important}
+ body.dj-print-mode #djSheet2{box-sizing:border-box!important;width:319mm!important;max-width:100%!important;height:193.7mm!important;max-height:193.7mm!important;margin:0 auto!important;overflow:hidden!important;break-before:auto!important;page-break-before:auto!important;break-after:auto!important;page-break-after:auto!important}
+ body.dj-print-mode #djSheet2 .dj-p2-svg{display:block!important;width:100%!important;height:100%!important;aspect-ratio:auto!important}
+ body.dj-print-mode .dj-sheet-one .dj-table{table-layout:fixed!important;width:100%!important;min-width:0!important;font-size:7.5pt!important}
+ body.dj-print-mode .dj-sheet-one .dj-table td,body.dj-print-mode .dj-sheet-one .dj-table th{padding:3px 2px!important}
+ body.dj-print-mode .dj-sheet-one .dj-table .dj-signature{min-width:0!important}
+}
+
+/* v0.9.16.12: advertencia no destructiva para intervalos de 24 horas. */
+#profile .dj-hours.adc-time-warning{background:#fff0d4;border:1px solid #d97706;border-radius:8px;padding:5px}
+#profile .dj-hours input.adc-time-invalid{background:#ffedd5!important;border:2px solid #ea580c!important;color:#7c2d12}
+#profile .dj-hours input.adc-time-invalid:focus{outline:2px solid #f59e0b;outline-offset:1px}
+@media print{
+ body.dj-print-mode #djPreview{display:flow-root!important}
+ body.dj-print-mode #djSheet1{break-before:auto!important;page-break-before:auto!important}
+ body.dj-print-mode #djSheet2{break-before:page!important;page-break-before:always!important;break-after:auto!important;page-break-after:auto!important}
+ body.dj-print-mode #djPreview::after{content:none!important}
+ body.dj-print-mode .dj-sheet:last-child{break-after:auto!important;page-break-after:auto!important}
+}
+
+/* v0.9.16.12c: selectors 24 h independientes del idioma del navegador. */
+.dj-hours .adc-24-clock{display:inline-flex;align-items:center;gap:1px;min-width:99px;flex:0 0 auto;white-space:nowrap}
+.dj-hours .adc-24-clock select{width:46px;min-width:42px;padding:6px 1px;margin:0;font-size:12px;font-variant-numeric:tabular-nums}
+.dj-hours .adc-24-clock .adc-clock-colon{font-weight:800}
+.dj-hours .adc-24-clock.adc-time-invalid select{background:#ffedd5!important;border:2px solid #ea580c!important}
+@media(max-width:700px){.dj-hours{flex-wrap:wrap}.dj-hours .adc-24-clock select{width:46px}}
+/* v0.9.16.12e: minute steps and legacy non-multiple indication */
+.dj-hours .adc-24-clock select.adc-legacy-minute{border:2px solid #d97706!important;background:#fff0d4!important}
+.dj-hours .adc-24-clock{min-width:112px;gap:2px}
+.dj-hours .adc-24-clock select{width:50px;min-width:46px}
+
+/* v0.9.16.13 — DJ-01: acordeones accesibles y jerarquia visual de cursos. */
+#djCargoList .dj-group{background:#f7f9fd;border:1px solid #cbd5e1;padding:0;overflow:hidden}
+#djCargoList .dj-group-header{display:flex;align-items:center;gap:6px;padding:9px;background:#edf3fc}
+#djCargoList .dj-group-header .dj-accordion-toggle{flex:1;min-width:0;background:transparent;color:#17324e;text-align:left;margin:0;padding:6px;border-radius:6px;display:flex;justify-content:space-between;align-items:center;gap:8px}
+#djCargoList .dj-group-header .dj-accordion-toggle .dj-group-name{font-weight:750;font-size:.83rem;overflow-wrap:anywhere}
+#djCargoList .dj-group-header .dj-accordion-toggle .dj-group-summary{font-size:.72rem;color:#526479;display:block;margin-top:3px;font-weight:500}
+#djCargoList .dj-group-header .dj-drag-handle{background:transparent;color:#37547c;cursor:grab;padding:7px 5px;margin:0;touch-action:none}
+#djCargoList .dj-group-header .dj-drag-handle:disabled{opacity:.3;cursor:not-allowed}
+#djCargoList .dj-group-header .dj-move{padding:4px 7px;margin:0;font-size:.8rem}
+#djCargoList .dj-group.dj-dragging{opacity:.45;border:2px dashed #2563eb}
+#djCargoList .dj-group.dj-drop-target{outline:3px solid #2563eb;outline-offset:-3px}
+#djCargoList .dj-group-body{padding:7px}
+#djCargoList .dj-course-badge{display:inline-block;background:#dbeafe;color:#1d4ed8;border:1px solid #bfdbfe;border-radius:6px;padding:5px 8px;font-weight:750;font-size:.85rem;overflow-wrap:anywhere}
+#djCargoList .dj-course-subject{font-weight:650;color:#233b5a;font-size:.8rem;margin-top:5px}
+#djCargoList .dj-group[data-dj-open="false"] .dj-group-body{display:none}
+#djCargoList .dj-group[data-dj-open="false"] .dj-group-header{background:#f1f5fa}
+#djCargoList .dj-drag-note{font-size:.76rem;color:#526479;padding:5px 0}
+.adc-pendiente{display:inline-flex;align-items:center;justify-content:center;width:19px;height:19px;border-radius:50%;background:#f59e0b;color:#fff;font-weight:800;margin-left:5px}.adc-pendiente.oculto{display:none}#perfilAntiguedadVista{background:#f3f6fa;font-weight:700}#perfilAntiguedadVista.pendiente{border:2px solid #f59e0b;background:#fff7ed}.adc-nota-antiguedad{font-size:.8rem;color:#64748b;margin:0}
+/* v0.9.16.15 — avisos no bloqueantes y edición compartida */
+.adc-pending-input{border:2px solid #e4a135!important;background:#fff9ed!important}
+.adc-field-warning{color:#a65b00;font-weight:800;margin-left:5px;font-size:15px}
+.adc-pending-note{color:#8a5200;background:#fff5dd;border-left:3px solid #e4a135;padding:9px;margin:9px 0;border-radius:5px}
+.adc-shared-editor{border:1px solid #e4a135;background:#fffaf0;border-radius:10px;padding:12px;margin:10px 0}
+.adc-shared-editor label{margin:7px 0}.adc-shared-editor input{background:#fff}
+.adc-status{display:inline-block;padding:7px 12px;border-radius:8px;font-weight:700;margin:8px 0}
+.adc-status.draft{background:#fff0d2;color:#8b5000}.adc-status.ready{background:#e5f5e8;color:#176033}
+@media print{.adc-shared-editor,.adc-status,.adc-pending-note{display:none!important}}
+
+/* v0.9.16.16 — Señales amables para campos obligatorios. */
+#profile .adc-pendiente{width:auto;height:auto;background:transparent;color:#c58a36;border-radius:0;font-size:15px;vertical-align:super;font-weight:700;transition:color .15s ease}
+#profile .adc-field-warning,.adc-shared-editor .adc-field-warning{color:#c58a36;font-size:15px;font-weight:700;vertical-align:super;transition:color .15s ease}
+#profile label:hover .adc-field-warning,#profile label:focus-within .adc-field-warning,#profile label:hover .adc-pendiente,#profile label:focus-within .adc-pendiente,.adc-shared-editor label:hover .adc-field-warning,.adc-shared-editor label:focus-within .adc-field-warning{color:#ea580c}
+#profile .adc-pending-input{border:1px solid #b9c6d7!important;background:white!important;transition:border-color .15s,background .15s,box-shadow .15s}
+#profile label:hover>.adc-pending-input,#profile label:focus-within>.adc-pending-input,.adc-shared-editor label:hover>input,.adc-shared-editor label:focus-within>input{border:2px solid #f59e0b!important;background:#fffaf0!important}
+#profile.adc-attempted .adc-pending-input{border:2px solid #ea580c!important;background:#fff7ed!important}
+#profile label:has(.adc-pending-input):hover::after,#profile label:has(.adc-pending-input):focus-within::after,.adc-shared-editor label:hover::after,.adc-shared-editor label:focus-within::after{content:'Recordá completar este dato';display:block;font-size:12px;font-style:italic;font-weight:400;color:#b45309;margin-top:4px}
+@media print{.adc-field-warning,.adc-pendiente{display:none!important}}
+
+/* Aviso informativo DL-01: coincidencia de fechas, sin bloqueo. */
+.adc-fecha-aviso{display:block;margin-top:7px;padding:9px 10px;background:#fff8e8;border-left:3px solid #d6a24b;border-radius:5px;font-size:12px;font-weight:400;color:#704b13;line-height:1.45}
+.adc-fecha-entendido{display:inline-block;margin:5px 0 0;padding:5px 9px;font-size:12px;background:#e8eef8;color:#19396f}
+
+/* v0.9.16.17 — Advertencias visuales de edición, jamás en impresión. */
+.adc-conflict-row{background:#fff1f2!important;outline:2px solid #dc2626;outline-offset:-2px;border-radius:5px}
+.adc-conflict-row .adc-24-clock select{border-color:#dc2626!important;background:#fff1f2!important}
+.adc-conflict-badge{color:#b91c1c!important;font-weight:800;font-size:13px;margin-left:6px}
+.adc-conflict-message{color:#b91c1c;font-size:12px;font-weight:650;margin:5px 0}
+.adc-preview-conflict{box-shadow:inset 0 0 0 2px #dc2626!important;background:#fff1f2!important}
+.adc-conflict-hint{color:#b91c1c;font-size:12px;margin-top:5px}
+.adc-exam-notice{background:#fff1f2;border:1px solid #dc2626;color:#991b1b;border-radius:9px;padding:12px;margin-top:10px;font-weight:600}
+@media print{body.dj-print-mode .adc-conflict-badge,body.dj-print-mode .adc-conflict-message,body.dj-print-mode .adc-conflict-hint{display:none!important}body.dj-print-mode .adc-preview-conflict{box-shadow:none!important;background:transparent!important}body.dj-print-mode .adc-conflict-row{outline:none!important;background:transparent!important}}
+
+/* v0.9.16.18: pares de colores, tarjetas de decisión y vista de impresión limpia. */
+.adc-conflict-actions{display:grid;gap:9px;margin:8px 0 14px}
+.adc-conflict-card{border:1px solid #d6dce6;border-left:4px solid var(--adc-pair-color);background:#fff;padding:11px;border-radius:9px;font-size:12px}
+.adc-conflict-card p{margin:7px 0 10px;line-height:1.5}
+.adc-conflict-title{font-weight:750;font-size:13px}
+.adc-conflict-label,.adc-pair-tag>span{display:inline-block;color:#fff;background:var(--adc-pair-color);border-radius:4px;padding:2px 5px;font-weight:800;font-size:10px;margin-right:4px}
+.adc-conflict-buttons{display:flex;flex-direction:row;flex-wrap:wrap;align-items:center;gap:8px}
+.adc-conflict-buttons button{margin:0;padding:9px 12px;border:1px solid #aeb8c8;background:white;color:#17243a;border-radius:8px;font-size:12px;white-space:nowrap}
+.adc-conflict-buttons .adc-acknowledge{border-color:#15803d;color:#166534}
+.adc-conflict-row{outline:2px solid #dc2626!important;background:#fff1f2!important}
+.adc-conflict-row .adc-24-clock.adc-conflict-pair select{border:2px solid var(--adc-pair-color)!important;background:white!important}
+.adc-preview-conflict{box-shadow:inset 0 0 0 2px #dc2626!important;background:#fff1f2!important}
+.adc-conflict-cell{display:inline-block;border:2px solid var(--adc-pair-color);border-radius:3px;padding:1px 2px}
+.adc-pair-tag{white-space:nowrap;display:inline-flex;gap:2px;margin-left:3px}
+@media print{body.dj-print-mode .adc-conflict-actions,body.dj-print-mode .adc-pair-tag{display:none!important}body.dj-print-mode .adc-conflict-cell{border:0!important;padding:0!important}body.dj-print-mode .adc-preview-conflict{background:transparent!important;box-shadow:none!important}}
+
+/* v0.9.16.19: perfil tranquilo; DJ con borde fino y etiquetas diferenciadas. */
+#profile .adc-conflict-row,#profile .adc-preview-conflict{outline:none!important;background:transparent!important}
+#profile .adc-conflict-badge,#profile .adc-pair-tag,#profile .adc-conflict-actions,#profile [data-pwarnings]{display:none!important}
+#profile .adc-time-warning{background:transparent!important;border:0!important;padding:0!important}
+#profile .adc-24-clock.adc-time-invalid select{background:white!important;border:1px solid #b9c6d7!important}
+.adc-conflict-row{background:transparent!important;outline:1.5px solid #dc2626!important;outline-offset:-1px}
+.adc-preview-conflict{background:transparent!important;box-shadow:inset 0 0 0 1.5px #dc2626!important}
+.adc-profile-review-link{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;background:#f1f6fc;border:1px solid #c8d8ee;border-radius:10px;padding:12px;margin:12px 0}
+.adc-profile-review-link p{font-size:12px;color:#526479;margin:5px 0 0}
+.adc-profile-review-link button{margin:0;white-space:normal}
+@media print{.adc-profile-review-link{display:none!important}}
+
+/* v0.9.16.19a — Correcciones de impresión: la vista DJ-01 impresa nunca conserva avisos. */
+@media print {
+ body.dj-print-mode .adc-conflict-row {outline:none!important;background:transparent!important;box-shadow:none!important}
+ body.dj-print-mode .adc-preview-conflict {outline:none!important;background:transparent!important;box-shadow:none!important}
+ body.dj-print-mode .adc-conflict-cell {outline:none!important;border:0!important;box-shadow:none!important;background:transparent!important;padding:0!important}
+ body.dj-print-mode .adc-conflict-badge,body.dj-print-mode .adc-conflict-message,body.dj-print-mode .adc-conflict-hint,body.dj-print-mode .adc-conflict-actions,body.dj-print-mode .adc-pair-tag,body.dj-print-mode .adc-profile-review-link {display:none!important}
+}
+
+/* v0.9.16.19b: una etiqueta por advertencia e intervalo; navegación al detalle. */
+.adc-pair-tag .adc-jump-notice{display:inline-block;border:0;border-radius:4px;padding:2px 5px;margin:0 3px 0 0;background:var(--adc-pair-color);color:white;font-size:10px;font-weight:800;cursor:pointer;line-height:1.3}
+.adc-pair-tag .adc-jump-notice:focus-visible,.adc-conflict-badge:focus-visible{outline:2px solid #111827;outline-offset:2px}
+.adc-conflict-badge{cursor:pointer}
+.adc-conflict-card.adc-notice-target{outline:3px solid #2563eb;outline-offset:3px}
+@media print{body.dj-print-mode .adc-jump-notice{display:none!important}}

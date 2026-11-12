@@ -1,0 +1,79 @@
+
+/* v0.9.16.19g · Modo Candado: ancho ajustable y vista reducida solo en pantalla. */
+@media screen {
+ #dj{width:100%;max-width:none;margin:0 auto;padding:0 12px 24px}
+ #dj>section{width:100%;max-width:none;margin:0;padding:16px}
+ #dj .dj-layout{display:grid;grid-template-columns:minmax(245px,var(--adc-dj-side-width,355px)) 12px minmax(0,1fr);gap:7px;align-items:start;min-width:0}
+ #dj .dj-side{max-height:none;height:calc(100vh - 24px);min-height:400px;overflow-y:auto;overflow-x:hidden;position:sticky;top:12px;padding:12px}
+ #dj .dj-preview{min-width:0;overflow-x:auto;overflow-y:visible;padding:10px}
+ #dj .adc-dj-splitter{position:sticky;top:12px;height:calc(100vh - 24px);min-height:400px;display:flex;align-items:center;justify-content:center;cursor:col-resize;border-radius:9px;background:#e9eef6;color:#577090;touch-action:none;user-select:none;transition:background .15s}
+ #dj .adc-dj-splitter:hover,#dj .adc-dj-splitter:focus-visible,#dj .adc-dj-splitter.adc-dragging{background:#cbdcf3;outline:2px solid #94b4dd}
+ #dj .adc-dj-splitter span{font-size:24px;letter-spacing:-3px}
+ #dj .adc-dj-view-controls{display:flex;flex-wrap:wrap;gap:8px;align-items:center;padding:9px 10px;margin-bottom:10px;border:1px solid #d8e3ef;background:#f5f8fd;border-radius:9px}
+ #dj .adc-dj-view-controls label{font-size:12px;white-space:nowrap}
+ #dj .adc-dj-view-controls input[type=range]{width:130px;max-width:35%;padding:0;margin:0;accent-color:#557cae}
+ #dj .adc-dj-view-controls button{padding:7px 9px;margin:0;font-size:12px}
+ #dj #djPreview{zoom:var(--adc-dj-zoom,1)}
+}
+@media screen and (max-width:700px){
+ #dj{padding:0 7px 16px}
+ #dj>section{padding:10px}
+ #dj .dj-layout{grid-template-columns:minmax(0,1fr)!important;gap:10px}
+ #dj .dj-side{position:static;height:auto;min-height:0;max-height:55vh}
+ #dj .adc-dj-splitter{display:none}
+ #dj .dj-preview{min-width:0}
+}
+@media print{
+ body.dj-print-mode #dj{width:100%!important;padding:0!important}
+ body.dj-print-mode #djPreview{zoom:1!important}
+ body.dj-print-mode .adc-dj-splitter,body.dj-print-mode .adc-dj-view-controls{display:none!important}
+}
+
+/* v0.9.16.19h · Modo Candado: barra de zoom inferior, siempre accesible en pantalla. */
+@media screen {
+ #dj .dj-preview{position:relative}
+ #dj .adc-dj-view-controls{position:sticky;bottom:0;z-index:30;margin:12px 0 0;box-shadow:0 -3px 14px rgba(30,53,88,.09);background:#f5f8fd}
+}
+@media print {body.dj-print-mode .adc-dj-view-controls{display:none!important}}
+
+/* v0.9.16.19i · Modo Candado: control flotante anclado a la ventana. */
+@media screen {
+ #dj .adc-dj-view-controls{
+   position:fixed!important;bottom:12px!important;right:16px;
+   left:auto;z-index:1000;margin:0!important;
+   max-width:calc(100vw - 24px);width:min(680px,calc(100vw - 24px));
+   box-shadow:0 5px 22px rgba(25,43,73,.23)!important;
+   border:1px solid #bdcfe7;border-radius:12px;
+ }
+ #dj .dj-preview{padding-bottom:82px!important}
+ body:has(#dj.hide) #dj .adc-dj-view-controls,
+ body:has(#djHistory:not(.hide)) #dj .adc-dj-view-controls{display:none!important}
+}
+@media screen and (max-width:700px){#dj .adc-dj-view-controls{left:12px!important;right:12px!important;width:auto!important}}
+@media print{body.dj-print-mode #dj .adc-dj-view-controls{display:none!important}}
+
+/* v0.9.16.19j · Modo Candado: zoom centrado y aparición al mover el puntero. */
+@media screen {
+ #dj .adc-dj-view-controls{
+   opacity:0;visibility:hidden;pointer-events:none;
+   transform:translateY(9px);
+   transition:opacity .22s ease,transform .22s ease,visibility .22s ease;
+ }
+ #dj .adc-dj-view-controls.adc-zoom-visible,
+ #dj .adc-dj-view-controls:focus-within{
+   opacity:1;visibility:visible;pointer-events:auto;transform:translateY(0);
+ }
+}
+@media (prefers-reduced-motion:reduce){#dj .adc-dj-view-controls{transition:none!important}}
+
+/* v0.9.16.19k · Modo Candado: acciones visibles en barra flotante. */
+@media screen and (min-width:701px){
+ #dj .adc-dj-view-controls{width:min(760px,calc(100vw - 24px));max-width:calc(100vw - 24px);justify-content:center;gap:9px;flex-wrap:wrap}
+ #dj .adc-dj-view-controls input[type=range]{flex:1 1 120px;max-width:180px;min-width:90px}
+ #dj .adc-dj-view-controls #adcDjFit,#dj .adc-dj-view-controls #adcDjResetPanel{display:inline-flex!important;align-items:center;justify-content:center;white-space:nowrap;flex:0 0 auto}
+}
+@media screen and (max-width:700px){
+ #dj .adc-dj-view-controls{justify-content:center;gap:7px;flex-wrap:wrap;padding:9px}
+ #dj .adc-dj-view-controls input[type=range]{flex:1 1 110px;max-width:none;min-width:80px}
+ #dj .adc-dj-view-controls #adcDjFit,#dj .adc-dj-view-controls #adcDjResetPanel{display:inline-flex!important;white-space:normal;text-align:center}
+}

@@ -1,0 +1,38 @@
+
+/* 19p: DJ-02 reconstructed as real HTML, not a raster template. Scoped entirely to DJ-02. */
+#dj02 .dj02-paper{width:1311px!important;min-width:1311px!important;height:796px!important;aspect-ratio:auto!important;position:relative;background:#fff;color:#111;font-family:Arial,Helvetica,sans-serif;container-type:inline-size;box-sizing:border-box;overflow:hidden;border:1px solid #bbb}
+#dj02 .dj02-preview{overflow:auto}
+#dj02 .dj02-native-header{position:absolute;left:1%;top:1.2%;width:98%;height:18%;display:grid;grid-template-columns:53% 47%;gap:4px}
+#dj02 .dj02-native-header>div{border:3px double #111;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:8px;font-weight:700;font-size:17px}
+#dj02 .dj02-native-header .dj02-title{font-size:26px}
+#dj02 .dj02-oath{position:absolute;top:20.7%;width:100%;text-align:center;font-size:17px}
+#dj02 .dj02-formarea{position:absolute;top:25.5%;left:.8%;width:98.4%;height:65.7%;padding:1px;box-sizing:border-box;display:grid;grid-template-columns:30% 70%;}
+#dj02 .dj02-paper::before{content:"";position:absolute;inset:25.5% .8% 0;border:1px solid #333;pointer-events:none}
+#dj02 .dj02-personal{padding:9px 12px 4px;position:relative;min-width:0}
+#dj02 .dj02-personal>h4{font-size:17px;margin:0 0 12px}
+#dj02 .dj02-person-line{display:flex;align-items:baseline;min-height:37px;gap:5px;position:relative;white-space:nowrap}
+#dj02 .dj02-person-line label{font-size:16px;font-weight:700;flex:none}
+#dj02 .dj02-person-line .dj02-person-value{position:relative;flex:1;min-width:0;border-bottom:1px dotted #555;display:flex;align-items:baseline;justify-content:flex-start;text-align:left;height:24px}
+#dj02 .dj02-person-line.dj02-tall{min-height:55px}
+#dj02 .dj02-person-line.dj02-tall .dj02-person-value{height:43px;align-items:flex-start}
+#dj02 .dj02-person-line small{font-size:11px;position:absolute;top:25px;left:0}
+#dj02 .dj02-person-line .dj02-overlay{position:relative!important;left:auto!important;top:auto!important;width:100%!important;height:100%!important;display:block!important;overflow:hidden!important;text-align:left!important;white-space:normal!important;line-height:1.08!important;font-weight:700!important;background:transparent!important;padding:2px 2px!important;box-sizing:border-box!important}
+#dj02 .dj02-venue{font-size:14px;text-align:center;line-height:1.3;margin-top:5px}
+#dj02 .dj02-license-table{width:100%;height:100%;border-collapse:collapse;table-layout:fixed;font-size:12px}
+#dj02 .dj02-license-table th,#dj02 .dj02-license-table td{border:1px solid #222;padding:2px 3px;text-align:center;vertical-align:middle;box-sizing:border-box;overflow:hidden}
+#dj02 .dj02-license-table thead tr:first-child{height:43px}
+#dj02 .dj02-license-table thead tr:nth-child(2){height:30px}
+#dj02 .dj02-license-table tbody tr{height:calc((100% - 73px)/14)}
+#dj02 .dj02-license-table th{font-weight:600;font-size:12px;line-height:1.15}
+#dj02 .dj02-license-table .dj02-cell{width:100%;height:100%;display:flex;align-items:center;justify-content:center;overflow:hidden;box-sizing:border-box;line-height:1.1;font-weight:700;white-space:normal;overflow-wrap:anywhere}
+#dj02 .dj02-license-table .dj02-motivo{text-align:left;justify-content:flex-start}
+#dj02 .dj02-footer{position:absolute;top:94.7%;left:1.5%;width:97%;font-size:13px;display:flex;align-items:center;gap:30px}
+#dj02 .dj02-footer .dj02-sign{width:28%;text-align:center;font-weight:700}
+#dj02 .dj02-footer .dj02-warning{flex:1;text-align:center}
+#dj02 .dj02-draggable{outline:1px dashed #c94d28!important;background:rgba(255,220,170,.22)!important;cursor:move!important;touch-action:none}
+#dj02 .dj02-fit-warning{color:#a0441b;font-size:12px;margin:8px 0}
+@media print{
+ #dj02 .dj02-paper{transform-origin:top left;transform:scale(.97);width:1311px!important;height:796px!important;min-width:1311px!important;print-color-adjust:exact;-webkit-print-color-adjust:exact}
+ #dj02 .dj02-preview{overflow:visible!important}
+ #dj02 .dj02-draggable{outline:none!important;background:transparent!important}
+}

@@ -1,0 +1,358 @@
+{
+  "sourceSha256": "2926ad85608cdb076c693b97b9163ccece21176c25d2c182bfff3a1e0d3ee6db",
+  "sourceBytes": 4717508,
+  "blocks": [
+    {
+      "type": "style",
+      "file": "assets/css/base.css",
+      "opening": "<style>",
+      "closing": "</style>",
+      "replacement": "<link rel=\"stylesheet\" href=\"assets/css/base.css\">",
+      "sha256": "f9f90bcff0c6dc62b70d98c6334f643b99fd4534a4957ce5be5753e9159e6013"
+    },
+    {
+      "type": "style",
+      "file": "assets/css/tramites/dj01-advertencias.css",
+      "opening": "<style>",
+      "closing": "</style>",
+      "replacement": "<link rel=\"stylesheet\" href=\"assets/css/tramites/dj01-advertencias.css\">",
+      "sha256": "c2035a466be5be880738a715897f29cf8dd27a503ab6bfa5b87bc9783260cada"
+    },
+    {
+      "type": "style",
+      "file": "assets/css/tramites/dj01-distribucion.css",
+      "opening": "<style>",
+      "closing": "</style>",
+      "replacement": "<link rel=\"stylesheet\" href=\"assets/css/tramites/dj01-distribucion.css\">",
+      "sha256": "8ffea1c7eef6d87484086338ec9cba6079945ec4f6cea209bc7f1beaccafdaee"
+    },
+    {
+      "type": "style",
+      "file": "assets/css/interfaz/navegacion.css",
+      "opening": "<style>",
+      "closing": "</style>",
+      "replacement": "<link rel=\"stylesheet\" href=\"assets/css/interfaz/navegacion.css\">",
+      "sha256": "28848981b685aab70ee4289b873ceec24905756bba4304f96619b5479c317126"
+    },
+    {
+      "type": "style",
+      "file": "assets/css/tramites/dj02-base.css",
+      "opening": "<style>",
+      "closing": "</style>",
+      "replacement": "<link rel=\"stylesheet\" href=\"assets/css/tramites/dj02-base.css\">",
+      "sha256": "53eac84d13ac323cf7a4356448f7dad5f1e5f30fee012a81a80dcfdae8d9f1f1"
+    },
+    {
+      "type": "style",
+      "file": "assets/css/tramites/dj02-plantilla.css",
+      "opening": "<style>",
+      "closing": "</style>",
+      "replacement": "<link rel=\"stylesheet\" href=\"assets/css/tramites/dj02-plantilla.css\">",
+      "sha256": "c99a78c2a8da0db0eb81940f7e20a0a2f147cdfc4c740af2d64669e89209b074"
+    },
+    {
+      "type": "style",
+      "file": "assets/css/calendario/base.css",
+      "opening": "<style>",
+      "closing": "</style>",
+      "replacement": "<link rel=\"stylesheet\" href=\"assets/css/calendario/base.css\">",
+      "sha256": "53752ef42df24923677fd0d3bfff9fa425ab80b29b33acb760234740e325c5c1"
+    },
+    {
+      "type": "style",
+      "file": "assets/css/tramites/catalogo.css",
+      "opening": "<style>",
+      "closing": "</style>",
+      "replacement": "<link rel=\"stylesheet\" href=\"assets/css/tramites/catalogo.css\">",
+      "sha256": "2bad864f814704d42370e4f08b3fb76e49e3637380d3101cdaff369d3b2ee855"
+    },
+    {
+      "type": "style",
+      "file": "assets/css/interfaz/fondo.css",
+      "opening": "<style>",
+      "closing": "</style>",
+      "replacement": "<link rel=\"stylesheet\" href=\"assets/css/interfaz/fondo.css\">",
+      "sha256": "57b07c22fcb36598ed40916cb21dda34b8ac45b6a85678a8f1bb9dcbe6a2b0fc"
+    },
+    {
+      "type": "style",
+      "file": "assets/css/interfaz/tema.css",
+      "opening": "<style>",
+      "closing": "</style>",
+      "replacement": "<link rel=\"stylesheet\" href=\"assets/css/interfaz/tema.css\">",
+      "sha256": "88a5a25bf595985bc9324b39ab749f2ec45474906d23e4d17ed41c728a181ee6"
+    },
+    {
+      "type": "script",
+      "file": "assets/js/tema/inicial.js",
+      "opening": "<script>",
+      "closing": "</script>",
+      "replacement": "<script src=\"assets/js/tema/inicial.js\"></script>",
+      "sha256": "e5e109d21615e30f0645587e8bd50a0b18db22074df32602b52980939aad5d0c"
+    },
+    {
+      "type": "script",
+      "file": "assets/js/tema/controles.js",
+      "opening": "<script>",
+      "closing": "</script>",
+      "replacement": "<script src=\"assets/js/tema/controles.js\"></script>",
+      "sha256": "e2b8a09036717435e7278e43e222ad0d51056239003ce143660c1190eb7618a5"
+    },
+    {
+      "type": "script",
+      "file": "assets/js/core/aplicacion-base.js",
+      "opening": "<script>",
+      "closing": "</script>",
+      "replacement": "<script src=\"assets/js/documentos/plantillas-dl01.js\"></script><script src=\"assets/js/core/estado.js\"></script><script src=\"assets/js/tramites/catalogo-datos.js\"></script><script src=\"assets/js/interfaz/navegacion.js\"></script><script src=\"assets/js/perfil/instituciones.js\"></script><script src=\"assets/js/perfil/datos-personales.js\"></script><script src=\"assets/js/tramites/dj01-traslados.js\"></script><script src=\"assets/js/perfil/respaldos.js\"></script><script src=\"assets/js/tramites/solicitudes.js\"></script><script src=\"assets/js/tramites/dl01-reglas.js\"></script><script src=\"assets/js/documentos/pdf-utilidades.js\"></script><script src=\"assets/js/tramites/dl01-pdf.js\"></script><script src=\"assets/js/tramites/dj01.js\"></script><script src=\"assets/js/core/inicializacion.js\"></script>",
+      "sha256": "f51bfe1cbd613ae2a72de3c717fe5494aa1e0a153b181133d452f420472292a5",
+      "parts": [
+        "assets/js/documentos/plantillas-dl01.js",
+        "assets/js/core/estado.js",
+        "assets/js/tramites/catalogo-datos.js",
+        "assets/js/interfaz/navegacion.js",
+        "assets/js/perfil/instituciones.js",
+        "assets/js/perfil/datos-personales.js",
+        "assets/js/tramites/dj01-traslados.js",
+        "assets/js/perfil/respaldos.js",
+        "assets/js/tramites/solicitudes.js",
+        "assets/js/tramites/dl01-reglas.js",
+        "assets/js/documentos/pdf-utilidades.js",
+        "assets/js/tramites/dl01-pdf.js",
+        "assets/js/tramites/dj01.js",
+        "assets/js/core/inicializacion.js"
+      ]
+    },
+    {
+      "type": "script",
+      "file": "assets/js/documentos/acciones.js",
+      "opening": "<script>",
+      "closing": "</script>",
+      "replacement": "<script src=\"assets/js/documentos/acciones.js\"></script>",
+      "sha256": "e310d4fe2f4df970e0ac5d5eb221ba325a4048f9be9dfb180d1aee2525a79524"
+    },
+    {
+      "type": "script",
+      "file": "assets/js/tramites/dj01-conflictos.js",
+      "opening": "<script>",
+      "closing": "</script>",
+      "replacement": "<script src=\"assets/js/tramites/dj01-conflictos.js\"></script>",
+      "sha256": "9ec9c296c194043a12ee4a219dc59484e2b2517ad98685ffc428fdc1bbcde479"
+    },
+    {
+      "type": "style",
+      "file": "assets/css/perfil/revision.css",
+      "opening": "<style>",
+      "closing": "</style>",
+      "replacement": "<link rel=\"stylesheet\" href=\"assets/css/perfil/revision.css\">",
+      "sha256": "615db9746eb751f35caf84d63f0def60dc883e6527a570a7fd6a8fd7e9e65e2a"
+    },
+    {
+      "type": "script",
+      "file": "assets/js/tramites/dj01-guia.js",
+      "opening": "<script>",
+      "closing": "</script>",
+      "replacement": "<script src=\"assets/js/tramites/dj01-guia.js\"></script>",
+      "sha256": "0f431e7a4b90c915574b290d5cef3178b483e1829ac85f4e1bf1176ca4e8e544"
+    },
+    {
+      "type": "script",
+      "file": "assets/js/tramites/dj01-distribucion.js",
+      "opening": "<script>",
+      "closing": "</script>",
+      "replacement": "<script src=\"assets/js/tramites/dj01-distribucion.js\"></script>",
+      "sha256": "326a43277e2c0682edf263e2ec5a4d412a304297974ff2c2fe6e8f7b753c658e"
+    },
+    {
+      "type": "script",
+      "file": "assets/js/tramites/dj01-zoom.js",
+      "opening": "<script>",
+      "closing": "</script>",
+      "replacement": "<script src=\"assets/js/tramites/dj01-zoom.js\"></script>",
+      "sha256": "4f21c24fd094a473b65be2e55528ac9c4015b901d2b8bc533b30f8bb9f06e5ac"
+    },
+    {
+      "type": "script",
+      "file": "assets/js/tramites/dj02-base.js",
+      "opening": "<script>",
+      "closing": "</script>",
+      "replacement": "<script src=\"assets/js/tramites/dj02-base.js\"></script>",
+      "sha256": "c39bb38bcd33c26a7763bcbca89644ea3c932c961b3dbe86df31291c443c664a"
+    },
+    {
+      "type": "script",
+      "file": "assets/js/tramites/dj02-plantilla.js",
+      "opening": "<script>",
+      "closing": "</script>",
+      "replacement": "<script src=\"assets/js/tramites/dj02-plantilla.js\"></script>",
+      "sha256": "d629af41dba2ba3dc919f0170e73f55b37b61d1adf871e16a853488e0db89997"
+    },
+    {
+      "type": "style",
+      "file": "assets/css/perfil/nombres.css",
+      "opening": "<style>",
+      "closing": "</style>",
+      "replacement": "<link rel=\"stylesheet\" href=\"assets/css/perfil/nombres.css\">",
+      "sha256": "c5aac4e21b2bf515d4ec2e57fc4309922862acdf2366f08f30eceb2f56d0a697"
+    },
+    {
+      "type": "script",
+      "file": "assets/js/perfil/nombres.js",
+      "opening": "<script>",
+      "closing": "</script>",
+      "replacement": "<script src=\"assets/js/perfil/nombres.js\"></script>",
+      "sha256": "5bc6ed82b02b9850d6adbf7fd888057dab87bbcf834ca7e7afde9f961c911f12"
+    },
+    {
+      "type": "style",
+      "file": "assets/css/tramites/dj02-formulario.css",
+      "opening": "<style>",
+      "closing": "</style>",
+      "replacement": "<link rel=\"stylesheet\" href=\"assets/css/tramites/dj02-formulario.css\">",
+      "sha256": "319d4b850a3137c5544fef08c82921b71c8ccb8b0175e6f438191314e72c0304"
+    },
+    {
+      "type": "script",
+      "file": "assets/js/tramites/dj02-formulario.js",
+      "opening": "<script>",
+      "closing": "</script>",
+      "replacement": "<script src=\"assets/js/tramites/dj02-formulario.js\"></script>",
+      "sha256": "3254ca169d66a6306c65066e5ef5355e5f1071be6e54f28394d2408e50815aa3"
+    },
+    {
+      "type": "script",
+      "file": "assets/js/calendario/calendario.js",
+      "opening": "<script>",
+      "closing": "</script>",
+      "replacement": "<script src=\"assets/js/calendario/calendario.js\"></script>",
+      "sha256": "69648ea45f7c95d65ddfe0c85e86aacca706a8c5b816d04918398bf9dbae3bb2"
+    },
+    {
+      "type": "script",
+      "file": "assets/js/tramites/ayuda.js",
+      "opening": "<script>",
+      "closing": "</script>",
+      "replacement": "<script src=\"assets/js/tramites/ayuda.js\"></script>",
+      "sha256": "5a47a708fe0a8640d93a39a83c43534b6eb1dc9197bee25839cac799ccf3de0f"
+    },
+    {
+      "type": "style",
+      "file": "assets/css/calendario/meses.css",
+      "opening": "<style>",
+      "closing": "</style>",
+      "replacement": "<link rel=\"stylesheet\" href=\"assets/css/calendario/meses.css\">",
+      "sha256": "d3e1dd325bd04a6a5f939fd44ae4b1d1b0001844d7606085487396ea2e2f0da6"
+    },
+    {
+      "type": "script",
+      "file": "assets/js/calendario/solicitudes.js",
+      "opening": "<script>",
+      "closing": "</script>",
+      "replacement": "<script src=\"assets/js/calendario/solicitudes.js\"></script>",
+      "sha256": "7ff24e623ed6ed000b54d12e31cc094245fd5b5ac500ad76246a17fb1f7caaa0"
+    },
+    {
+      "type": "style",
+      "file": "assets/css/calendario/solicitudes.css",
+      "opening": "<style>",
+      "closing": "</style>",
+      "replacement": "<link rel=\"stylesheet\" href=\"assets/css/calendario/solicitudes.css\">",
+      "sha256": "c487176250a30030540a742f3dd369f5f9dd377c7ce901110c47df49e8fdcfa5"
+    },
+    {
+      "type": "style",
+      "file": "assets/css/tramites/buscador.css",
+      "opening": "<style>",
+      "closing": "</style>",
+      "replacement": "<link rel=\"stylesheet\" href=\"assets/css/tramites/buscador.css\">",
+      "sha256": "dbcdfeb49ae068396fca629ffde2b025022d21975d85fe07bcbe66289782b900"
+    },
+    {
+      "type": "style",
+      "file": "assets/css/calendario/navegacion.css",
+      "opening": "<style>",
+      "closing": "</style>",
+      "replacement": "<link rel=\"stylesheet\" href=\"assets/css/calendario/navegacion.css\">",
+      "sha256": "7b20c71e44c0ddcd2c6a833505b7bcc8d06fb7a5587a1f30297f38ea36eb7a1d"
+    },
+    {
+      "type": "style",
+      "file": "assets/css/interfaz/dialogos.css",
+      "opening": "<style>",
+      "closing": "</style>",
+      "replacement": "<link rel=\"stylesheet\" href=\"assets/css/interfaz/dialogos.css\">",
+      "sha256": "28742879c0e064d4c25323621e990db2b16f1501df9769bd326193eae91d0ee3"
+    },
+    {
+      "type": "style",
+      "file": "assets/css/documentos/panel.css",
+      "opening": "<style>",
+      "closing": "</style>",
+      "replacement": "<link rel=\"stylesheet\" href=\"assets/css/documentos/panel.css\">",
+      "sha256": "a2404a30c8cbc93d15bff22f3abf5f16875ad2d837f1f89ea822963d0d49c2d4"
+    },
+    {
+      "type": "style",
+      "file": "assets/css/tramites/ol01.css",
+      "opening": "<style>",
+      "closing": "</style>",
+      "replacement": "<link rel=\"stylesheet\" href=\"assets/css/tramites/ol01.css\">",
+      "sha256": "4c121edd9ba1064f526c38c4d3dabd3d5fe9cc4a6e48506ebafd577e6e575931"
+    },
+    {
+      "type": "script",
+      "file": "assets/js/tramites/ol01.js",
+      "opening": "<script>",
+      "closing": "</script>",
+      "replacement": "<script src=\"assets/js/tramites/ol01.js\"></script>",
+      "sha256": "09eee188230591ac05b4a97c20a45213575ca8c19933d4267649d45836fbe383"
+    },
+    {
+      "type": "style",
+      "file": "assets/css/interfaz/espacio-trabajo.css",
+      "opening": "<style>",
+      "closing": "</style>",
+      "replacement": "<link rel=\"stylesheet\" href=\"assets/css/interfaz/espacio-trabajo.css\">",
+      "sha256": "e8be56be6dd847663e091a7e17ecdf620aa9f590e9e29de3edb0a23baf294725"
+    },
+    {
+      "type": "script",
+      "file": "assets/js/interfaz/espacio-trabajo.js",
+      "opening": "<script>",
+      "closing": "</script>",
+      "replacement": "<script src=\"assets/js/interfaz/espacio-trabajo.js\"></script>",
+      "sha256": "e117089920c784852e5afc4f95de3f36a0b3c30b3e75f193187eca2bf44ef0ce"
+    },
+    {
+      "type": "style",
+      "file": "assets/css/editor/editor.css",
+      "opening": "<style>",
+      "closing": "</style>",
+      "replacement": "<link rel=\"stylesheet\" href=\"assets/css/editor/editor.css\">",
+      "sha256": "fd63247bf4d93aa280afc1bda7ee13e968deff16af6426d3f5e64197ec877663"
+    },
+    {
+      "type": "script",
+      "file": "assets/js/editor/editor.js",
+      "opening": "<script>",
+      "closing": "</script>",
+      "replacement": "<script src=\"assets/js/editor/editor.js\"></script>",
+      "sha256": "558e4a9a73cf6599e7cffea0c7041f3c7b64c06ffa6112f86e70bb631b7561d7"
+    },
+    {
+      "type": "style",
+      "file": "assets/css/tramites/dj02-registro.css",
+      "opening": "<style>",
+      "closing": "</style>",
+      "replacement": "<link rel=\"stylesheet\" href=\"assets/css/tramites/dj02-registro.css\">",
+      "sha256": "94957c6c5417c9fb47cfeb0b9ce4211016c553854e06389553616e52f163ab4e"
+    },
+    {
+      "type": "script",
+      "file": "assets/js/tramites/dj02-registro.js",
+      "opening": "<script>",
+      "closing": "</script>",
+      "replacement": "<script src=\"assets/js/tramites/dj02-registro.js\"></script>",
+      "sha256": "2837393ac22f0c9373b6a2df5d4f267c1812ac604ebc3b6e22e99da594d9b2db"
+    }
+  ]
+}

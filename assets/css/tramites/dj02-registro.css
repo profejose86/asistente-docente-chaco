@@ -1,0 +1,26 @@
+#dj02 .adc58-toolbar{flex-wrap:wrap}
+#dj02Preview .adc58-page-shell{position:relative;width:1311px;min-width:1311px;margin-bottom:18px;break-after:page}
+#dj02Preview.adc58-edit-mode .adc58-page-shell{width:1580px;min-width:1580px}
+#dj02Preview .adc58-paper{overflow:visible}
+#dj02Preview .adc58-paper .dj02-license-table tbody tr{height:auto}
+#dj02Preview .adc58-paper .dj02-license-table td{position:relative;overflow:visible;padding:4px}
+#dj02Preview .adc58-paper .dj02-license-table .dj02-cell{font-size:13px;line-height:1.15;overflow-wrap:anywhere;height:auto;min-height:25px}
+#dj02Preview .adc58-paper .dj02-license-table td input,
+#dj02Preview .adc58-paper .dj02-license-table td textarea{font:13px Arial;color:#111;background:#fff;width:100%;min-width:0;padding:2px;border:1px solid #b8c9df;border-radius:3px;box-sizing:border-box;margin:0;min-height:30px;resize:none}
+#dj02Preview .adc58-paper .dj02-license-table td textarea{height:42px;line-height:15px}
+#dj02Preview .adc58-pending td{background:#fff3d9}
+#dj02Preview .adc58-row-actions{position:absolute;left:calc(100% + 12px);top:0;bottom:0;display:flex;align-items:center;gap:6px;width:255px;font:13px system-ui;color:#152844}
+#dj02Preview .adc58-row-actions span{font-size:11px;min-width:49px}
+#dj02Preview .adc58-row-actions button{font:12px system-ui;padding:6px 8px;min-height:32px;white-space:normal;margin:0}
+#dj02Preview .dj02-matches{position:absolute;top:100%;left:0;width:340px;z-index:30;background:#fff;border:1px solid #8daacf;padding:6px;box-shadow:0 3px 12px #0003}
+#dj02Preview .dj02-matches[hidden]{display:none}
+#dj02Preview .dj02-matches button{display:block;color:#152844;width:100%;margin:3px 0;font-size:12px;white-space:normal}
+#dj02Preview .adc58-page-number{position:absolute;right:14px;bottom:5px;color:#111;font:11px Arial}
+@media print{
+ #dj02 .adc58-toolbar,#adc58Status,#dj02Preview .adc58-row-actions{display:none!important}
+ #dj02>section{height:auto!important;max-height:none!important;overflow:visible!important}
+ #dj02Preview .adc58-page-shell{zoom:.97!important;height:796px!important;width:1311px!important;min-width:1311px!important;break-after:page;page-break-after:always;margin:0}
+ #dj02Preview .adc58-page-shell:last-child{break-after:auto;page-break-after:auto}
+ #dj02Preview .adc58-paper{transform:none!important;break-inside:avoid;page-break-inside:avoid}
+ #dj02Preview{height:auto!important;max-height:none!important;overflow:visible!important}
+}

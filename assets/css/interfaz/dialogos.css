@@ -1,0 +1,4 @@
+
+#adcClearDialog{width:min(28rem,calc(100% - 2rem));border:1px solid #cbd6e4;border-radius:.75rem;padding:1.2rem;color:#142034;background:white}
+#adcClearDialog::backdrop{background:#14203466}
+#adcClearDialog .toolbar{display:flex;justify-content:flex-end;gap:.5rem;flex-wrap:wrap}

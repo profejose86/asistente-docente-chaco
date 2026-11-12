@@ -1,0 +1,10 @@
+
+#adcFormSearch[hidden],#adcFormQuestion[hidden],#adcFormTypo[hidden]{display:none!important}
+#adcFormSearch{margin:.75rem 0;padding:.75rem;background:#eef4fc;border-radius:.6rem}
+#adcCloseRequestCalendar{align-self:end;background:#244d96;color:#fff}
+.adc-range-preview{margin:.55rem 0}
+#adcRangeUntil{display:block;width:100%;margin-top:.25rem}
+#adcRangeUntil.adc-range-waiting{color:#4d5b6f;background:#f0f2f5}
+#adcRangeNotice:not(:empty){color:#864412;background:#fff2df;padding:.45rem;border-radius:.4rem}
+#adcCalMonths>[data-month-action]{margin:0 .3rem .4rem 0}
+#adcCalMonth button[data-date][aria-pressed=true]{outline:2px solid #244d96}

@@ -1,0 +1,6 @@
+/* v0.9.16.19l — agrupación visual Mis trámites; módulos sin alterar. */
+.adc-tramites-menu{display:flex;flex-wrap:wrap;gap:8px;background:#eaf0f8;border:1px solid #d3dfed;border-radius:12px;padding:12px;margin:-7px 0 18px}
+.adc-tramites-menu button{margin:0;font-size:.85rem}
+.adc-tramites-menu button:disabled{opacity:.58;cursor:not-allowed;background:#f4f6fa;color:#66748a}
+@media(max-width:650px){.adc-tramites-menu{flex-direction:column}.adc-tramites-menu button{text-align:left}}
+@media print{.adc-tramites-menu{display:none!important}}

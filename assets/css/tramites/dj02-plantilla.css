@@ -1,0 +1,31 @@
+
+/* v0.9.16.19n — DJ-02 sobre plantilla PDF, edición en vivo y 14 renglones. */
+#dj02{width:100%;max-width:none;padding:0 12px}#dj02>section{max-width:none}
+#dj02 .dj02-missing{background:#fff7e8;border:1px solid #eac88e;border-radius:9px;padding:12px;margin:12px 0;font-size:13px}
+#dj02 .dj02-missing:empty{display:none}#dj02 .dj02-edit{border:1px solid #dbe4f0;border-radius:9px;padding:10px;margin:12px 0}
+#dj02 [hidden]{display:none}
+#dj02 .dj02-matches:not([hidden]){display:grid;gap:3px;max-height:12rem;overflow:auto;margin-top:4px}
+#dj02 .dj02-matches button{text-align:left;white-space:normal}
+#dj02ExamDialog{max-width:min(34rem,90vw);border:1px solid #b45309;border-radius:10px;padding:18px}#dj02ExamDialog::backdrop{background:#0f172a66}
+#dj02 input::placeholder{color:#667085;font-style:italic}
+#dj02 .dj02-edit summary{cursor:pointer;color:#214878;font-weight:700;padding:6px}
+#dj02 .dj02-edit .fields{padding-top:12px}#dj02 .dj02-preview{padding:0;overflow:auto;background:#f2f5fa;border:1px solid #cbd5e1}
+#dj02 .dj02-paper{position:relative;width:100%;min-width:1000px;aspect-ratio:1311/796;background:white;color:#111}
+#dj02 .dj02-paper img{display:block;width:100%;height:100%;position:absolute;inset:0}
+#dj02 .dj02-overlay{position:absolute;display:flex;align-items:center;justify-content:center;text-align:center;white-space:nowrap;overflow:hidden;font-family:Arial,sans-serif;font-size:clamp(7px,.85vw,12px);line-height:1;background:white;color:#111;padding:0 2px}
+#dj02 .dj02-overlay.dj02-person{justify-content:flex-start;text-align:left;font-size:clamp(8px,.9vw,13px)}
+#dj02 .dj02-overlay.dj02-row{font-size:clamp(7px,.68vw,10px)}
+#dj02 .dj02-preview .dj02-paper{margin:0 auto}
+#dj02 .dj02-overflow{color:#a34b16;font-size:12px;margin:8px 0}
+@media print{
+ @page{size:legal landscape;margin:4mm}
+ body.dj02-print-mode .wrap,body.dj02-print-mode #dj,body.dj02-print-mode #license,body.dj02-print-mode #profile{display:none!important}
+ body.dj02-print-mode #dj02{display:block!important;width:100%!important;padding:0!important;margin:0!important}
+ body.dj02-print-mode #dj02>section{padding:0!important;margin:0!important;border:0!important}
+ body.dj02-print-mode #dj02>section>*:not(.dj02-preview){display:none!important}
+ body.dj02-print-mode #dj02 .dj02-preview{display:block!important;border:0!important;padding:0!important;overflow:visible!important}
+ body.dj02-print-mode #dj02 .dj02-preview:before{display:none!important;content:none!important}
+ body.dj02-print-mode #dj02 .dj02-paper{min-width:0!important;width:100%!important;max-width:100%!important;page-break-inside:avoid!important}
+ body.dj02-print-mode #dj02 .dj02-overlay{font-size:8pt!important}
+ body.dj02-print-mode #dj02 .dj02-overlay.dj02-row{font-size:7pt!important}
+}
