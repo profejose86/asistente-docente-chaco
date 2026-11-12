@@ -76,6 +76,68 @@
   line-height: 1;
 }
 
+#adcSC01Sheet .adc-sc01-surname-mask {
+  position: absolute;
+  background: #fff;
+}
+
+#adcSC01Sheet input[type="date"] {
+  color-scheme: light;
+  font-size: 1.35cqw;
+  padding-right: 1px;
+}
+
+#adcSC01Sheet .adc-sc01-unverified {
+  border-color: #a16207;
+  background: #fff3cd !important;
+}
+
+.adc-sc01-contact-notice {
+  border-left: 3px solid #b7791f;
+  padding: 8px 12px;
+  background: #fff5dc;
+  color: #704b13;
+}
+
+.adc-sc01-contact-notice p {
+  margin: 4px 0;
+}
+
+.adc-school-contacts {
+  margin-block: 12px;
+  min-width: 0;
+  border: 1px solid #b9c6d7;
+  border-radius: 8px;
+  padding: 12px;
+}
+
+.adc-profile-address {
+  margin: 16px 0;
+  min-width: 0;
+  border: 1px solid #b9c6d7;
+  border-radius: 8px;
+  padding: 12px;
+}
+
+.adc-contact-warning {
+  color: #a16207;
+  font-size: .8rem;
+}
+
+#adcSC01Sheet .adc-sc01-verify {
+  position: absolute;
+  padding-inline: 2px;
+  color: #704b13 !important;
+  background: #fff3cd;
+  font: 1.1cqw Arial, sans-serif;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+#adcSC01Sheet [hidden] {
+  display: none !important;
+}
+
 @media screen and (max-width: 650px) {
   #adcSC01 .toolbar > a {
     width: 100%;
