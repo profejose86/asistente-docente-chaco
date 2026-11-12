@@ -83,6 +83,7 @@ function adcCheckDJ02Print(){
 
 function renderFrecuentes(){let used=Object.keys(usage).sort((a,b)=>usage[b]-usage[a]);let top=[...new Set([...used,'Enfermedad o lesión común','Asuntos particulares','Exámenes','Duelo'])].slice(0,4);$('frecuentes').innerHTML=top.map(t=>`<button data-adc-tramite="${esc(t)}" aria-pressed="${selected===t}">${esc(adcTramiteLabel(t))}</button>`).join('')}
 function renderTramites(){
+ if(window.adcMBIT)return window.adcMBIT.render();
  const raw=$('buscar').value, code=norm(raw).replace(/[\s‐‑–—-]/g,''), dl=code==='dl01', typo=code==='bl01';
  const panel=$('adcFormSearch'), results=$('adcFormMatches');
  $('adcFormQuestion').hidden=!dl;

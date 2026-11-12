@@ -1,4 +1,3 @@
-
 #adcFormSearch[hidden],#adcFormQuestion[hidden],#adcFormTypo[hidden]{display:none!important}
 #adcFormSearch{margin:.75rem 0;padding:.75rem;background:#eef4fc;border-radius:.6rem}
 #adcCloseRequestCalendar{align-self:end;background:#244d96;color:#fff}
@@ -8,3 +7,19 @@
 #adcRangeNotice:not(:empty){color:#864412;background:#fff2df;padding:.45rem;border-radius:.4rem}
 #adcCalMonths>[data-month-action]{margin:0 .3rem .4rem 0}
 #adcCalMonth button[data-date][aria-pressed=true]{outline:2px solid #244d96}
+
+#adcTramitesMenu{--mbit-card:var(--card,#f4f8ff);--mbit-hover:#e8f0fc;--mbit-text:#183857;--mbit-muted:#52657e;--mbit-border:#c7d4e5;--mbit-accent:#2453a3;--mbit-shadow:#1426421f}
+#adcTramitesMenu #adcFormSearch{padding:0;background:transparent}
+html[data-theme=dark] #adcTramitesMenu{--mbit-card:var(--card,#20334c);--mbit-hover:#2b4566;--mbit-text:#e5edf8;--mbit-muted:#c0cde0;--mbit-border:#526782;--mbit-accent:#8dc3ff;--mbit-shadow:#0005}
+#adcTramitesMenu .adc-form-grid>button,#adcTramitesMenu #adcFormMatches>button{display:flex;flex-direction:column;align-items:stretch;gap:7px;width:100%;min-width:0;min-height:116px;height:auto;margin:0;padding:15px;text-align:left;white-space:normal;overflow-wrap:anywhere;border:1px solid var(--mbit-border);border-radius:10px;background:var(--mbit-card);color:var(--mbit-text);cursor:pointer;transition:transform 180ms ease,box-shadow 180ms ease,background-color 180ms ease,border-color 180ms ease}
+#adcTramitesMenu .adc-form-grid>button strong,#adcTramitesMenu #adcFormMatches strong{display:block;font-size:1rem;line-height:1.4;white-space:normal}
+#adcTramitesMenu .adc-form-grid>button small,#adcTramitesMenu #adcFormMatches small{display:block;color:var(--mbit-muted);font-size:.82rem;line-height:1.4}
+#adcTramitesMenu .adc-mbit-code{align-self:flex-start;font-weight:700;letter-spacing:.03em}
+#adcTramitesMenu .adc-mbit-action{margin-top:auto;padding-top:3px}
+#adcTramitesMenu #adcFormMatches{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,225px),1fr));gap:12px;margin:12px 0}
+#adcTramitesMenu .adc-form-grid>button:focus-visible,#adcTramitesMenu #adcFormMatches>button:focus-visible{outline:3px solid var(--mbit-accent);outline-offset:3px;background:var(--mbit-hover);box-shadow:0 4px 12px var(--mbit-shadow)}
+@media(hover:hover){#adcTramitesMenu .adc-form-grid>button:hover,#adcTramitesMenu #adcFormMatches>button:hover{transform:translateY(-2px);box-shadow:0 4px 12px var(--mbit-shadow);border-color:var(--mbit-accent);background:var(--mbit-hover)}}
+#adcTramitesMenu .adc-mbit-clear{min-height:36px;margin:6px 0 0}
+#adcTramitesMenu .adc-mbit-clear[hidden],#adcTramitesMenu [hidden]{display:none!important}
+#adcTramitesMenu .adc-mbit-empty{padding:12px;border:1px solid var(--mbit-border);border-radius:8px;color:var(--mbit-muted)}
+@media(prefers-reduced-motion:reduce){#adcTramitesMenu .adc-form-grid>button,#adcTramitesMenu #adcFormMatches>button{transition:none;transform:none!important}}

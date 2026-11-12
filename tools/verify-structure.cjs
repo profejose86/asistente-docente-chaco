@@ -16,11 +16,26 @@ for (const block of manifest.blocks) {
   const files = block.parts || [block.file];
   const content = files.map(file => fs.readFileSync(path.join(root, file), 'utf8')).join('');
   if (hash(content) !== block.sha256) changed.push(files.join(', '));
-  assert.ok(reconstructed.includes(block.replacement), `Referencia ausente: ${block.file}`);
+  const contiguous = reconstructed.includes(block.replacement);
+  if (!contiguous) {
+    // Los módulos nuevos pueden intercalarse entre las partes históricas.
+    // Verificamos presencia y orden sin regenerar el manifiesto de referencia.
+    assert.ok(block.parts, `Referencia ausente: ${block.file}`);
+    let previous = -1;
+    for (const file of files) {
+      const reference = `<script src="${file}"></script>`;
+      const position = reconstructed.indexOf(reference);
+      assert.ok(position > previous, `Referencia ausente o fuera de orden: ${file}`);
+      previous = position;
+    }
+  }
   if (block.type.toLowerCase() === 'script') {
     for (const file of files) new vm.Script(fs.readFileSync(path.join(root, file), 'utf8'), { filename: file });
   }
-  reconstructed = reconstructed.replace(block.replacement, () => block.opening + content + block.closing);
+  if (contiguous) reconstructed = reconstructed.replace(block.replacement, () => block.opening + content + block.closing);
+  else for (const file of files) {
+    reconstructed = reconstructed.replace(`<script src="${file}"></script>`,() => block.opening + fs.readFileSync(path.join(root,file),'utf8') + block.closing);
+  }
 }
 if (process.argv.includes('--baseline')) {
   assert.equal(hash(reconstructed), manifest.sourceSha256, 'La reconstrucción difiere de la referencia inicial.');

@@ -77,7 +77,7 @@ function dj02ExamNotice(i){
   const button=document.createElement('button');
   button.type='button';
   button.className='alt';
-  const label=entry.cargoName||[entry.subject,entry.course].filter(Boolean).join(' ')||'Cargo suplente';
+  const label=entry.cargoName||[entry.subject,window.adcAcademic.course(entry)].filter(Boolean).join(' ')||'Cargo suplente';
   button.textContent='Verificar situación de revista · '+label;
   button.onclick=()=>{
    dialog.close();

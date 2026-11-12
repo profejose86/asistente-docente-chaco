@@ -40,7 +40,7 @@ function adcDjSetMode(mode){
 }
 function adcTransferOpen(){
  const entries=djEntries(), draft=adcTransferDraft, form=$('adcTransferForm');
- const title=x=>x.i.name+' · '+(x.e.type==='cargo'?x.e.cargoName:[x.e.subject,x.e.course].filter(Boolean).join(' '));
+ const title=x=>x.i.name+' · '+(x.e.type==='cargo'?x.e.cargoName:[x.e.subject,window.adcAcademic.course(x.e)].filter(Boolean).join(' '));
  const destinations=draft.destinations||(draft.destination?[draft.destination]:[]);
  form.elements.destination.replaceChildren(...entries.map(x=>new Option(title(x),x.key,false,destinations.includes(x.key))));
  for(const key of ['resolution','from','affectedFrom','until','article'])form.elements[key].value=draft[key]??(key==='article'?'7-D':'');

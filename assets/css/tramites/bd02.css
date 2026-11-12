@@ -1,0 +1,41 @@
+#adcBD02 [hidden]{display:none!important}
+#adcBD02 .adc-bd02-actions{display:flex;flex-wrap:wrap;gap:10px;margin:1rem 0}
+#adcBD02 .adc-bd02-actions button{flex:1 1 190px;margin:0}
+#adcBD02 .adc-bd02-school{display:block;max-width:40rem;margin:1rem 0}
+#adcBD02 .adc-bd02-entries{min-width:0;margin:1rem 0;padding:1rem;border:1px solid #cbd5e1;border-radius:6px}
+#adcBD02 [data-bd02-entries] label{display:flex;align-items:center;gap:.6rem;margin:.5rem 0;overflow-wrap:anywhere}
+#adcBD02 [data-bd02-entries] input{width:1.1rem;height:1.1rem;flex:0 0 auto;margin:0}
+#adcBD02 .adc-bd02-unused{position:absolute;pointer-events:none;overflow:visible}
+#adcBD02 .adc-bd02-tools{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:.6rem 0;position:sticky;top:0;z-index:20;background:#fff;padding:.5rem;border:1px solid #cbd5e1;border-radius:6px}
+#adcBD02 .adc-bd02-tools button{margin:0;min-height:36px}
+#adcBD02 .adc-bd02-tools output{min-width:3rem;text-align:center}
+#adcBD02 .adc-bd02-viewport{box-sizing:border-box;width:100%;max-width:100%;height:80vh;min-height:360px;overflow:auto;background:#dce3eb;border:1px solid #b8c6d6;border-radius:6px;padding:12px;overscroll-behavior:contain}
+#adcBD02 .adc-bd02-size{position:relative;margin:auto}
+#adcBD02 .adc-bd02-document{position:relative;transform-origin:top left;width:816.16px;height:2712.32px;margin:0;padding:0;border:0}
+#adcBD02 .adc-bd02-page{position:relative;width:816.16px;height:1344.16px;margin:0 0 24px;background:white;box-shadow:0 2px 8px #22334430}
+#adcBD02 .adc-bd02-page>img{display:block;width:100%;height:100%;margin:0;max-width:none;pointer-events:none}
+#adcBD02 .adc-bd02-field{position:absolute;margin:0;padding:0;background:transparent;box-sizing:border-box}
+#adcBD02 .adc-bd02-field>.adc-mnc-control{display:block;width:100%;height:100%}
+#adcBD02 .adc-bd02-field input{display:block;box-sizing:border-box;width:100%;height:100%;min-height:0;margin:0;padding:0 1px;border:0;border-radius:0;background:transparent;color:#111;font-family:Arial,sans-serif;line-height:1;box-shadow:none;text-transform:none}
+#adcBD02 .adc-bd02-field input:focus{outline:1px solid #2563eb;background:#eff6ff80}
+#adcBD02 .adc-bd02-field input[aria-invalid=true]{outline:1px solid #b45309}
+#adcBD02 .adc-bd02-field input[readonly]{color:#111;background:transparent}
+#adcBD02 .adc-mnc-button{width:14px!important;height:100%;max-height:17px;left:0;border:1px solid #94a3b8;background:#f8fafc;font:10px/1 Arial}
+#adcBD02 .adc-mnc-line{left:15%;width:70%;height:.5mm;background:#000}
+#adcBD02 .adc-mnc-control>[hidden]{display:none!important}
+#adcBD02 .adc-bd02-choice{appearance:none;position:absolute;box-sizing:border-box;min-width:0;min-height:0;padding:0;margin:0;border:0;border-radius:0;background:transparent;cursor:pointer}
+#adcBD02 .adc-bd02-choice:checked:after{content:'✓';display:block;color:#000;text-align:center;font:bold 13px/15px Arial}
+#adcBD02 .adc-bd02-choice:focus-visible{outline:1px solid #2563eb}
+#adcBD02 .adc-bd02-calendar{position:absolute;min-width:0;min-height:0;margin:0;padding:0;border:0;background:transparent;color:transparent;font-size:10px}
+#adcBD02 .adc-bd02-calendar::-webkit-datetime-edit{display:none}
+#adcBD02 .adc-bd02-calendar::-webkit-calendar-picker-indicator{margin:0;padding:0;opacity:.65;cursor:pointer}
+#adcBD02 .adc-bd02-preview{margin:1rem 0;border:1px solid #b8c6d6;border-radius:6px;overflow:hidden}
+#adcBD02 .adc-bd02-preview iframe{display:block;width:100%;height:80vh;border:0}
+#adcBD02 [data-bd02-review]:not(:empty),#adcBD02 .adc-bd02-conflict{padding:.65rem;margin:.6rem 0;background:#fff8eb;color:#493717;border-left:3px solid #d5a04b}
+#adcBD02 [data-bd02-review] p,#adcBD02 .adc-bd02-conflict p{margin:.3rem 0}
+#adcBD02 .adc-bd02-conflict button{margin:.2rem .4rem .2rem 0}
+.adc-bd02-print-frame{position:fixed;left:-10000px;bottom:0;width:1px;height:1px;border:0}
+html[data-theme=dark] #adcBD02 .adc-bd02-tools{background:#17263a}
+html[data-theme=dark] #adcBD02 .adc-bd02-field input{background:transparent;color:#111}
+html[data-theme=dark] #adcBD02 .adc-bd02-field input:focus{background:#eff6ff80;color:#111}
+@media(max-width:650px){#adcBD02 .adc-bd02-actions button{flex-basis:100%}#adcBD02 .adc-bd02-viewport{height:72vh;min-height:300px}}

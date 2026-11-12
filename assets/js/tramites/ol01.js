@@ -11,6 +11,12 @@ const adcDocsDefaults={'Enfermedad o lesión común':[
 ].map(([level,document,action,state])=>({level,document,action,state,url:action==='link'?adcSIEPortal:''}))};
 const adcDocsDock=$('adcDocsDock'),adcDocsPanel=$('adcDocsPanel');
 const adcDocsForm=$('adcDocsForm'),adcOLForm=$('adcOLForm');
+adcOLForm.noValidate=true;
+const adcOLGuided=adcGuidedValidation.create({root:adcOLForm,collect:()=>{
+ const relative=adcOLForm.elements.mode.value==='relative';
+ const keys=['teacherSurname','teacherGiven','teacherDni',...(relative?['surname','given','dni','sex','address','relation','place','signDate']:['reason','from','until','law','article','description'])];
+ return keys.map(key=>({key,input:adcOLForm.elements[key]})).filter(({input})=>input&&!input.disabled&&!input.value.trim()&&!input.hasAttribute('data-adc-mnc-marked')).map(({key,input})=>({key,label:input.getAttribute('aria-label')||input.labels?.[0]?.textContent.trim()||key,controls:[input]}));
+}});
 let adcDocsContext='',adcDocsView='',adcDocsEditing=-1;
 let adcOLUrl='',adcOLGeneration=0;
 const adcDocsKey='adc_documentos_tramite_v1';
@@ -140,7 +146,7 @@ function adcOLPosts(schoolId,contextual=false){
   label.children[1].prepend(box);group.append(label);
  }
 }
-function adcOLCargo(e){return e.type==='cargo'?e.cargoName:[e.subject,e.course].filter(Boolean).join(' · ')}
+function adcOLCargo(e){return e.type==='cargo'?e.cargoName:[e.subject,window.adcAcademic.course(e)].filter(Boolean).join(' · ')}
 const adcOLConfirmedReason='Enfermedad o lesión común';
 function adcOLResolve(reason,school,entries,pay,relation){
  if(!reason)return {message:'1. Confirmá un motivo de la lista.'};
@@ -285,11 +291,12 @@ function adcOLSyncTeacherProfile(){
  };
  let changed=false;
  for(const [field,id] of Object.entries(profileFields)){
+  if(fields[field].adcMnc?.marked)continue;
   const value=$(id).value;
   if(fields[field].value!==value){fields[field].value=value;changed=true}
  }
  const place=$('perfilLocalidad').value;
- if(fields.place.value!==place){fields.place.value=place;changed=true}
+ if(!fields.place.adcMnc?.marked&&fields.place.value!==place){fields.place.value=place;changed=true}
  if(changed)adcOLInvalidate();
  adcOLPaperVariant();
 }
@@ -389,7 +396,9 @@ function adcOLDraw(page,font,values){
  }
 }
 adcOLForm.addEventListener('submit',async event=>{
- event.preventDefault();adcOLInvalidate();const generation=adcOLGeneration;
+ event.preventDefault();
+ if(!await adcOLGuided.review())return;
+ adcOLInvalidate();const generation=adcOLGeneration;
  const note=$('adcOLStatus'),fields=adcOLForm.elements;
  const v=Object.fromEntries(new FormData(adcOLForm)),{school,entries:posts,rule}=adcOLSelection();
  const relative=v.mode==='relative';
@@ -402,20 +411,14 @@ adcOLForm.addEventListener('submit',async event=>{
  if(!school){missing('school','Elegí en qué escuela vas a presentar la solicitud.');return}
  if(!rule.confirmed&&!rule.previewOnly){note.textContent=rule.message;return}
  const surname=v.teacherSurname.trim(),given=v.teacherGiven.trim();
- if(!surname||!given||!adcPersonalValid(v.teacherDni,7,8)){note.textContent='Completá apellido, nombres y DNI en la plantilla.';return}
+ if(v.teacherDni&&!adcPersonalValid(v.teacherDni,7,8)){note.textContent='Revisá el DNI en la plantilla.';return}
  const entries=posts.map(e=>({cargo:adcOLCargo(e),revista:e.revista||''}));
  if(entries.length>12){note.textContent='El OL-01 admite hasta 12 filas.';return}
  if(!relative){
-  for(const [key,label] of [['reason','Motivo'],['from','Desde'],['until','Hasta'],['law','Ley N.º'],['article','Artículo N.º'],['description','Descripción']]){
-   if(!v[key]?.trim()){missing(key,'Completá '+label+'.');return}
-  }
-  if(!date(v.from)||!date(v.until)||v.until<v.from){missing('until','Revisá el rango de fechas.');return}
-  if(v.law.trim()!==rule.row.code||v.article.trim()!==rule.row.article){missing('law','El código y el artículo deben coincidir con el encuadre del cargo seleccionado.');return}
+  if((v.from&&!date(v.from))||(v.until&&!date(v.until))||(v.from&&v.until&&v.until<v.from)){missing('until','Revisá el rango de fechas.');return}
+  if((v.law&&v.law.trim()!==rule.row.code)||(v.article&&v.article.trim()!==rule.row.article)){missing('law','El código y el artículo deben coincidir con el encuadre del cargo seleccionado.');return}
  }else{
-  for(const [key,label] of [['surname','Apellido'],['given','Nombres'],['dni','DNI'],['sex','Sexo'],['address','Domicilio'],['relation','Parentesco'],['place','Lugar'],['signDate','Fecha de firma']]){
-   if(!v[key]?.trim()){missing(key,'Completá '+label+'.');return}
-  }
-  if(!adcPersonalValid(v.dni,7,8)){missing('dni','Ingresá un DNI válido del pariente.');return}
+  if(v.dni&&!adcPersonalValid(v.dni,7,8)){missing('dni','Ingresá un DNI válido del pariente.');return}
  }
  if(!window.PDFLib){note.textContent='Se necesita conexión para cargar la biblioteca PDF.';return}
  const displayDate=iso=>iso.split('-').reverse().join('/');

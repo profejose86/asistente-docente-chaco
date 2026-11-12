@@ -14,16 +14,40 @@ function adcInvalidatePDF(force=false){
  $('pdfResult').replaceChildren();
 }
 
+let adcDLGuided;
+let adcDLPersonalEditor;
 async function generatePDF(){
  if(!adcDL01Ready.has(selected))return alert(selected?'Formulario por confirmar para este trámite.':'Elegí primero un trámite.');
- if(classify()==='inasistencia'&&(!date($('desde').value)||$('hasta').value!==$('desde').value))
+ if(!adcDLPersonalEditor){
+  adcDLPersonalEditor=document.createElement('fieldset');
+  adcDLPersonalEditor.innerHTML='<legend>Datos del docente pendientes</legend>';
+  for(const [id,label] of [['perfilApellidos','Apellido'],['perfilNombres','Nombres'],['dni','DNI']]){
+   const wrapper=document.createElement('label'),input=document.createElement('input');
+   wrapper.textContent=label;input.dataset.dlProfile=id;input.setAttribute('aria-label',label);wrapper.append(input);adcDLPersonalEditor.append(wrapper);
+   input.addEventListener('input',()=>adcSetSharedField(id,input.value));
+  }
+  $('pdfResult').before(adcDLPersonalEditor);
+ }
+ for(const input of adcDLPersonalEditor.querySelectorAll('input'))input.value=$(input.dataset.dlProfile).value;
+ adcDLPersonalEditor.hidden=Boolean($('nombre').value.trim()&&$('dni').value.trim());
+ if(!adcDLGuided)adcDLGuided=adcGuidedValidation.create({root:$('license'),collect:()=>{
+  const controls=adcGuidedValidation.controls($('license'));
+  const dates=['desde','hasta'].filter(key=>!$(key).value).map(key=>({key,label:key==='desde'?'Fecha de inicio':'Fecha de finalización',controls:[$(key)]}));
+  const personal=[];
+  if(!$('nombre').value.trim())personal.push({key:'nombre',label:'Apellido y nombres del docente',controls:[...adcDLPersonalEditor.querySelectorAll('input')].slice(0,2)});
+  if(!$('dni').value.trim())personal.push({key:'dni',label:'DNI del docente',controls:[adcDLPersonalEditor.querySelector('[data-dl-profile=dni]')]});
+  return [...personal,...controls.filter(item=>!['desde','hasta'].includes(item.key)),...dates];
+ }});
+ if(!await adcDLGuided.review())return;
+ if(classify()==='inasistencia'&&$('desde').value&&$('hasta').value&&(!date($('desde').value)||$('hasta').value!==$('desde').value))
   return alert('La inasistencia justificada debe tener la misma fecha en Desde y Hasta.');
  if(!window.PDFLib)return alert('No se cargó la biblioteca PDF. Se necesita conexión para cargar pdf-lib.');
  if(classify()==='inasistencia'&&!$('justifica').value)$('justifica').value='si';
  const r=review();
  const calendarSnapshot=window.adcDateSnapshot?.();
  if(selected==='Asuntos particulares'&&r.messages.some(x=>x.includes('Asuntos particulares')))return alert('Asuntos particulares: corregí la situación de revista y la forma de pago antes de generar el DL-01.');
- if(r.messages.some(x=>x.includes('Faltan nombre')||x.includes('fechas válidas')||x.includes('Agregá una institución')||x.includes('No se encontraron')||x.includes('Falta nombre')))return alert('Corregí los datos indicados antes de generar.');
+ if(($('dni').value&&!adcPersonalValid($('dni').value,7,8))||(['desde','hasta'].some(id=>$(id).value&&!date($(id).value)))||($('desde').value&&$('hasta').value&&$('hasta').value<$('desde').value))return alert('Corregí los datos inválidos indicados antes de generar.');
+ r.i=r.i||{};
  const dueloRelation=selected==='Duelo'?adcDueloRelation():null;
  if(selected==='Duelo'&&(!dueloRelation||$('pago').value!=='con'||r.rows.some(({e})=>!adcDueloCode(e.revista,dueloRelation)[0])))
   return alert('Revisá el parentesco, la situación de revista y la forma de pago antes de generar el permiso por Duelo.');
@@ -74,7 +98,7 @@ async function generatePDF(){
    [day,mo,yr].forEach((v,i)=>{const [dx,dy,w,h]=cells[i];text(page,rect(x+dx,y+dy+0.5,w,h-0.5),v,10)});
   }
 
-  function fillSlot(page,two,slot,obj){const e=obj.e,c=splitCourse(e.course),legal=dueloRelation?adcDueloCode(e.revista,dueloRelation):mapping(e),kind=classify();
+  function fillSlot(page,two,slot,obj){const e=obj.e,c=window.adcAcademic.parts(e),legal=dueloRelation?adcDueloCode(e.revista,dueloRelation):mapping(e),kind=classify();
    const description=kind==='inasistencia'?'Justificada':selected==='Exámenes'?'LIC. X EXAMEN':selected;
    const cargo=e.type==='cargo',codigoCargo=dl01CodigoCargo(e,r.i);
    function courseField(box,value){
@@ -125,7 +149,7 @@ async function generatePDF(){
    }
   }
   let pagesGenerated=0,warnings=[];
-  for(let start=0;start<r.rows.length;start+=5){
+  for(let start=0;start<Math.max(1,r.rows.length);start+=5){
    let batch=r.rows.slice(start,start+5),two=batch.length>2;
    let template=await PDFDocument.load(bytes(two?TEMPLATE_TWO:TEMPLATE_ONE));
    let copied=await out.copyPages(template,two?[0,1]:[0]);let pgs=copied.map(p=>out.addPage(p));

@@ -1,0 +1,7 @@
+.adc-mnc-control{display:block;position:relative;min-width:0;width:100%}
+.adc-mnc-control>input,.adc-mnc-control>textarea,.adc-mnc-control>select{padding-left:22px!important}
+.adc-mnc-button{position:absolute;left:1px;top:50%;transform:translateY(-50%);z-index:4;width:18px!important;height:18px;min-width:0!important;min-height:0!important;padding:0!important;margin:0!important;border:1px solid #94a3b8;border-radius:3px;background:#f8fafc;color:#334155;font:11px Arial;line-height:16px}
+.adc-mnc-line{position:absolute;left:15%;width:70%;top:50%;height:.5mm;transform:translateY(-50%);background:#000;pointer-events:none;z-index:3}
+.adc-mnc-tooltip{position:absolute;left:0;bottom:100%;padding:5px 7px;background:#17243a;color:#fff;font:12px Arial;white-space:nowrap;z-index:200}
+.adc-mnc-control>[hidden]{display:none!important}
+@media print{.adc-mnc-button,.adc-mnc-tooltip{display:none!important}.adc-mnc-line{print-color-adjust:exact;-webkit-print-color-adjust:exact}}

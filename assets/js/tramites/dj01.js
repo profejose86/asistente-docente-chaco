@@ -18,7 +18,7 @@ function djSortedItems(items){return [...items].sort((a,b)=>{
  const x=djCourseKey(a.e),y=djCourseKey(b.e);
  return x[0]-y[0]||x[1]-y[1]||a.n-b.n;
 })}
-function djCourseDisplay(e){return e.type==='cargo'?String(e.cargoName||'Cargo'):djCourseOrdinal(e.course)||String(e.subject||'Asignatura')}
+function djCourseDisplay(e){return e.type==='cargo'?String(e.cargoName||'Cargo'):djCourseOrdinal(e)||String(e.subject||'Asignatura')}
 const djCourseAccordionOpen=new Set();
 function djToggleCourse(uid){uid=String(uid);if(djCourseAccordionOpen.has(uid))djCourseAccordionOpen.delete(uid);else djCourseAccordionOpen.add(uid);djRender();}
 function djToggleGroup(id){
@@ -285,6 +285,7 @@ const DJ_P2_IMAGE='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5
 const DJ_P2_KEY='adc_dj_page2_details';
 let djP2={};try{djP2=JSON.parse(localStorage.getItem(DJ_P2_KEY)||'{}')||{}}catch(e){djP2={}}
 function djCourseOrdinal(value){
+ if(window.adcAcademic)return window.adcAcademic.course(value,{legacyPacked:true});
  const raw=String(value??'').trim();
  if(!raw)return '';
  const normalized=raw.replace(/(\d+)\.º/g,'$1º').replace(/(\d+)\.ª/g,'$1ª');
@@ -375,4 +376,20 @@ function djSaveDeclaration(){const rows=djSnapshotRows();if(!rows.length)return 
  djHistory.unshift({id:djUid(),created:new Date().toISOString(),status:state.ready?'ready':'draft',snapshot:{nombre:$('nombre').value,apellidos:$('perfilApellidos').value,nombres:$('perfilNombres').value,dni:$('dni').value,presentedAt:inst.find(i=>String(i.id)===djPresentedAt)?.name||'',page2:structuredClone(djPage2Current()),rows}});
  djPersist(state.ready?'Declaración lista para presentar guardada.':'Borrador guardado en Mi historial.');djSubtab('history');}
 function djRenderHistory(){const list=$('djHistoryList');list.innerHTML=djHistory.map((d,i)=>`<div class="dj-item"><b>${esc(new Date(d.created).toLocaleString('es-AR'))}</b><div class="small">${d.snapshot.rows.length} cargo(s) · ${esc(d.snapshot.nombre)} · ${d.status==='ready'?'Lista para presentar':'Borrador'}</div><button class="alt" data-dj-view="${i}">Ver copia</button></div>`).join('')||'<p class="small">Todavía no hay declaraciones guardadas.</p>';list.querySelectorAll('[data-dj-view]').forEach(n=>n.onclick=()=>{const d=djHistory[Number(n.dataset.djView)];$('djHistoryDetail').classList.remove('hide');$('djHistoryDetail').innerHTML='<p class="small">Copia histórica guardada el '+esc(new Date(d.created).toLocaleString('es-AR'))+'</p><div class="dj-page">'+djPreviewHTML(d.snapshot)+'</div>'})}
-function djPrint(){document.body.classList.add('dj-print-mode');window.print();setTimeout(()=>document.body.classList.remove('dj-print-mode'),1000)}
+let djGuidedReview;
+function djReviewPending(){
+ const pending=[...document.querySelectorAll('#dj .adc-shared-editor input')].filter(input=>!input.value.trim()).map(input=>({key:input.dataset.adcShared||input.id,label:input.closest('label')?.textContent.trim()||'Dato del docente',controls:[input]}));
+ for(const item of djEntries().filter(djSelected)){
+  const period=item.e.djPeriods?.at(-1)||{};
+  for(const [part,label] of [['desde','Fecha de alta'],['hasta','Fecha de finalización']]){
+   if(period[part]||(part==='hasta'&&period.modo!=='fecha'))continue;
+   pending.push({key:`${item.key}.${part}`,label:`${label} — ${djCourseDisplay(item.e)}`,get controls(){return [...document.querySelectorAll(`[data-dj-period="${CSS.escape(item.key)}"][data-field="${part}"]`)];},reveal:()=>{djAccordionOpen.add(String(item.i.id));djCourseAccordionOpen.add(item.key);djRender();}});
+  }
+ }
+ return pending;
+}
+async function djPrint(){
+ if(!djGuidedReview)djGuidedReview=adcGuidedValidation.create({root:$('dj'),collect:djReviewPending});
+ if(!await djGuidedReview.review())return;
+ document.body.classList.add('dj-print-mode');window.print();setTimeout(()=>document.body.classList.remove('dj-print-mode'),1000)
+}

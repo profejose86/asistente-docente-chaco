@@ -321,18 +321,30 @@ function adc58Transition(store,id,action){
   validatePrint();
   requestAnimationFrame(()=>{if(typeof adc43Fit==='function')adc43Fit()});
  }
- function validatePrint(){
+ const guidedReview=adcGuidedValidation.create({root,collect:()=>{
+  const pending=dj02Fields.filter(key=>!dj02Val(key).trim()).map(key=>({key,label:$('dj02'+key)?.labels?.[0]?.textContent.trim()||key,controls:[$('dj02'+key)],reveal:()=>{const editor=root.querySelector('.dj02-edit');if(editor)editor.open=true;}}));
+  for(const row of root.querySelectorAll('[data-license][data-record]')){
+   if(ledger?.adc58.licenses.find(item=>item.id===row.dataset.license)?.status!=='granted')continue;
+   for(const key of ['motivo','articulo','unidad','desde','hasta']){
+    const input=row.querySelector(`[data-field="${key}"]`);
+    if(input&&!input.value.trim())pending.push({key:`${row.dataset.license}.${row.dataset.record}.${key}`,label:`${input.getAttribute('aria-label')} — Licencia ${Number(row.dataset.record)+1}`,controls:[input]});
+   }
+  }
+  return pending;
+ }});
+ function validatePrint(allowMissing=false){
   const rows=dj02Records.filter(row=>!filter.value||row.unidad===filter.value);
   const problems=[];
   if(!rows.length)problems.push('No hay licencias otorgadas para imprimir en esta selección.');
-  if(dj02Fields.some(key=>!dj02Val(key).trim())||!adcPersonalValid(dj02Val('Dni'),7,8)||!adcPersonalValid(dj02Val('Clase'),4))problems.push('Completá los datos personales y la institución de presentación.');
-  if(rows.some(row=>!row.motivo?.trim()||!row.articulo?.trim()||!row.unidad?.trim()||!date(row.desde)||!date(row.hasta)||row.desde>row.hasta))problems.push('Revisá motivo, artículo, institución y fechas de las licencias otorgadas.');
+  if((!allowMissing&&dj02Fields.some(key=>!dj02Val(key).trim()))||(dj02Val('Dni')&&!adcPersonalValid(dj02Val('Dni'),7,8))||(dj02Val('Clase')&&!adcPersonalValid(dj02Val('Clase'),4)))problems.push('Completá los datos personales y la institución de presentación.');
+  if(rows.some(row=>(!allowMissing&&(!row.motivo?.trim()||!row.articulo?.trim()||!row.unidad?.trim()||!row.desde||!row.hasta))||(row.desde&&!date(row.desde))||(row.hasta&&!date(row.hasta))||(row.desde&&row.hasta&&row.desde>row.hasta)))problems.push('Revisá motivo, artículo, institución y fechas de las licencias otorgadas.');
   $('adcDJ02PrintStatus').textContent=problems.join(' ');
-  printButton.disabled=problems.length>0||showDeleted;
+  printButton.disabled=!rows.length||showDeleted;
   return !problems.length&&!showDeleted;
  }
- tools.addEventListener('click',event=>{
+ tools.addEventListener('click',async event=>{
   const button=event.target.closest('[data-view]');if(!button)return;
+  if(button.dataset.view==='print'&&(!await guidedReview.review()))return;
   view=button.dataset.view;render();
  });
  deletedButton.onclick=()=>{showDeleted=!showDeleted;view='edit';render()};
@@ -355,8 +367,10 @@ function adc58Transition(store,id,action){
  dj02Remove=function(i){const row=rowRefs[i];if(row)stateAction(row.license.id,'delete')};
  dj02ConfirmDL01=function(){tab('dj02');dj02Open()};
  adcCheckDJ02Print=validatePrint;
- dj02Print=function(){
-  if(!safeWrite()||!validatePrint())return;
+ dj02Print=async function(){
+  if(!safeWrite()||!validatePrint(true))return;
+  view='edit';render();
+  if(!await guidedReview.review({action:'print'})||!validatePrint(true))return;
   view='print';showDeleted=false;render();
   requestAnimationFrame(()=>{document.body.classList.add('dj02-print-mode');window.print()});
  };

@@ -1,0 +1,9 @@
+.adc-review[hidden]{display:none!important}
+.adc-review{position:fixed;z-index:10050;left:50%;top:18vh;transform:translateX(-50%);box-sizing:border-box;width:min(420px,calc(100vw - 24px));max-height:70vh;overflow:auto;padding:16px;background:#fffaf0;color:#30281d;border:1px solid #b7791f;border-radius:10px;box-shadow:0 6px 24px #0003;font:14px/1.4 Arial,sans-serif}
+.adc-review[data-adc-review-stage=field]{transform:none}
+.adc-review h3,.adc-review p{margin:0 0 9px}.adc-review small{display:block;margin-bottom:10px}
+.adc-review button{font:inherit;min-height:38px;margin:4px;padding:7px 10px;border:1px solid #8a6427;border-radius:6px;background:white;color:#30281d;cursor:pointer}
+.adc-review button:focus-visible{outline:3px solid #2563eb;outline-offset:2px}
+.adc-review-missing{outline:2px solid #b7791f!important;outline-offset:2px;scroll-margin-block:150px}
+@media(max-width:500px){.adc-review{max-height:46vh}.adc-review button{font-size:13px}}
+@media print{.adc-review{display:none!important}.adc-review-missing{outline:none!important}}

@@ -21,8 +21,9 @@ function validateProfileBackup(d){
  const plain=value=>record(value)&&Object.values(value).every(scalar);
  const optionalRecords=(value,check)=>value==null||records(value,check);
  const entry=e=>record(e)&&optionalRecords(e.djIntervals,plain)&&optionalRecords(e.djPeriods,plain)
+  &&(e.adcCourseParts==null||(plain(e.adcCourseParts)&&Object.keys(e.adcCourseParts).every(key=>['year','division'].includes(key))))
   &&(e.schedule==null||(Array.isArray(e.schedule)&&e.schedule.every(scalar)))
-  &&Object.entries(e).every(([key,value])=>['djIntervals','djPeriods','schedule'].includes(key)||scalar(value));
+  &&Object.entries(e).every(([key,value])=>['djIntervals','djPeriods','schedule','adcCourseParts'].includes(key)||scalar(value));
  const institution=i=>record(i)&&optionalRecords(i.entries,entry)
   &&Object.entries(i).every(([key,value])=>key==='entries'||scalar(value));
  if(!record(d)||!records(d.inst,institution)||!optionalRecords(d.djHistory,item=>record(item)&&record(item.snapshot)&&records(item.snapshot.rows))

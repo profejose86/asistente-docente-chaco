@@ -28,9 +28,9 @@
   ];
   const storageKey = 'adc-sc01-borrador-v1';
   const requiredFields = new Set(['fecha','apellido','nombres','calle','localidad','institucion','motivo']);
-  const optionalFields = fields.filter(field => !requiredFields.has(field.key));
-  const optionalFieldKeys = new Set(optionalFields.map(field => field.key));
-  const optionalStrike = {start:0.15,end:0.85,thickness:0.75*72/25.4};
+  const notApplicableFields = fields.filter(field => !requiredFields.has(field.key) || field.key === 'calle');
+  const notApplicableFieldKeys = new Set(notApplicableFields.map(field => field.key));
+  const optionalStrike = adcMnc.geometry;
   const markedFields = new Set();
   const notApplicableButtons = new Map();
   const notApplicableLines = new Map();
@@ -54,13 +54,13 @@
   section.innerHTML = `
     <button type="button" class="alt" onclick="adcBackToTramites()">← Volver a Mis trámites</button>
     <h2 tabindex="-1">Solicitud de certificación de servicios docentes · SC-01</h2>
-    <p>Los datos personales se toman de Mi Perfil Docente. Completá los datos del trámite; los campos obligatorios se validan antes de previsualizar, descargar o imprimir.</p>
+    <p>Los datos personales se toman de Mi Perfil Docente. Completá los datos del trámite; los campos obligatorios se validan antes de previsualizar, descargar o imprimir, salvo los que marques con MNC cuando el formulario lo permita.</p>
     <div class="toolbar adc-sc01-actions">
       <button type="button" data-adc-sc01-action="preview">Ver Vista Preliminar</button>
       <button type="button" data-adc-sc01-action="download">Descargar PDF Completado</button>
       <button type="button" data-adc-sc01-action="print">Imprimir</button>
     </div>
-    <p class="small">El borrador se guarda en este navegador. El Rubro II y las firmas corresponden a sus responsables. En pantallas pequeñas podés desplazar el formulario horizontalmente. En los campos opcionales, pulsá X para indicar que no corresponde; volvé a pulsarla para quitar la línea y editar.</p>
+    <p class="small">El borrador se guarda en este navegador. El Rubro II y las firmas corresponden a sus responsables. En pantallas pequeñas podés desplazar el formulario horizontalmente. En los campos opcionales y en “Calle” cuando esté vacía, pulsá X para indicar que no corresponde; volvé a pulsarla para quitar la línea y editar.</p>
     <p id="adcSC01Status" role="status" aria-live="polite"></p>
     <div id="adcSC01ContactNotice" class="adc-sc01-contact-notice" aria-live="polite" hidden></div>
     <div class="adc-sc01-scroll" role="region" aria-label="Formulario SC-01 editable" tabindex="0">
@@ -113,7 +113,7 @@
     position(input, field);
     sheet.append(input);
   }
-  for (const field of optionalFields) {
+  for (const field of notApplicableFields) {
     const input = sheet.elements[field.key];
     const button = document.createElement('button');
     const tooltip = document.createElement('span');
@@ -139,28 +139,13 @@
       width:field.width*(optionalStrike.end-optionalStrike.start),
       height:optionalStrike.thickness
     });
+    line.style.top = `${(field.y+field.height/2)/1008*100}%`;
+    line.style.height = '0.5mm';
+    line.style.transform = 'translateY(-50%)';
     sheet.append(button,line);
     notApplicableButtons.set(field.key,button);
     notApplicableLines.set(field.key,line);
-    let showTimer;
-    let hideTimer;
-    const hideTooltip = () => {
-      window.clearTimeout(showTimer);
-      window.clearTimeout(hideTimer);
-      tooltip.hidden = true;
-    };
-    const showTooltip = () => {
-      window.clearTimeout(showTimer);
-      window.clearTimeout(hideTimer);
-      showTimer = window.setTimeout(() => {
-        tooltip.hidden = false;
-        hideTimer = window.setTimeout(() => { tooltip.hidden = true; },1500);
-      },250);
-    };
-    button.addEventListener('pointerenter',showTooltip);
-    button.addEventListener('pointerleave',hideTooltip);
-    button.addEventListener('focus',showTooltip);
-    button.addEventListener('blur',hideTooltip);
+    adcMnc.help(button,tooltip);
     button.addEventListener('click',() => {
       const marked = !markedFields.has(field.key);
       if (!setNotApplicable(field.key,marked)) return;
@@ -459,7 +444,7 @@
     for (const [key,profileKey] of [['direccionInstitucion','direccion'],['telefonoInstitucion','telefono'],['correoInstitucion','correo']]) {
       const input = sheet.elements[key];
       const value = school?.[profileKey] || directoryRecord?.[profileKey] || '';
-      if (value && markedFields.has(key)) setNotApplicable(key,false,false);
+      if (markedFields.has(key)) continue;
       input.value = value;
       updateNotApplicableControl(key);
       input.classList.remove('adc-sc01-unverified');
@@ -485,12 +470,15 @@
     const button = notApplicableButtons.get(key);
     const line = notApplicableLines.get(key);
     if (!input || !button || !line) return false;
+    if (!adcMnc.apply(input,marked,{allowRequired:key==='calle'})) return false;
     if (marked && input.value.trim()) {
-      status.textContent = 'Solo se puede tachar un campo opcional vacío.';
+      status.textContent = 'Solo se puede tachar un campo vacío.';
       return false;
     }
     if (marked) markedFields.add(key);
     else markedFields.delete(key);
+    input.required = requiredFields.has(key) && !marked;
+    if (key === 'calle' && marked) input.setCustomValidity('');
     input.readOnly = marked;
     line.hidden = !marked;
     button.hidden = !marked && Boolean(input.value.trim());
@@ -512,6 +500,8 @@
     return {...Object.fromEntries(new FormData(sheet)),_notApplicable:[...markedFields],_dateOrigin:dateOrigin,_autoDate:lastAutoDate,_contactOrigin:contactOrigin};
   }
   function write(values) {
+    values = {...values};
+    for (const key of values._notApplicable || []) if(notApplicableFieldKeys.has(key))values[key]='';
     for (const key of [...markedFields]) setNotApplicable(key,false,false);
     for (const input of sheet.elements) {
       if (input.type === 'radio') input.checked = values[input.name] === input.value;
@@ -519,7 +509,7 @@
     }
     if (Array.isArray(values._notApplicable)) {
       for (const key of values._notApplicable) {
-        if (optionalFieldKeys.has(key)) setNotApplicable(key,true,false);
+        if (notApplicableFieldKeys.has(key)) setNotApplicable(key,true,false);
       }
     }
     if (/^\d{2}\/\d{2}\/\d{4}$/.test(values.fecha || '')) dateField.value = values.fecha.split('/').reverse().join('-');
@@ -530,7 +520,7 @@
       if (contactOrigin[key] !== window.adcEscuelasChaco?.fuente) delete contactOrigin[key];
     }
     updateFormGeography();
-    for (const field of optionalFields) updateNotApplicableControl(field.key);
+    for (const field of notApplicableFields) updateNotApplicableControl(field.key);
     updateSurnameNote();
     showContactOrigin();
   }
@@ -539,13 +529,14 @@
     catch { status.textContent = 'No se pudo guardar el borrador. Descargá el PDF para conservarlo.'; }
   }
   function splitAddress(values) {
+    if (markedFields.has('calle') || markedFields.has('numeroCalle')) return;
     if (values.numeroCalle) return;
     const address = String(values.calle || '').match(/^(.+?)\s+(?:N[°º.]?\s*)?(\d+[a-zA-Z]?)$/i);
     if (address && !/^(ruta|km|kilometro)\b/i.test(address[1])) {values.calle = address[1];values.numeroCalle = address[2];}
   }
   function fromProfile() {
     const values = read();
-    for (const field of fields.filter(field => field.profile)) values[field.key] = document.getElementById(field.profile)?.value || '';
+    for (const field of fields.filter(field => field.profile && !markedFields.has(field.key))) values[field.key] = document.getElementById(field.profile)?.value || '';
     values.sexo = document.getElementById('sexo')?.value || '';
     values.tipoDocumento = 'DNI';
     splitAddress(values);
@@ -569,7 +560,7 @@
     if (event.target.name === 'localidad') {
       updateNotApplicableControl('codigoPostal');
       updateNotApplicableControl('departamento');
-    } else if (optionalFieldKeys.has(event.target.name)) updateNotApplicableControl(event.target.name);
+    } else if (notApplicableFieldKeys.has(event.target.name)) updateNotApplicableControl(event.target.name);
     if (contactOrigin[event.target.name]) {
       delete contactOrigin[event.target.name];
       event.target.classList.remove('adc-sc01-unverified');
@@ -577,16 +568,29 @@
     }
     save();
   });
-  function validateForm(){
+  function scPending() {
+    const pending=[...requiredFields].filter(key=>!sheet.elements[key].value.trim()&&!markedFields.has(key)).map(key=>({key,label:fields.find(field=>field.key===key).label,controls:[sheet.elements[key]]}));
+    for(const choice of choices)if(!sheet.querySelector(`input[name="${choice.key}"]:checked`))pending.push({key:choice.key,label:choice.label,controls:[...sheet.querySelectorAll(`input[name="${choice.key}"]`)]});
+    const number=digits.map(input=>input.value).join('');
+    const length=sheet.querySelector('input[name="tipoDocumento"]:checked')?.value==='CUIL'?11:7;
+    if(number.length<length)pending.push({key:'documento',label:'Número de documento',controls:digits.filter(input=>!input.value&&!input.disabled)});
+    return pending;
+  }
+  const guidedReview=adcGuidedValidation.create({root:section,collect:scPending,save});
+  function validateForm(allowMissing=false){
     for (const key of requiredFields) {
       const input = sheet.elements[key];
-      input.setCustomValidity(input.value.trim() ? '' : 'Completá este dato obligatorio.');
+      input.setCustomValidity(input.value.trim() || markedFields.has(key) ? '' : 'Completá este dato obligatorio.');
     }
     const number = digits.map(digit => digit.value).join('');
     const type = sheet.querySelector('input[name="tipoDocumento"]:checked')?.value;
     const validNumber = type === 'CUIL' ? /^\d{11}$/.test(number) : /^\d{7,8}$/.test(number);
     digits[0].setCustomValidity(validNumber ? '' : type === 'CUIL' ? 'Ingresá los 11 dígitos del CUIL.' : 'Ingresá los 7 u 8 dígitos del documento.');
-    if (!sheet.reportValidity()) {
+    const pendingControls=new Set(allowMissing?scPending().flatMap(item=>item.controls):[]);
+    if(allowMissing && scPending().some(item=>item.key==='documento'))pendingControls.add(digits[0]);
+    const invalid=[...sheet.elements].find(input=>!input.disabled&&!pendingControls.has(input)&&!input.checkValidity());
+    if (invalid) {
+      invalid.reportValidity();
       status.textContent = 'Completá los datos obligatorios indicados antes de continuar.';
       return false;
     }
@@ -689,7 +693,7 @@
     setTimeout(cleanup,60000);
   }
   async function runPdfAction(action){
-    if (!validateForm()) return;
+    if (!validateForm(true) || !await guidedReview.review({action}) || !validateForm(true)) return;
     const buttons = [...section.querySelectorAll('[data-adc-sc01-action]')];
     buttons.forEach(button => {button.disabled = true;});
     status.textContent = 'Preparando el PDF…';
