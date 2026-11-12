@@ -18,7 +18,8 @@
  const instructions={note:'Dibujá dónde querés escribir la nota.',rectangle:'Arrastrá para dibujar el recuadro.',ellipse:'Arrastrá para dibujar el óvalo.','doc-size':'Elegí la vista previa y arrastrá ↔ o ↕. Esc cancela.',move:'Agarrá los seis puntitos. Soltá para mover. Esc cancela.', 'center-area':'Revisá el centro de la columna.','center-peer':'Tocá la sección de referencia.','center-screen':'Revisá la guía y pulsá Aplicar centrado.',size:'Arrastrá el centro para mover o un borde para ajustar.',section:'Dibujá el cuadro y soltá.',box:'Dibujá la caja y soltá.',split:'Hacé clic entre dos elementos para empezar.',button:'Hacé clic donde va el botón.',bubble:'Hacé clic junto al elemento.',dropdown:'Elegí un control para ubicar el panel.',fold:'Elegí la sección que querés plegar.',erase:'Apuntá y mantené presionado para eliminar. También podés seleccionar y pulsar Eliminar.'};
  const originals=new WeakMap(),foldSummaries=new WeakMap(),originalDetailsOpen=new WeakMap();
  const selector = 'header,nav,main,footer,section,article,aside,form,div,details,summary,h1,h2,h3,h4,h5,h6,p,span,small,strong,label,button,a,input,textarea,select,table,thead,tbody,tr,th,td,ul,ol,li';
- let selected, grouping, range, drag, suppressClick=false;
+ let selected, grouping, range, drag, lineEndpointDrag, suppressClick=false;
+ instructions.line='Arrastrá con el botón izquierdo para dibujar. Después, mantené el botón derecho sobre la línea y mové el extremo más cercano.';
  let operations = [], redo = [], reversals = [];
  function register(element, key) {
    keys.set(element, key);
@@ -93,6 +94,23 @@
    register(title,op.id + '-title');
    return box;
  }
+ function linePointValues(annotation) {
+   const points=['adcLineX1','adcLineY1','adcLineX2','adcLineY2'].map(key=>Number(annotation.dataset[key]));
+   return points.every(Number.isFinite)?points:null;
+ }
+ function renderLinePoints(annotation,x1,y1,x2,y2) {
+   const left=Math.min(x1,x2),top=Math.min(y1,y2),width=Math.max(1,Math.abs(x2-x1)),height=Math.max(1,Math.abs(y2-y1));
+   Object.assign(annotation.style,{left:left+'px',top:top+'px',width:width+'px',height:height+'px'});
+   Object.assign(annotation.dataset,{adcLineX1:String(x1),adcLineY1:String(y1),adcLineX2:String(x2),adcLineY2:String(y2)});
+   const line=annotation.querySelector('line');
+   if(!line)return;
+   for(const [key,value] of Object.entries({
+     x1:(x1-left)/width*100,
+     y1:(y1-top)/height*100,
+     x2:(x2-left)/width*100,
+     y2:(y2-top)/height*100
+   }))line.setAttribute(key,value);
+ }
  function apply(op) {
    const node = resolve(op.target);
    if (!node?.matches(selector) || panel.contains(node) || node === gear) return;
@@ -101,14 +119,32 @@
      node.setAttribute('data-adc-design-hidden','');
      return ()=>node.toggleAttribute('data-adc-design-hidden',before);
    }
+   if(op.kind==='lineEndpoints'&&node.matches('.adc-design-annotation.line')&&[op.x1,op.y1,op.x2,op.y2].every(numeric)){
+     const before=linePointValues(node);
+     if(!before)return;
+     renderLinePoints(node,op.x1,op.y1,op.x2,op.y2);
+     return ()=>renderLinePoints(node,...before);
+   }
    if(op.kind==='annotation'&&canContain(node)){
-     if(!['note','rectangle','ellipse'].includes(op.shape)||![op.left,op.top,op.width,op.height].every(numeric))return;
+     if(!['note','rectangle','ellipse','line'].includes(op.shape)||![op.left,op.top,op.width,op.height].every(numeric))return;
      const annotation=document.createElement('p');
      annotation.className='adc-design-created adc-design-annotation '+op.shape;
      annotation.textContent=op.title||'';
-     annotation.setAttribute('aria-label',op.shape==='note'?'Nota':op.shape==='ellipse'?'Óvalo':'Recuadro');
+     annotation.setAttribute('aria-label',({note:'Nota',ellipse:'Óvalo',rectangle:'Recuadro',line:'Línea de referencia'})[op.shape]);
      Object.assign(annotation.style,{left:op.left+'px',top:op.top+'px',width:op.width+'px',height:op.height+'px'});
      if(/^#[0-9a-f]{6}$/i.test(op.color||''))annotation.style.setProperty('--adc-note-color',op.color);
+     annotation.style.setProperty('--adc-note-width',Math.max(1,Math.min(20,Number(op.strokeWidth)||3))+'px');
+     if(op.shape==='line'){
+       const svg=document.createElementNS('http://www.w3.org/2000/svg','svg');
+       svg.setAttribute('viewBox','0 0 100 100');svg.setAttribute('preserveAspectRatio','none');svg.setAttribute('aria-hidden','true');
+       const line=document.createElementNS('http://www.w3.org/2000/svg','line');
+       for(const [key,value] of Object.entries({x1:'0',y1:'0',x2:'100',y2:'100','vector-effect':'non-scaling-stroke'}))line.setAttribute(key,value);
+       svg.append(line);annotation.append(svg);
+       const points=[op.x1,op.y1,op.x2,op.y2].every(numeric)
+         ? [op.x1,op.y1,op.x2,op.y2]
+         : [op.left,op.top+(op.reverse?op.height:0),op.left+op.width,op.top+(op.reverse?0:op.height)];
+       renderLinePoints(annotation,...points);
+     }
      register(annotation,op.id);node.append(annotation);
      return ()=>annotation.remove();
    }
@@ -126,6 +162,10 @@
      if (op.center) { node.style.marginInline = 'auto'; node.style.justifySelf = 'center'; }
      if (/^#[0-9a-f]{6}$/i.test(op.background || '')) node.style.backgroundColor = op.background;
      if (/^#[0-9a-f]{6}$/i.test(op.color || '')) node.style.color = op.color;
+     if(node.matches('.adc-design-annotation')){
+       if(numeric(op.strokeWidth)&&op.strokeWidth>=1&&op.strokeWidth<=20)node.style.setProperty('--adc-note-width',op.strokeWidth+'px');
+       if(/^#[0-9a-f]{6}$/i.test(op.color||''))node.style.setProperty('--adc-note-color',op.color);
+     }
      return () => {
        if (before === null) node.removeAttribute('style'); else node.setAttribute('style',before);
        if (numeric(op.x) && numeric(op.y)) {
@@ -297,6 +337,11 @@
    selected = node;
    if (!node) { paletteBox.hidden=true;formatting.hidden = true; editor.replaceChildren(); range = null;scheduleMarks(); return; }
    node.setAttribute('data-adc-design-selected','');
+   if(node.matches('.adc-design-annotation')){
+     document.getElementById('adcAnnotationWidth').value=parseFloat(node.style.getPropertyValue('--adc-note-width'))||3;
+     const color=node.style.getPropertyValue('--adc-note-color');
+     if(/^#[0-9a-f]{6}$/i.test(color))document.getElementById('adcAnnotationColor').value=color;
+   }
    const editable = canEditText(node);
    formatting.hidden = !editable;
    editor.replaceChildren();
@@ -437,7 +482,7 @@
  }
  function load(incoming) {
    const allowed={
-     annotation:['id','shape','title','left','top','width','height','color'],hideOriginal:[],style:['x','y','width','height','center','background','color'],text:['html'],
+     annotation:['id','shape','title','left','top','width','height','color','strokeWidth','reverse','x1','y1','x2','y2'],lineEndpoints:['x1','y1','x2','y2'],hideOriginal:[],style:['x','y','width','height','center','background','color','strokeWidth'],text:['html'],
      reorder:['direction'],group:['destination'],split:['id','title','fold','open'],
      section:['id','title','fold','open','width','height','left','top'],box:['id','title','width','height','left','top'],
      button:['id','title','action','left','top','tone'],bubble:['id','title','tone','popup','left','top'],
@@ -535,7 +580,14 @@
    }
    if(act==='background'){setTool('');paletteBox.hidden=false;say('Elegí un fondo de la paleta.');}
  };
- const drawingTools=['section','box','note','rectangle','ellipse'];
+ for(const [id,property] of [['adcAnnotationWidth','strokeWidth'],['adcAnnotationColor','color']]){
+   document.getElementById(id).addEventListener('change',event=>{
+     if(!selected?.matches('.adc-design-annotation'))return;
+     const value=property==='strokeWidth'?Number(event.target.value):event.target.value;
+     commit({kind:'style',target:keyFor(selected),[property]:value});
+   });
+ }
+ const drawingTools=['section','box','note','rectangle','ellipse','line'];
  const blocks='header,nav,section,article,aside,details,.card,.adc-design-section';
  const protectedField='input,select,textarea,button,a,[contenteditable]';
  const id=()=> 'new-'+Date.now().toString(36)+'-'+Math.random().toString(36).slice(2,10);
@@ -549,6 +601,21 @@
  }
  function ghost(r,bad=false,label=''){
    marks.replaceChildren();const guide=mark('adc-ghost'+(bad?' invalid':''),r);guide.textContent=label;
+ }
+ function ghostLine(x1,y1,x2,y2){
+   marks.replaceChildren();
+   const left=Math.min(x1,x2),top=Math.min(y1,y2),width=Math.max(1,Math.abs(x2-x1)),height=Math.max(1,Math.abs(y2-y1));
+   const preview=mark('adc-line-ghost',rect(left,top,width,height));
+   const svg=document.createElementNS('http://www.w3.org/2000/svg','svg');
+   svg.setAttribute('viewBox','0 0 100 100');svg.setAttribute('preserveAspectRatio','none');
+   const line=document.createElementNS('http://www.w3.org/2000/svg','line');
+   for(const [key,value] of Object.entries({
+     x1:(x1-left)/width*100,y1:(y1-top)/height*100,x2:(x2-left)/width*100,y2:(y2-top)/height*100,
+     stroke:document.getElementById('adcAnnotationColor').value,
+     'stroke-width':Math.max(1,Math.min(20,Number(document.getElementById('adcAnnotationWidth').value)||3)),
+     'vector-effect':'non-scaling-stroke','stroke-linecap':'round'
+   }))line.setAttribute(key,value);
+   svg.append(line);preview.append(svg);
  }
  function siblings(node){return [...node.parentElement.children].filter(other=>other!==node&&usable(other)&&visible(other)&&!other.matches('script,style,summary'))}
  const overlaps=(a,b)=>a.left<b.right-1&&a.right>b.left+1&&a.top<b.bottom-1&&a.bottom>b.top+1;
@@ -601,6 +668,7 @@
  const allEdges=['left','midX','right','top','midY','bottom'];
  function alignedGesture(d,event){
    const r=geometry(d,event),draw=drawingTools.includes(d.kind);
+   if(d.kind==='line')return {r,guides:[]};
    const edges=d.kind==='move'?allEdges:draw?[event.clientX<d.x?'left':'right',event.clientY<d.y?'top':'bottom']:[d.kind];
    const guides=align(r,d.node,edges,event.altKey);
    const x=guides.find(g=>g.axis==='x')?.delta||0,y=guides.find(g=>g.axis==='y')?.delta||0;
@@ -653,11 +721,11 @@
    rule('y',left-20,top,20,bottom-top,r.top);
    rule('y',right,top,20,bottom-top,r.top);
  }
- const documentArea='#dj02Preview,.adc-ol-scroll,#dj .dj-preview';
+ const documentArea='#dj02Preview,.adc-ol-scroll,#dj .dj-preview,.adc-sc01-scroll';
  function scheduleMarks(){
    cancelAnimationFrame(frame);frame=requestAnimationFrame(()=>{
      paintRulers();
-     if(drag||cut)return;
+     if(drag||lineEndpointDrag||cut)return;
      marks.replaceChildren();if(panel.hidden)return;
      if(centerPreview){showCenter(centerPreview.node,centerPreview.reference);return}
      if(tool==='move'){
@@ -682,6 +750,7 @@
        }
      }
      if(tool==='size'&&selected&&visible(selected)){
+       if(selected.matches('.adc-design-annotation.line'))return;
        const r=selected.getBoundingClientRect();mark('adc-outline',r).textContent=dimensions(r);
        const edges={left:rect(r.left-4,r.top,8,r.height),right:rect(r.right-4,r.top,8,r.height),top:rect(r.left,r.top-4,r.width,8),bottom:rect(r.left,r.bottom-4,r.width,8)};
        for(const [side,area] of Object.entries(edges)){
@@ -697,22 +766,50 @@
    event.preventDefault();event.stopPropagation();
    drag={node,kind,x:event.clientX,y:event.clientY,base:node.getBoundingClientRect()};
  }
+ function updateLineEndpointDrag(event){
+   const state=lineEndpointDrag;
+   if(!state?.node.isConnected||event.pointerId!==state.pointerId)return;
+   const parentRect=state.parent.getBoundingClientRect();
+   const points=state.original.slice();
+   const x=event.clientX-parentRect.left-state.parent.clientLeft+state.parent.scrollLeft;
+   const y=event.clientY-parentRect.top-state.parent.clientTop+state.parent.scrollTop;
+   if(state.endpoint==='start'){points[0]=x;points[1]=y}
+   else{points[2]=x;points[3]=y}
+   state.current=points;
+   renderLinePoints(state.node,...points);
+ }
  document.addEventListener('pointerdown',event=>{
    if(panel.hidden||!usable(event.target)||grouping)return;
+   const lineAnnotation=event.button===2?event.target.closest('.adc-design-annotation.line'):null;
+   if(lineAnnotation){
+     const svg=lineAnnotation.querySelector('svg'),line=lineAnnotation.querySelector('line'),points=linePointValues(lineAnnotation);
+     if(!svg||!line||!points)return;
+     const bounds=svg.getBoundingClientRect();
+     const startPoint={x:bounds.left+Number(line.getAttribute('x1'))/100*bounds.width,y:bounds.top+Number(line.getAttribute('y1'))/100*bounds.height};
+     const endPoint={x:bounds.left+Number(line.getAttribute('x2'))/100*bounds.width,y:bounds.top+Number(line.getAttribute('y2'))/100*bounds.height};
+     const startDistance=Math.hypot(event.clientX-startPoint.x,event.clientY-startPoint.y);
+     const endDistance=Math.hypot(event.clientX-endPoint.x,event.clientY-endPoint.y);
+     lineEndpointDrag={node:lineAnnotation,parent:lineAnnotation.parentElement,pointerId:event.pointerId,endpoint:startDistance<=endDistance?'start':'end',original:points,current:points,startX:event.clientX,startY:event.clientY};
+     event.preventDefault();event.stopPropagation();
+     select(lineAnnotation);
+     lineAnnotation.setPointerCapture(event.pointerId);
+     return;
+   }
    if(!tool||tool==='size'){
      const created=event.target.closest('.adc-design-created');
      const control=event.target.closest(protectedField);
      if(control&&control!==selected&&(!created||(!created.matches('button,.adc-design-pop')&&created.contains(control))))return;
      const node=(selected?.contains(event.target)?selected:null)||created||event.target.closest(blocks);
-     if(node&&usable(node)){select(node);start(event,node,'move');}
+     if(node&&usable(node)){select(node);if(node.matches('.adc-design-annotation.line'))return;start(event,node,'move');}
      return;
    }
    if(!drawingTools.includes(tool))return;
-   const host=event.target.closest('main')||event.target.closest('section,article,aside,div');
+   const host=event.target.closest('#adcSC01Sheet')||event.target.closest('main')||event.target.closest('section,article,aside,div');
    if(host&&canContain(host))start(event,host,tool);
  },true);
  function geometry(d,event){
    const x=event.clientX-d.x,y=event.clientY-d.y,r=d.base;
+   if(d.kind==='line')return rect(Math.min(d.x,event.clientX),Math.min(d.y,event.clientY),Math.max(1,Math.abs(x)),Math.max(1,Math.abs(y)));
    if(drawingTools.includes(d.kind))return rect(Math.min(d.x,event.clientX),Math.min(d.y,event.clientY),Math.abs(x),Math.abs(y));
    const viewport=document.documentElement.clientWidth;
    const w=d.kind==='left'?Math.min(r.right-8,Math.max(120,r.width-x)):d.kind==='right'?Math.min(viewport-r.left-8,Math.max(120,r.width+x)):r.width;
@@ -721,9 +818,11 @@
  }
  document.addEventListener('pointermove',event=>{
    if(panel.hidden)return;
+   if(lineEndpointDrag){updateLineEndpointDrag(event);return}
    if(drag){
      const {r,guides}=alignedGesture(drag,event);
      const bad=drag.kind==='move'&&!validMove(drag.node,r);
+     if(drag.kind==='line'){ghostLine(drag.x,drag.y,event.clientX,event.clientY);return}
      const horizontal=['left','right'].includes(drag.kind),vertical=['top','bottom'].includes(drag.kind);
      const before=horizontal?drag.base.width:drag.base.height,after=horizontal?r.width:r.height;
      const delta=Math.round(after-before);
@@ -759,19 +858,33 @@
    }
  });
  document.addEventListener('pointerup',event=>{
+   if(lineEndpointDrag){
+     const state=lineEndpointDrag;
+     if(event.pointerId!==state.pointerId)return;
+     if(Math.hypot(event.clientX-state.startX,event.clientY-state.startY)<3){
+       lineEndpointDrag=null;renderLinePoints(state.node,...state.original);scheduleMarks();return;
+     }
+     updateLineEndpointDrag(event);
+     const points=state.current;
+     lineEndpointDrag=null;renderLinePoints(state.node,...state.original);
+     commit({kind:'lineEndpoints',target:keyFor(state.node),x1:points[0],y1:points[1],x2:points[2],y2:points[3]});
+     return;
+   }
    if(!drag)return;
    const d=drag;drag=null;const {r}=alignedGesture(d,event),base=d.base;
    scheduleMarks();
    if(drawingTools.includes(d.kind)){
-     if(r.width<24||r.height<20){say('Dibujá un cuadro más grande.');return}
+     if(d.kind==='line'?Math.hypot(r.width,r.height)<8:r.width<24||r.height<20){say(d.kind==='line'?'Dibujá una línea más larga.':'Dibujá un cuadro más grande.');return}
      if(r.left<base.left-1||r.right>base.right+1||r.top<base.top-1||r.bottom>base.bottom+1){say('Dibujá dentro del área de trabajo.');return}
-     const annotation=['note','rectangle','ellipse'].includes(d.kind);
+     const annotation=['note','rectangle','ellipse','line'].includes(d.kind);
      const title=d.kind==='note'?prompt('Escribí tu nota.'):d.kind==='section'?prompt('Título de la sección','Nueva sección'):annotation?'':'Escribí acá';
      if(title===null)return;
      const key=id();
      commit({kind:annotation?'annotation':d.kind,target:keyFor(d.node),id:key,title,width:r.width,height:r.height,left:r.left-base.left+d.node.scrollLeft,top:r.top-base.top+d.node.scrollTop,
-      ...(annotation?{shape:d.kind,color:document.getElementById('adcAnnotationColor').value}:{})});
+      ...(annotation?{shape:d.kind,color:document.getElementById('adcAnnotationColor').value,strokeWidth:Math.max(1,Math.min(20,Number(document.getElementById('adcAnnotationWidth').value)||3)),reverse:(event.clientX-d.x)*(event.clientY-d.y)<0,...(d.kind==='line'?{x1:d.x-base.left-d.node.clientLeft+d.node.scrollLeft,y1:d.y-base.top-d.node.clientTop+d.node.scrollTop,x2:event.clientX-base.left-d.node.clientLeft+d.node.scrollLeft,y2:event.clientY-base.top-d.node.clientTop+d.node.scrollTop}:{})}:{})});
      const added=resolve(key);if(added){setTool('');select(added);if(d.kind==='box'){formatting.open=true;editor.focus();const selection=getSelection();selection.selectAllChildren(editor)}}
+     suppressClick=true;
+     setTimeout(()=>{suppressClick=false},0);
      return;
    }
    if(Math.max(Math.abs(event.clientX-d.x),Math.abs(event.clientY-d.y))<3)return;
@@ -780,7 +893,10 @@
    if(d.kind==='move'&&!validMove(d.node,r)){say('Ese destino tapa un cuadro o queda fuera del área.');return}
    commit({kind:'style',target:keyFor(d.node),x:r.left-base.left,y:r.top-base.top,...(d.kind==='move'?{}:{width:r.width,height:r.height})});
  },true);
- document.addEventListener('pointercancel',()=>{drag=null;scheduleMarks()});
+ document.addEventListener('pointercancel',event=>{
+   if(lineEndpointDrag?.pointerId===event.pointerId){const state=lineEndpointDrag;lineEndpointDrag=null;renderLinePoints(state.node,...state.original)}
+   drag=null;scheduleMarks()
+ });
  window.addEventListener('scroll',scheduleMarks,true);window.addEventListener('resize',scheduleMarks);
  function gap(event){
    if(event.target.closest(protectedField))return null;
@@ -942,6 +1058,7 @@
  document.addEventListener('keydown',event=>{if(event.key==='Escape')closeContextMenu()});
  document.addEventListener('contextmenu',event=>{
    if(panel.hidden||!usable(event.target)||contextMenu.contains(event.target))return;
+   if(event.target.closest('.adc-design-annotation.line')){event.preventDefault();return}
    const node=event.target.closest('.adc-design-created')||event.target.closest(selector);
    if(!node||!keyFor(node))return;
    event.preventDefault();setTool('');select(node);
@@ -969,9 +1086,13 @@
    contextMenu.style.top=Math.max(0,Math.min(event.clientY,innerHeight-contextMenu.offsetHeight))+'px';
  });
  const initialLayout = [{"kind":"style","target":"base-423","x":0,"y":0,"width":919,"height":217.390625},{"kind":"style","target":"base-434","x":0,"y":0,"width":919,"height":1698.34375},{"kind":"style","target":"base-423","x":8.5,"y":0},{"kind":"style","target":"base-434","x":8.5,"y":0},{"kind":"style","target":"base-509","x":0,"y":0,"width":1247,"height":4665.96875},{"kind":"style","target":"base-509","x":0,"y":0,"width":1286,"height":4665.96875},{"kind":"style","target":"base-5","x":-24,"y":0,"width":926,"height":109.375},{"kind":"style","target":"base-5","x":0,"y":0,"width":1051,"height":109.375},{"kind":"style","target":"base-5","x":0,"y":0,"width":951,"height":109.375},{"kind":"style","target":"base-9","x":-24,"y":0},{"kind":"style","target":"base-509","x":-36,"y":-2},{"kind":"style","target":"base-293","x":-24,"y":0,"width":926,"height":47},{"kind":"style","target":"base-293","x":0,"y":0,"width":883,"height":47},{"kind":"style","target":"base-329","x":-24,"y":0},{"kind":"style","target":"base-329","x":0,"y":0,"width":951,"height":686.1875},{"kind":"style","target":"base-366","x":0,"y":0,"width":927,"height":999.5},{"kind":"style","target":"base-390","x":0,"y":0,"width":927,"height":199.5},{"kind":"style","target":"base-366","x":-24,"y":0,"width":951,"height":999.5},{"kind":"style","target":"base-390","x":-24,"y":0,"width":951,"height":199.5},{"kind":"style","target":"base-5","x":0,"y":0,"width":951,"height":147.375},{"kind":"style","target":"base-423","x":0,"y":0,"width":919,"height":235.390625},{"kind":"style","target":"base-434","x":0,"y":0,"width":919,"height":1130.34375},{"kind":"style","target":"base-434","x":0,"y":0,"width":919,"height":897.34375},{"kind":"style","target":"base-400","x":0,"y":0,"width":426,"height":426.734375},{"kind":"style","target":"base-400","x":-17,"y":0,"width":443,"height":426.734375},{"kind":"style","target":"base-400","x":0,"y":0,"width":430,"height":426.734375},{"kind":"style","target":"base-509","x":-2,"y":2},{"kind":"style","target":"base-509","x":0,"y":0},{"kind":"style","target":"base-572","x":-31,"y":0,"width":1424,"height":301.5},{"kind":"style","target":"base-586","x":-31,"y":0,"width":1331,"height":1010.53125},{"kind":"style","target":"base-572","x":0,"y":0,"width":1331,"height":301.5},{"kind":"style","target":"base-5","x":-19,"y":0,"width":970,"height":147.375},{"kind":"style","target":"base-5","x":0,"y":0,"width":992,"height":147.375},{"kind":"style","target":"base-5","x":0,"y":0,"width":999,"height":147.375},{"kind":"style","target":"base-9","x":-19,"y":10},{"kind":"style","target":"base-293","x":-19,"y":0,"width":902,"height":47},{"kind":"style","target":"base-521","x":0,"y":0,"width":1142,"height":654.71875},{"kind":"style","target":"base-521","x":0,"y":0,"width":1122,"height":654.71875},{"kind":"style","target":"base-521","x":0,"y":0,"width":1143,"height":654.71875},{"kind":"style","target":"base-509","x":0,"y":0,"width":1337,"height":4665.96875},{"kind":"style","target":"base-509","x":0,"y":0,"width":1364,"height":4665.96875}];
+ function restoreLayout(){
  try {
    const draft = JSON.parse(localStorage.getItem('adc-design-draft-v60') || localStorage.getItem('adc-design-draft-v59') || localStorage.getItem('adc-design-draft-v58') || 'null');
    load(draft?.schema===storageKey?draft.operations:initialLayout);
    dirty=false;say('Distribución cargada.');
  } catch { say('No se pudo recuperar el borrador.'); }
+ }
+ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',restoreLayout,{once:true});
+ else restoreLayout();
 })();

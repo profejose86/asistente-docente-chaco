@@ -10,7 +10,7 @@ const ids=new Set(inst.map(i=>i.id));const uids=new Set(inst.flatMap(i=>i.entrie
 for(const id of instAbiertasPrevias)if(ids.has(id))perfilInstitucionesAbiertas.add(id);
 for(const uid of cargosAbiertosPrevios)if(uids.has(uid))perfilCargosAbiertos.add(uid);
 for(const uid of horariosAbiertosPrevios)if(uids.has(uid))perfilHorariosAbiertos.add(uid);
-render()}
+render();if(typeof window.adcAplicarGeografiaPerfil==='function')window.adcAplicarGeografiaPerfil()}
 const PERFIL_PRUEBA_V07={nombre:'',dni:'',correo:'',sexo:'',inst:[]};
 function restoreTestProfile(){if(!confirm('¿Restaurar el perfil vacío? Se reemplazarán los datos visibles (no el respaldo original).'))return;applyData(JSON.parse(JSON.stringify(PERFIL_PRUEBA_V07)));alert('Perfil vacío restaurado. Completá tus datos y guardalos en este navegador.')}
 function exportJSON(){let a=document.createElement('a');a.href=URL.createObjectURL(new Blob([JSON.stringify(data(),null,2)],{type:'application/json'}));a.download='respaldo_asistente_docente_chaco_v0915.json';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000)}

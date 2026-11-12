@@ -63,6 +63,7 @@ for(const id of ['dni','perfilRegistro','perfilClase']){
 function adcSetSharedField(id,value){const el=$(id);if(!el)return;
  if(id==='perfilAntiguedad'){adcAntiguedadModo='manual';el.value=String(value||'').trim();$('perfilAntiguedadVista').value=value;}
  else el.value=['dni','perfilRegistro','perfilClase'].includes(id)?adcPersonalFormat(value,id):value;
+ if(id==='perfilLocalidad'&&typeof window.adcAplicarGeografiaPerfil==='function')window.adcAplicarGeografiaPerfil();
  adcRefreshPending();localStorage.setItem('adc_v08',JSON.stringify(data()));
  if(typeof djRender==='function')djRender();
 }
@@ -90,5 +91,5 @@ function adcDeclarationState(){
  return {ready:missing.length===0&&issues.length===0,missing,issues};
 }
 function adcDeclarationBannerHTML(){const x=adcDeclarationState();return `<div class="adc-status ${x.ready?'ready':'draft'}">${x.ready?'✓ Lista para presentar':'! Borrador'}</div>${!x.ready?`<p class="small">${esc([...x.missing,...x.issues].slice(0,5).join(' · '))}${x.missing.length+x.issues.length>5?' · …':''}</p>`:''}`;}
-window.addEventListener('DOMContentLoaded',()=>{adcActualizarAntiguedad(false);document.querySelectorAll('#profile input,#profile select').forEach(el=>el.addEventListener('change',adcRefreshPending));});
+window.addEventListener('DOMContentLoaded',()=>{adcActualizarAntiguedad(false);if(typeof window.adcAplicarGeografiaPerfil==='function')window.adcAplicarGeografiaPerfil();document.querySelectorAll('#profile input,#profile select').forEach(el=>el.addEventListener('change',adcRefreshPending));});
 

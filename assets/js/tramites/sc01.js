@@ -28,6 +28,12 @@
   ];
   const storageKey = 'adc-sc01-borrador-v1';
   const requiredFields = new Set(['fecha','apellido','nombres','calle','localidad','institucion','motivo']);
+  const optionalFields = fields.filter(field => !requiredFields.has(field.key));
+  const optionalFieldKeys = new Set(optionalFields.map(field => field.key));
+  const optionalStrike = {start:0.15,end:0.85,thickness:0.75*72/25.4};
+  const markedFields = new Set();
+  const notApplicableButtons = new Map();
+  const notApplicableLines = new Map();
   const extraProfile = document.createElement('fieldset');
   extraProfile.className = 'adc-profile-address';
   extraProfile.innerHTML = '<legend>Datos de domicilio para formularios</legend><div class="fields"></div>';
@@ -48,13 +54,13 @@
   section.innerHTML = `
     <button type="button" class="alt" onclick="adcBackToTramites()">← Volver a Mis trámites</button>
     <h2 tabindex="-1">Solicitud de certificación de servicios docentes · SC-01</h2>
-    <p>Completá los casilleros resaltados. Los campos obligatorios se validan al descargar el PDF.</p>
-    <div class="toolbar">
-      <button type="button" id="adcSC01Profile" class="alt">Cargar datos del perfil</button>
-      <button type="button" id="adcSC01Download">Descargar PDF completado</button>
-      <a class="adc-sc01-action" href="assets/formularios/SC-01.pdf" target="_blank" rel="noopener">Ver original</a>
+    <p>Los datos personales se toman de Mi Perfil Docente. Completá los datos del trámite; los campos obligatorios se validan antes de previsualizar, descargar o imprimir.</p>
+    <div class="toolbar adc-sc01-actions">
+      <button type="button" data-adc-sc01-action="preview">Ver Vista Preliminar</button>
+      <button type="button" data-adc-sc01-action="download">Descargar PDF Completado</button>
+      <button type="button" data-adc-sc01-action="print">Imprimir</button>
     </div>
-    <p class="small">El borrador se guarda en este navegador. El Rubro II y las firmas corresponden a sus responsables. En pantallas pequeñas podés desplazar el formulario horizontalmente.</p>
+    <p class="small">El borrador se guarda en este navegador. El Rubro II y las firmas corresponden a sus responsables. En pantallas pequeñas podés desplazar el formulario horizontalmente. En los campos opcionales, pulsá X para indicar que no corresponde; volvé a pulsarla para quitar la línea y editar.</p>
     <p id="adcSC01Status" role="status" aria-live="polite"></p>
     <div id="adcSC01ContactNotice" class="adc-sc01-contact-notice" aria-live="polite" hidden></div>
     <div class="adc-sc01-scroll" role="region" aria-label="Formulario SC-01 editable" tabindex="0">
@@ -62,6 +68,12 @@
         <img src="assets/formularios/SC-01-plantilla.png" alt="Plantilla oficial de solicitud de certificación de servicios docentes">
       </form>
     </div>
+    <div class="toolbar adc-sc01-actions" aria-label="Acciones del formulario">
+      <button type="button" data-adc-sc01-action="preview">Ver Vista Preliminar</button>
+      <button type="button" data-adc-sc01-action="download">Descargar PDF Completado</button>
+      <button type="button" data-adc-sc01-action="print">Imprimir</button>
+    </div>
+    <div id="adcSC01Preview" class="adc-sc01-preview" role="region" aria-label="Vista preliminar del formulario" hidden></div>
     <a href="https://dirdocumentacion.educacion.chaco.gob.ar/formularios-planillas/" target="_blank" rel="noopener">Fuente oficial del formulario</a>`;
   const footer = document.querySelector('.wrap > footer');
   if (footer) footer.before(section);
@@ -79,6 +91,7 @@
   const status = section.querySelector('#adcSC01Status');
   let initialized = false;
   let pdfBytes;
+  let previewUrl;
   let dateOrigin = 'auto';
   let lastAutoDate = '';
   let contactOrigin = {};
@@ -100,6 +113,62 @@
     position(input, field);
     sheet.append(input);
   }
+  for (const field of optionalFields) {
+    const input = sheet.elements[field.key];
+    const button = document.createElement('button');
+    const tooltip = document.createElement('span');
+    const line = document.createElement('span');
+    button.type = 'button';
+    button.className = 'adc-sc01-not-applicable';
+    button.setAttribute('aria-label',`Tachar ${field.label.toLowerCase()} si no corresponde`);
+    button.setAttribute('aria-pressed','false');
+    tooltip.className = 'adc-sc01-not-applicable-tooltip';
+    tooltip.id = `adcSC01NotApplicable${field.key}`;
+    tooltip.setAttribute('role','tooltip');
+    tooltip.textContent = 'Tachar si no corresponde';
+    tooltip.hidden = true;
+    button.setAttribute('aria-describedby',tooltip.id);
+    button.append(document.createTextNode('X'),tooltip);
+    line.className = 'adc-sc01-not-applicable-line';
+    line.hidden = true;
+    position(input,{...field,x:field.x+14,width:field.width-14});
+    position(button,{...field,width:14});
+    position(line,{
+      x:field.x+field.width*optionalStrike.start,
+      y:field.y+(field.height-optionalStrike.thickness)/2,
+      width:field.width*(optionalStrike.end-optionalStrike.start),
+      height:optionalStrike.thickness
+    });
+    sheet.append(button,line);
+    notApplicableButtons.set(field.key,button);
+    notApplicableLines.set(field.key,line);
+    let showTimer;
+    let hideTimer;
+    const hideTooltip = () => {
+      window.clearTimeout(showTimer);
+      window.clearTimeout(hideTimer);
+      tooltip.hidden = true;
+    };
+    const showTooltip = () => {
+      window.clearTimeout(showTimer);
+      window.clearTimeout(hideTimer);
+      showTimer = window.setTimeout(() => {
+        tooltip.hidden = false;
+        hideTimer = window.setTimeout(() => { tooltip.hidden = true; },1500);
+      },250);
+    };
+    button.addEventListener('pointerenter',showTooltip);
+    button.addEventListener('pointerleave',hideTooltip);
+    button.addEventListener('focus',showTooltip);
+    button.addEventListener('blur',hideTooltip);
+    button.addEventListener('click',() => {
+      const marked = !markedFields.has(field.key);
+      if (!setNotApplicable(field.key,marked)) return;
+      status.textContent = '';
+      if (!marked) input.focus();
+    });
+  }
+  const updateFormGeography=window.adcVincularGeografiaChaco(sheet.elements.localidad,sheet.elements.codigoPostal,sheet.elements.departamento);
   const dateField = sheet.elements.fecha;
   dateField.type = 'date';
   dateField.removeAttribute('maxlength');
@@ -196,13 +265,165 @@
     digits.push(input);
     sheet.append(input);
   }
-  const institutions = document.createElement('datalist');
-  institutions.id = 'adcSC01Institutions';
-  sheet.elements.institucion.setAttribute('list',institutions.id);
-  sheet.append(institutions);
+  const institutionField = fields.find(field => field.key === 'institucion');
+  const institutionInput = sheet.elements.institucion;
+  const schoolToggle = document.createElement('button');
+  schoolToggle.type = 'button';
+  schoolToggle.className = 'adc-sc01-school-toggle';
+  schoolToggle.textContent = '▾';
+  schoolToggle.setAttribute('aria-label','Mostrar instituciones sugeridas');
+  schoolToggle.setAttribute('aria-haspopup','listbox');
+  schoolToggle.setAttribute('aria-expanded','false');
+  schoolToggle.title = 'Elegir una institución del perfil o del padrón';
+  position(schoolToggle,{x:institutionField.x+institutionField.width-22,y:institutionField.y,width:22,height:institutionField.height});
+  position(institutionInput,{...institutionField,width:institutionField.width-24});
+  const schoolSuggestions = document.createElement('div');
+  schoolSuggestions.className = 'adc-sc01-school-suggestions';
+  schoolSuggestions.id = 'adcSC01SchoolSuggestions';
+  schoolSuggestions.setAttribute('role','listbox');
+  schoolSuggestions.setAttribute('aria-label','Instituciones sugeridas');
+  schoolSuggestions.hidden = true;
+  position(schoolSuggestions,{x:institutionField.x,y:institutionField.y+institutionField.height,width:institutionField.width,height:14});
+  institutionInput.setAttribute('aria-autocomplete','list');
+  institutionInput.setAttribute('aria-controls',schoolSuggestions.id);
+  institutionInput.setAttribute('aria-expanded','false');
+  institutionInput.placeholder = 'Escribí o elegí una institución';
+  sheet.append(schoolToggle,schoolSuggestions);
+  let activeSchoolSuggestion = -1;
+  let selectedProfileSchoolId = null;
+  let selectedDirectoryRecord = null;
+  const normalizeInstitutionName = value => String(value || '').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLocaleLowerCase().replace(/[^a-z0-9]+/g,' ').trim();
+  const sameName = (left,right) => normalizeInstitutionName(left) === normalizeInstitutionName(right);
+  const directoryInstitutions = (window.adcEscuelasChaco?.registros || []).map(record => ({
+    record,
+    name:String(record.nombre || '').trim(),
+    localidad:String(record.localidad || ''),
+    normalizedName:normalizeInstitutionName(record.nombre)
+  }));
+  function matchesNormalizedInstitution(normalizedName,query) {
+    const words = normalizedName.split(' ');
+    return normalizedName.includes(query) || query.split(' ').every(token => words.some(word => word.startsWith(token)));
+  }
+  const matchesInstitution = (name,query) => matchesNormalizedInstitution(normalizeInstitutionName(name),query);
+  function institutionSuggestions(query) {
+    const profileSchools = inst.filter(school => String(school.name || '').trim());
+    if (!query) return profileSchools.slice(0,8).map(school => ({type:'profile',name:school.name,school}));
+    const profileMatches = profileSchools
+      .filter(school => matchesInstitution(school.name,query))
+      .map(school => ({type:'profile',name:school.name,school}));
+    const profileNames = new Set(profileMatches.map(suggestion => normalizeInstitutionName(suggestion.name)));
+    const directoryMatches = [];
+    const seen = new Set();
+    if (query.length >= 2) {
+      for (const institution of directoryInstitutions) {
+        const {record,name,localidad,normalizedName} = institution;
+        if (!name || !matchesNormalizedInstitution(normalizedName,query)) continue;
+        const key = `${normalizedName}|${normalizeInstitutionName(localidad)}`;
+        if (profileNames.has(normalizedName) || seen.has(key)) continue;
+        seen.add(key);
+        directoryMatches.push({type:'directory',name,localidad,record});
+        if (directoryMatches.length >= 8) break;
+      }
+    }
+    return [...profileMatches,...directoryMatches].slice(0,8);
+  }
+  function closeSchoolSuggestions() {
+    schoolSuggestions.hidden = true;
+    activeSchoolSuggestion = -1;
+    institutionInput.setAttribute('aria-expanded','false');
+    schoolToggle.setAttribute('aria-expanded','false');
+    institutionInput.removeAttribute('aria-activedescendant');
+  }
+  function selectSchoolSuggestion(suggestion) {
+    selectedProfileSchoolId = suggestion.type === 'profile' ? String(suggestion.school.id) : null;
+    selectedDirectoryRecord = suggestion.type === 'directory' ? suggestion.record : null;
+    institutionInput.value = suggestion.name;
+    institutionInput.setCustomValidity('');
+    loadInstitution();
+    closeSchoolSuggestions();
+  }
+  function renderSchoolSuggestions(showAll = false) {
+    const query = normalizeInstitutionName(institutionInput.value);
+    const suggestions = institutionSuggestions(showAll ? '' : query);
+    schoolSuggestions.replaceChildren();
+    activeSchoolSuggestion = -1;
+    institutionInput.removeAttribute('aria-activedescendant');
+    suggestions.forEach((suggestion,index) => {
+      const option = document.createElement('button');
+      option.type = 'button';
+      option.id = `adcSC01SchoolOption${index}`;
+      option.className = 'adc-sc01-school-option';
+      option.setAttribute('role','option');
+      option.setAttribute('aria-selected','false');
+      option.textContent = suggestion.type === 'directory' && suggestion.localidad
+        ? `${suggestion.name} · ${suggestion.localidad}`
+        : suggestion.name;
+      option.addEventListener('mousedown',event => event.preventDefault());
+      option.addEventListener('click',() => selectSchoolSuggestion(suggestion));
+      schoolSuggestions.append(option);
+    });
+    if (!suggestions.length) {
+      closeSchoolSuggestions();
+      return;
+    }
+    position(schoolSuggestions,{x:institutionField.x,y:institutionField.y+institutionField.height,width:institutionField.width,height:Math.min(suggestions.length,8)*14});
+    schoolSuggestions.hidden = false;
+    institutionInput.setAttribute('aria-expanded','true');
+    schoolToggle.setAttribute('aria-expanded','true');
+  }
+  schoolToggle.addEventListener('mousedown',event => event.preventDefault());
+  schoolToggle.addEventListener('click',() => {
+    if (schoolSuggestions.hidden) renderSchoolSuggestions(true);
+    else closeSchoolSuggestions();
+  });
+  institutionInput.addEventListener('focus',() => renderSchoolSuggestions());
+  institutionInput.addEventListener('blur',() => window.setTimeout(closeSchoolSuggestions,0));
+  institutionInput.addEventListener('keydown',event => {
+    const options = schoolSuggestions.querySelectorAll('.adc-sc01-school-option');
+    if (event.key === 'Escape' && !schoolSuggestions.hidden) {
+      event.preventDefault();
+      closeSchoolSuggestions();
+      return;
+    }
+    if (event.key === 'Enter' && !schoolSuggestions.hidden && activeSchoolSuggestion >= 0) {
+      event.preventDefault();
+      options[activeSchoolSuggestion]?.click();
+      return;
+    }
+    if (!['ArrowDown','ArrowUp'].includes(event.key)) return;
+    if (schoolSuggestions.hidden) renderSchoolSuggestions();
+    const updatedOptions = schoolSuggestions.querySelectorAll('.adc-sc01-school-option');
+    if (!updatedOptions.length) return;
+    event.preventDefault();
+    const direction = event.key === 'ArrowDown' ? 1 : -1;
+    activeSchoolSuggestion = activeSchoolSuggestion < 0
+      ? (event.key === 'ArrowDown' ? 0 : updatedOptions.length - 1)
+      : (activeSchoolSuggestion + direction + updatedOptions.length) % updatedOptions.length;
+    updatedOptions.forEach((option,index) => {
+      const active = index === activeSchoolSuggestion;
+      option.setAttribute('aria-selected',String(active));
+      if (active) {
+        institutionInput.setAttribute('aria-activedescendant',option.id);
+        option.scrollIntoView({block:'nearest'});
+      }
+    });
+  });
+  section.addEventListener('click',event => {
+    if (!event.target.closest('.adc-sc01-school-toggle,.adc-sc01-school-suggestions')) closeSchoolSuggestions();
+  });
   function updateInstitutions() {
-    institutions.replaceChildren();
-    for (const school of inst.filter(school => school.name.trim())) institutions.append(new Option(school.name,school.name));
+    const schools = inst.filter(school => school.name.trim());
+    institutionInput.readOnly = false;
+    institutionInput.placeholder = schools.length ? 'Escribí o elegí una institución' : 'Escribí el nombre de la institución';
+    const current = schools.find(school => sameName(school.name,institutionInput.value));
+    if (!institutionInput.value.trim() && schools.length) {
+      selectedProfileSchoolId = String(schools[0].id);
+      institutionInput.value = schools[0].name;
+      loadInstitution();
+    } else if (current && !sheet.elements.direccionInstitucion.value && !sheet.elements.telefonoInstitucion.value && !sheet.elements.correoInstitucion.value) {
+      selectedProfileSchoolId = String(current.id);
+      loadInstitution();
+    }
   }
   function updateSurnameNote() {
     surnameNote.hidden = sheet.querySelector('input[name="sexo"]:checked')?.value !== 'M';
@@ -213,7 +434,7 @@
     for (const [key,badge] of Object.entries(contactBadges)) {
       const field = fields.find(field => field.key === key);
       badge.hidden = !contactOrigin[key];
-      position(sheet.elements[key],{...field,width:field.width-(contactOrigin[key]?105:0)});
+      position(sheet.elements[key],{...field,x:field.x+14,width:field.width-14-(contactOrigin[key]?105:0)});
     }
     for (const [key,label] of [['direccionInstitucion','Dirección'],['telefonoInstitucion','Teléfono'],['correoInstitucion','Correo electrónico']]) {
       if (!contactOrigin[key]) continue;
@@ -222,8 +443,8 @@
       source.href = contactOrigin[key];
       source.target = '_blank';source.rel = 'noopener';
       source.textContent = 'Consultar padrón oficial';
-      line.append(`⚠ Verificar ${label.toLowerCase()} de la institución. `,source);
-      notice.append(line);
+      line.append('Contactos obtenidos del padrón oficial. Verificá antes de presentar. ',source);
+      if (!notice.childElementCount) notice.append(line);
       const input = sheet.elements[key];
       input.title = `${label} · ⚠ Verificar con la institución`;
       input.classList.add('adc-sc01-unverified');
@@ -231,27 +452,75 @@
     notice.hidden = !notice.childElementCount;
   }
   function loadInstitution() {
-    const name = sheet.elements.institucion.value.trim();
-    const school = inst.find(school => school.name.trim().toLocaleLowerCase() === name.toLocaleLowerCase());
+    const name = institutionInput.value.trim();
+    const school = inst.find(school => String(school.id) === selectedProfileSchoolId && sameName(school.name,name)) || inst.find(school => school.name && sameName(school.name,name));
+    const directoryRecord = !school && selectedDirectoryRecord && sameName(selectedDirectoryRecord.nombre,name) ? selectedDirectoryRecord : null;
+    if (school) selectedProfileSchoolId = String(school.id);
     for (const [key,profileKey] of [['direccionInstitucion','direccion'],['telefonoInstitucion','telefono'],['correoInstitucion','correo']]) {
       const input = sheet.elements[key];
-      input.value = school?.[profileKey] || '';
+      const value = school?.[profileKey] || directoryRecord?.[profileKey] || '';
+      if (value && markedFields.has(key)) setNotApplicable(key,false,false);
+      input.value = value;
+      updateNotApplicableControl(key);
       input.classList.remove('adc-sc01-unverified');
       delete contactOrigin[key];
       if (school?.contactoFuente && input.value && (school.contactoVerificar || '').split(',').includes(profileKey)) contactOrigin[key] = school.contactoFuente;
+      if (directoryRecord?.[profileKey]) contactOrigin[key] = window.adcEscuelasChaco?.fuente || '';
     }
     showContactOrigin();
     save();
   }
-  sheet.elements.institucion.addEventListener('input',loadInstitution);
+  institutionInput.addEventListener('input',() => {
+    selectedProfileSchoolId = null;
+    selectedDirectoryRecord = null;
+    institutionInput.setCustomValidity('');
+    loadInstitution();
+    renderSchoolSuggestions();
+  });
   document.addEventListener('adc-school-contact-updated',() => {
     if (initialized) loadInstitution();
   });
-  function read() { return {...Object.fromEntries(new FormData(sheet)),_dateOrigin:dateOrigin,_autoDate:lastAutoDate,_contactOrigin:contactOrigin}; }
+  function setNotApplicable(key,marked,persist=true) {
+    const input = sheet.elements[key];
+    const button = notApplicableButtons.get(key);
+    const line = notApplicableLines.get(key);
+    if (!input || !button || !line) return false;
+    if (marked && input.value.trim()) {
+      status.textContent = 'Solo se puede tachar un campo opcional vacío.';
+      return false;
+    }
+    if (marked) markedFields.add(key);
+    else markedFields.delete(key);
+    input.readOnly = marked;
+    line.hidden = !marked;
+    button.hidden = !marked && Boolean(input.value.trim());
+    button.setAttribute('aria-pressed',String(marked));
+    const label = fields.find(field => field.key === key).label.toLowerCase();
+    button.setAttribute('aria-label',marked
+      ? `Quitar el tachado de ${label} y volver a editar`
+      : `Tachar ${label} si no corresponde`);
+    button.classList.toggle('is-marked',marked);
+    if (persist) save();
+    return true;
+  }
+  function updateNotApplicableControl(key) {
+    const input = sheet.elements[key];
+    const button = notApplicableButtons.get(key);
+    if (input && button) button.hidden = !markedFields.has(key) && Boolean(input.value.trim());
+  }
+  function read() {
+    return {...Object.fromEntries(new FormData(sheet)),_notApplicable:[...markedFields],_dateOrigin:dateOrigin,_autoDate:lastAutoDate,_contactOrigin:contactOrigin};
+  }
   function write(values) {
+    for (const key of [...markedFields]) setNotApplicable(key,false,false);
     for (const input of sheet.elements) {
       if (input.type === 'radio') input.checked = values[input.name] === input.value;
       else if (input.name) input.value = String(values[input.name] || '').slice(0,input.maxLength > 0 ? input.maxLength : 120);
+    }
+    if (Array.isArray(values._notApplicable)) {
+      for (const key of values._notApplicable) {
+        if (optionalFieldKeys.has(key)) setNotApplicable(key,true,false);
+      }
     }
     if (/^\d{2}\/\d{2}\/\d{4}$/.test(values.fecha || '')) dateField.value = values.fecha.split('/').reverse().join('-');
     dateOrigin = values._dateOrigin || 'auto';
@@ -260,6 +529,8 @@
     for (const key of Object.keys(contactOrigin)) {
       if (contactOrigin[key] !== window.adcEscuelasChaco?.fuente) delete contactOrigin[key];
     }
+    updateFormGeography();
+    for (const field of optionalFields) updateNotApplicableControl(field.key);
     updateSurnameNote();
     showContactOrigin();
   }
@@ -277,16 +548,28 @@
     for (const field of fields.filter(field => field.profile)) values[field.key] = document.getElementById(field.profile)?.value || '';
     values.sexo = document.getElementById('sexo')?.value || '';
     values.tipoDocumento = 'DNI';
-    values.telefonoFijo ||= '------';
     splitAddress(values);
     const number = (document.getElementById('dni')?.value || '').replace(/\D/g,'');
     digits.forEach((digit,index) => {values[digit.name] = number[index] || '';});
     write(values);
     save();
   }
+  const profileInputIds = new Set([...fields.map(field => field.profile).filter(Boolean),'dni','sexo']);
+  function syncFromProfileEvent(event){
+    if (initialized && profileInputIds.has(event.target.id)) fromProfile();
+  }
+  document.addEventListener('input',syncFromProfileEvent);
+  document.addEventListener('change',syncFromProfileEvent);
+  window.addEventListener('DOMContentLoaded',() => {
+    if (initialized) fromProfile();
+  });
   sheet.addEventListener('submit',event => event.preventDefault());
   sheet.addEventListener('input',event => {
     updateSurnameNote();
+    if (event.target.name === 'localidad') {
+      updateNotApplicableControl('codigoPostal');
+      updateNotApplicableControl('departamento');
+    } else if (optionalFieldKeys.has(event.target.name)) updateNotApplicableControl(event.target.name);
     if (contactOrigin[event.target.name]) {
       delete contactOrigin[event.target.name];
       event.target.classList.remove('adc-sc01-unverified');
@@ -294,11 +577,7 @@
     }
     save();
   });
-  section.querySelector('#adcSC01Profile').addEventListener('click',() => {
-    fromProfile();
-    status.textContent = 'Datos del perfil cargados. Revisá el domicilio y completá los datos restantes.';
-  });
-  section.querySelector('#adcSC01Download').addEventListener('click',async event => {
+  function validateForm(){
     for (const key of requiredFields) {
       const input = sheet.elements[key];
       input.setCustomValidity(input.value.trim() ? '' : 'Completá este dato obligatorio.');
@@ -307,55 +586,133 @@
     const type = sheet.querySelector('input[name="tipoDocumento"]:checked')?.value;
     const validNumber = type === 'CUIL' ? /^\d{11}$/.test(number) : /^\d{7,8}$/.test(number);
     digits[0].setCustomValidity(validNumber ? '' : type === 'CUIL' ? 'Ingresá los 11 dígitos del CUIL.' : 'Ingresá los 7 u 8 dígitos del documento.');
-    if (!sheet.reportValidity()) {status.textContent = 'Completá los datos obligatorios indicados antes de descargar.';return;}
-    const button = event.currentTarget;
-    button.disabled = true;
+    if (!sheet.reportValidity()) {
+      status.textContent = 'Completá los datos obligatorios indicados antes de continuar.';
+      return false;
+    }
+    return true;
+  }
+  async function createCompletedPdf(){
+    if (!window.PDFLib) throw Error('Revisá tu conexión y actualizá la página para cargar la biblioteca PDF.');
+    if (!pdfBytes) {
+      const response = await fetch('assets/formularios/SC-01.pdf');
+      if (!response.ok) throw Error('No se pudo cargar la plantilla oficial.');
+      pdfBytes = await response.arrayBuffer();
+    }
+    const pdf = await PDFLib.PDFDocument.load(pdfBytes.slice(0));
+    const page = pdf.getPages()[0];
+    const form = pdf.getForm();
+    const font = await pdf.embedFont(PDFLib.StandardFonts.Helvetica);
+    const values = read();
+    if (values.sexo === 'M') page.drawRectangle({x:136,y:815,width:435,height:13,color:PDFLib.rgb(1,1,1)});
+    for (const field of fields) {
+      const textField = form.createTextField(`SC01.${field.key}`);
+      const rawValue = field.key === 'fecha' ? (values.fecha || '').split('-').reverse().join('/') : values[field.key] || '';
+      const value = field.key === 'telefonoFijo' && String(rawValue).trim() === '------' ? '' : rawValue;
+      textField.setText(value);
+      textField.addToPage(page,{x:field.x,y:1008-field.y-field.height,width:field.width,height:field.height,borderWidth:0,borderColor:undefined,backgroundColor:field.key === 'fecha' ? PDFLib.rgb(1,1,1) : undefined,font});
+      textField.setFontSize(Math.min(9,(field.width-4)/Math.max(1,font.widthOfTextAtSize(value || ' ',1))));
+    }
+    digits.forEach((digit,index) => {
+      const textField = form.createTextField(`SC01.documento.${index+1}`);
+      textField.setMaxLength(1);
+      textField.setText(digit.value);
+      textField.addToPage(page,{x:264+index*28.4,y:726,width:26,height:16,borderWidth:0,borderColor:undefined,backgroundColor:undefined,font});
+      textField.setAlignment(PDFLib.TextAlignment.Center);
+      textField.setFontSize(11);
+    });
+    for (const choice of choices) {
+      for (const [value,x,y] of choice.options) {
+        const checkbox = form.createCheckBox(`SC01.${choice.key}.${value}`);
+        checkbox.addToPage(page,{x,y:1008-y-10,width:9,height:10,borderWidth:0,borderColor:undefined,backgroundColor:undefined});
+        if (values[choice.key] === value) checkbox.check();
+      }
+    }
+    form.updateFieldAppearances(font);
+    form.flatten();
+    for (const field of fields) {
+      if (markedFields.has(field.key)) adcPdfDrawBlankLine(page,field,optionalStrike);
+    }
+    return pdf.save();
+  }
+  function showPreview(bytes){
+    const preview = section.querySelector('#adcSC01Preview');
+    if (previewUrl) URL.revokeObjectURL(previewUrl);
+    previewUrl = URL.createObjectURL(new Blob([bytes],{type:'application/pdf'}));
+    const frame = document.createElement('iframe');
+    frame.title = 'Vista preliminar del formulario SC-01 completado';
+    frame.src = previewUrl;
+    preview.replaceChildren(frame);
+    preview.hidden = false;
+    preview.scrollIntoView({behavior:'smooth',block:'start'});
+  }
+  function downloadPdf(bytes){
+    const url = URL.createObjectURL(new Blob([bytes],{type:'application/pdf'}));
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = 'SC-01-completado.pdf';
+    link.click();
+    link.remove();
+    setTimeout(() => URL.revokeObjectURL(url),60000);
+  }
+  function printPdf(bytes){
+    const url = URL.createObjectURL(new Blob([bytes],{type:'application/pdf'}));
+    const frame = document.createElement('iframe');
+    let loaded = false;
+    const cleanup = () => {URL.revokeObjectURL(url);frame.remove();};
+    const loadTimeout = setTimeout(() => {
+      if (loaded) return;
+      status.textContent = 'No se pudo abrir el PDF para imprimir.';
+      cleanup();
+    },15000);
+    frame.className = 'adc-sc01-print-frame';
+    frame.title = 'Documento SC-01 preparado para imprimir';
+    frame.addEventListener('load',() => {
+      loaded = true;
+      clearTimeout(loadTimeout);
+      try {
+        frame.contentWindow.focus();
+        frame.contentWindow.print();
+        status.textContent = 'Se abrió el diálogo de impresión.';
+      } catch (error) {
+        status.textContent = `No se pudo imprimir el formulario. ${error.message}`;
+        cleanup();
+      }
+    },{once:true});
+    frame.addEventListener('error',() => {
+      clearTimeout(loadTimeout);
+      status.textContent = 'No se pudo abrir el PDF para imprimir.';
+      cleanup();
+    },{once:true});
+    frame.src = url;
+    document.body.append(frame);
+    setTimeout(cleanup,60000);
+  }
+  async function runPdfAction(action){
+    if (!validateForm()) return;
+    const buttons = [...section.querySelectorAll('[data-adc-sc01-action]')];
+    buttons.forEach(button => {button.disabled = true;});
     status.textContent = 'Preparando el PDF…';
     try {
-      if (!window.PDFLib) throw Error('Revisá tu conexión y actualizá la página para cargar la biblioteca PDF.');
-      if (!pdfBytes) {
-        const response = await fetch('assets/formularios/SC-01.pdf');
-        if (!response.ok) throw Error('No se pudo cargar la plantilla oficial.');
-        pdfBytes = await response.arrayBuffer();
+      const bytes = await createCompletedPdf();
+      if (action === 'preview') {
+        showPreview(bytes);
+        status.textContent = 'Vista preliminar lista.';
+      } else if (action === 'download') {
+        downloadPdf(bytes);
+        status.textContent = 'PDF descargado y bloqueado para editar sus campos.';
+      } else if (action === 'print') {
+        printPdf(bytes);
+        status.textContent = 'Preparando el formulario para imprimir…';
       }
-      const pdf = await PDFLib.PDFDocument.load(pdfBytes.slice(0));
-      const page = pdf.getPages()[0];
-      const form = pdf.getForm();
-      const font = await pdf.embedFont(PDFLib.StandardFonts.Helvetica);
-      const values = read();
-      if (values.sexo === 'M') page.drawRectangle({x:136,y:815,width:435,height:13,color:PDFLib.rgb(1,1,1)});
-      for (const field of fields) {
-        const textField = form.createTextField(`SC01.${field.key}`);
-        const value = field.key === 'fecha' ? (values.fecha || '').split('-').reverse().join('/') : values[field.key] || '';
-        textField.setText(value);
-        textField.addToPage(page,{x:field.x,y:1008-field.y-field.height,width:field.width,height:field.height,borderWidth:0,borderColor:undefined,backgroundColor:field.key === 'fecha' ? PDFLib.rgb(1,1,1) : undefined,font});
-        textField.setFontSize(Math.min(9,(field.width-4)/Math.max(1,font.widthOfTextAtSize(value || ' ',1))));
-      }
-      digits.forEach((digit,index) => {
-        const textField = form.createTextField(`SC01.documento.${index+1}`);
-        textField.setMaxLength(1);
-        textField.setText(digit.value);
-        textField.addToPage(page,{x:264+index*28.4,y:726,width:26,height:16,borderWidth:0,borderColor:undefined,backgroundColor:undefined,font});
-        textField.setAlignment(PDFLib.TextAlignment.Center);
-        textField.setFontSize(11);
-      });
-      for (const choice of choices) {
-        for (const [value,x,y] of choice.options) {
-          const checkbox = form.createCheckBox(`SC01.${choice.key}.${value}`);
-          checkbox.addToPage(page,{x,y:1008-y-10,width:9,height:10,borderWidth:0,borderColor:undefined,backgroundColor:undefined});
-          if (values[choice.key] === value) checkbox.check();
-        }
-      }
-      form.updateFieldAppearances(font);
-      const url = URL.createObjectURL(new Blob([await pdf.save()],{type:'application/pdf'}));
-      const link = document.createElement('a');
-      link.href = url;
-      link.download = 'SC-01-completado.pdf';
-      link.click();
-      setTimeout(() => URL.revokeObjectURL(url),60000);
-      status.textContent = 'PDF descargado. Conserva campos editables para realizar correcciones.';
-    } catch (error) { status.textContent = `No se pudo generar el PDF. ${error.message}`; }
-    finally { button.disabled = false; }
+    } catch (error) {
+      status.textContent = `No se pudo generar el PDF. ${error.message}`;
+    } finally {
+      buttons.forEach(button => {button.disabled = false;});
+    }
+  }
+  section.querySelectorAll('[data-adc-sc01-action]').forEach(button => {
+    button.addEventListener('click',() => runPdfAction(button.dataset.adcSc01Action));
   });
   window.adcSC01Open = () => {
     if (!initialized) {
@@ -364,16 +721,16 @@
       let draft;
       try { draft = JSON.parse(localStorage.getItem(storageKey) || 'null'); } catch {}
       if (draft && typeof draft === 'object' && !Array.isArray(draft)) write(draft);
-      else fromProfile();
       initialized = true;
     }
+    fromProfile();
     const now = new Date();
     const today = `${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}-${String(now.getDate()).padStart(2,'0')}`;
     if (dateOrigin === 'auto') {dateField.value = today;lastAutoDate = today;}
     const values = read();
     splitAddress(values);
     write(values);
-    sheet.elements.telefonoFijo.value ||= '------';
+    if(sheet.elements.telefonoFijo.value.trim()==='------')sheet.elements.telefonoFijo.value='';
     updateInstitutions();
     save();
     tab('sc01');
