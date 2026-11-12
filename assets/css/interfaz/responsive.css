@@ -1,3 +1,45 @@
+/* Los controles de la página siguen el contenido. El editor conserva sus ajustes. */
+@media screen {
+  body:not(.adcDesignActive) :is(
+    .wrap > header,
+    .adc-main-nav,
+    .wrap h2[data-adc-design-x],
+    .wrap .toolbar[data-adc-design-x],
+    #dj,
+    #dj02,
+    #license,
+    #adcOL,
+    #adcCalendar,
+    #profile,
+    #profile > section,
+    #profile [data-adc-design-x],
+    #profile [data-adc-design-y]
+  ) {
+    translate: none !important;
+    width: auto !important;
+    max-width: 100% !important;
+    height: auto !important;
+    min-width: 0 !important;
+    min-height: 0 !important;
+  }
+
+  #profile .fields {
+    align-items: start;
+  }
+
+  .fields > *,
+  .adc-name-line > * {
+    min-width: 0;
+  }
+
+  #dj02 > section,
+  .dj-preview,
+  #dj02 .dj02-preview {
+    min-width: 0;
+    max-width: 100%;
+  }
+}
+
 @media screen and (max-width: 1100px) {
   [data-adc-design-x],
   [data-adc-design-y] {
