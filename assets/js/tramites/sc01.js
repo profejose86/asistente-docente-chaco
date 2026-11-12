@@ -221,16 +221,18 @@
     try { localStorage.setItem(storageKey,JSON.stringify(read())); }
     catch { status.textContent = 'No se pudo guardar el borrador. Descargá el PDF para conservarlo.'; }
   }
+  function splitAddress(values) {
+    if (values.numeroCalle) return;
+    const address = String(values.calle || '').match(/^(.+?)\s+(?:N[°º.]?\s*)?(\d+[a-zA-Z]?)$/i);
+    if (address && !/^(ruta|km|kilometro)\b/i.test(address[1])) {values.calle = address[1];values.numeroCalle = address[2];}
+  }
   function fromProfile() {
     const values = read();
     for (const field of fields.filter(field => field.profile)) values[field.key] = document.getElementById(field.profile)?.value || '';
     values.sexo = document.getElementById('sexo')?.value || '';
     values.tipoDocumento = 'DNI';
     values.telefonoFijo ||= '------';
-    if (!values.numeroCalle) {
-      const address = values.calle.match(/^(.+?)\s+(?:N[°º.]?\s*)?(\d+[a-zA-Z]?)$/i);
-      if (address && !/^(ruta|km|kilometro)\b/i.test(address[1])) {values.calle = address[1];values.numeroCalle = address[2];}
-    }
+    splitAddress(values);
     const number = (document.getElementById('dni')?.value || '').replace(/\D/g,'');
     digits.forEach((digit,index) => {values[digit.name] = number[index] || '';});
     write(values);
@@ -322,6 +324,9 @@
     const now = new Date();
     const today = `${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}-${String(now.getDate()).padStart(2,'0')}`;
     if (dateOrigin === 'auto') {dateField.value = today;lastAutoDate = today;}
+    const values = read();
+    splitAddress(values);
+    write(values);
     sheet.elements.telefonoFijo.value ||= '------';
     updateInstitutions();
     save();
