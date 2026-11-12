@@ -14,14 +14,66 @@
   text-decoration: none;
 }
 
-#adcSC01Preview {
-  display: block;
-  width: 100%;
-  height: 80vh;
-  min-height: 360px;
+.adc-sc01-scroll {
+  max-width: 100%;
+  overflow: auto;
   border: 1px solid #b9c6d7;
   border-radius: 8px;
+  margin-block: 16px;
+}
+
+#adcSC01Sheet {
+  position: relative;
+  width: 100%;
+  min-width: 780px;
+  aspect-ratio: 612 / 1008;
+  margin: 0;
+  container-type: inline-size;
+  color-scheme: light;
   background: #fff;
+}
+
+#adcSC01Sheet > img {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+#adcSC01Sheet .adc-sc01-field,
+#adcSC01Sheet .adc-sc01-choice {
+  position: absolute;
+  margin: 0;
+  padding: 0 2px;
+  border: 1px solid #2453a377;
+  border-radius: 1px;
+  background: #eaf3ffbb !important;
+  color: #111 !important;
+  font: 1.47cqw Arial, sans-serif;
+  min-width: 0;
+  min-height: 0;
+}
+
+#adcSC01Sheet .adc-sc01-field:focus,
+#adcSC01Sheet .adc-sc01-choice:focus {
+  outline: 2px solid #2453a3;
+  background: #fff !important;
+}
+
+#adcSC01Sheet .adc-sc01-digit {
+  text-align: center;
+}
+
+#adcSC01Sheet .adc-sc01-choice {
+  appearance: none;
+  cursor: pointer;
+}
+
+#adcSC01Sheet .adc-sc01-choice:checked::after {
+  content: '×';
+  position: absolute;
+  inset: 0;
+  text-align: center;
+  line-height: 1;
 }
 
 @media screen and (max-width: 650px) {

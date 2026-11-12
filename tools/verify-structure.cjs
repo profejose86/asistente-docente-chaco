@@ -8,6 +8,8 @@ const root = path.resolve(__dirname, '..');
 const manifest = JSON.parse(fs.readFileSync(path.join(root, 'docs/structure-manifest.json'), 'utf8'));
 const hash = value => crypto.createHash('sha256').update(value).digest('hex');
 let reconstructed = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
+// Las versiones de caché mantienen la referencia al mismo recurso local.
+reconstructed = reconstructed.replace(/((?:src|href)="assets\/[^"?]+)\?[^\"]*"/g, '$1"');
 const changed = [];
 
 for (const block of manifest.blocks) {
