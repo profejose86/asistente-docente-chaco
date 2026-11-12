@@ -23,7 +23,10 @@ const context = {
   adcOLDraftKey: 'standalone',
   $: id => profile[id],
   adcOLInvalidate: () => invalidations++,
+  adcOLMode: () => {},
+  adcOLSyncRule: () => {},
   adcOLPaperVariant: () => paperUpdates++,
+  adcOLRefreshSchools: () => {},
   tab: () => {}
 };
 vm.createContext(context);

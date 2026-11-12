@@ -21,6 +21,7 @@
  let selected, grouping, range, drag, lineEndpointDrag, suppressClick=false;
  instructions.line='Arrastrá con el botón izquierdo para dibujar. Después, mantené el botón derecho sobre la línea y mové el extremo más cercano.';
  let operations = [], redo = [], reversals = [];
+ let frontLayer=100;
  function register(element, key) {
    keys.set(element, key);
    if(element.matches('details')&&!originalDetailsOpen.has(element))originalDetailsOpen.set(element,element.open);
@@ -111,9 +112,41 @@
      y2:(y2-top)/height*100
    }))line.setAttribute(key,value);
  }
+ function frontHost(node){
+   return node.closest('#adcOL,#adcSC01,#adcBD02,#adcOfficial,#profile,#license,#dj,#dj02,#adcCalendar')||node.closest('main,.wrap');
+ }
  function apply(op) {
    const node = resolve(op.target);
    if (!node?.matches(selector) || panel.contains(node) || node === gear) return;
+   if(op.kind==='front'&&numeric(op.layer)&&op.layer>=100&&op.layer<8990){
+     const parent=node.parentElement,next=node.nextSibling;
+     const before=node.getAttribute('style');
+     const priorX=node.dataset.adcDesignX,priorY=node.dataset.adcDesignY;
+     const host=frontHost(node);
+     const hostPosition=host?.style.position;
+     if(node.matches('.adc-design-created')&&host&&host!==node&&parent!==host){
+       const bounds=node.getBoundingClientRect(),container=host.getBoundingClientRect();
+       if(getComputedStyle(host).position==='static')host.style.position='relative';
+       host.append(node);
+       Object.assign(node.style,{
+         position:'absolute',translate:'none',margin:'0',
+         left:(numeric(op.left)?op.left:bounds.left-container.left-host.clientLeft+host.scrollLeft)+'px',
+         top:(numeric(op.top)?op.top:bounds.top-container.top-host.clientTop+host.scrollTop)+'px',
+         width:(numeric(op.width)?op.width:bounds.width)+'px',height:(numeric(op.height)?op.height:bounds.height)+'px'
+       });
+       node.dataset.adcDesignX='0';node.dataset.adcDesignY='0';
+     }
+     if(getComputedStyle(node).position==='static')node.style.position='relative';
+     node.style.zIndex=String(op.layer);
+     frontLayer=Math.max(frontLayer,op.layer);
+     return ()=>{
+       if(node.parentElement!==parent)parent.insertBefore(node,next?.parentElement===parent?next:null);
+       if(before===null)node.removeAttribute('style');else node.setAttribute('style',before);
+       if(priorX===undefined)delete node.dataset.adcDesignX;else node.dataset.adcDesignX=priorX;
+       if(priorY===undefined)delete node.dataset.adcDesignY;else node.dataset.adcDesignY=priorY;
+       if(host)host.style.position=hostPosition;
+     };
+   }
    if(op.kind==='hideOriginal'){
      const before=node.hasAttribute('data-adc-design-hidden');
      node.setAttribute('data-adc-design-hidden','');
@@ -336,6 +369,19 @@
    selected?.removeAttribute('data-adc-design-selected');
    selected = node;
    if (!node) { paletteBox.hidden=true;formatting.hidden = true; editor.replaceChildren(); range = null;scheduleMarks(); return; }
+   if(!panel.hidden){
+     const op={kind:'front',target:keyFor(node),layer:++frontLayer};
+     const host=frontHost(node);
+     if(node.matches('.adc-design-created')&&host&&host!==node&&node.parentElement!==host){
+       const bounds=node.getBoundingClientRect(),container=host.getBoundingClientRect();
+       Object.assign(op,{
+         left:bounds.left-container.left-host.clientLeft+host.scrollLeft,
+         top:bounds.top-container.top-host.clientTop+host.scrollTop,
+         width:bounds.width,height:bounds.height
+       });
+     }
+     commit(op);
+   }
    node.setAttribute('data-adc-design-selected','');
    if(node.matches('.adc-design-annotation')){
      document.getElementById('adcAnnotationWidth').value=parseFloat(node.style.getPropertyValue('--adc-note-width'))||3;
@@ -482,7 +528,7 @@
  }
  function load(incoming) {
    const allowed={
-     annotation:['id','shape','title','left','top','width','height','color','strokeWidth','reverse','x1','y1','x2','y2'],lineEndpoints:['x1','y1','x2','y2'],hideOriginal:[],style:['x','y','width','height','center','background','color','strokeWidth'],text:['html'],
+     annotation:['id','shape','title','left','top','width','height','color','strokeWidth','reverse','x1','y1','x2','y2'],lineEndpoints:['x1','y1','x2','y2'],hideOriginal:[],front:['layer','left','top','width','height'],style:['x','y','width','height','center','background','color','strokeWidth'],text:['html'],
      reorder:['direction'],group:['destination'],split:['id','title','fold','open'],
      section:['id','title','fold','open','width','height','left','top'],box:['id','title','width','height','left','top'],
      button:['id','title','action','left','top','tone'],bubble:['id','title','tone','popup','left','top'],
@@ -617,12 +663,9 @@
    }))line.setAttribute(key,value);
    svg.append(line);preview.append(svg);
  }
- function siblings(node){return [...node.parentElement.children].filter(other=>other!==node&&usable(other)&&visible(other)&&!other.matches('script,style,summary'))}
- const overlaps=(a,b)=>a.left<b.right-1&&a.right>b.left+1&&a.top<b.bottom-1&&a.bottom>b.top+1;
  function validMove(node,r){
    const left=0,right=document.documentElement.clientWidth;
-   return r.left>=Math.min(left,node.getBoundingClientRect().left)-1&&r.right<=Math.max(right,node.getBoundingClientRect().right)+1&&r.top>=-scrollY&&r.bottom<=document.documentElement.scrollHeight-scrollY&&
-     (node.matches('.adc-design-annotation')||!siblings(node).some(other=>!other.matches('.adc-design-annotation')&&overlaps(r,other.getBoundingClientRect())));
+   return r.left>=Math.min(left,node.getBoundingClientRect().left)-1&&r.right<=Math.max(right,node.getBoundingClientRect().right)+1&&r.top>=-scrollY&&r.bottom<=document.documentElement.scrollHeight-scrollY;
  }
  let centerPreview=null;
  const centerApply=panel.querySelector('[data-act="center-apply"]');
@@ -890,7 +933,7 @@
    if(Math.max(Math.abs(event.clientX-d.x),Math.abs(event.clientY-d.y))<3)return;
    suppressClick=true;
    setTimeout(()=>{suppressClick=false},0);
-   if(d.kind==='move'&&!validMove(d.node,r)){say('Ese destino tapa un cuadro o queda fuera del área.');return}
+   if(d.kind==='move'&&!validMove(d.node,r)){say('Ese destino queda fuera del área de trabajo.');return}
    commit({kind:'style',target:keyFor(d.node),x:r.left-base.left,y:r.top-base.top,...(d.kind==='move'?{}:{width:r.width,height:r.height})});
  },true);
  document.addEventListener('pointercancel',event=>{

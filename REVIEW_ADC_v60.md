@@ -367,3 +367,30 @@ Los casilleros del código se concatenan completos: 1 / 1 / 1 = 111; 1 / 6 / 10 
 Pendiente para futuros formularios: cotejar etiquetas y campos reales de DJ-01 y OL-01 antes de aplicar el pedido de colocar el código en «artículo» o «ley número». El PDF no identifica esos conceptos como equivalentes. Seleccionar por motivo, situación de revista y condiciones (prórroga, porcentaje de haberes, parentesco u otras), conservando observaciones y página fuente. No elegir una variante solamente por titular/interino/suplente. También existe Funcionario Político.
 
 No se modificó la aplicación ni se conectaron estos datos a los formularios. No se verificó vigencia normativa. Quedan documentados texto recortado del traslado transitorio, variantes de escritura de Interino, salto del motivo 11 al 13 en otras licencias y sección adicional sin encabezado legible. Las aclaraciones de duelo de la página 6 se conservan sin reinterpretación. No se realizó push.
+
+## Mejoras funcionales OL-01
+
+Se implementó el recorrido solicitado para instituciones y cargos, encuadre, familiar enfermo, lugar y fecha, y vista previa:
+
+- «Presentada ante» muestra las instituciones del perfil y las filas de cargos/horas de la institución seleccionada. Los nombres completos quedan disponibles en el selector y en el texto accesible de las filas. Si no hay instituciones, aparece un acceso a Mi perfil docente.
+- «Enfermedad de un miembro del grupo familiar» se encuentra con «pariente enfermo» y «enfermedad de un familiar» en ambos buscadores. La selección activa el bloque inferior, tacha el espacio de redacción superior y mantiene fechas, encuadre y lugar/fecha disponibles. Se añadieron sugerencias de parentesco, normalización de «ma», «pa» y «hi», y «Usar mi domicilio».
+- El encuadre familiar usa las variantes locales 151–156 según situación de revista y período. Titular y Funcionario Político requieren indicar solicitud inicial o prórroga; mezclas incompatibles bloquean la generación y explican los cargos involucrados. Las situaciones sin variante disponible requieren completar el encuadre manualmente.
+- «Hasta» no se calcula para enfermedad familiar: la referencia local indica topes anuales, pero no una regla individual verificada. La sugerencia de «Lugar y fecha» usa los horarios de la institución y los cierres que ADC tiene cargados para 2026. Si faltan horarios o se elige una fecha manual, se conserva esa fecha y se informa cualquier nueva sugerencia. Para años no cubiertos se solicita el ingreso manual.
+- Vista previa, descarga e impresión comparten una barra. Descarga e impresión se habilitan con una vista vigente y vuelven a deshabilitarse cuando cambia un dato del PDF. El tachado superior quedó limitado al espacio de redacción; no cruza el renglón de «Lugar y fecha».
+
+### Verificación realizada
+
+Se ejecutaron `node --test tests/ol01-perfil.test.cjs tests/ol01-integracion.test.cjs` y la comprobación de sintaxis de OL-01 y el catálogo. Las tres pruebas pasaron. La integración con Chrome usa datos sintéticos y comprueba:
+
+- Dos instituciones con horarios y situaciones de revista distintos; cambios de cargos y encuadres incompatibles, y los códigos 151/309-D y 156/340-E.
+- Sugerencias de fecha del 16 y 17/11/2026, conservación de una fecha manual del 19/11 y el caso de una institución sin horarios.
+- Búsqueda interna por teclado y apertura desde Mis trámites; modo familiar, campos editables, parentesco, domicilio del perfil y campos incluidos en el PDF.
+- Acciones habilitadas al generar la vista, invalidadas al editar, y manejo de una plantilla ausente (404). El PDF descargado se inspecciona para verificar datos, encuadre, ubicación del tachado y que este no alcance «Lugar y fecha».
+
+### Pendiente / límites
+
+- Los códigos y artículos provienen de la referencia local archivada y siguen pendientes de validación normativa oficial y de vigencia. El aviso en pantalla no reemplaza esa revisión antes de presentar.
+- No se inventa una duración para «Hasta» cuando faltan una regla individual y su cómputo verificables. Los cierres y horarios deben completarse y confirmarse en Mi perfil; la sugerencia de «Lugar y fecha» solo cubre 2026.
+- Las pruebas usan instituciones, perfiles y horarios sintéticos. No se validaron datos reales ni una impresión física.
+
+Los cambios permanecen locales: no se hizo commit ni push.

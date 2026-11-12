@@ -11,3 +11,6 @@ window.adcFormSearchMetadata={
  dj02:{officialName:'Declaración jurada de licencias',keywords:['declaración jurada','licencias','licencias anteriores']},
  sc01:{keywords:['certificación de servicios','certificado de servicios','servicios docentes']}
 };
+
+const adcFamilyIllnessSearch = tramites.find(row => row[0] === 'Enfermedad de un miembro del grupo familiar');
+if (adcFamilyIllnessSearch) adcFamilyIllnessSearch[2] += ' pariente enfermo enfermedad de un familiar';
