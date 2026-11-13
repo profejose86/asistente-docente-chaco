@@ -30,6 +30,7 @@ test('Importador: incorpora una pantalla, conserva la otra y permite comprobar s
 test('Chrome: carga, exportación, deshacer, borrador prioritario y recuperación',async()=>{
   const {chromium}=require(path.join(os.homedir(),'.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright'));
   const server=http.createServer((req,res)=>{
+    if(require('./support/demo-config.cjs').serve(req,res))return;
     const file=path.resolve(root,'.'+new URL(req.url,'http://localhost').pathname);
     if(!file.startsWith(root+path.sep))return res.writeHead(403).end();
     fs.readFile(file,(error,data)=>{if(error)return res.writeHead(404).end();res.setHeader('Content-Type',({'.html':'text/html','.js':'application/javascript','.json':'application/json','.css':'text/css'})[path.extname(file)]||'application/octet-stream');res.end(data);});
@@ -40,7 +41,7 @@ test('Chrome: carga, exportación, deshacer, borrador prioritario y recuperació
     const page=await browser.newPage(),errors=[];page.on('pageerror',error=>errors.push(error.message));
     await page.route('**/assets/datos/ajustes-pagina.json',route=>route.fulfill({json:fixture()}));
     const url=`http://127.0.0.1:${server.address().port}/ADC_Ingreso_Editable.html`;
-    await page.goto(url);await page.waitForFunction(()=>document.querySelector('#adcLoginTitle').style.color==='rgb(18, 52, 86)');
+    await page.goto(url);await page.waitForFunction(()=>document.querySelector('#adcLoginTitle')?.style.color==='rgb(18, 52, 86)');
     await page.locator('#adcDesignGear').click();
     const download=page.waitForEvent('download');await page.locator('[data-project-export]').click();
     const data=contract.validate(JSON.parse(fs.readFileSync(await (await download).path(),'utf8')));
@@ -60,7 +61,7 @@ test('Chrome: carga, exportación, deshacer, borrador prioritario y recuperació
     await page.reload();await page.waitForSelector('[data-project-export]',{state:'attached'});
     assert.equal(await page.locator('#adcLoginTitle').evaluate(node=>node.style.color),'');
     await page.locator('#adcDesignGear').click();await page.getByRole('button',{name:'Usar ajustes del proyecto',exact:true}).click();
-    await page.waitForFunction(()=>document.querySelector('#adcLoginTitle').style.color==='rgb(18, 52, 86)');
+    await page.waitForFunction(()=>document.querySelector('#adcLoginTitle')?.style.color==='rgb(18, 52, 86)');
     await page.locator('#adcDesignGear').click();await page.getByRole('button',{name:'Recuperar borrador anterior',exact:true}).click();
     await page.waitForFunction(()=>localStorage.getItem('adc-login-design-draft')!==null);
     assert.equal(await page.evaluate(()=>localStorage.getItem('adc-profile-test')),'conservar');

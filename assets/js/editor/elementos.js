@@ -15,6 +15,7 @@
   }
   const validSource=value=>typeof value==='string'&&value.length<=700000&&/^data:image\/(png|jpeg|webp);base64,[A-Za-z0-9+/]+={0,2}$/.test(value);
   function apply(op,{node,register}){
+    if(op.kind==='documentTransform')return window.adcDocumentEditor?.apply(op,node);
     if(op.kind==='front'){
       if(!Number.isInteger(op.level)||op.level<1||op.level>5000)return;
       const previous=[];

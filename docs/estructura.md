@@ -1,5 +1,9 @@
 # Estructura y ejecución
 
+La publicación online del piloto utiliza `config/publicacion.json`, `tools/publicar.cjs` y `.github/workflows/pages.yml`. El artefacto `dist/` contiene sólo los recursos web y requiere Supabase real. La rama que publica se controla con `ADC_PAGES_BRANCH` y permanece en `log-in` hasta la aprobación de `main`. Ver [publicación, configuración del piloto y recuperación](publicacion-online.md).
+
+La autenticación de staging se organiza en `assets/js/servicios/supabaseClient.js`, `assets/js/acceso/autenticacion.js` y `assets/js/interfaz/sesion.js`. El cliente oficial se instala con npm y se compila localmente para mantener la web estática. `.env.local` está excluido de Git; sólo `assets/datos/config-publica.js` puede llegar al navegador. La migración inicial con RLS vive en `supabase/migrations/`. Ver [configuración, modos, pruebas y pendientes remotos](supabase-staging.md). Los párrafos siguientes sobre acceso sin datos describen exclusivamente el modo de demostración: en modo Supabase, `adc-preview=1` no salta la autenticación.
+
 El modelo de documentos preparados utiliza el registro `assets/datos/formularios-pdf.js`, el motor `assets/js/documentos/pdf-campos.js` y el lienzo común de `assets/js/tramites/formularios-oficiales.js`. Solo DP-01 está habilitado en este modo editable sobre PDF original. Su alcance y pasos pendientes se documentan en [formularios-pdf-preparados.md](formularios-pdf-preparados.md). DJ-01, DJ-02, OL-01, SC-01 y DL-01 permanecen protegidos y no se modifican para incorporar nuevos documentos.
 
 La entrada de la aplicación es `index.html`. Los estilos están en `assets/css/` y los scripts en `assets/js/`, agrupados por área.

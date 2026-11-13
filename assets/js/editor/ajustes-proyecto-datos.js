@@ -8,7 +8,7 @@
   const allowed={
     annotation:['id','shape','title','left','top','width','height','color','strokeWidth','reverse','x1','y1','x2','y2','stroke','flip'],
     image:['id','src','alt','left','top','width','height'],replaceImage:['src'],pdf:['id','src','title'],
-    lineEndpoints:['x1','y1','x2','y2'],hideOriginal:[],front:['level'],style:['x','y','width','height','center','background','color','strokeWidth'],text:['html'],
+    lineEndpoints:['x1','y1','x2','y2'],hideOriginal:[],front:['level'],documentTransform:['x','y','scale'],style:['x','y','width','height','center','background','color','strokeWidth'],text:['html'],
     reorder:['direction'],group:['destination'],split:['id','title','fold','open'],
     section:['id','title','fold','open','width','height','left','top'],box:['id','title','width','height','left','top','overlay'],
     button:['id','title','action','left','top','tone','width','height','overlay'],bubble:['id','title','tone','popup','left','top'],dropdown:['id','title','direction'],
@@ -41,6 +41,7 @@
         if(['image','replaceImage'].includes(op.kind)&&!/^data:image\/(png|jpeg|webp);base64,[A-Za-z0-9+/]+={0,2}$/.test(op.src||''))throw Error('Imagen no admitida.');
         if(['image','replaceImage'].includes(op.kind)&&op.src.length>700000)throw Error('Imagen demasiado grande.');
         if(op.kind==='pdf'&&!/^data:application\/pdf;base64,[A-Za-z0-9+/]+={0,2}$/.test(op.src||''))throw Error('PDF no admitido.');
+        if(op.kind==='documentTransform'&&(![op.x,op.y,op.scale].every(Number.isFinite)||op.scale<0.1||op.scale>5))throw Error('Escala de documento no admitida.');
         if(op.id&&!/^new-[a-z0-9-]+$/i.test(op.id))throw Error('Identificador de elemento creado inválido.');
       }
     }

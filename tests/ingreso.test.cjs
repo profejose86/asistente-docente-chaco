@@ -24,6 +24,7 @@ test('Ingreso demo online: aviso, acceso sin datos, registro, temas y ancho movi
   page.on('pageerror', e => errors.push(e.message));
   await page.route('https://adc-test.example/adc/**', route => {
    const relative = decodeURIComponent(new URL(route.request().url()).pathname.slice('/adc/'.length));
+   if(relative==='assets/datos/config-publica.js')return route.fulfill({contentType:'application/javascript',body:require('./support/demo-config.cjs').script});
    if (relative === 'index.html') return route.fulfill({ contentType: 'text/html', body: '<h1>ADC demo</h1>' });
    const file = path.join(root, relative);
    return fs.existsSync(file) ? route.fulfill({ path: file }) : route.abort();

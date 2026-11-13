@@ -116,7 +116,7 @@
  function apply(op) {
    const node = resolve(op.target);
    if (!node?.matches(selector+',img') || panel.contains(node) || node === gear) return;
-   if(['image','replaceImage','pdf','front'].includes(op.kind))return window.adcVisualElements?.apply(op,{node,register});
+   if(['image','replaceImage','pdf','front','documentTransform'].includes(op.kind))return window.adcVisualElements?.apply(op,{node,register});
    if(op.kind==='hideOriginal'){
      const before=node.hasAttribute('data-adc-design-hidden');
      node.setAttribute('data-adc-design-hidden','');
@@ -489,7 +489,7 @@
  }
  function load(incoming) {
    const allowed={
-     annotation:['id','shape','title','left','top','width','height','color','strokeWidth','reverse','x1','y1','x2','y2'],lineEndpoints:['x1','y1','x2','y2'],hideOriginal:[],front:['level'],image:['id','src','alt','left','top','width','height'],replaceImage:['src'],pdf:['id','src','title'],style:['x','y','width','height','center','background','color','strokeWidth'],text:['html'],
+     annotation:['id','shape','title','left','top','width','height','color','strokeWidth','reverse','x1','y1','x2','y2'],lineEndpoints:['x1','y1','x2','y2'],hideOriginal:[],front:['level'],documentTransform:['x','y','scale'],image:['id','src','alt','left','top','width','height'],replaceImage:['src'],pdf:['id','src','title'],style:['x','y','width','height','center','background','color','strokeWidth'],text:['html'],
      reorder:['direction'],group:['destination'],split:['id','title','fold','open'],
      section:['id','title','fold','open','width','height','left','top'],box:['id','title','width','height','left','top'],
      button:['id','title','action','left','top','tone'],bubble:['id','title','tone','popup','left','top'],

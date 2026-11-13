@@ -4,6 +4,7 @@ const root=path.resolve(__dirname,'..');
 const {chromium}=require(path.join(os.homedir(),'.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright'));
 for(const screen of ['ADC_Ingreso_Editable.html','index.html?adc-preview=1'])test(screen+': doble clic, arrastre sobre otro elemento, tamaño y navegación',async()=>{
   const server=http.createServer((req,res)=>{
+    if(require('./support/demo-config.cjs').serve(req,res))return;
     const file=path.resolve(root,'.'+new URL(req.url,'http://localhost').pathname);
     if(!file.startsWith(root+path.sep))return res.writeHead(403).end();
     fs.readFile(file,(error,data)=>{if(error)return res.writeHead(404).end();res.setHeader('Content-Type',({'.html':'text/html','.js':'application/javascript','.json':'application/json','.css':'text/css'})[path.extname(file)]||'application/octet-stream');res.end(data);});

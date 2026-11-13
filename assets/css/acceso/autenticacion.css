@@ -1,0 +1,10 @@
+html.adc-auth-pending body>*{visibility:hidden!important}
+html.adc-auth-pending body>#adcAuthGate{visibility:visible!important}
+#adcAuthGate{position:fixed;inset:0;z-index:2147483647;background:#f4f7fc;color:#152844;display:grid;place-content:center;gap:16px;padding:24px;font:16px system-ui;text-align:center}
+#adcAuthGate p{max-width:36rem;margin:0 auto}
+#adcAuthGate button,.adc-session-bar button{padding:8px 14px;border:1px solid #aac0df;border-radius:6px;background:#2453a3;color:#fff;cursor:pointer}
+.adc-session-bar{position:fixed;right:12px;bottom:12px;z-index:8800;display:flex;align-items:center;gap:10px;max-width:calc(100vw - 24px);padding:8px 12px;border:1px solid #aac0df;border-radius:8px;background:#fff;color:#152844;font:13px system-ui;box-sizing:border-box}
+.adc-session-bar span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+#adcLoginStatus[data-error=true]{color:#a52c32}
+#adcRecoveryForm{display:grid;gap:12px}#adcRecoveryForm[hidden]{display:none}
+@media print{.adc-session-bar,#adcAuthGate{display:none!important}}

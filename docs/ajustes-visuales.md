@@ -41,7 +41,17 @@ No se editaron las implementaciones propias de DJ-01, DJ-02, OL-01, SC-01 ni DL-
 
 ## Imágenes, PDF y herramientas con el mouse
 
-### Seleccionar botones y superponer elementos
+### Seleccionar y ajustar documentos completos
+
+Con Ajustes abierto, hacer clic sobre el fondo del documento para seleccionarlo. Mantener presionado el segundo clic y arrastrar para moverlo. También puede hacerse doble clic y luego arrastrar la selección. Aparecen ocho controles azules: cuatro bordes y cuatro esquinas. Todos cambian la escala conservando las proporciones, incluyendo las cajas y los datos superpuestos; no se estira únicamente la imagen de fondo.
+
+Funciona sobre los lienzos de SC-01, OL-01, BD-02, DJ-01, DJ-02, formularios oficiales preparados y documentos agregados con la tuerquita. Para visores PDF nativos se selecciona el contenedor mediante una capa transparente, disponible sólo mientras Ajustes está abierto. Al cerrar Ajustes se recupera el uso normal del visor y de los campos.
+
+Los gestos se guardan como `documentTransform` en el borrador y en la copia JSON. Deshacer/rehacer y Escape durante el arrastre están disponibles. Estos ajustes cambian la presentación web: no alteran los datos, las dimensiones de la plantilla oficial ni la generación del PDF final.
+
+La implementación compartida está en `assets/js/editor/documentos.js`. No se modificaron los archivos propios de los formularios. Una vista previa todavía cerrada no bloquea los ajustes pendientes de otros documentos.
+
+### Botones y solapamientos
 
 Con **Ajustes abierto**, hacer doble clic en un botón para seleccionarlo: aparece el borde azul entrecortado y se activa mover/ajustar tamaño. Arrastrar el botón para moverlo y sus bordes para redimensionarlo. El borde permanece visible durante la selección.
 

@@ -10,6 +10,7 @@ const {chromium} = require(path.join(modules,'playwright'));
 
 test('DL-01: perfil, instituciones, cursos, calendario, cálculos y responsive',async () => {
   const server = http.createServer((request,response) => {
+    if(require('./support/demo-config.cjs').serve(request,response))return;
     const file = path.resolve(root,'.'+new URL(request.url,'http://localhost').pathname);
     if (!file.startsWith(root+path.sep)) return response.writeHead(403).end();
     fs.readFile(file,(error,bytes) => {

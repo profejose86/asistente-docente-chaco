@@ -41,6 +41,7 @@ const runtime=path.join(os.homedir(),'.cache/codex-runtimes/codex-primary-runtim
 let playwright;try{playwright=require('playwright')}catch{try{playwright=require(path.join(runtime,'playwright'))}catch{}}
 test('MBIT en Chrome: predicción, tarjetas, categorías, temas, teclado, catálogo y accesos', {skip:!playwright,timeout:120000},async()=>{
  const server=http.createServer((req,res)=>{
+    if(require('./support/demo-config.cjs').serve(req,res))return;
   const file=path.resolve(root,'.'+new URL(req.url,'http://local').pathname.replace(/^\/$/,'/index.html'));
   if(!file.startsWith(root+path.sep)){res.writeHead(403).end();return;}
   fs.readFile(file,(error,data)=>{if(error){res.writeHead(404).end();return;}res.setHeader('Content-Type',({'.js':'application/javascript','.css':'text/css','.html':'text/html','.png':'image/png','.pdf':'application/pdf'})[path.extname(file)]||'application/octet-stream');res.end(data);});

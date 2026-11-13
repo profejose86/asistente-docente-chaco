@@ -1,0 +1,25 @@
+{
+  "name": "asistente-docente-chaco",
+  "version": "0.9.16-staging",
+  "private": true,
+  "description": "ADC: entorno de prueba para 15 a 50 testers",
+  "scripts": {
+    "build": "node tools/build.cjs",
+    "dev": "node tools/dev-server.cjs",
+    "test:auth": "node --test tests/supabase*.test.cjs",
+    "test": "node --test --test-concurrency=2 tests/*.test.cjs",
+    "supabase:create": "node tools/configurar-supabase.cjs --create-project",
+    "supabase:check": "node tools/configurar-supabase.cjs",
+    "supabase:configure": "node tools/configurar-supabase.cjs --apply",
+    "build:pages": "node tools/publicar.cjs",
+    "supabase:online": "node tools/configurar-supabase.cjs --apply --online",
+    "test:ci": "node --test --test-concurrency=2 tests/supabase-config.test.cjs tests/supabase-management.test.cjs tests/supabase-rls.test.cjs tests/publicacion.test.cjs"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "2.119.0"
+  },
+  "devDependencies": {
+    "@electric-sql/pglite": "0.5.16",
+    "esbuild": "0.28.2"
+  }
+}

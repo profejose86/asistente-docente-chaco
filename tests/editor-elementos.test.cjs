@@ -6,6 +6,7 @@ const contract=require('../assets/js/editor/ajustes-proyecto-datos.js');
 const png=Buffer.from('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+jRZkAAAAASUVORK5CYII=','base64');
 for(const [screen,scope] of [['ADC_Ingreso_Editable.html','ingreso'],['index.html?adc-preview=1','pagina']])test(screen+': imágenes, borrado reversible, PDF multipágina, cajas, tamaño y copia restaurable',async()=>{
   const server=http.createServer((req,res)=>{
+    if(require('./support/demo-config.cjs').serve(req,res))return;
     const file=path.resolve(root,'.'+new URL(req.url,'http://localhost').pathname);
     if(!file.startsWith(root+path.sep))return res.writeHead(403).end();
     fs.readFile(file,(error,data)=>{if(error)return res.writeHead(404).end();res.setHeader('Content-Type',({'.html':'text/html','.js':'application/javascript','.mjs':'application/javascript','.json':'application/json','.css':'text/css','.wasm':'application/wasm'})[path.extname(file)]||'application/octet-stream');res.end(data);});

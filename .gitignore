@@ -1,0 +1,8 @@
+node_modules/
+.adc-tools/
+.env
+.env.*
+!.env.example
+dist/
+supabase/.temp/
+*.log

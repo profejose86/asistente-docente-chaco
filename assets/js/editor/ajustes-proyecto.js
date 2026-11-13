@@ -42,6 +42,7 @@
   function attach(api){
     const {scope,panel,say}=api;
     let projectPage=null;
+    window.adcDocumentEditor?.attach(api);
     window.adcVisualElements?.attach(api);
     const button=document.createElement('button');button.type='button';button.dataset.projectExport='';
     button.textContent='Exportar ajustes al proyecto';panel.append(button);
@@ -94,13 +95,14 @@
           const node=api.resolve(op.target);
           if(node&&node!==previous&&api.refresh(op))applied.set(op,node);
         }
-        while(pending.length){
-          const op=pending[0];
-          if(op.target.startsWith('project:')&&!resolve(op.target,projectPage.targets[op.target]))break;
-          if(op.destination?.startsWith('project:')&&!resolve(op.destination,projectPage.targets[op.destination]))break;
-          if(!api.append(op))break;
+        const blocked=new Set();
+        for(let index=0;index<pending.length;){
+          const op=pending[index],references=[op.target,...(op.destination?[op.destination]:[])];
+          if(references.some(ref=>blocked.has(ref)||ref.startsWith('project:')&&!resolve(ref,projectPage.targets[ref]))||!api.append(op)){
+            references.forEach(ref=>blocked.add(ref));index++;continue;
+          }
           applied.set(op,api.resolve(op.target));
-          pending.shift();
+          pending.splice(index,1);
         }
         observer.observe(document.body,{childList:true,subtree:true});
       };

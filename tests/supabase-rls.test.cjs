@@ -1,0 +1,45 @@
+const {test}=require('node:test'),assert=require('node:assert/strict');
+const fs=require('node:fs'),path=require('node:path');
+const {PGlite}=require('@electric-sql/pglite');
+const {validPolicies}=require('../tools/configurar-supabase.cjs');
+test('PostgreSQL real aislado: RLS separa dos testers, bloquea anon y protege columnas y FK',async()=>{
+ const db=new PGlite();
+ const a='11111111-1111-4111-8111-111111111111',b='22222222-2222-4222-8222-222222222222';
+ try{
+  await db.exec(`create role anon;create role authenticated;create schema auth;
+   create table auth.users(id uuid primary key);
+   create function auth.uid() returns uuid language sql stable as $$select nullif(current_setting('request.jwt.claim.sub',true),'')::uuid$$;
+   grant usage on schema auth,public to authenticated,anon;
+   grant execute on function auth.uid() to authenticated;
+   insert into auth.users values('${a}'),('${b}');`);
+  await db.exec(fs.readFileSync(path.join(__dirname,'../supabase/migrations/202611130001_adc_tester_profiles.sql'),'utf8'));
+  const flags=(await db.query("select relrowsecurity,relforcerowsecurity from pg_class where oid='public.adc_tester_profiles'::regclass")).rows[0];
+  assert.deepEqual(flags,{relrowsecurity:true,relforcerowsecurity:true});
+  assert.equal((await db.query("select count(*)::int as n from pg_policies where tablename='adc_tester_profiles'")).rows[0].n,4);
+  const policies=(await db.query("select policyname,cmd,roles,permissive,qual,with_check from pg_policies where tablename='adc_tester_profiles'")).rows;
+  assert.equal(validPolicies(policies),true);assert.equal(validPolicies(policies.map(row=>({...row,qual:'true'}))),false);
+  assert.equal(validPolicies(policies.map(row=>({...row,roles:'{authenticated}'}))),true);
+  assert.equal(validPolicies(policies.map(row=>({...row,roles:'{authenticated,anon}'}))),false);
+  await db.exec(`set role authenticated;select set_config('request.jwt.claim.sub','${a}',false);`);
+  await db.query('insert into public.adc_tester_profiles(id,display_name) values($1,$2)',[a,'Tester A']);
+  await assert.rejects(db.query('insert into public.adc_tester_profiles(id,display_name) values($1,$2)',[b,'No permitido']),/row.level security/i);
+  await db.exec(`select set_config('request.jwt.claim.sub','${b}',false);`);
+  assert.equal((await db.query('select * from public.adc_tester_profiles')).rows.length,0);
+  await db.query('insert into public.adc_tester_profiles(id,display_name) values($1,$2)',[b,'Tester B']);
+  assert.deepEqual((await db.query('select display_name from public.adc_tester_profiles')).rows,[{display_name:'Tester B'}]);
+  assert.equal((await db.query('update public.adc_tester_profiles set display_name=$1 where id=$2 returning id',['Intruso',a])).rows.length,0);
+  assert.equal((await db.query('delete from public.adc_tester_profiles where id=$1 returning id',[a])).rows.length,0);
+  await assert.rejects(db.query('update public.adc_tester_profiles set id=$1 where id=$2',[a,b]),/permission denied/i);
+  await assert.rejects(db.query("update public.adc_tester_profiles set created_at='2000-01-01'"),/permission denied/i);
+  await db.query('update public.adc_tester_profiles set display_name=$1 where id=$2',['Tester B editado',b]);
+  assert.equal((await db.query('select display_name from public.adc_tester_profiles')).rows[0].display_name,'Tester B editado');
+  await db.exec("select set_config('request.jwt.claim.sub','',false);");
+  assert.equal((await db.query('select * from public.adc_tester_profiles')).rows.length,0);
+  await db.exec('reset role;set role anon;');
+  await assert.rejects(db.query('select * from public.adc_tester_profiles'),/permission denied/i);
+  await assert.rejects(db.query('insert into public.adc_tester_profiles(id) values($1)',[a]),/permission denied/i);
+  await db.exec('reset role;');
+  await db.query('delete from auth.users where id=$1',[b]);
+  assert.equal((await db.query('select * from public.adc_tester_profiles where id=$1',[b])).rows.length,0);
+ }finally{await db.close();}
+});

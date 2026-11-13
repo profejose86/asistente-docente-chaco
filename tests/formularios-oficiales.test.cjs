@@ -50,6 +50,7 @@ test('Chrome verifica formularios, borradores, MNC, filas, validación y PDF',{
 },async t => {
   const output = fs.mkdtempSync(path.join(os.tmpdir(),'adc-form-tests-'));
   const server = http.createServer((request,response) => {
+    if(require('./support/demo-config.cjs').serve(request,response))return;
     const url = new URL(request.url,'http://localhost');
     const file = path.resolve(root,'.'+decodeURIComponent(url.pathname === '/' ? '/index.html' : url.pathname));
     if (!file.startsWith(root+path.sep)) { response.writeHead(403).end(); return; }

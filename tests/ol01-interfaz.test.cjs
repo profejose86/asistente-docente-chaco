@@ -7,6 +7,7 @@ const {chromium}=require(path.join(modules,'playwright'));
 
 test('OL-01: tiradores históricos no cubren la plantilla y permiten editar y generar PDF',async()=>{
   const server=http.createServer((req,res)=>{
+    if(require('./support/demo-config.cjs').serve(req,res))return;
     const file=path.resolve(root,'.'+new URL(req.url,'http://localhost').pathname);
     if(!file.startsWith(root+path.sep))return res.writeHead(403).end();
     fs.readFile(file,(error,bytes)=>{

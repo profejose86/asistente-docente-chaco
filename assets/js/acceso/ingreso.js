@@ -4,7 +4,7 @@
  const root=document.documentElement;
  const status=document.getElementById('adcLoginStatus');
  // Modo de demostración explícito para revisar el ingreso también online.
- const localPreview=true;
+ const localPreview=window.adcConfig?.authMode!=='supabase';
  if(localPreview){
   document.getElementById('adcLoginForm').noValidate=true;
   for(const input of document.querySelectorAll('#adcLoginForm input'))input.required=false;
