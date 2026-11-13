@@ -54,7 +54,7 @@ test('MBIT en Chrome: predicción, tarjetas, categorías, temas, teclado, catál
    if(route.request().url().includes('cdn.jsdelivr.net/npm/pdf-lib'))return route.fulfill({path:path.join(runtime,'pdf-lib/dist/pdf-lib.min.js'),contentType:'application/javascript'});
    return route.request().url().startsWith('http://127.0.0.1:')?route.continue():route.abort();
   });
-  await page.goto(`http://127.0.0.1:${server.address().port}`);await page.waitForFunction(()=>window.adcMBIT);
+  await page.goto(`http://127.0.0.1:${server.address().port}/index.html?adc-preview=1`);await page.waitForFunction(()=>window.adcMBIT);
   await page.evaluate(()=>tab('tramites'));
   const search=page.locator('#buscar'),cards=page.locator('#adcFormMatches>button');
   const frequent=await page.locator('#adc43Frequent').innerHTML();

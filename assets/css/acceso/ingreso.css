@@ -1,0 +1,49 @@
+
+:root{color-scheme:light;--ink:#14243e;--muted:#485b74;--surface:#fff;--stroke:#b8c8da;--primary:#18365e;--primary-ink:#fff;--accent:#e89a4a;--background:#f2f6fb;--doodles:url("../../img/acceso/fondo-escolar-light.png");--motifs:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%22300%22%20height%3D%22300%22%20viewBox%3D%220%200%20300%20300%22%3E%3Cg%20fill%3D%22none%22%20stroke%3D%22%23a2bad2%22%20stroke-width%3D%221.15%22%3E%3Cg%20transform%3D%22translate%28164%2045%29%22%3E%3Cpolygon%20points%3D%220%2C-5%201.4%2C-1.5%205%2C-1.5%202.2%2C1%203%2C4.5%200%2C2.4%20-3%2C4.5%20-2.2%2C1%20-5%2C-1.5%20-1.4%2C-1.5%22%20transform%3D%22translate%280%200%29%22/%3E%3Cpolygon%20points%3D%220%2C-5%201.4%2C-1.5%205%2C-1.5%202.2%2C1%203%2C4.5%200%2C2.4%20-3%2C4.5%20-2.2%2C1%20-5%2C-1.5%20-1.4%2C-1.5%22%20transform%3D%22translate%2813%200%29%22/%3E%3Cpolygon%20points%3D%220%2C-5%201.4%2C-1.5%205%2C-1.5%202.2%2C1%203%2C4.5%200%2C2.4%20-3%2C4.5%20-2.2%2C1%20-5%2C-1.5%20-1.4%2C-1.5%22%20transform%3D%22translate%2826%200%29%22/%3E%3C/g%3E%3Cg%20transform%3D%22translate%28250%20213%29%20rotate%2812%29%22%3E%3Crect%20width%3D%2224%22%20height%3D%2235%22%20rx%3D%222%22/%3E%3Cpath%20transform%3D%22translate%287%2011%29%22%20d%3D%22M-3%20-2h6q0%204-3%204t-3-4m3%204v3m-2%200h4%22/%3E%3Cpath%20transform%3D%22translate%2817%2011%29%22%20d%3D%22M-3%20-2h6q0%204-3%204t-3-4m3%204v3m-2%200h4%22/%3E%3Cpath%20transform%3D%22translate%2812%2019%29%22%20d%3D%22M-3%20-2h6q0%204-3%204t-3-4m3%204v3m-2%200h4%22/%3E%3Cpath%20transform%3D%22translate%287%2027%29%22%20d%3D%22M-3%20-2h6q0%204-3%204t-3-4m3%204v3m-2%200h4%22/%3E%3Cpath%20transform%3D%22translate%2817%2027%29%22%20d%3D%22M-3%20-2h6q0%204-3%204t-3-4m3%204v3m-2%200h4%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")}
+:root[data-theme="dark"]{color-scheme:dark;--ink:#f1f6ff;--muted:#c4d2e4;--surface:#192b43;--stroke:#64809f;--primary:#9bc6ff;--primary-ink:#112441;--background:#121d2e;--doodles:url("../../img/acceso/fondo-escolar-dark.png");--motifs:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%22300%22%20height%3D%22300%22%20viewBox%3D%220%200%20300%20300%22%3E%3Cg%20fill%3D%22none%22%20stroke%3D%22%23476887%22%20stroke-width%3D%221.15%22%3E%3Cg%20transform%3D%22translate%28164%2045%29%22%3E%3Cpolygon%20points%3D%220%2C-5%201.4%2C-1.5%205%2C-1.5%202.2%2C1%203%2C4.5%200%2C2.4%20-3%2C4.5%20-2.2%2C1%20-5%2C-1.5%20-1.4%2C-1.5%22%20transform%3D%22translate%280%200%29%22/%3E%3Cpolygon%20points%3D%220%2C-5%201.4%2C-1.5%205%2C-1.5%202.2%2C1%203%2C4.5%200%2C2.4%20-3%2C4.5%20-2.2%2C1%20-5%2C-1.5%20-1.4%2C-1.5%22%20transform%3D%22translate%2813%200%29%22/%3E%3Cpolygon%20points%3D%220%2C-5%201.4%2C-1.5%205%2C-1.5%202.2%2C1%203%2C4.5%200%2C2.4%20-3%2C4.5%20-2.2%2C1%20-5%2C-1.5%20-1.4%2C-1.5%22%20transform%3D%22translate%2826%200%29%22/%3E%3C/g%3E%3Cg%20transform%3D%22translate%28250%20213%29%20rotate%2812%29%22%3E%3Crect%20width%3D%2224%22%20height%3D%2235%22%20rx%3D%222%22/%3E%3Cpath%20transform%3D%22translate%287%2011%29%22%20d%3D%22M-3%20-2h6q0%204-3%204t-3-4m3%204v3m-2%200h4%22/%3E%3Cpath%20transform%3D%22translate%2817%2011%29%22%20d%3D%22M-3%20-2h6q0%204-3%204t-3-4m3%204v3m-2%200h4%22/%3E%3Cpath%20transform%3D%22translate%2812%2019%29%22%20d%3D%22M-3%20-2h6q0%204-3%204t-3-4m3%204v3m-2%200h4%22/%3E%3Cpath%20transform%3D%22translate%287%2027%29%22%20d%3D%22M-3%20-2h6q0%204-3%204t-3-4m3%204v3m-2%200h4%22/%3E%3Cpath%20transform%3D%22translate%2817%2027%29%22%20d%3D%22M-3%20-2h6q0%204-3%204t-3-4m3%204v3m-2%200h4%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")}
+*{box-sizing:border-box}
+body{margin:0;font:16px/1.5 system-ui,sans-serif;color:var(--ink);background:var(--background)}
+[hidden]{display:none!important}
+button,input,select,textarea{font:inherit}
+button{cursor:pointer}
+.wrap{min-height:100vh;background-image:var(--motifs),var(--doodles);background-size:300px 300px}
+.adc-header{display:flex;align-items:center;gap:14px;padding:20px clamp(18px,2vw,32px) 20px max(100px,5vw);background:#13243e;color:#fff}
+.adc-header strong{font-size:clamp(18px,3vw,30px);line-height:1.15}
+.adc-emblem{width:50px;height:50px;flex:none;overflow:hidden;border-radius:50%;background:var(--accent)}
+.adc-emblem img{display:block;width:100%;height:100%;object-fit:cover;transform:scale(1.13);filter:brightness(1.16) saturate(.85) hue-rotate(5deg)}
+#adcThemeSwitch{margin-inline-start:auto;flex:none;display:inline-flex;align-items:center;gap:7px;min-width:90px;min-height:34px;padding:4px 10px 4px 4px;border:1px solid #69819d;border-radius:999px;background:#f1f5fb;color:#243b58;cursor:pointer;font-family:inherit;line-height:1.2;font-size:11px;font-weight:600}
+#adcThemeSwitch:focus-visible{outline:2px solid #f1b86d;outline-offset:3px}
+#adcThemeSwitch .theme-medallion{display:grid;place-items:center;width:24px;height:24px;border-radius:50%;background:#fff6e7;color:#926020;box-shadow:0 1px 3px #14264226}
+#adcThemeSwitch svg{width:15px;height:15px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+#adcThemeSwitch .theme-dark,#adcThemeSwitch[aria-checked=true] .theme-light{display:none}
+#adcThemeSwitch[aria-checked=true]{background:#26354d;color:#edf3fc}
+#adcThemeSwitch[aria-checked=true] .theme-dark{display:inline-block}
+#adcThemeSwitch[aria-checked=true] .theme-medallion{background:#dce7f8;color:#344b70}
+@media(max-width:460px){.adc-header{position:relative;padding:55px 16px 15px!important}#adcThemeSwitch{position:absolute;top:9px;right:16px}}
+.adc-stage{width:min(100%,1320px);margin:auto;padding:clamp(28px,6vw,74px) clamp(18px,5vw,70px);display:grid;grid-template-columns:1.1fr 1fr;gap:clamp(22px,5vw,65px);align-items:center}
+.adc-intro h1{font-size:clamp(29px,4.5vw,54px);letter-spacing:-.04em;line-height:1.07;margin:0 0 24px;max-width:20ch}
+.accent-rule{height:5px;width:105px;background:var(--accent);border-radius:6px;margin-bottom:20px}
+.adc-feature{background:var(--surface);border:1px solid var(--stroke);border-radius:12px;padding:15px 18px;margin-block:11px;display:flex;align-items:center;gap:12px}
+.adc-feature .icon{display:grid;place-items:center;flex:none;border-right:3px solid var(--accent);padding-right:12px}.adc-feature .icon svg{display:block;width:36px;height:36px}
+.adc-feature small{display:block;color:var(--muted)}
+.adc-future{border-left:4px solid var(--accent);padding-left:12px;margin-top:24px}
+.adc-future span{display:block;color:var(--muted)}
+.adc-card{background:var(--surface);border:1px solid var(--stroke);border-radius:18px;box-shadow:0 12px 35px #10223b22;padding:clamp(18px,3vw,36px);min-width:0}
+.adc-card h2{margin:0 0 14px;font-size:clamp(23px,3vw,34px);letter-spacing:-.03em;line-height:1.15}
+.adc-card form{display:grid;gap:11px}
+.adc-card form[hidden],.adc-signup-prompt[hidden]{display:none}
+.adc-signup-prompt{margin:12px 0 0;padding-top:8px;border-top:1px solid var(--stroke);text-align:center;color:var(--muted);font-size:14px}
+.adc-signup-prompt button{margin-inline-start:4px;padding-inline:6px}
+.adc-card label{font-weight:650}
+.adc-card input{display:block;margin-top:4px;width:100%;padding:9px 12px;min-height:44px;color:var(--ink);background:var(--surface);border:1px solid var(--stroke);border-radius:7px}
+.adc-card button{min-height:44px;border-radius:8px;font-weight:650}
+.adc-google{width:100%;border:1px solid var(--stroke);background:var(--surface);color:var(--ink);display:flex;justify-content:center;align-items:center;gap:10px}
+.adc-google span{display:flex;flex:none}.adc-google svg{width:22px;height:22px;display:block}
+.adc-separator{display:flex;align-items:center;gap:10px;color:var(--muted);margin:13px 0;font-size:14px}
+.adc-separator::before,.adc-separator::after{content:'';flex:1;height:1px;background:var(--stroke)}
+.adc-login{border:0;background:var(--primary);color:var(--primary-ink)}
+.adc-recover{border:0;background:transparent;color:var(--ink);text-decoration:underline}
+#adcLoginStatus{font-size:14px;margin-bottom:0}
+#adcLoginStatus:empty{display:none}
+:focus-visible{outline:2px solid #6798dd;outline-offset:3px}
+@media(max-width:700px){.adc-stage{grid-template-columns:minmax(0,1fr)}.adc-card{grid-row:1}.adc-header{gap:8px;padding-left:98px}.adc-header strong{font-size:15px}.adc-emblem{width:32px;height:32px}#adcThemeSwitch{font-size:12px}}

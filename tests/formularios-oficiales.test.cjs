@@ -71,7 +71,7 @@ test('Chrome verifica formularios, borradores, MNC, filas, validación y PDF',{
       if (route.request().url().startsWith('http://127.0.0.1:') || route.request().url().startsWith('blob:')) return route.continue();
       return route.abort();
     });
-    await page.goto(`http://127.0.0.1:${server.address().port}`);
+    await page.goto(`http://127.0.0.1:${server.address().port}/index.html?adc-preview=1`);
     await page.waitForFunction(() => window.PDFLib && document.querySelectorAll('[data-adc-official-form]').length === 26);
     const open = id => page.evaluate(id => document.querySelector(`[data-adc-official-form="${id}"]`).click(),id);
     async function fillRequired() {

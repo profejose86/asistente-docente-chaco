@@ -2,11 +2,17 @@
 
 La entrada de la aplicación es `index.html`. Los estilos están en `assets/css/` y los scripts en `assets/js/`, agrupados por área.
 
+En la rama Log-in, la entrada local abre `ADC_Ingreso_Editable.html`. El botón Ingresar permite acceder a `index.html?adc-preview=1` con los campos vacíos durante los ajustes. `assets/js/interfaz/inicio-local.js` aplica el recorrido a localhost, 127.0.0.1, IPv6 local y archivos abiertos desde el disco. El perfil sigue utilizando el almacenamiento del mismo origen. La pantalla de registro conserva su validación y sus acciones de demostración. Este acceso local de prueba queda separado de la futura autenticación y gestión de sesiones.
+
+La pantalla de acceso conserva su entrada en `ADC_Ingreso_Editable.html`. Sus estilos y comportamiento se organizan en `assets/css/acceso/` y `assets/js/acceso/`, con archivos separados para ingreso y Ajustes. Los fondos Light/Dark y el logo se guardan en `assets/img/acceso/`. El editor de acceso conserva sus claves de almacenamiento y permanece separado del editor de formularios.
+
 ```text
 PaginaDocente/
+├── ADC_Ingreso_Editable.html
 ├── index.html
 ├── assets/
 │   ├── css/
+│   │   ├── acceso/ (ingreso.css, editor.css)
 │   │   ├── base.css
 │   │   ├── calendario/
 │   │   ├── documentos/
@@ -14,7 +20,10 @@ PaginaDocente/
 │   │   ├── interfaz/
 │   │   ├── perfil/
 │   │   └── tramites/
+│   ├── img/
+│   │   └── acceso/ (fondos y logo)
 │   └── js/
+│       ├── acceso/ (ingreso.js, editor.js)
 │       ├── calendario/
 │       ├── core/
 │       ├── documentos/

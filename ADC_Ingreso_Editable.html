@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="es-AR" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Asistente Docente Chaco · Ingreso</title>
+<link rel="stylesheet" href="assets/css/acceso/ingreso.css">
+</head>
+<body>
+<main class="wrap" id="adcLoginCanvas">
+<header class="adc-header"><span class="adc-emblem"><img alt="" src="assets/img/acceso/logo-adc.png"></span><strong>Asistente Docente Chaco</strong><button type="button" id="adcThemeSwitch" role="switch" aria-label="Tema oscuro" aria-checked="false"><span class="theme-medallion" aria-hidden="true"><svg class="theme-light" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v3m0 14v3M2 12h3m14 0h3M5 5l2 2m10 10 2 2M19 5l-2 2M7 17l-2 2"/></svg><svg class="theme-dark" viewBox="0 0 24 24"><path d="M20 15a8 8 0 0 1-11-11A8.5 8.5 0 1 0 20 15Z"/><path d="M17 4v4m-2-2h4"/></svg></span><span aria-hidden="true"><span class="theme-light">Light</span><span class="theme-dark">Dark</span></span></button></header>
+<div class="adc-stage">
+<section class="adc-intro" aria-labelledby="adcIntroTitle">
+<h1 id="adcIntroTitle">Tus trámites y tu agenda en un solo lugar</h1><div class="accent-rule" aria-hidden="true"></div>
+<article class="adc-feature"><span class="icon" aria-hidden="true"><svg viewBox="0 0 40 40" aria-hidden="true" focusable="false"><rect x="7" y="6" width="22" height="28" rx="4" fill="#d9e9ff" stroke="#3565a0" stroke-width="1.6"/><rect x="12" y="9" width="22" height="27" rx="4" fill="#f3f8ff" stroke="#3565a0" stroke-width="1.6"/><path d="M17 15h11m-11 5h9m-9 5h6" fill="none" stroke="#3565a0" stroke-linecap="round" stroke-width="1.7"/><circle cx="29" cy="29" r="7" fill="#f2b25d" stroke="#fff" stroke-width="1.4"/><path d="m26.5 29 1.7 1.8 3.4-3.5" fill="none" stroke="#253855" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span><strong>Licencias y declaraciones juradas</strong></article>
+<article class="adc-feature"><span class="icon" aria-hidden="true"><svg viewBox="0 0 40 40" aria-hidden="true" focusable="false"><rect x="6" y="9" width="28" height="25" rx="5" fill="#e2f5f2" stroke="#23776f" stroke-width="1.7"/><path d="M6 16h28M13 6v7m14-7v7" fill="none" stroke="#23776f" stroke-width="2" stroke-linecap="round"/><path d="M12 21h3m4 0h3m4 0h3m-17 6h3m4 0h3" fill="none" stroke="#4b8d86" stroke-width="2" stroke-linecap="round"/><rect x="25" y="25" width="6" height="5" rx="1.4" fill="#eba650"/></svg></span><div><strong>Agenda y calendario escolar</strong><small>Anotaciones personales</small></div></article>
+<p class="adc-future"><strong>En desarrollo · Recursos para actos patrios</strong><span>Glosas, canciones e himnos</span></p>
+</section>
+<section class="adc-card" id="adcLoginCard" aria-labelledby="adcLoginTitle">
+<h2 id="adcLoginTitle">Ingresá a tu cuenta</h2><div class="accent-rule" aria-hidden="true"></div>
+<button class="adc-google" type="button" id="adcGoogle"><span aria-hidden="true"><svg viewBox="0 0 48 48" aria-hidden="true" focusable="false"><path fill="#4285F4" d="M43.6 24.5c0-1.4-.1-2.7-.4-4H24v7.6h11a9.4 9.4 0 0 1-4.1 6.1v5h6.6c3.8-3.5 6.1-8.6 6.1-14.7z"/><path fill="#34A853" d="M24 44c5.5 0 10.1-1.8 13.5-4.8l-6.6-5c-1.8 1.2-4.1 2-6.9 2-5.3 0-9.8-3.6-11.4-8.4H5.8V33A20 20 0 0 0 24 44z"/><path fill="#FBBC05" d="M12.6 27.8a12 12 0 0 1 0-7.6V15H5.8a20 20 0 0 0 0 18z"/><path fill="#EA4335" d="M24 11.8c3 0 5.7 1 7.8 3l5.8-5.7A19.2 19.2 0 0 0 24 4 20 20 0 0 0 5.8 15l6.8 5.2A12 12 0 0 1 24 11.8z"/></svg></span> Continuar con Google</button>
+<div class="adc-separator">o ingresá con tu correo</div>
+<form id="adcLoginForm" autocomplete="off">
+<label>Correo electrónico<input id="adcLoginEmail" name="email" type="email" autocomplete="off" required></label>
+<label>Contraseña<input id="adcLoginPassword" name="password" type="password" autocomplete="off" required></label>
+<button class="adc-login" type="submit">Ingresar</button>
+<button class="adc-recover" type="button" id="adcRecover">Olvidé mi contraseña</button>
+</form>
+<p class="adc-signup-prompt" id="adcSignupPrompt">¿Todavía no tenés cuenta? <button class="adc-recover" type="button" id="adcOpenSignup" aria-controls="adcSignupForm">Crear cuenta</button></p>
+<form id="adcSignupForm" hidden>
+<label>Correo electrónico<input id="adcSignupEmail" name="email" type="email" autocomplete="email" required></label>
+<label>Contraseña<input id="adcSignupPassword" name="password" type="password" autocomplete="new-password" required></label>
+<button class="adc-login" type="submit">Crear cuenta</button>
+<button class="adc-recover" type="button" id="adcBackToLogin">Volver a ingresar</button>
+</form>
+<p id="adcLoginStatus" role="status"></p>
+</section>
+</div>
+</main>
+<script src="assets/js/acceso/ingreso.js"></script>
+<link rel="stylesheet" href="assets/css/acceso/editor.css">
+<button type="button" id="adcDesignGear" aria-expanded="false" aria-controls="adcDesignPanel" title="Clic para abrir. Con Ajustes abierto, arrastrá la tuerquita.">⚙ Ajustes</button>
+<aside id="adcDesignPanel" hidden aria-label="Editor de diseño">
+ <label><input type="checkbox" id="adcDevRules" checked> Mostrar reglas</label><br><label><input type="checkbox" id="adcKeepNotes"> Mantener anotaciones visibles</label><br><strong>Modo Diseño · ADC</strong>
+ <p data-status role="status">Mantené presionada una sección y arrastrala.</p>
+ <div><button data-act="navigate">Modo navegación</button><button data-act="undo">Deshacer</button><button data-act="redo">Rehacer</button><button data-act="delete">Eliminar</button></div>
+ <div aria-label="Organizar"><button data-act="parent">Cuadro exterior</button><button data-act="up">↑ Subir</button><button data-act="down">↓ Bajar</button><details><summary>Alinear</summary><button data-act="center-area">Centrar en la columna</button><button data-act="center-screen">Centrar en pantalla</button><button data-act="center-peer">Centrar con otra sección</button><button data-act="center-apply" hidden>Aplicar centrado</button></details></div>
+ <div><button data-act="size">↔ Mover y ajustar tamaño</button><button data-act="doc-size">↔ ↕ Ajustar área del documento</button></div>
+ <div aria-label="Crear y agrupar"><button data-act="section">Nueva sección</button><button data-act="split">✂ Separar desde aquí</button><button data-act="group">Agrupar en sección</button></div>
+ <div aria-label="Anotar sobre la página"><button data-act="note">✎ Nota</button><button data-act="rectangle">□ Recuadro</button><button data-act="ellipse">○ Óvalo</button><button data-act="line">╱ Línea</button><label>Grosor (px) <input id="adcStroke" type="number" min="1" max="20" value="3"></label><label>Color <input id="adcAnnotationColor" type="color" value="#d22945"></label></div><div><button data-act="box">+ Caja</button><button data-act="button">+ Botón</button><button data-act="dropdown">+ Desplegable</button><button data-act="fold">Hacer plegable</button><button data-act="erase">Goma de borrar</button><button data-act="bubble">+ Burbuja de aviso</button><button data-act="background">Fondo de caja</button></div>
+ <div id="adcDesignPalette" hidden></div><details id="adcDesignFormatting" hidden><summary>Editar texto</summary>
+  <p><select id="adcDesignFont" aria-label="Fuente"><option value="inherit">Fuente de ADC</option><option>Arial</option><option>Georgia</option><option>Garamond</option><option>Verdana</option><option>system-ui</option></select>
+  <select id="adcDesignSize" aria-label="Tamaño"><option value="">Tamaño</option><option value="2">Chico</option><option value="3">Normal</option><option value="4">Mediano</option><option value="5">Grande</option><option value="6">Muy grande</option></select>
+  <button data-format="bold"><b>N</b></button><button data-format="italic"><i>C</i></button><button data-format="underline"><u>S</u></button></p>
+  <p><button data-format="insertUnorderedList">• Viñetas</button><button data-format="insertOrderedList">1. Numerar</button><button data-format="indent">Sangría</button><button data-format="outdent">Reducir sangría</button></p>
+  <p><button data-format="justifyLeft">Izquierda</button><button data-format="justifyCenter">Centro</button><button data-format="justifyRight">Derecha</button><button data-act="link">Enlace</button><button data-format="removeFormat">Quitar formato</button></p>
+  <p><label>Letra <input id="adcDesignColor" type="color"></label><label>Resaltar <input id="adcDesignMark" type="color" value="#fff19a"></label></p>
+  <div id="adcDesignText" contenteditable="true" role="textbox" aria-label="Texto del elemento" aria-multiline="true"></div>
+  <button data-act="text">Aplicar texto</button>
+ </details>
+ <div><button data-act="save">Guardar borrador</button><button data-act="export">Exportar JSON</button><button data-act="import">Importar JSON</button><input type="file" id="adcDesignImport" accept=".json" hidden></div>
+</aside>
+<script src="assets/js/acceso/editor.js"></script>
+</body>
+</html>
