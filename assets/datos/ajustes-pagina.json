@@ -142,6 +142,637 @@
           "kind": "front",
           "target": "project:#dj02 > section:nth-of-type(1)",
           "level": 515
+        },
+        {
+          "kind": "front",
+          "target": "project:#dj02 > section:nth-of-type(1) > div:nth-of-type(4) > input:nth-of-type(1)",
+          "level": 516
+        },
+        {
+          "kind": "front",
+          "target": "project:#dj02 > section:nth-of-type(1)",
+          "level": 517
+        },
+        {
+          "kind": "front",
+          "target": "project:#dj02 > section:nth-of-type(1) > div:nth-of-type(4)",
+          "level": 518
+        },
+        {
+          "kind": "style",
+          "target": "project:#dj02 > section:nth-of-type(1) > div:nth-of-type(4)",
+          "x": -153.5,
+          "y": -70
+        },
+        {
+          "kind": "style",
+          "target": "project:#dj02 > section:nth-of-type(1) > div:nth-of-type(4)",
+          "x": -31,
+          "y": -196
+        },
+        {
+          "kind": "style",
+          "target": "project:#dj02 > section:nth-of-type(1) > div:nth-of-type(4)",
+          "x": 21,
+          "y": -48
+        },
+        {
+          "kind": "style",
+          "target": "project:#dj02 > section:nth-of-type(1) > div:nth-of-type(4)",
+          "x": 1,
+          "y": 11
+        },
+        {
+          "kind": "style",
+          "target": "project:#dj02 > section:nth-of-type(1) > div:nth-of-type(4)",
+          "x": 0,
+          "y": 0,
+          "width": 1143,
+          "height": 373.71875
+        },
+        {
+          "kind": "style",
+          "target": "project:#dj02 > section:nth-of-type(1) > div:nth-of-type(4)",
+          "x": 0,
+          "y": 139,
+          "width": 1143,
+          "height": 234.71875
+        },
+        {
+          "kind": "style",
+          "target": "project:#dj02 > section:nth-of-type(1) > div:nth-of-type(4)",
+          "x": 0,
+          "y": 49,
+          "width": 1143,
+          "height": 185.71875
+        },
+        {
+          "kind": "style",
+          "target": "project:#dj02 > section:nth-of-type(1) > div:nth-of-type(4)",
+          "x": 0,
+          "y": 69,
+          "width": 1143,
+          "height": 116.71875
+        },
+        {
+          "kind": "style",
+          "target": "project:#dj02 > section:nth-of-type(1) > div:nth-of-type(4)",
+          "x": 0,
+          "y": 0,
+          "width": 1143,
+          "height": 90.71875
+        },
+        {
+          "kind": "style",
+          "target": "project:#dj02 > section:nth-of-type(1) > div:nth-of-type(4)",
+          "x": -5,
+          "y": 31
+        },
+        {
+          "kind": "style",
+          "target": "project:#dj02 > section:nth-of-type(1) > div:nth-of-type(4)",
+          "x": -14,
+          "y": -1
+        },
+        {
+          "kind": "style",
+          "target": "project:#dj02 > section:nth-of-type(1) > div:nth-of-type(4)",
+          "x": 8,
+          "y": -4
+        },
+        {
+          "kind": "style",
+          "target": "project:#dj02 > section:nth-of-type(1) > div:nth-of-type(4)",
+          "x": -7,
+          "y": 42
+        },
+        {
+          "kind": "style",
+          "target": "project:#dj02 > section:nth-of-type(1) > div:nth-of-type(4)",
+          "x": -9,
+          "y": 8
+        },
+        {
+          "kind": "front",
+          "target": "project:#dj02 > section:nth-of-type(1)",
+          "level": 519
+        },
+        {
+          "kind": "front",
+          "target": "project:#dj02Preview",
+          "level": 520
+        },
+        {
+          "kind": "style",
+          "target": "project:#dj02Preview",
+          "x": 0,
+          "y": 56
+        },
+        {
+          "kind": "style",
+          "target": "project:#dj02Preview",
+          "x": 0,
+          "y": -31
+        },
+        {
+          "kind": "front",
+          "target": "project:#dj02 > section:nth-of-type(1)",
+          "level": 521
+        },
+        {
+          "kind": "style",
+          "target": "project:#dj02 > section:nth-of-type(1)",
+          "x": -10,
+          "y": 3
+        },
+        {
+          "kind": "style",
+          "target": "project:#dj02 > section:nth-of-type(1)",
+          "x": 2,
+          "y": -7
+        },
+        {
+          "kind": "front",
+          "target": "project:html > body:nth-of-type(1) > div:nth-of-type(1) > footer:nth-of-type(1)",
+          "level": 522
+        },
+        {
+          "kind": "style",
+          "target": "project:html > body:nth-of-type(1) > div:nth-of-type(1) > footer:nth-of-type(1)",
+          "x": 0,
+          "y": 38
+        },
+        {
+          "kind": "front",
+          "target": "project:#dj02 > section:nth-of-type(1)",
+          "level": 523
+        },
+        {
+          "kind": "style",
+          "target": "project:#dj02 > section:nth-of-type(1)",
+          "x": -56,
+          "y": -37
+        },
+        {
+          "kind": "style",
+          "target": "project:#dj02 > section:nth-of-type(1)",
+          "x": 9,
+          "y": 0
+        },
+        {
+          "kind": "style",
+          "target": "project:#dj02 > section:nth-of-type(1)",
+          "x": 0,
+          "y": 0,
+          "width": 999,
+          "height": 1060.34375
+        },
+        {
+          "kind": "front",
+          "target": "project:#dj02Preview",
+          "level": 524
+        },
+        {
+          "kind": "front",
+          "target": "project:#dj02 > section:nth-of-type(1)",
+          "level": 525
+        },
+        {
+          "kind": "front",
+          "target": "project:#dj02Preview",
+          "level": 526
+        },
+        {
+          "kind": "style",
+          "target": "project:#dj02Preview",
+          "x": 0,
+          "y": 0,
+          "width": 942,
+          "height": 523.109375
+        },
+        {
+          "kind": "style",
+          "target": "project:#dj02Preview",
+          "x": 0,
+          "y": 0,
+          "width": 942,
+          "height": 537.109375
+        },
+        {
+          "kind": "style",
+          "target": "project:#dj02Preview",
+          "x": 0,
+          "y": 0,
+          "width": 965,
+          "height": 537.109375
+        },
+        {
+          "kind": "style",
+          "target": "project:#dj02Preview",
+          "x": -21,
+          "y": 0,
+          "width": 986,
+          "height": 537.109375
+        },
+        {
+          "kind": "front",
+          "target": "project:#dj02 > section:nth-of-type(1)",
+          "level": 527
+        },
+        {
+          "kind": "front",
+          "target": "project:#dj02Preview > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(4)",
+          "level": 528
+        },
+        {
+          "kind": "front",
+          "target": "project:#dj02 > section:nth-of-type(1)",
+          "level": 529
+        },
+        {
+          "kind": "front",
+          "target": "project:#dj02Preview > div:nth-of-type(1) > div:nth-of-type(1)",
+          "level": 530
+        },
+        {
+          "kind": "style",
+          "target": "project:#dj02Preview > div:nth-of-type(1) > div:nth-of-type(1)",
+          "x": -76,
+          "y": -23
+        },
+        {
+          "kind": "front",
+          "target": "project:#dj02 > section:nth-of-type(1)",
+          "level": 531
+        },
+        {
+          "kind": "front",
+          "target": "project:#dj02Preview > div:nth-of-type(1)",
+          "level": 532
+        },
+        {
+          "kind": "front",
+          "target": "project:#dj02 > section:nth-of-type(1)",
+          "level": 533
+        },
+        {
+          "kind": "front",
+          "target": "project:#dj02Preview > div:nth-of-type(1)",
+          "level": 534
+        },
+        {
+          "kind": "front",
+          "target": "project:#dj02Preview > div:nth-of-type(1) > div:nth-of-type(1)",
+          "level": 535
+        },
+        {
+          "kind": "style",
+          "target": "project:#dj02Preview > div:nth-of-type(1) > div:nth-of-type(1)",
+          "x": -35,
+          "y": -9
+        },
+        {
+          "kind": "style",
+          "target": "project:#dj02Preview > div:nth-of-type(1) > div:nth-of-type(1)",
+          "x": 0,
+          "y": 0,
+          "width": 891.46875,
+          "height": 525.265625
+        },
+        {
+          "kind": "style",
+          "target": "project:#dj02Preview > div:nth-of-type(1) > div:nth-of-type(1)",
+          "x": 0,
+          "y": 0,
+          "width": 891.46875,
+          "height": 503.265625
+        },
+        {
+          "kind": "front",
+          "target": "project:#dj02 > section:nth-of-type(1)",
+          "level": 536
+        },
+        {
+          "kind": "front",
+          "target": "project:#dj02Preview",
+          "level": 537
+        },
+        {
+          "kind": "style",
+          "target": "project:#dj02Preview",
+          "x": 0,
+          "y": 0,
+          "width": 986,
+          "height": 565.109375
+        },
+        {
+          "kind": "style",
+          "target": "project:#dj02Preview",
+          "x": 0,
+          "y": 0,
+          "width": 986,
+          "height": 587.109375
+        },
+        {
+          "kind": "front",
+          "target": "project:#dj02 > section:nth-of-type(1)",
+          "level": 538
+        },
+        {
+          "kind": "style",
+          "target": "project:#dj02 > section:nth-of-type(1)",
+          "x": -35,
+          "y": 1
+        },
+        {
+          "kind": "front",
+          "target": "project:#dj02Preview > div:nth-of-type(1) > div:nth-of-type(1)",
+          "level": 539
+        },
+        {
+          "kind": "style",
+          "target": "project:#dj02Preview > div:nth-of-type(1) > div:nth-of-type(1)",
+          "x": 0,
+          "y": 0,
+          "width": 968.46875,
+          "height": 541.265625
+        },
+        {
+          "kind": "style",
+          "target": "project:#dj02Preview > div:nth-of-type(1) > div:nth-of-type(1)",
+          "x": 0,
+          "y": 0,
+          "width": 932.46875,
+          "height": 541.265625
+        },
+        {
+          "kind": "style",
+          "target": "project:#dj02Preview > div:nth-of-type(1) > div:nth-of-type(1)",
+          "x": 0,
+          "y": 0,
+          "width": 955.46875,
+          "height": 541.265625
+        },
+        {
+          "kind": "style",
+          "target": "project:#dj02Preview > div:nth-of-type(1) > div:nth-of-type(1)",
+          "x": -11,
+          "y": 0,
+          "width": 902.46875,
+          "height": 541.265625
+        },
+        {
+          "kind": "front",
+          "target": "project:#dj02 > section:nth-of-type(1)",
+          "level": 540
+        },
+        {
+          "kind": "front",
+          "target": "project:#dj02 > section:nth-of-type(1)",
+          "level": 541
+        },
+        {
+          "kind": "front",
+          "target": "project:#dj02Preview > div:nth-of-type(1) > div:nth-of-type(1)",
+          "level": 542
+        },
+        {
+          "kind": "style",
+          "target": "project:#dj02Preview > div:nth-of-type(1) > div:nth-of-type(1)",
+          "x": 0,
+          "y": 0,
+          "width": 970.4686889648438,
+          "height": 541.265625
+        },
+        {
+          "kind": "style",
+          "target": "project:#dj02Preview > div:nth-of-type(1) > div:nth-of-type(1)",
+          "x": 0,
+          "y": 0,
+          "width": 961.4686889648438,
+          "height": 541.265625
+        },
+        {
+          "kind": "front",
+          "target": "project:#dj02 > section:nth-of-type(1)",
+          "level": 543
+        },
+        {
+          "kind": "style",
+          "target": "project:#dj02 > section:nth-of-type(1)",
+          "x": 0,
+          "y": 0,
+          "width": 1098,
+          "height": 1060.328125
+        },
+        {
+          "kind": "front",
+          "target": "project:#dj02Preview > div:nth-of-type(1)",
+          "level": 544
+        },
+        {
+          "kind": "front",
+          "target": "project:#dj02 > section:nth-of-type(1)",
+          "level": 545
+        },
+        {
+          "kind": "front",
+          "target": "project:#dj02Preview > div:nth-of-type(1)",
+          "level": 546
+        },
+        {
+          "kind": "front",
+          "target": "project:#dj02 > section:nth-of-type(1)",
+          "level": 547
+        },
+        {
+          "kind": "front",
+          "target": "project:#dj02Preview",
+          "level": 548
+        },
+        {
+          "kind": "style",
+          "target": "project:#dj02Preview",
+          "x": 0,
+          "y": 0,
+          "width": 1080,
+          "height": 587.09375
+        },
+        {
+          "kind": "front",
+          "target": "project:#dj02Preview > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2)",
+          "level": 549
+        },
+        {
+          "kind": "front",
+          "target": "project:#dj02 > section:nth-of-type(1)",
+          "level": 550
+        },
+        {
+          "kind": "front",
+          "target": "project:#dj02Preview > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2)",
+          "level": 551
+        },
+        {
+          "kind": "front",
+          "target": "project:#dj02 > section:nth-of-type(1)",
+          "level": 552
+        },
+        {
+          "kind": "front",
+          "target": "project:#dj02Preview > div:nth-of-type(1) > div:nth-of-type(1)",
+          "level": 553
+        },
+        {
+          "kind": "style",
+          "target": "project:#dj02Preview > div:nth-of-type(1) > div:nth-of-type(1)",
+          "x": 0,
+          "y": 0,
+          "width": 1065.4686889648438,
+          "height": 541.265625
+        },
+        {
+          "kind": "style",
+          "target": "project:#dj02Preview > div:nth-of-type(1) > div:nth-of-type(1)",
+          "x": 0,
+          "y": 0,
+          "width": 1063.4686889648438,
+          "height": 541.265625
+        },
+        {
+          "kind": "front",
+          "target": "project:#dj02 > section:nth-of-type(1)",
+          "level": 554
+        },
+        {
+          "kind": "front",
+          "target": "project:#dj02 > section:nth-of-type(1)",
+          "level": 555
+        },
+        {
+          "kind": "style",
+          "target": "project:#dj02 > section:nth-of-type(1)",
+          "x": 0,
+          "y": 0,
+          "width": 980,
+          "height": 1060.328125
+        },
+        {
+          "kind": "style",
+          "target": "project:#dj02 > section:nth-of-type(1)",
+          "x": 0,
+          "y": 0,
+          "width": 1241,
+          "height": 1060.328125
+        },
+        {
+          "kind": "front",
+          "target": "project:#dj02 > section:nth-of-type(1)",
+          "level": 556
+        },
+        {
+          "kind": "style",
+          "target": "project:#dj02 > section:nth-of-type(1)",
+          "x": -47,
+          "y": 3
+        },
+        {
+          "kind": "front",
+          "target": "project:#dj02 > section:nth-of-type(1) > p:nth-of-type(2)",
+          "level": 557
+        },
+        {
+          "kind": "front",
+          "target": "project:#dj02 > section:nth-of-type(1)",
+          "level": 558
+        },
+        {
+          "kind": "style",
+          "target": "project:#dj02 > section:nth-of-type(1)",
+          "x": -44.5,
+          "y": 0
+        },
+        {
+          "kind": "front",
+          "target": "project:#dj02 > section:nth-of-type(1)",
+          "level": 559
+        },
+        {
+          "kind": "front",
+          "target": "project:#dj02Preview > div:nth-of-type(1)",
+          "level": 560
+        },
+        {
+          "kind": "style",
+          "target": "project:#dj02Preview > div:nth-of-type(1)",
+          "x": 0,
+          "y": 0,
+          "width": 1074.390625,
+          "height": 535.265625
+        },
+        {
+          "kind": "front",
+          "target": "project:#dj02 > section:nth-of-type(1)",
+          "level": 561
+        },
+        {
+          "kind": "front",
+          "target": "project:#dj02Preview",
+          "level": 562
+        },
+        {
+          "kind": "style",
+          "target": "project:#dj02Preview",
+          "x": 0,
+          "y": 0,
+          "width": 1219,
+          "height": 587.09375
+        },
+        {
+          "kind": "front",
+          "target": "project:#dj02Preview > div:nth-of-type(1)",
+          "level": 563
+        },
+        {
+          "kind": "style",
+          "target": "project:#dj02Preview > div:nth-of-type(1)",
+          "x": 0,
+          "y": 0,
+          "width": 730.578125,
+          "height": 550.9687194824219
+        },
+        {
+          "kind": "style",
+          "target": "project:#dj02Preview > div:nth-of-type(1)",
+          "x": 0,
+          "y": 0,
+          "width": 1211.78125,
+          "height": 374.6562194824219
+        },
+        {
+          "kind": "style",
+          "target": "project:#dj02Preview > div:nth-of-type(1)",
+          "x": 399,
+          "y": 304
+        },
+        {
+          "kind": "style",
+          "target": "project:#dj02Preview > div:nth-of-type(1)",
+          "x": 120,
+          "y": 92
+        },
+        {
+          "kind": "style",
+          "target": "project:#dj02Preview > div:nth-of-type(1)",
+          "x": 0,
+          "y": -274,
+          "width": 824.0000610351562,
+          "height": 528.765625
+        },
+        {
+          "kind": "front",
+          "target": "project:#dj02 > section:nth-of-type(1)",
+          "level": 564
         }
       ],
       "targets": {
@@ -167,6 +798,32 @@
         },
         "project:#dj02 > section:nth-of-type(1) > div:nth-of-type(4)": {
           "tag": "div"
+        },
+        "project:#dj02 > section:nth-of-type(1) > div:nth-of-type(4) > input:nth-of-type(1)": {
+          "tag": "input",
+          "type": "range"
+        },
+        "project:#dj02Preview": {
+          "tag": "div",
+          "id": "dj02Preview"
+        },
+        "project:html > body:nth-of-type(1) > div:nth-of-type(1) > footer:nth-of-type(1)": {
+          "tag": "footer"
+        },
+        "project:#dj02Preview > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(4)": {
+          "tag": "div"
+        },
+        "project:#dj02Preview > div:nth-of-type(1) > div:nth-of-type(1)": {
+          "tag": "div"
+        },
+        "project:#dj02Preview > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2)": {
+          "tag": "div"
+        },
+        "project:#dj02Preview > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2)": {
+          "tag": "div"
+        },
+        "project:#dj02 > section:nth-of-type(1) > p:nth-of-type(2)": {
+          "tag": "p"
         }
       }
     },
