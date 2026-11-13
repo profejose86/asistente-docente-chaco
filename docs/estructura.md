@@ -79,6 +79,12 @@ Las plantillas, imágenes y fuentes incrustadas permanecen en sus bloques origin
 
 ## Desarrollo
 
+### Flujo de ramas acordado
+
+El repositorio utiliza únicamente `main` y `log-in`. Los cambios se desarrollan y prueban en `log-in`, se guardan mediante commit y se suben a esa misma rama para comprobarlos en GitHub Pages. Una vez revisado el resultado online con el usuario, se integran en `main`. No se crean ramas adicionales. Mientras dure la prueba actual, GitHub Pages publica desde `log-in`.
+
+Antes de retirar una rama con cambios exclusivos, se conserva su commit mediante una etiqueta de archivo. Estas etiquetas preservan versiones históricas y no son ramas de desarrollo. No se reemplaza una versión de `main` mediante un push forzado.
+
 Abrir `index.html` desde el entorno habitual. La carpeta completa constituye la aplicación y debe acompañar al HTML. Para desarrollo y pruebas de recursos se recomienda un servidor HTTP local disponible en el equipo. La publicación bajo una subcarpeta funciona con las rutas relativas utilizadas en la entrada.
 
 Las claves de almacenamiento y los identificadores del DOM conservan su definición anterior. Las operaciones del editor mantienen las referencias a los elementos originales.
