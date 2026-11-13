@@ -1,4 +1,4 @@
-// Primera etapa: revisar el documento preparado antes de configurar campos.
+// Configuración de documentos originales y coordenadas de sus controles.
 // Solo los formularios registrados aquí utilizan este modo; los demás conservan su implementación.
 window.adcPreparedPdfForms = Object.freeze({
   dp01: Object.freeze({
@@ -6,7 +6,52 @@ window.adcPreparedPdfForms = Object.freeze({
     pages: [{ image: 'assets/formularios/DP-01-pagina-1.png', width: 612, height: 1008 }],
     source: 'https://drive.google.com/drive/folders/1AZpunmuWaPrB-qXgHyaaCjGGRwAEqSy3',
     sha256: '88d14c87d6de22b1caf0dc17281f0737e5de6ebfc8dca927c48f145f894024a8',
-    note: 'El PDF preparado conserva «2009» impreso en la fecha Desde. Pendiente de revisión; ADC no modifica ese texto.',
-    stage: 'revision-documento'
+    note: 'Se autorizó reemplazar únicamente el año 2009 impreso en Desde. El PDF original se conserva intacto; el año editable se agrega en la vista y en la copia completada.',
+    stage: 'editable',
+    fields: {
+      situacion: {x:95,top:103,width:90,height:42,options:[{value:'Interino',x:99,top:104},{value:'Suplente',x:176,top:104},{value:'Titular',x:99,top:133}]},
+      selloRegional: {x:174,top:34,width:216,height:32},
+      numeroDisposicion: {x:418,top:108,width:133,height:13,fontSize:10},
+      fechaAltaDesde: {x:331,top:131,width:124,height:12,fontSize:10,dateParts:[{x:332,width:21},{x:358,width:21},{x:402,width:34}],printedYear:2009,replacePrintedYear:{x:403.94,top:131.8,width:22.2,height:10.7}},
+      fechaAltaHasta: {x:498,top:131,width:74,height:12,fontSize:9,dateParts:[{x:498,width:16},{x:520,width:19},{x:549,width:24}]},
+      apellido: {x:279,top:163,width:304,height:14},
+      nombres: {x:112,top:184,width:471,height:14},
+      dni: {x:99,top:205,width:300,height:14},
+      sexo: {x:459,top:205,width:47,height:13,options:[{value:'F',x:461,top:207},{value:'M',x:496,top:207}]},
+      codigoOficina: {x:156,top:225,width:215,height:14,institution:'office'},
+      codigoAnexo: {x:76,top:246,width:127,height:14,institution:'anexo'},
+      establecimiento: {x:159,top:267,width:183,height:13,institution:'name'},
+      nivel: {x:441,top:267,width:65,height:13,institution:'level'},
+      modalidad: {x:510,top:267,width:70,height:13,institution:'modalidad'},
+      categoria: {x:113,top:295,width:125,height:14},
+      zona: {x:277,top:295,width:78,height:14},
+      jornada: {x:411,top:295,width:171,height:14},
+      localidad: {x:159,top:316,width:424,height:14,institution:'localidad'},
+      codigoCargo: {x:158,top:347,width:99,height:14},
+      descripcionCargo: {x:331,top:347,width:251,height:14},
+      anio: {x:71,top:367,width:43,height:14},
+      division: {x:229,top:367,width:98,height:14},
+      turno: {x:376,top:367,width:74,height:14},
+      horas: {x:532,top:367,width:42,height:14},
+      especialidad: {x:117,top:387,width:264,height:14},
+      planEstudio: {x:479,top:387,width:96,height:14},
+      asignatura: {x:107,top:407,width:468,height:14},
+      codigoMotivo: {x:133,top:455,width:58,height:12,digits:5,fontSize:10},
+      descripcionMotivo: {x:280,top:455,width:300,height:30,fontSize:11},
+      instrumento: {x:214,top:495,width:366,height:14},
+      reemplazadoDni: {x:70,top:542,width:182,height:14},
+      reemplazadoSexo: {x:307,top:542,width:45,height:13,options:[{value:'F',x:308,top:545},{value:'M',x:340,top:545}]},
+      reemplazadoApellido: {x:92,top:562,width:224,height:14},
+      reemplazadoNombres: {x:376,top:562,width:203,height:14},
+      reemplazadoCodigoMotivo: {x:152,top:582,width:55,height:12,digits:5,fontSize:10},
+      reemplazadoDescripcionMotivo: {x:284,top:582,width:291,height:14},
+      reemplazadoInstrumento: {x:158,top:602,width:169,height:14},
+      observaciones: {x:139,top:665,width:441,height:51,fontSize:11,multiline:true},
+      firmaDirector: {x:341,top:752,width:211,height:24,fontSize:11},
+      fechaPresentacion: {x:90,top:822,width:108,height:16,fontSize:11,dateParts:[{x:90,width:25},{x:124,width:25},{x:157,width:39}]},
+      firmaAgente: {x:341,top:811,width:120,height:24,fontSize:11},
+      notificacion: {x:172,top:885,width:158,height:14},
+      aclaracion: {x:341,top:885,width:212,height:14}
+    }
   })
 });

@@ -1,6 +1,6 @@
 # Estructura y ejecución
 
-La primera prueba de documentos preparados utiliza el registro `assets/datos/formularios-pdf.js` y el lienzo común de `assets/js/tramites/formularios-oficiales.js`. Solo DP-01 está habilitado en este modo de revisión del PDF original. Su alcance y pasos pendientes se documentan en [formularios-pdf-preparados.md](formularios-pdf-preparados.md).
+El modelo de documentos preparados utiliza el registro `assets/datos/formularios-pdf.js`, el motor `assets/js/documentos/pdf-campos.js` y el lienzo común de `assets/js/tramites/formularios-oficiales.js`. Solo DP-01 está habilitado en este modo editable sobre PDF original. Su alcance y pasos pendientes se documentan en [formularios-pdf-preparados.md](formularios-pdf-preparados.md). DJ-01, DJ-02, OL-01, SC-01 y DL-01 permanecen protegidos y no se modifican para incorporar nuevos documentos.
 
 La entrada de la aplicación es `index.html`. Los estilos están en `assets/css/` y los scripts en `assets/js/`, agrupados por área.
 
@@ -37,6 +37,7 @@ PaginaDocente/
 │   │   ├── calendario/
 │   │   ├── core/
 │   │   ├── documentos/
+│   │   │   └── pdf-campos.js
 │   │   ├── editor/
 │   │   ├── interfaz/
 │   │   ├── perfil/
@@ -57,6 +58,7 @@ PaginaDocente/
 ├── tests/
 │   ├── dl01-interfaz.test.cjs
 │   ├── formularios-oficiales.test.cjs
+│   ├── pdf-campos.test.cjs
 │   └── ... (pruebas existentes)
 ├── tools/
 │   └── verify-structure.cjs
@@ -216,3 +218,6 @@ El borrador utiliza `adc-bd02-borrador-v1`. Los datos del anterior `adc-official
 El PDF final carga la plantilla adjunta, agrega los datos, actualiza las apariencias y aplana los campos, siguiendo el flujo de SC-01. Después dibuja las líneas MNC de 0,5 mm y 70% centrado. Se retiran las referencias de los widgets generados y se conservan las anotaciones que tuviera el original. El archivo final mantiene las dos páginas y sus dimensiones. Las firmas y sellos se realizan sobre el impreso.
 
 La muestra `output/pdf/BD-02-ejemplo.pdf` contiene datos ficticios para revisar la alineación y una marca MNC. Sus imágenes están en la misma carpeta. La conformidad visual del usuario precede al trabajo sobre otro formulario.
+# Ajustes visuales versionables
+
+La tuerquita puede exportar ajustes para incorporarlos a `assets/datos/ajustes-pagina.json`. El puente compartido vive en `assets/js/editor/ajustes-proyecto*.js`; `tools/importar-ajustes.cjs` valida e incorpora el archivo sin ejecutar Git. Ver [flujo, conservación y límites](ajustes-visuales.md).

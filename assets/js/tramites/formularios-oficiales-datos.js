@@ -604,7 +604,7 @@
       notices:["Para ingreso definitivo de titulares no se consigna número de disposición. El bloque de motivo e instrumento de titulares/interinos y el del reemplazado para suplentes se completan según corresponda."],
       sections:[
         {title:"Tipo de alta",fields:[
-          select("situacion","Situación",["Interino","Suplente","Titular"],{"required":true}),
+          choices("situacion","Situación",["Interino","Suplente","Titular"],{"required":true,"mnc":false}),
           text("selloRegional","Sello regional / actuación",{"signature":true,"mnc":false}),
           text("numeroDisposicion","Número de disposición",{"when":{"key":"situacion","values":["Interino","Suplente"]}}),
           date("fechaAltaDesde","Fecha de alta desde"),
@@ -612,7 +612,7 @@
           text("apellido","Apellido",{"required":true,"profileId":"perfilApellidos"}),
           text("nombres","Nombres",{"required":true,"profileId":"perfilNombres"}),
           text("dni","DNI",{"required":true,"profileId":"dni","inputmode":"numeric","document":true}),
-          select("sexo","Sexo",["F","M","Otro"],{"profileId":"sexo"})
+          choices("sexo","Sexo",["F","M"],{"profileId":"sexo","mnc":false})
         ]},
         {title:"Establecimiento y cargo",fields:[
           text("codigoOficina","Código de oficina"),
@@ -635,22 +635,25 @@
           text("asignatura","Asignatura")
         ]},
         {title:"Motivo e instrumento legal",fields:[
-          text("codigoMotivo","Código de motivo",{"when":{"key":"situacion","values":["Titular","Interino"]}}),
+          text("codigoMotivo","Código de motivo",{"mnc":false,"maxLength":5,"when":{"key":"situacion","values":["Titular","Interino"]}}),
           area("descripcionMotivo","Descripción del motivo",{"wide":true,"when":{"key":"situacion","values":["Titular","Interino"]}}),
           text("instrumento","Instrumento legal / resolución",{"when":{"key":"situacion","values":["Titular","Interino"]}}),
           text("observaciones","Observaciones")
         ]},
         {title:"Datos del reemplazado · solo suplencias",fields:[
           text("reemplazadoDni","DNI",{"when":{"key":"situacion","values":["Suplente"]}}),
-          select("reemplazadoSexo","Sexo",["F","M","Otro"],{"when":{"key":"situacion","values":["Suplente"]}}),
+          choices("reemplazadoSexo","Sexo",["F","M"],{"when":{"key":"situacion","values":["Suplente"]}}),
           text("reemplazadoApellido","Apellido",{"when":{"key":"situacion","values":["Suplente"]}}),
           text("reemplazadoNombres","Nombres",{"when":{"key":"situacion","values":["Suplente"]}}),
-          text("reemplazadoMotivo","Código / descripción del motivo",{"when":{"key":"situacion","values":["Suplente"]}}),
+          text("reemplazadoMotivo","Código / descripción del motivo (borrador anterior)",{"legacyOnly":true,"mnc":false,"when":{"key":"situacion","values":["Suplente"]}}),
+          text("reemplazadoCodigoMotivo","Código de motivo",{"mnc":false,"maxLength":5,"when":{"key":"situacion","values":["Suplente"]}}),
+          text("reemplazadoDescripcionMotivo","Descripción del motivo",{"when":{"key":"situacion","values":["Suplente"]}}),
           text("reemplazadoInstrumento","Instrumento legal",{"when":{"key":"situacion","values":["Suplente"]}})
         ]},
         {title:"Firmas y notificación",fields:[
           date("fechaPresentacion","Fecha"),
           text("notificacion","Notificación del docente"),
+          text("aclaracion","Aclaración",{"profileId":"nombre"}),
           text("firmaDirector","Firma y sello del director",{"signature":true,"mnc":false}),
           text("firmaAgente","Firma del agente",{"signature":true,"mnc":false})
         ]},

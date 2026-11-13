@@ -23,6 +23,7 @@
  let operations = [], redo = [], reversals = [];
  function register(element, key) {
    keys.set(element, key);
+   if(element.isConnected)window.adcProjectLayout?.describe(element);
    if(element.matches('details')&&!originalDetailsOpen.has(element))originalDetailsOpen.set(element,element.open);
    if(!originals.has(element))originals.set(element,element.getAttribute("style"));
    elements.set(key, element);
@@ -40,6 +41,7 @@
    return keys.get(element);
  }
  function resolve(key) {
+   if(typeof key==='string'&&key.startsWith('project:'))return window.adcProjectLayout?.resolve(key);
    if (elements.get(key)?.isConnected) return elements.get(key);
    if (typeof key !== 'string' || !key.includes('/')) return null;
    const parent = resolve(key.slice(0,key.lastIndexOf('/')));
@@ -113,7 +115,8 @@
  }
  function apply(op) {
    const node = resolve(op.target);
-   if (!node?.matches(selector) || panel.contains(node) || node === gear) return;
+   if (!node?.matches(selector+',img') || panel.contains(node) || node === gear) return;
+   if(['image','replaceImage','pdf','front'].includes(op.kind))return window.adcVisualElements?.apply(op,{node,register});
    if(op.kind==='hideOriginal'){
      const before=node.hasAttribute('data-adc-design-hidden');
      node.setAttribute('data-adc-design-hidden','');
@@ -318,7 +321,9 @@
    if(numeric(op.width)&&numeric(op.height)){
      added.style.width=op.width+'px';added.style.height=op.height+'px';added.style.maxWidth='100%';added.style.overflow='auto';
    }
-   if(numeric(op.left)&&numeric(op.top)){
+   if(node.matches('.adc-design-pdf-page')&&numeric(op.left)&&numeric(op.top)){
+     Object.assign(added.style,{position:'absolute',left:op.left+'px',top:op.top+'px',margin:'0',zIndex:'5',boxSizing:'border-box',padding:'2px',fontSize:Math.max(7,Math.min(12,(op.height||20)-6))+'px',lineHeight:'1.2',borderRadius:'0'});
+   }else if(numeric(op.left)&&numeric(op.top)){
      const r=added.getBoundingClientRect(),host=node.getBoundingClientRect();
      const x=host.left+op.left-r.left,y=host.top+op.top-r.top;
      added.style.translate=x+'px '+y+'px';added.dataset.adcDesignX=x;added.dataset.adcDesignY=y;
@@ -326,6 +331,7 @@
    return () => added.remove();
  }
  function commit(op) {
+   op=window.adcVisualElements?.normalize(op,resolve)||op;
    const reverse = apply(op);
    if (!reverse) { say('Esta acción requiere otro elemento o una sección compatible.'); return false; }
    operations.push(op); reversals.push(reverse); redo = [];dirty=true;scheduleMarks();
@@ -333,6 +339,7 @@
    return true;
  }
  function select(node) {
+   if(node&&node!==selected&&window.adcVisualElements)commit({kind:'front',target:keyFor(node),level:Math.min(5000,1+Math.max(500,...operations.filter(op=>op.kind==='front').map(op=>op.level)))});
    selected?.removeAttribute('data-adc-design-selected');
    selected = node;
    if (!node) { paletteBox.hidden=true;formatting.hidden = true; editor.replaceChildren(); range = null;scheduleMarks(); return; }
@@ -482,7 +489,7 @@
  }
  function load(incoming) {
    const allowed={
-     annotation:['id','shape','title','left','top','width','height','color','strokeWidth','reverse','x1','y1','x2','y2'],lineEndpoints:['x1','y1','x2','y2'],hideOriginal:[],style:['x','y','width','height','center','background','color','strokeWidth'],text:['html'],
+     annotation:['id','shape','title','left','top','width','height','color','strokeWidth','reverse','x1','y1','x2','y2'],lineEndpoints:['x1','y1','x2','y2'],hideOriginal:[],front:['level'],image:['id','src','alt','left','top','width','height'],replaceImage:['src'],pdf:['id','src','title'],style:['x','y','width','height','center','background','color','strokeWidth'],text:['html'],
      reorder:['direction'],group:['destination'],split:['id','title','fold','open'],
      section:['id','title','fold','open','width','height','left','top'],box:['id','title','width','height','left','top'],
      button:['id','title','action','left','top','tone'],bubble:['id','title','tone','popup','left','top'],
@@ -498,7 +505,7 @@
    const reset=()=>{while(reversals.length)reversals.pop()();operations=[]};
    const replay=items=>{
      for(const op of items){
-       const reverse=apply(op);if(!reverse)throw Error('Ajuste incompatible');
+       const reverse=apply(op)||window.adcVisualElements?.defer(op,resolve,apply);if(!reverse)throw Error('Ajuste incompatible');
        operations.push(op);reversals.push(reverse);
      }
    };
@@ -512,7 +519,7 @@
  importer.onchange = async () => {
    try {
      const file = importer.files[0];
-     if (!file || file.size > 2e6) throw Error();
+     if (!file || file.size > 12e6) throw Error();
      const draft = JSON.parse(await file.text());
      if (draft.schema !== storageKey) throw Error();
      const skipped = load(draft.operations);
@@ -621,8 +628,7 @@
  const overlaps=(a,b)=>a.left<b.right-1&&a.right>b.left+1&&a.top<b.bottom-1&&a.bottom>b.top+1;
  function validMove(node,r){
    const left=0,right=document.documentElement.clientWidth;
-   return r.left>=Math.min(left,node.getBoundingClientRect().left)-1&&r.right<=Math.max(right,node.getBoundingClientRect().right)+1&&r.top>=-scrollY&&r.bottom<=document.documentElement.scrollHeight-scrollY&&
-     (node.matches('.adc-design-annotation')||!siblings(node).some(other=>!other.matches('.adc-design-annotation')&&overlaps(r,other.getBoundingClientRect())));
+   return r.left>=Math.min(left,node.getBoundingClientRect().left)-1&&r.right<=Math.max(right,node.getBoundingClientRect().right)+1&&r.top>=-scrollY&&r.bottom<=document.documentElement.scrollHeight-scrollY;
  }
  let centerPreview=null;
  const centerApply=panel.querySelector('[data-act="center-apply"]');
@@ -678,7 +684,7 @@
    return {r:adjusted,guides:finalGuides};
  }
  function placement(event){
-   const host=event.target.closest('main')||event.target.closest(blocks);
+   const host=event.target.closest('.adc-design-pdf-page')||event.target.closest('main')||event.target.closest(blocks);
    if(!host||!usable(event.target)||!canContain(host))return null;
    const base=host.getBoundingClientRect();
    const raw=rect(event.clientX,event.clientY,tool==='button'?112:145,tool==='button'?36:48);
@@ -754,6 +760,7 @@
        const r=selected.getBoundingClientRect();mark('adc-outline',r).textContent=dimensions(r);
        const edges={left:rect(r.left-4,r.top,8,r.height),right:rect(r.right-4,r.top,8,r.height),top:rect(r.left,r.top-4,r.width,8),bottom:rect(r.left,r.bottom-4,r.width,8)};
        for(const [side,area] of Object.entries(edges)){
+         if(selected.matches('.adc-design-pdf')&&['top','bottom'].includes(side))continue;
          const edge=mark('adc-edge',area);
          edge.style.cursor=['left','right'].includes(side)?'ew-resize':'ns-resize';
          edge.onpointerdown=event=>start(event,selected,side);
@@ -804,7 +811,7 @@
      return;
    }
    if(!drawingTools.includes(tool))return;
-   const host=event.target.closest('#adcSC01Sheet')||event.target.closest('main')||event.target.closest('section,article,aside,div');
+   const host=event.target.closest('.adc-design-pdf-page')||event.target.closest('#adcSC01Sheet')||event.target.closest('main')||event.target.closest('section,article,aside,div');
    if(host&&canContain(host))start(event,host,tool);
  },true);
  function geometry(d,event){
@@ -890,7 +897,7 @@
    if(Math.max(Math.abs(event.clientX-d.x),Math.abs(event.clientY-d.y))<3)return;
    suppressClick=true;
    setTimeout(()=>{suppressClick=false},0);
-   if(d.kind==='move'&&!validMove(d.node,r)){say('Ese destino tapa un cuadro o queda fuera del área.');return}
+   if(d.kind==='move'&&!validMove(d.node,r)){say('Ese destino queda fuera del área de trabajo.');return}
    commit({kind:'style',target:keyFor(d.node),x:r.left-base.left,y:r.top-base.top,...(d.kind==='move'?{}:{width:r.width,height:r.height})});
  },true);
  document.addEventListener('pointercancel',event=>{
@@ -1092,6 +1099,17 @@
    load(draft?.schema===storageKey?draft.operations:initialLayout);
    dirty=false;say('Distribución cargada.');
  } catch { say('No se pudo recuperar el borrador.'); }
+
+ window.adcProjectLayout?.attach({
+   commit,keyFor,select,setTool,selected:()=>selected,tool:()=>tool,
+   scope:'pagina',panel,say,baseline:initialLayout,
+   operations:()=>operations.slice(),resolve,serialize,
+   append:op=>{const reverse=apply(op);if(!reverse)return false;operations.push(op);reversals.push(reverse);return true;},
+   refresh:op=>{const index=operations.indexOf(op);if(index<0)return false;const reverse=apply(op);if(!reverse)return false;reversals[index]=reverse;return true;},
+   hasDraft:()=>["adc-design-draft-v60", "adc-design-draft-v59", "adc-design-draft-v58"].some(key=>localStorage.getItem(key)),
+   clearDraft:()=>["adc-design-draft-v60", "adc-design-draft-v59", "adc-design-draft-v58"].forEach(key=>localStorage.removeItem(key)),
+   restoreDraft:value=>localStorage.setItem('adc-design-draft-v60',value)
+ });
  }
  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',restoreLayout,{once:true});
  else restoreLayout();

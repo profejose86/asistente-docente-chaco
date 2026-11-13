@@ -1,0 +1,179 @@
+{
+  "schema": "adc-project-layout-v1",
+  "pages": {
+    "pagina": {
+      "editorSchema": "adc-design-v50",
+      "operations": [
+        {
+          "kind": "style",
+          "target": "project:#adcOLLeft",
+          "x": 18.75,
+          "y": 0,
+          "width": 1296.484375,
+          "height": 1010.52734375
+        },
+        {
+          "kind": "style",
+          "target": "project:#adcOLLeft",
+          "x": 3.75,
+          "y": 0,
+          "width": 1292.734375,
+          "height": 1010.52734375
+        },
+        {
+          "kind": "style",
+          "target": "project:#adcOLLeft",
+          "x": 0,
+          "y": 0,
+          "width": 870.234375,
+          "height": 1010.52734375
+        },
+        {
+          "kind": "style",
+          "target": "project:#adcOLLeft",
+          "x": 0,
+          "y": 0,
+          "width": 870.234375,
+          "height": 635.52734375
+        },
+        {
+          "kind": "style",
+          "target": "project:#adcOLLeft",
+          "x": 0,
+          "y": 0,
+          "width": 870.234375,
+          "height": 219.27734375
+        },
+        {
+          "kind": "style",
+          "target": "project:#adcOLLeft",
+          "x": 0,
+          "y": 0,
+          "width": 870.234375,
+          "height": 70.52734375
+        },
+        {
+          "kind": "front",
+          "target": "project:#dj02 > section:nth-of-type(1) > h2:nth-of-type(1)",
+          "level": 501
+        },
+        {
+          "kind": "front",
+          "target": "project:#dj02 > section:nth-of-type(1)",
+          "level": 502
+        },
+        {
+          "kind": "front",
+          "target": "project:#dj02 > section:nth-of-type(1)",
+          "level": 503
+        },
+        {
+          "kind": "front",
+          "target": "project:#dj02 > section:nth-of-type(1) > h2:nth-of-type(1)",
+          "level": 504
+        },
+        {
+          "kind": "front",
+          "target": "project:#dj02 > section:nth-of-type(1)",
+          "level": 505
+        },
+        {
+          "kind": "front",
+          "target": "project:#dj02 > section:nth-of-type(1) > h2:nth-of-type(1)",
+          "level": 506
+        },
+        {
+          "kind": "hideOriginal",
+          "target": "project:#dj02 > section:nth-of-type(1) > h2:nth-of-type(1)"
+        },
+        {
+          "kind": "front",
+          "target": "project:#dj02 > section:nth-of-type(1)",
+          "level": 507
+        },
+        {
+          "kind": "style",
+          "target": "project:#dj02 > section:nth-of-type(1)",
+          "x": 0,
+          "y": 36
+        },
+        {
+          "kind": "front",
+          "target": "project:#dj02 > section:nth-of-type(1) > p:nth-of-type(1)",
+          "level": 508
+        },
+        {
+          "kind": "front",
+          "target": "project:#dj02 > section:nth-of-type(1)",
+          "level": 509
+        },
+        {
+          "kind": "front",
+          "target": "project:#dj02 > section:nth-of-type(1) > div:nth-of-type(1) > label:nth-of-type(1)",
+          "level": 510
+        },
+        {
+          "kind": "front",
+          "target": "project:#dj02 > section:nth-of-type(1)",
+          "level": 511
+        },
+        {
+          "kind": "front",
+          "target": "project:#dj02Preview > div:nth-of-type(1)",
+          "level": 512
+        },
+        {
+          "kind": "style",
+          "target": "project:#dj02Preview > div:nth-of-type(1)",
+          "x": -2,
+          "y": 38
+        },
+        {
+          "kind": "front",
+          "target": "project:#dj02 > section:nth-of-type(1)",
+          "level": 513
+        },
+        {
+          "kind": "front",
+          "target": "project:#dj02 > section:nth-of-type(1) > div:nth-of-type(4)",
+          "level": 514
+        },
+        {
+          "kind": "front",
+          "target": "project:#dj02 > section:nth-of-type(1)",
+          "level": 515
+        }
+      ],
+      "targets": {
+        "project:#adcOLLeft": {
+          "tag": "button",
+          "id": "adcOLLeft",
+          "type": "button"
+        },
+        "project:#dj02 > section:nth-of-type(1) > h2:nth-of-type(1)": {
+          "tag": "h2"
+        },
+        "project:#dj02 > section:nth-of-type(1)": {
+          "tag": "section"
+        },
+        "project:#dj02 > section:nth-of-type(1) > p:nth-of-type(1)": {
+          "tag": "p"
+        },
+        "project:#dj02 > section:nth-of-type(1) > div:nth-of-type(1) > label:nth-of-type(1)": {
+          "tag": "label"
+        },
+        "project:#dj02Preview > div:nth-of-type(1)": {
+          "tag": "div"
+        },
+        "project:#dj02 > section:nth-of-type(1) > div:nth-of-type(4)": {
+          "tag": "div"
+        }
+      }
+    },
+    "ingreso": {
+      "editorSchema": "adc-login-design-v1",
+      "operations": [],
+      "targets": {}
+    }
+  }
+}

@@ -17,7 +17,7 @@ body.adcDesignActive [data-adc-design-selected]{outline:2px dashed #0082d9!impor
 #adcDesignMarks .adc-grip,#adcDesignMarks .adc-edge{pointer-events:auto;touch-action:none}
 .adc-grip{transform:translate(-50%,-50%);cursor:grab;padding:1px 5px;line-height:8px;white-space:pre;color:white;background:#2453a3;border:1px solid white}
 .adc-outline,.adc-ghost{border:2px dashed #347cde;background:#347cde13;border-radius:8px}
-body.adcDesignSizing [data-adc-design-selected]{outline:none!important}
+body.adcDesignSizing [data-adc-design-selected]{outline:2px dashed #0082d9!important;outline-offset:2px}
 body.adcDesignMoving [data-adc-design-selected]{cursor:grab}
 .adc-edge{touch-action:none}
 .adc-ghost.invalid{border-color:#d73b45;background:#d73b4522;color:#a90014}

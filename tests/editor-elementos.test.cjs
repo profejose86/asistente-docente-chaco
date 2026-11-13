@@ -1,0 +1,75 @@
+const {test}=require('node:test'),assert=require('node:assert/strict');
+const fs=require('node:fs'),path=require('node:path'),os=require('node:os'),http=require('node:http');
+const root=path.resolve(__dirname,'..'),modules=path.join(os.homedir(),'.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules');
+const {chromium}=require(path.join(modules,'playwright'));
+const contract=require('../assets/js/editor/ajustes-proyecto-datos.js');
+const png=Buffer.from('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+jRZkAAAAASUVORK5CYII=','base64');
+for(const [screen,scope] of [['ADC_Ingreso_Editable.html','ingreso'],['index.html?adc-preview=1','pagina']])test(screen+': imágenes, borrado reversible, PDF multipágina, cajas, tamaño y copia restaurable',async()=>{
+  const server=http.createServer((req,res)=>{
+    const file=path.resolve(root,'.'+new URL(req.url,'http://localhost').pathname);
+    if(!file.startsWith(root+path.sep))return res.writeHead(403).end();
+    fs.readFile(file,(error,data)=>{if(error)return res.writeHead(404).end();res.setHeader('Content-Type',({'.html':'text/html','.js':'application/javascript','.mjs':'application/javascript','.json':'application/json','.css':'text/css','.wasm':'application/wasm'})[path.extname(file)]||'application/octet-stream');res.end(data);});
+  });
+  await new Promise(resolve=>server.listen(0,'127.0.0.1',resolve));
+  const browser=await chromium.launch({channel:'chrome',headless:true});
+  try{
+    const page=await browser.newPage({viewport:{width:1600,height:1200}}),errors=[];page.on('pageerror',error=>errors.push(error.stack));page.on('dialog',dialog=>dialog.accept());
+    await page.goto(`http://127.0.0.1:${server.address().port}/${screen}`);
+    await page.locator('#adcDesignGear').click();
+    await page.locator('[data-image-import]').setInputFiles({name:'test.png',mimeType:'image/png',buffer:png});
+    await page.waitForFunction(()=>document.querySelector('[data-status]').textContent.includes('Dibujá'));
+    await page.mouse.move(700,200);await page.mouse.down();await page.mouse.move(900,300,{steps:5});await page.mouse.up();
+    await page.waitForSelector('.adc-design-image img');
+    assert.equal(await page.locator('.adc-design-image').evaluate(node=>parseFloat(node.style.width)),200);
+    await page.waitForSelector('#adcDesignMarks .adc-edge');
+    let imageBounds=await page.locator('.adc-design-image').boundingBox();
+    assert.equal(await page.evaluate(({x,y})=>document.elementFromPoint(x,y)?.className,{x:imageBounds.x+imageBounds.width,y:imageBounds.y+imageBounds.height/2}),'adc-edge');
+    await page.mouse.move(imageBounds.x+imageBounds.width,imageBounds.y+imageBounds.height/2);await page.mouse.down();await page.mouse.move(imageBounds.x+imageBounds.width+60,imageBounds.y+imageBounds.height/2,{steps:5});await page.mouse.up();
+    assert.ok(await page.locator('.adc-design-image').evaluate(node=>parseFloat(node.style.width))>240,JSON.stringify(await page.evaluate(()=>({style:document.querySelector('.adc-design-image').getAttribute('style'),status:document.querySelector('[data-status]').textContent,errors:document.querySelectorAll('#adcDesignMarks .adc-edge').length}))));
+    await page.locator('[data-element-action=replace-image]').click();await page.locator('.adc-design-image').click();
+    const jpeg=await page.evaluate(()=>{const canvas=document.createElement('canvas');canvas.width=2;canvas.height=2;return canvas.toDataURL('image/jpeg').split(',')[1];});
+    await page.locator('[data-image-import]').setInputFiles({name:'otra.jpg',mimeType:'image/jpeg',buffer:Buffer.from(jpeg,'base64')});
+    await page.waitForFunction(()=>document.querySelector('.adc-design-image img').src.startsWith('data:image/jpeg'));
+    await page.locator('[data-act=undo]').click();assert.ok(await page.locator('.adc-design-image img').evaluate(node=>node.src.startsWith('data:image/png')));
+    await page.locator('[data-element-action=delete]').click();
+    await page.locator('.adc-design-image').click();
+    assert.equal(await page.locator('.adc-design-image').evaluate(node=>node.hasAttribute('data-adc-design-hidden')),true);
+    await page.locator('[data-act=undo]').click();
+    assert.equal(await page.locator('.adc-design-image').evaluate(node=>node.hasAttribute('data-adc-design-hidden')),false);
+    const {PDFDocument,StandardFonts}=require(path.join(modules,'pdf-lib'));
+    const pdf=await PDFDocument.create(),font=await pdf.embedFont(StandardFonts.Helvetica);
+    for(let index=0;index<2;index++)pdf.addPage([400,500]).drawText('PDF de prueba '+(index+1),{x:30,y:450,font,size:14});
+    await page.locator('[data-pdf-import]').setInputFiles({name:'dos-paginas.pdf',mimeType:'application/pdf',buffer:Buffer.from(await pdf.save())});
+    await page.waitForFunction(()=>document.querySelectorAll('.adc-design-pdf-page canvas').length===2);
+    await page.waitForFunction(()=>document.querySelector('.adc-design-pdf-page')?.dataset.adcPdfScale);
+    const paper=page.locator('.adc-design-pdf-page').first();await paper.scrollIntoViewIfNeeded();
+    await page.locator('[data-element-action=add-box]').click();
+    const bounds=await paper.boundingBox();
+    const x=Math.max(500,bounds.x+60),y=Math.max(120,bounds.y+120);
+    await page.mouse.move(x,y);await page.mouse.down();await page.mouse.move(x+140,y+50,{steps:5});await page.mouse.up();
+    await page.waitForSelector('.adc-design-pdf-page > .adc-design-created');
+    const box=paper.locator(':scope > .adc-design-created');
+    assert.equal(await box.evaluate(node=>node.style.position),'absolute');
+    // Una edición posterior depende de la caja creada de forma diferida al reabrir.
+    await page.locator('#adcDesignPalette').evaluate(node=>node.hidden=false);
+    await page.locator('#adcDesignPalette [data-swatch="#2453a3"]').click();
+    assert.equal(await box.evaluate(node=>node.style.backgroundColor),'rgb(36, 83, 163)');
+    const before=await box.boundingBox();assert.ok(Math.abs(before.x-x)<3);assert.ok(Math.abs(before.width-140)<3);
+    const docPosition=await box.evaluate(node=>[node.style.left,node.style.top,node.style.width]);
+    // El tamaño de la página cambia y las coordenadas del recuadro permanecen relativas al PDF.
+    await page.locator('.adc-design-pdf').evaluate(node=>node.style.width='600px');
+    await page.waitForFunction(()=>document.querySelector('.adc-design-pdf-page').dataset.adcPdfScale==='1.5');
+    assert.deepEqual(await box.evaluate(node=>[node.style.left,node.style.top,node.style.width]),docPosition);
+    const download=page.waitForEvent('download');await page.locator('[data-layout-copy]').click();
+    const exported=contract.validate(JSON.parse(fs.readFileSync(await (await download).path(),'utf8')));
+    assert.ok(exported.pages[scope].operations.some(op=>op.kind==='pdf'&&op.src.startsWith('data:application/pdf;base64,')));
+    assert.ok(exported.pages[scope].operations.some(op=>op.kind==='image'));
+    await page.reload();await page.waitForFunction(()=>document.querySelectorAll('.adc-design-pdf-page canvas').length===2);
+    await page.waitForSelector('.adc-design-pdf-page > .adc-design-created');
+    await page.waitForFunction(()=>document.querySelector('.adc-design-pdf-page > .adc-design-created').style.backgroundColor==='rgb(36, 83, 163)');
+    await page.locator('.adc-design-pdf-page').first().scrollIntoViewIfNeeded();
+    await page.screenshot({path:path.join(os.tmpdir(),'adc-editor-'+scope+'.png')});
+    assert.equal(await page.locator('.adc-design-image img').count(),1);
+    assert.deepEqual(errors,[]);
+  }finally{await browser.close();await new Promise(resolve=>server.close(resolve));}
+});

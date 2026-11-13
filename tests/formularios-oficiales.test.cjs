@@ -537,51 +537,95 @@ test('Chrome verifica formularios, borradores, MNC, filas, validación y PDF',{
     await page.reload();
     await open('sr01');
     assert.equal(await page.locator('[data-adc-field="domicilio"]').isEditable(),false);
-    await t.test('DP-01 preparado: documento intacto, acciones y borrador histórico conservado', async () => {
-      const key = 'adc-official-form-dp01-draft-v1';
-      const previous = JSON.stringify({schemaVersion:2,values:{apellido:'Corrección histórica'},marked:['codigoAnexo']});
-      await page.evaluate(({key,previous}) => localStorage.setItem(key,previous),{key,previous});
+    await t.test('DP-01 editable sobre PDF: perfil, MNC, borrador y exportación', async () => {
+      const key='adc-official-form-dp01-draft-v1';
+      await page.evaluate(key=>{
+        localStorage.setItem(key,JSON.stringify({schemaVersion:2,values:{apellido:'Corrección histórica',reemplazadoMotivo:'Dato anterior ambiguo'},touched:['apellido'],marked:['codigoAnexo']}));
+      },key);
       await open('dp01');
-      assert.equal(await page.locator('#adcOfficialForm').getAttribute('data-adc-document-mode'),'original');
-      assert.match(await page.locator('[data-adc-official-notices]').textContent(),/2009/);
-      assert.equal(await page.locator('#adcOfficialForm [data-adc-field]').count(),0);
-      assert.equal(await page.locator('#adcOfficialForm [data-adc-mnc]').count(),0);
-      assert.equal(await page.locator('[data-adc-document-pending]').isVisible(),false);
-      await page.waitForFunction(() => document.querySelector('.adc-prepared-pdf-page')?.naturalWidth > 0);
-      assert.equal(await page.locator('.adc-prepared-pdf-page').evaluate(image => image.complete && image.naturalWidth > 0),true);
-      for (const width of [320,390,1440]) {
+      assert.equal(await page.locator('#adcOfficialForm').getAttribute('data-adc-document-mode'),'overlay');
+      assert.equal(await page.locator('[data-adc-field="apellido"]').inputValue(),'Corrección histórica');
+      assert.ok(await page.locator('[data-adc-field="nombres"]').inputValue());
+      assert.equal(await page.locator('[data-adc-field="codigoAnexo"]').isEditable(),false);
+      await page.locator('[data-adc-field="situacion"][value="Titular"]').check();
+      assert.equal(await page.locator('[data-adc-field="numeroDisposicion"]').count(),0);
+      assert.equal(await page.locator('[data-adc-field="reemplazadoDni"]').count(),0);
+      await page.locator('[data-adc-field="situacion"][value="Suplente"]').check();
+      assert.ok(await page.locator('[data-adc-field="reemplazadoDni"]').count());
+      await page.locator('[data-adc-field="situacion"][value="Interino"]').check();
+      await page.locator('[data-adc-field="dni"]').fill('12345678');
+      await page.locator('[data-adc-field="sexo"][value="F"]').check();
+      assert.equal(await page.locator('[data-adc-mnc="sexo"]').count(),0);
+      assert.equal(await page.locator('[data-adc-mnc="codigoMotivo"]').count(),0);
+      await page.locator('[data-adc-field="codigoOficina"]').fill('1438');
+      await page.locator('[data-adc-field="establecimiento"]').fill('Escuela de prueba');
+      await page.locator('[data-adc-field="fechaAltaDesde"]').fill('2026-03-02');
+      await page.locator('[data-adc-field="fechaAltaHasta"]').fill('2026-03-10');
+      await page.locator('[data-adc-field="observaciones"]').fill('Datos de prueba para revisar la alineación.');
+      const longName='Apellido compuesto muy extenso de prueba para comprobar ajuste de fuente en el casillero';
+      await page.locator('[data-adc-field="apellido"]').fill(longName);
+      await page.waitForFunction(()=>parseFloat(document.querySelector('[data-adc-field="apellido"]').style.fontSize)<16);
+      assert.ok(await page.locator('[data-adc-field="apellido"]').evaluate(input=>parseFloat(input.style.fontSize)>=7*96/72));
+      await page.locator('[data-adc-field="apellido"]').fill('X'.repeat(200));
+      await page.locator('[data-adc-official-action="download"]').first().click();
+      await page.waitForFunction(()=>!document.querySelector('[data-adc-official-action="download"]').disabled);
+      assert.match(await page.locator('[data-adc-official-status]').textContent(),/7 puntos/);
+      assert.equal(await page.evaluate(key=>JSON.parse(localStorage.getItem(key)).values.apellido.length,key),200);
+      await page.locator('[data-adc-field="apellido"]').fill('Corrección histórica');
+      await page.locator('[data-adc-mnc="codigoAnexo"]').click();
+      assert.equal(await page.locator('[data-adc-field="codigoAnexo"]').isEditable(),true);
+      await page.locator('[data-adc-mnc="codigoAnexo"]').click();
+      for(const width of [320,390,1440]){
         await page.setViewportSize({width,height:1000});
-        assert.equal(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth),false);
+        assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false);
       }
-      for (const index of [0,1]) {
-        const download = page.waitForEvent('download');
-        await page.locator('[data-adc-official-action="download"]').nth(index).click();
-        const result = await download;
-        assert.equal(result.suggestedFilename(),'DP-01_original.pdf');
-        assert.deepEqual(fs.readFileSync(await result.path()),fs.readFileSync(path.join(root,'assets/formularios/DP-01.pdf')));
-        await page.locator('[data-adc-official-action="preview"]').nth(index).click();
-        const bytes = await page.locator('[data-adc-official-preview] iframe').evaluate(async frame => Array.from(new Uint8Array(await (await fetch(frame.src)).arrayBuffer())));
-        assert.deepEqual(Buffer.from(bytes),fs.readFileSync(path.join(root,'assets/formularios/DP-01.pdf')));
-      }
-      await page.evaluate(() => {
-        window.testPreparedPrints = [];
-        window.testPreparedOriginalOpen = window.open;
-        window.open = url => {window.testPreparedPrints.push(url); return {addEventListener:(_,callback)=>callback(),print:()=>window.testPreparedPrintCalled=true};};
+      const source=fs.readFileSync(path.join(root,'assets/formularios/DP-01.pdf'));
+      assert.equal(require('node:crypto').createHash('sha256').update(source).digest('hex'),'88d14c87d6de22b1caf0dc17281f0737e5de6ebfc8dca927c48f145f894024a8');
+      await page.evaluate(()=>{
+        window.testDpLines=[];
+        const original=PDFLib.PDFPage.prototype.drawLine;
+        PDFLib.PDFPage.prototype.drawLine=function(options){testDpLines.push(options);return original.call(this,options);};
       });
-      for (const index of [0,1]) await page.locator('[data-adc-official-action="print"]').nth(index).click();
-      await page.waitForFunction(() => window.testPreparedPrintCalled);
-      assert.equal(await page.evaluate(() => testPreparedPrints.length),2);
-      const printed = await page.evaluate(async () => Array.from(new Uint8Array(await (await fetch(testPreparedPrints[1])).arrayBuffer())));
-      assert.deepEqual(Buffer.from(printed),fs.readFileSync(path.join(root,'assets/formularios/DP-01.pdf')));
-      await page.evaluate(() => {window.open = window.testPreparedOriginalOpen;});
-      assert.equal(await page.evaluate(key => localStorage.getItem(key),key),previous);
-      await page.locator('[data-adc-official-back]').click();
-      await open('dp01');
-      assert.equal(await page.locator('.adc-prepared-pdf-page').count(),1);
+      const download=page.waitForEvent('download');
+      await page.locator('[data-adc-official-action="download"]').first().click();
+      const result=await download;
+      await result.saveAs(path.join(output,'DP-01-editable.pdf'));
+      const bytes=fs.readFileSync(await result.path());
+      assert.notDeepEqual(bytes,source);
+      const pdf=await require(path.join(runtime,'pdf-lib')).PDFDocument.load(bytes);
+      assert.equal(pdf.getPageCount(),1);assert.equal(pdf.getPage(0).getHeight(),1008);
+      assert.ok(!pdf.catalog.has(require(path.join(runtime,'pdf-lib')).PDFName.of('AcroForm')));
+      assert.ok(await page.evaluate(()=>testDpLines.some(line=>Math.abs(line.thickness-.5*72/25.4)<1e-10&&Math.abs(line.start.x-(76+127*.15))<.001&&Math.abs(line.end.x-(76+127*.85))<.001)));
+      for(const index of [0,1]){
+        await page.locator('[data-adc-official-action="preview"]').nth(index).click();
+        await page.waitForSelector('[data-adc-official-preview] iframe');
+      }
+      const lowerDownload=page.waitForEvent('download');
+      await page.locator('[data-adc-official-action="download"]').last().click();
+      assert.ok(fs.statSync(await(await lowerDownload).path()).size>10000);
+      await page.evaluate(()=>{
+        window.testDpOriginalOpen=window.open;window.testDpPrintCount=0;
+        window.open=()=>({addEventListener:(_,callback)=>callback(),print:()=>testDpPrintCount++});
+      });
+      for(const index of [0,1])await page.locator('[data-adc-official-action="print"]').nth(index).click();
+      await page.waitForFunction(()=>testDpPrintCount===2);
+      await page.evaluate(()=>{window.open=testDpOriginalOpen;});
+      await page.locator('[data-adc-official-preview]').evaluate(el=>{el.hidden=true;});
+      await page.locator('[data-adc-official-sheet]').screenshot({path:path.join(output,'DP-01-lienzo.png')});
+      await page.reload();await open('dp01');
+      assert.equal(await page.locator('[data-adc-field="apellido"]').inputValue(),'Corrección histórica');
+      assert.equal(await page.locator('[data-adc-field="codigoAnexo"]').isEditable(),false);
+      assert.equal(await page.evaluate(key=>JSON.parse(localStorage.getItem(key)).values.reemplazadoMotivo,key),'Dato anterior ambiguo');
+      await page.locator('[data-adc-field="fechaAltaDesde"]').fill('2030-03-02');
+      await page.locator('[data-adc-field="fechaAltaHasta"]').fill('2030-03-10');
+      const futureDownload=page.waitForEvent('download');
+      await page.locator('[data-adc-official-action="download"]').first().click();
+      await(await futureDownload).saveAs(path.join(output,'DP-01-anio-2030.pdf'));
+      await page.waitForFunction(()=>!document.querySelector('[data-adc-official-action="download"]').disabled);
+      assert.match(await page.locator('[data-adc-official-status]').textContent(),/PDF descargado/);
       await open('sr01');
       assert.equal(await page.locator('#adcOfficialForm').getAttribute('data-adc-document-mode'),'editable');
       assert.ok(await page.locator('#adcOfficialForm [data-adc-field]').count());
-      assert.equal(await page.locator('[data-adc-official-mnc-help]').isVisible(),true);
     });
     await open('form-5');
     await page.locator('[data-adc-field="opcion"][value="Renuncia"]').check();

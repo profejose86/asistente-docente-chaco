@@ -70,6 +70,7 @@
   const pointToPixel = 96/72;
   const paperGap = 18;
   const preparedDocument = () => window.adcPreparedPdfForms?.[activeForm?.id];
+  const preparedReadOnly = () => Boolean(preparedDocument() && !preparedDocument().fields);
   const viewport = section.querySelector('.adc-document-viewport');
   const documentSize = section.querySelector('.adc-document-size');
 
@@ -93,7 +94,12 @@
     return String(value || '').normalize('NFD').replace(/[\u0300-\u036f]/g,'').trim().toLowerCase();
   }
   function profileValue(field) {
-    return field.profileId ? document.getElementById(field.profileId)?.value || '' : '';
+    if(field.profileId)return document.getElementById(field.profileId)?.value || '';
+    const property=preparedDocument()?.fields?.[field.path||field.key]?.institution;
+    if(!property)return '';
+    const known=inst.filter(item=>item.name?.trim());
+    const school=known.find(item=>normalized(item.name)===normalized(values.establecimiento))||(known.length===1?known[0]:null);
+    return String(school?.[property]||'');
   }
   function presented(field, value) {
     if (field.academicPart === 'course') return window.adcAcademic.course(value);
@@ -103,7 +109,7 @@
     return `adc-official-form-${form.id}-draft-v1`;
   }
   function save() {
-    if (!activeForm || preparedDocument()) return;
+    if (!activeForm || preparedReadOnly()) return;
     try {
       localStorage.setItem(storageKey(activeForm),JSON.stringify({
         schemaVersion:2,values,marked:[...marked],profileOrigin:[...profileOrigin],touched:[...touched],rowCounts,draftWarnings,profileAcknowledged
@@ -241,7 +247,19 @@
       input.value = String(presented(field,values[path]) ?? '');
     });
     control.append(input);
-    if (field.profileId) {
+    if(preparedDocument()?.fields && field.type==='date'){
+      const calendar=document.createElement('button');calendar.type='button';calendar.className='adc-prepared-date-picker';
+      calendar.setAttribute('aria-label',`Elegir ${field.label.toLowerCase()} en el calendario`);
+      calendar.innerHTML='<svg viewBox="0 0 16 16" aria-hidden="true"><rect x="2" y="3" width="12" height="11" rx="1"/><path d="M2 6h12M5 1v4M11 1v4"/></svg>';
+      calendar.addEventListener('click',()=>{if(input.disabled||input.readOnly)return;if(input.showPicker)input.showPicker();else input.focus();});
+      control.append(calendar);
+    }
+    if (preparedDocument()?.fields?.[path]?.institution === 'name') {
+      const list=document.createElement('datalist');list.id=`${id}-schools`;input.setAttribute('list',list.id);
+      for(const school of inst.filter(item=>item.name?.trim()))list.append(new Option(school.name,school.name));
+      control.append(list);
+    }
+    if (field.profileId || preparedDocument()?.fields?.[path]?.institution) {
       const origin = document.createElement('span');
       origin.className = 'adc-document-origin';
       origin.textContent = profileOrigin.has(path) ? 'Dato del Perfil Docente' : 'Dato editable del formulario';
@@ -390,7 +408,7 @@
   function renderFields() {
     if (!activeForm) return;
     sheet.replaceChildren();
-    if (preparedDocument()) {
+    if (preparedReadOnly()) {
       layoutDocument();
       section.querySelector('[data-adc-profile-conflicts]').replaceChildren();
       return;
@@ -411,6 +429,7 @@
       grid.className = 'fields';
       for (const field of group.fields) {
         if (!available(field,field.key)) continue;
+        if (preparedDocument()?.fields && !preparedDocument().fields[field.key]) continue;
         if (field.type === 'repeat') renderRepeat(field,grid);
         else renderSimpleField(field,field.key,grid);
       }
@@ -456,7 +475,7 @@
     if (!activeForm) return;
     if (layoutFrame !== null) { cancelAnimationFrame(layoutFrame); layoutFrame=null; }
     const prepared = preparedDocument();
-    if (prepared) {
+    if (preparedReadOnly()) {
       documentLayout = {width: prepared.pages[0].width, height: prepared.pages[0].height};
       let top = 0;
       sheet.replaceChildren();
@@ -476,7 +495,19 @@
       updateZoom();
       return;
     }
-    documentLayout = createLayout();
+    documentLayout = prepared?.fields ? window.adcPdfOverlay.layout({template:prepared,fields:formFields(),values,marked,presented,font:{widthOfTextAtSize(text,size){
+      if(layoutFonts)return layoutFonts.regular.widthOfTextAtSize(text,size);
+      const context=document.createElement('canvas').getContext('2d');context.font=`${size}px Arial`;return context.measureText(text).width;
+    }}}) : createLayout();
+    sheet.querySelectorAll('.adc-prepared-background').forEach(image=>image.remove());
+    if(prepared?.fields){
+      prepared.pages.forEach((page,index)=>{
+        const image=document.createElement('img');image.src=page.image;image.className='adc-prepared-background';image.alt='';
+        Object.assign(image.style,{top:`${index*(documentLayout.height+paperGap)*pointToPixel}px`,width:`${page.width*pointToPixel}px`,height:`${page.height*pointToPixel}px`});sheet.prepend(image);
+      });
+      if(documentLayout.errors.length){status.textContent=documentLayout.errors.join(' ');status.dataset.adcLayoutError='true';}
+      else if(status.dataset.adcLayoutError){status.textContent='';delete status.dataset.adcLayoutError;}
+    }
     const previousPages = new Map([...sheet.querySelectorAll('.adc-document-page')].map(canvas => [Number(canvas.dataset.adcPage),canvas]));
     sheet.querySelectorAll('.adc-document-continuation').forEach(element => element.remove());
     const totalHeight = documentLayout.pages.length*(documentLayout.height+paperGap)-paperGap;
@@ -532,7 +563,14 @@
       if (!wrapper) continue;
       wrapper.classList.add('adc-document-field');
       place(wrapper,box);
-      if (box.options) {
+      if (prepared?.fields && box.options) {
+        const labels=wrapper.querySelectorAll('.adc-official-options label');
+        box.options.forEach((option,index)=>{const label=labels[index];if(!label)return;
+          Object.assign(label.style,{top:`${(option.top-box.top)*pointToPixel}px`,left:`${(option.x-box.x)*pointToPixel}px`,width:'13.333px',height:'13.333px',padding:'0'});
+          label.querySelector('input').setAttribute('aria-label',`${box.field.label}: ${option.value}`);
+          label.querySelector('span').textContent='';
+        });
+      } else if (box.options) {
         const labels = wrapper.querySelectorAll('.adc-official-options label');
         box.options.forEach((option,index) => {
           const label = labels[index];
@@ -540,7 +578,8 @@
           label.querySelector('span').textContent = option.lines.join('\n');
         });
       } else if (input) {
-        const multiline = box.field.type === 'textarea' || (box.field.type === 'text' && box.lines.length > 1);
+        if(prepared?.fields){input.style.fontSize=`${box.size*pointToPixel}px`;input.style.lineHeight=`${(box.size+2)*pointToPixel}px`;}
+        const multiline = Boolean(box.multiline) || box.field.type === 'textarea' || (box.field.type === 'text' && box.lines.length > 1);
         if ((input.tagName === 'TEXTAREA') !== multiline && ['text','textarea'].includes(box.field.type)) {
           const replacement = document.createElement(multiline ? 'textarea' : 'input');
           for (const attribute of input.attributes) replacement.setAttribute(attribute.name,attribute.value);
@@ -571,7 +610,7 @@
     const container = section.querySelector('[data-adc-profile-conflicts]');
     container.replaceChildren();
     for (const field of formFields()) {
-      if (!field.profileId || field.repeatIndex > 0 || (!touched.has(field.path) && !marked.has(field.path))) continue;
+      if ((!field.profileId && !preparedDocument()?.fields?.[field.path]?.institution) || field.repeatIndex > 0 || (!touched.has(field.path) && !marked.has(field.path))) continue;
       const next = profileValue(field);
       if (next === String(values[field.path] || '') || profileAcknowledged[field.path] === next) continue;
       const notice = document.createElement('div');
@@ -604,12 +643,29 @@
     return field.academicPart && value === presented(field,values[field.path]) ? values[field.path] : value;
   }
   function persistCurrentValues() {
-    for (const field of formFields()) values[field.path] = readFieldValue(field);
+    for (const field of formFields()) if (!preparedDocument()?.fields || allControls(field.path).length) values[field.path] = readFieldValue(field);
     save();
   }
+  function syncPreparedInstitution() {
+    const template=preparedDocument();if(!template?.fields)return false;
+    const known=inst.filter(school=>school.name?.trim());
+    const name=String(values.establecimiento||'');
+    const school=known.find(item=>normalized(item.name)===normalized(name))||(!name&&known.length===1?known[0]:null);
+    if(!school)return false;
+    let changed=false;
+    for(const [path,setting] of Object.entries(template.fields)){
+      if(!setting.institution||marked.has(path)||touched.has(path))continue;
+      if(!isEmptyValue(values[path])&&!profileOrigin.has(path))continue;
+      const next=String(school[setting.institution]||'');
+      if(next!==String(values[path]||'')){values[path]=next;changed=true;}
+      if(next)profileOrigin.add(path);else profileOrigin.delete(path);
+    }
+    return changed;
+  }
   function updateProfileFields(profileId) {
-    if (!activeForm || preparedDocument()) return;
-    let changed = false;
+    if (!activeForm || preparedReadOnly()) return;
+    const schoolChanged=syncPreparedInstitution();
+    let changed = schoolChanged;
     for (const field of formFields()) {
       if (field.profileId !== profileId || (field.repeatIndex > 0) || marked.has(field.path) || touched.has(field.path)) continue;
       const next = profileValue(field);
@@ -689,6 +745,7 @@
         if (value) profileOrigin.add(field.path);
       }
     }
+    syncPreparedInstitution();
   }
   function markNotApplicable(path) {
     const field = formFields().find(item => item.path === path);
@@ -730,11 +787,12 @@
     profileOrigin.delete(path);
     if (field.profileId) profileAcknowledged[path] = profileValue(field);
     input.setCustomValidity('');
+    const schoolChanged=path==='establecimiento'&&syncPreparedInstitution();
     invalidatePreview();
     updateMnc(path,field);
     save();
     const controlsConditions = activeForm.sections.some(group => group.fields.some(item => item.when?.key === path || item.requiredWhen?.key === path));
-    if (controlsConditions) renderFields();
+    if (controlsConditions || schoolChanged) renderFields();
     else {
       requestLayout();
       renderProfileConflicts();
@@ -978,7 +1036,19 @@
       if (!response.ok) throw new Error('No se pudo cargar el PDF preparado. Intentá nuevamente.');
       const bytes = new Uint8Array(await response.arrayBuffer());
       if (new TextDecoder().decode(bytes.slice(0,5)) !== '%PDF-') throw new Error('El archivo recibido no es un PDF válido.');
-      return bytes;
+      if(!prepared.fields)return bytes;
+      if(!window.PDFLib)throw new Error('No se pudo cargar la biblioteca PDF local.');
+      await loadLayoutFonts();layoutDocument();
+      if(documentLayout.errors.length)throw new Error(documentLayout.errors.join(' '));
+      const document=await PDFLib.PDFDocument.load(bytes);
+      const font=await document.embedFont(PDFLib.StandardFonts.Helvetica);
+      documentLayout.pages.forEach((commands,index)=>{const page=document.getPage(index);for(const command of commands){
+        const {kind,text,font:ignored,fieldValue,...options}=command;
+        if(kind==='text')page.drawText(text,{...options,font});
+        if(kind==='rectangle')page.drawRectangle(options);
+        if(kind==='line')page.drawLine(options);
+      }});
+      return document.save();
     }
     if (!window.PDFLib) throw new Error('Revisá tu conexión para cargar la biblioteca PDF.');
     await loadLayoutFonts();
@@ -999,7 +1069,7 @@
   }
   async function runAction(action,reviewed=false) {
     if (!activeForm) return;
-    if (!preparedDocument() && (!validate(true) || (!reviewed&&!await guidedReview.review({action})) || !validate(true))) return;
+    if (!preparedReadOnly() && (!validate(true) || (!reviewed&&!await guidedReview.review({action})) || !validate(true))) return;
     const buttons = [...section.querySelectorAll('[data-adc-official-action]')];
     buttons.forEach(button => {button.disabled = true;});
     status.textContent = 'Generando el PDF…';
@@ -1028,9 +1098,9 @@
       } else if (action === 'download') {
         const link = document.createElement('a');
         link.href = pdfUrl;
-        link.download = `${activeForm.code || activeForm.id}${preparedDocument() ? '_original' : '_ADC'}.pdf`.replace(/[^\w.-]+/g,'_');
+        link.download = `${activeForm.code || activeForm.id}${preparedReadOnly() ? '_original' : '_ADC'}.pdf`.replace(/[^\w.-]+/g,'_');
         link.click();
-        status.textContent = preparedDocument() ? 'PDF original descargado, sin cambios.' : 'PDF descargado. El archivo es una copia estática y no se puede editar como formulario.';
+        status.textContent = preparedReadOnly() ? 'PDF original descargado, sin cambios.' : 'PDF descargado. El archivo es una copia estática y no se puede editar como formulario.';
       } else if (action === 'print') {
         const printWindow = window.open(pdfUrl,'_blank');
         if (!printWindow) throw new Error('El navegador bloqueó la ventana del PDF. Permití ventanas emergentes e intentá nuevamente.');
@@ -1044,10 +1114,11 @@
     }
   }
   function loadForm(form,trigger) {
+    section.dataset.adcFormId = form.id;
     invalidatePreview();
     activeForm = form;
     const prepared = preparedDocument();
-    section.dataset.adcDocumentMode = prepared ? 'original' : 'editable';
+    section.dataset.adcDocumentMode = preparedReadOnly() ? 'original' : prepared?.fields ? 'overlay' : 'editable';
     returnFocus = trigger;
     loadDraft(form);
     const notices = section.querySelector('[data-adc-official-notices]');
@@ -1063,15 +1134,22 @@
     }
     title.textContent = `${form.title}${form.code ? ` · ${form.code}` : ''}`;
     description.textContent = 'Revisá los datos del documento y completá los campos pendientes. El borrador se guarda en este dispositivo.';
-    section.querySelector('[data-adc-official-mnc-help]').hidden = Boolean(prepared);
+    section.querySelector('[data-adc-official-mnc-help]').hidden = preparedReadOnly();
     section.querySelectorAll('[data-adc-official-action="download"]').forEach(button => {
-      button.textContent = prepared ? 'Descargar PDF' : 'Descargar PDF Completado';
+      button.textContent = preparedReadOnly() ? 'Descargar PDF' : 'Descargar PDF Completado';
     });
     if (prepared) {
       description.textContent = 'Prueba de la pantalla común: PDF preparado en su diseño original. Los campos editables, la precarga y las preguntas se configurarán después de aprobar esta base.';
-      notices.replaceChildren();
+      if(prepared.fields)description.textContent='Verificá los datos precargados del Perfil Docente y completá el documento original. Los cambios y las marcas MNC se guardan en este dispositivo.';
+      if(preparedReadOnly())notices.replaceChildren();
       const note = document.createElement('p');
       note.className = 'warning'; note.textContent = prepared.note; notices.append(note);
+      for(const group of form.sections)for(const field of group.fields){
+        if(field.legacyOnly&&!prepared.fields?.[field.key]&&!isEmptyValue(values[field.key])){
+          const legacy=document.createElement('p');legacy.className='warning';
+          legacy.textContent=`Dato del borrador anterior conservado para revisar: ${field.label}: ${values[field.key]}. No se ubica ni se exporta automáticamente porque reúne datos de varios casilleros.`;notices.append(legacy);
+        }
+      }
     }
     privacy.hidden = !form.sensitive;
     privacy.textContent = form.sensitive
@@ -1090,7 +1168,7 @@
     save();
     tab('official');
     updateZoom();
-    if (!prepared) loadLayoutFonts().then(() => {if (activeForm) layoutDocument();}).catch(() => {});
+    if (!preparedReadOnly()) loadLayoutFonts().then(() => {if (activeForm) layoutDocument();}).catch(() => {});
     title.focus();
   }
   function replaceCatalogCards() {
