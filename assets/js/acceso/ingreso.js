@@ -3,11 +3,12 @@
  const theme=document.getElementById('adcThemeSwitch');
  const root=document.documentElement;
  const status=document.getElementById('adcLoginStatus');
- const localPreview=location.protocol==='file:'||['localhost','127.0.0.1','[::1]'].includes(location.hostname);
+ // Modo de demostración explícito para revisar el ingreso también online.
+ const localPreview=true;
  if(localPreview){
   document.getElementById('adcLoginForm').noValidate=true;
   for(const input of document.querySelectorAll('#adcLoginForm input'))input.required=false;
-  status.textContent='Modo de prueba local. Podés ingresar sin completar datos.';
+  status.textContent='Modo de demostración, sin autenticación real. Podés ingresar sin completar datos.';
  }
  function setTheme(dark){
   root.dataset.theme=dark?'dark':'light';
