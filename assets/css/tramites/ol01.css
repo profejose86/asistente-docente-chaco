@@ -4,6 +4,8 @@
 #adcOLSheet{position:relative;z-index:1;min-width:0}
 #adcOLSheet .adc-ol-edge{position:absolute;top:6px;z-index:2;cursor:ew-resize;touch-action:none;padding:2px 7px;margin:0}
 #adcOLLeft{left:4px}#adcOLRight{right:4px}
+/* Los tiradores son controles de tamaño fijo, incluso ante diseños históricos. */
+#adcOLSheet .adc-ol-edge{translate:none!important;width:28px!important;max-width:28px!important;height:24px!important;min-height:24px!important;padding:2px!important;overflow:hidden!important;box-sizing:border-box!important}
 #adcOLSheet .adc-ol-scroll{margin-top:22px}
 @media print{.adc-ol-edge{display:none!important}}
 #adcOLSuggestions{max-height:15rem;overflow:auto;margin:.3rem 0}

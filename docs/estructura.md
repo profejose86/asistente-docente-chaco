@@ -67,6 +67,8 @@ El árbol muestra los módulos y recursos relevantes; no enumera todos los archi
 
 DL-01 conserva sus reglas y generación en sus módulos existentes. `dl01-interfaz.js` conecta esos módulos con la navegación y la visualización del perfil; se carga después del editor para no desplazar sus identificadores históricos. La muestra de DP-01 reutiliza el lienzo común y se habilita mediante el registro de documentos preparados. No se mueve ni duplica la lógica de los formularios que ya funcionan.
 
+Los tiradores de borde de OL-01 tienen dimensiones fijas de 28 × 24 píxeles en `assets/css/tramites/ol01.css`. Esto evita que dimensiones históricas del editor conviertan un tirador en una capa de 1331 × 1011 píxeles que tape la plantilla y bloquee sus campos. Se conservan las operaciones de diseño guardadas. `tests/ol01-interfaz.test.cjs` reproduce ese tamaño heredado y verifica clics reales sobre los campos en anchos de 320, 390, 768 y 1440 píxeles, además de la selección de institución/cargos y la generación del PDF.
+
 ## Carga y dependencias
 
 El orden de las etiquetas de `index.html` conserva el de la aplicación previa. Los scripts son clásicos y síncronos. Comparten funciones y variables globales utilizadas por los eventos HTML. Cambiar su orden, convertirlos individualmente a módulos o agregar `async`/`defer` requiere revisar esas dependencias.
