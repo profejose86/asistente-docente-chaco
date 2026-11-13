@@ -59,6 +59,13 @@ test('MBIT en Chrome: predicción, tarjetas, categorías, temas, teclado, catál
   const search=page.locator('#buscar'),cards=page.locator('#adcFormMatches>button');
   const frequent=await page.locator('#adc43Frequent').innerHTML();
   const usage=await page.evaluate(()=>localStorage.getItem('adc_v07_usage'));
+  // La tarjeta original debe abrir la selección DL-01 igual que un resultado de búsqueda.
+  await page.locator('.adc-form-catalog #tabL').click();
+  assert.equal(await search.inputValue(),'DL-01');
+  assert.equal(await page.locator('#adcFormQuestion').isVisible(),true);
+  assert.equal(await page.evaluate(()=>document.activeElement.id),'adcFormMotivo');
+  assert.ok(await page.locator('#listaTramites [data-adc-tramite]').count());
+  await search.fill('');
   for(const query of ['bd','BD','bd-0']){
    await search.fill(query);
    assert.deepEqual((await cards.locator('.adc-mbit-code').allTextContents()).sort(),['BD-01','BD-02','BD-07']);

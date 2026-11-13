@@ -6,6 +6,13 @@
   const catalog=menu.querySelector('.adc-form-catalog'),matches=document.getElementById('adcFormMatches');
   const registered=new Map();
   const metadata=window.adcFormSearchMetadata||{};
+  function openDL01() {
+    if(window.adcDL01Open?.())return;
+    input.value='DL-01';
+    category.value='';
+    render();
+    document.getElementById('adcFormMotivo').focus();
+  }
   function decorate(button,record) {
     button.classList.add('adc-mbit-card');
     if(button.dataset.mbitDecorated===record.title+'|'+record.code+'|'+record.actionLabel)return;
@@ -23,6 +30,7 @@
       if(custom){card.hidden=!['available','published','ready'].includes(custom.status);if(!card.hidden){decorate(card,custom);result.push({...custom,card});}continue;}
       const source=forms.find(form=>form.id===card.dataset.adcOfficialForm);
       const code=source?.code||card.querySelector('small')?.textContent||'';
+      if(codeKey(code)==='dl:1')card.onclick=openDL01;
       const id=source?.id||codeKey(code).replace(/:(\d+)$/,(_,number)=>number.padStart(2,'0'))||card.id;
       const extra=metadata[id]||{};
       const record={id,code,title:source?.catalogTitle||card.querySelector('strong')?.textContent||'',officialName:source?.title||extra.officialName||'',category:source?.searchCategory||card.closest('details').querySelector('summary').textContent.trim(),keywords:[...(source?.keywords||[]),...(extra.keywords||[])],status:source?.status||'available',actionLabel:codeKey(code)==='dl:1'?'Elegir motivo':card.querySelector('small:last-child')?.textContent||'Abrir formulario',card};
@@ -64,7 +72,7 @@
         node=record.card?record.card.cloneNode(true):document.createElement('button');
         node.removeAttribute('id');node.type='button';node.dataset.mbitId=record.id;
         if(record.open)node.onclick=record.open;
-        if(codeKey(record.code)==='dl:1')node.onclick=()=>{input.value='DL-01';render();document.getElementById('adcFormMotivo').focus();};
+        if(codeKey(record.code)==='dl:1')node.onclick=openDL01;
       }
       decorate(node,record);return node;
     }):[];

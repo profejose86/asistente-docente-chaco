@@ -20,7 +20,7 @@
       <button type="button" data-adc-official-action="download">Descargar PDF Completado</button>
       <button type="button" data-adc-official-action="print">Imprimir</button>
     </div>
-    <p class="small">Usá la X para marcar «No corresponde» en los campos opcionales vacíos. Verificá el documento antes de presentarlo.</p>
+    <p class="small" data-adc-official-mnc-help>Usá la X para marcar «No corresponde» en los campos opcionales vacíos. Verificá el documento antes de presentarlo.</p>
     <p class="small" data-adc-official-status role="status" aria-live="polite"></p>
     <div data-adc-profile-conflicts aria-live="polite"></div>
     <div class="adc-document-tools" aria-label="Controles del documento">
@@ -69,6 +69,7 @@
   let layoutFrame = null;
   const pointToPixel = 96/72;
   const paperGap = 18;
+  const preparedDocument = () => window.adcPreparedPdfForms?.[activeForm?.id];
   const viewport = section.querySelector('.adc-document-viewport');
   const documentSize = section.querySelector('.adc-document-size');
 
@@ -102,7 +103,7 @@
     return `adc-official-form-${form.id}-draft-v1`;
   }
   function save() {
-    if (!activeForm) return;
+    if (!activeForm || preparedDocument()) return;
     try {
       localStorage.setItem(storageKey(activeForm),JSON.stringify({
         schemaVersion:2,values,marked:[...marked],profileOrigin:[...profileOrigin],touched:[...touched],rowCounts,draftWarnings,profileAcknowledged
@@ -389,6 +390,11 @@
   function renderFields() {
     if (!activeForm) return;
     sheet.replaceChildren();
+    if (preparedDocument()) {
+      layoutDocument();
+      section.querySelector('[data-adc-profile-conflicts]').replaceChildren();
+      return;
+    }
     for (const group of activeForm.sections) {
       if (!group.fields.some(field => available(field,field.key))) continue;
       const sectionFields = document.createElement('section');
@@ -449,6 +455,27 @@
   function layoutDocument() {
     if (!activeForm) return;
     if (layoutFrame !== null) { cancelAnimationFrame(layoutFrame); layoutFrame=null; }
+    const prepared = preparedDocument();
+    if (prepared) {
+      documentLayout = {width: prepared.pages[0].width, height: prepared.pages[0].height};
+      let top = 0;
+      sheet.replaceChildren();
+      for (const [index, page] of prepared.pages.entries()) {
+        const image = document.createElement('img');
+        image.className = 'adc-document-page adc-prepared-pdf-page';
+        image.dataset.adcPage = String(index + 1);
+        image.src = page.image;
+        image.alt = `${activeForm.code}, página ${index + 1} de ${prepared.pages.length}. Documento preparado sin campos editables.`;
+        Object.assign(image.style, {top: `${top * pointToPixel}px`, width: `${page.width * pointToPixel}px`, height: `${page.height * pointToPixel}px`});
+        image.addEventListener('error', () => {status.textContent = 'No se pudo mostrar la imagen. Podés abrir el PDF original desde Vista preliminar.';});
+        sheet.append(image);
+        top += page.height + paperGap;
+      }
+      Object.assign(sheet.style, {width: `${documentLayout.width * pointToPixel}px`, height: `${(top - paperGap) * pointToPixel}px`});
+      section.querySelector('[data-adc-document-pending]').hidden = true;
+      updateZoom();
+      return;
+    }
     documentLayout = createLayout();
     const previousPages = new Map([...sheet.querySelectorAll('.adc-document-page')].map(canvas => [Number(canvas.dataset.adcPage),canvas]));
     sheet.querySelectorAll('.adc-document-continuation').forEach(element => element.remove());
@@ -581,7 +608,7 @@
     save();
   }
   function updateProfileFields(profileId) {
-    if (!activeForm) return;
+    if (!activeForm || preparedDocument()) return;
     let changed = false;
     for (const field of formFields()) {
       if (field.profileId !== profileId || (field.repeatIndex > 0) || marked.has(field.path) || touched.has(field.path)) continue;
@@ -945,6 +972,14 @@
     return layout;
   }
   async function createPdf() {
+    const prepared = preparedDocument();
+    if (prepared) {
+      const response = await fetch(prepared.pdf);
+      if (!response.ok) throw new Error('No se pudo cargar el PDF preparado. Intentá nuevamente.');
+      const bytes = new Uint8Array(await response.arrayBuffer());
+      if (new TextDecoder().decode(bytes.slice(0,5)) !== '%PDF-') throw new Error('El archivo recibido no es un PDF válido.');
+      return bytes;
+    }
     if (!window.PDFLib) throw new Error('Revisá tu conexión para cargar la biblioteca PDF.');
     await loadLayoutFonts();
     layoutDocument();
@@ -963,7 +998,8 @@
     return pdf.save();
   }
   async function runAction(action,reviewed=false) {
-    if (!activeForm || !validate(true) || (!reviewed&&!await guidedReview.review({action})) || !validate(true)) return;
+    if (!activeForm) return;
+    if (!preparedDocument() && (!validate(true) || (!reviewed&&!await guidedReview.review({action})) || !validate(true))) return;
     const buttons = [...section.querySelectorAll('[data-adc-official-action]')];
     buttons.forEach(button => {button.disabled = true;});
     status.textContent = 'Generando el PDF…';
@@ -992,9 +1028,9 @@
       } else if (action === 'download') {
         const link = document.createElement('a');
         link.href = pdfUrl;
-        link.download = `${activeForm.code || activeForm.id}_ADC.pdf`.replace(/[^\w.-]+/g,'_');
+        link.download = `${activeForm.code || activeForm.id}${preparedDocument() ? '_original' : '_ADC'}.pdf`.replace(/[^\w.-]+/g,'_');
         link.click();
-        status.textContent = 'PDF descargado. El archivo es una copia estática y no se puede editar como formulario.';
+        status.textContent = preparedDocument() ? 'PDF original descargado, sin cambios.' : 'PDF descargado. El archivo es una copia estática y no se puede editar como formulario.';
       } else if (action === 'print') {
         const printWindow = window.open(pdfUrl,'_blank');
         if (!printWindow) throw new Error('El navegador bloqueó la ventana del PDF. Permití ventanas emergentes e intentá nuevamente.');
@@ -1010,6 +1046,8 @@
   function loadForm(form,trigger) {
     invalidatePreview();
     activeForm = form;
+    const prepared = preparedDocument();
+    section.dataset.adcDocumentMode = prepared ? 'original' : 'editable';
     returnFocus = trigger;
     loadDraft(form);
     const notices = section.querySelector('[data-adc-official-notices]');
@@ -1025,12 +1063,26 @@
     }
     title.textContent = `${form.title}${form.code ? ` · ${form.code}` : ''}`;
     description.textContent = 'Revisá los datos del documento y completá los campos pendientes. El borrador se guarda en este dispositivo.';
+    section.querySelector('[data-adc-official-mnc-help]').hidden = Boolean(prepared);
+    section.querySelectorAll('[data-adc-official-action="download"]').forEach(button => {
+      button.textContent = prepared ? 'Descargar PDF' : 'Descargar PDF Completado';
+    });
+    if (prepared) {
+      description.textContent = 'Prueba de la pantalla común: PDF preparado en su diseño original. Los campos editables, la precarga y las preguntas se configurarán después de aprobar esta base.';
+      notices.replaceChildren();
+      const note = document.createElement('p');
+      note.className = 'warning'; note.textContent = prepared.note; notices.append(note);
+    }
     privacy.hidden = !form.sensitive;
     privacy.textContent = form.sensitive
       ? 'Este trámite puede incluir información sensible. El borrador se guarda únicamente en este dispositivo y no se envía a un servidor.'
       : 'Los datos del formulario permanecen en este dispositivo; la aplicación no los envía a un servidor.';
     sourceLink.href = form.sourceUrl || sourcePage;
     sourceLink.textContent = form.sourceUrl ? 'Consultar documento oficial' : 'Consultar formularios y planillas oficiales';
+    if (prepared) {
+      sourceLink.href = prepared.source;
+      sourceLink.textContent = 'Ver carpeta de origen en Drive';
+    }
     preview.replaceChildren();
     preview.hidden = true;
     status.textContent = '';
@@ -1038,7 +1090,7 @@
     save();
     tab('official');
     updateZoom();
-    loadLayoutFonts().then(() => {if (activeForm) layoutDocument();}).catch(() => {});
+    if (!prepared) loadLayoutFonts().then(() => {if (activeForm) layoutDocument();}).catch(() => {});
     title.focus();
   }
   function replaceCatalogCards() {

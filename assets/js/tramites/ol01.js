@@ -109,6 +109,7 @@ function adcDocsFocusRequest(){
  heading.tabIndex=-1;heading.focus({preventScroll:true});heading.scrollIntoView({block:'start'});
 }
 function adcDocsNavigate(view){
+ if(view==='license'&&window.adcDL01Open?.())return;
  if(view==='ol01')adcOLStart(true);
  else{tab(view);if(view==='license')adcDocsFocusRequest();else $('dj02').querySelector('h2').scrollIntoView({block:'start'})}
 }

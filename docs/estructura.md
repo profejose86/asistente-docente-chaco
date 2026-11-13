@@ -1,5 +1,7 @@
 # Estructura y ejecución
 
+La primera prueba de documentos preparados utiliza el registro `assets/datos/formularios-pdf.js` y el lienzo común de `assets/js/tramites/formularios-oficiales.js`. Solo DP-01 está habilitado en este modo de revisión del PDF original. Su alcance y pasos pendientes se documentan en [formularios-pdf-preparados.md](formularios-pdf-preparados.md).
+
 La entrada de la aplicación es `index.html`. Los estilos están en `assets/css/` y los scripts en `assets/js/`, agrupados por área.
 
 En la rama `log-in`, la entrada local y online abre `ADC_Ingreso_Editable.html`. El botón Ingresar permite acceder a `index.html?adc-preview=1` con los campos vacíos durante los ajustes. `assets/js/interfaz/inicio-local.js` conserva su nombre por compatibilidad y aplica ahora el recorrido también en GitHub Pages. El parámetro de navegación no autentica al usuario. La pantalla muestra un aviso de demostración sin autenticación real. El registro conserva su validación y sus acciones de demostración. El perfil sigue utilizando el almacenamiento del mismo origen. Antes de habilitar cuentas reales se debe reemplazar este acceso de prueba por autenticación y sesiones verificadas. La publicación de prueba utiliza esta rama sin fusionarla con `main`.
@@ -20,25 +22,50 @@ PaginaDocente/
 │   │   ├── interfaz/
 │   │   ├── perfil/
 │   │   └── tramites/
+│   │       ├── dl01.css
+│   │       └── formularios-oficiales.css
+│   ├── datos/
+│   │   └── formularios-pdf.js
+│   ├── formularios/
+│   │   ├── DP-01.pdf
+│   │   ├── DP-01-pagina-1.png
+│   │   └── ... (plantillas SC-01 y BD-02 existentes)
 │   ├── img/
 │   │   └── acceso/ (fondos y logo)
-│   └── js/
-│       ├── acceso/ (ingreso.js, editor.js)
-│       ├── calendario/
-│       ├── core/
-│       ├── documentos/
-│       ├── editor/
-│       ├── interfaz/
-│       ├── perfil/
-│       ├── tema/
-│       └── tramites/
+│   ├── js/
+│   │   ├── acceso/ (ingreso.js, editor.js)
+│   │   ├── calendario/
+│   │   ├── core/
+│   │   ├── documentos/
+│   │   ├── editor/
+│   │   ├── interfaz/
+│   │   ├── perfil/
+│   │   ├── tema/
+│   │   └── tramites/
+│   │       ├── dl01-interfaz.js
+│   │       ├── dl01-reglas.js
+│   │       ├── dl01-pdf.js
+│   │       ├── formularios-oficiales-datos.js
+│   │       └── formularios-oficiales.js
+│   └── vendor/
+│       └── pdf-lib/ (distribución 1.17.1, licencia y procedencia)
 ├── docs/
 │   ├── estructura.md
-│   └── structure-manifest.json
+│   ├── structure-manifest.json
+│   ├── formularios-pdf-preparados.md
+│   └── recuperacion-dl01.md
+├── tests/
+│   ├── dl01-interfaz.test.cjs
+│   ├── formularios-oficiales.test.cjs
+│   └── ... (pruebas existentes)
 ├── tools/
 │   └── verify-structure.cjs
 └── REVIEW_ADC_v60.md
 ```
+
+El árbol muestra los módulos y recursos relevantes; no enumera todos los archivos históricos. Cada área conserva sus responsabilidades: `assets/datos/` contiene registros de documentos, `assets/formularios/` sus PDF e imágenes, `assets/js/tramites/` el comportamiento por trámite y `assets/css/tramites/` su presentación. Las bibliotecas externas se guardan con su licencia en `assets/vendor/`. Las pruebas y los informes permanecen fuera de los recursos de la aplicación.
+
+DL-01 conserva sus reglas y generación en sus módulos existentes. `dl01-interfaz.js` conecta esos módulos con la navegación y la visualización del perfil; se carga después del editor para no desplazar sus identificadores históricos. La muestra de DP-01 reutiliza el lienzo común y se habilita mediante el registro de documentos preparados. No se mueve ni duplica la lógica de los formularios que ya funcionan.
 
 ## Carga y dependencias
 
@@ -48,7 +75,7 @@ Las hojas CSS también conservan su posición y precedencia originales. `base.cs
 
 El núcleo histórico se distribuye entre `core/estado.js`, `interfaz/navegacion.js`, `perfil/instituciones.js`, `perfil/datos-personales.js`, `perfil/respaldos.js`, `tramites/catalogo-datos.js`, `tramites/solicitudes.js`, `tramites/dl01-reglas.js`, `tramites/dl01-pdf.js`, `tramites/dj01-traslados.js`, `tramites/dj01.js`, `documentos/plantillas-dl01.js` y `documentos/pdf-utilidades.js`. `core/inicializacion.js` ejecuta el arranque después de cargar esas declaraciones. Los bloques DJ-02 conservan sus reemplazos sucesivos. El inventario detallado está en `funciones-respaldo.md`.
 
-Las plantillas, imágenes y fuentes incrustadas permanecen en sus bloques originales extraídos. Su traslado a recursos independientes requiere implementar carga asíncrona y recuperación de errores. La biblioteca PDF continúa usando la URL y versión original.
+Las plantillas, imágenes y fuentes incrustadas permanecen en sus bloques originales extraídos. Su traslado a recursos independientes requiere implementar carga asíncrona y recuperación de errores. La biblioteca PDF conserva la versión 1.17.1 y se sirve desde `assets/vendor/pdf-lib/`, con su licencia, para evitar que la generación dependa de jsDelivr.
 
 ## Desarrollo
 

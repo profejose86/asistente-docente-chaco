@@ -90,7 +90,8 @@ test('Chrome verifica formularios, borradores, MNC, filas, validación y PDF',{
         }
       });
     }
-    for (const form of forms.filter(form => form.id !== 'bd02')) await t.test(form.id,async() => {
+    // DP-01 se revisa como PDF preparado, sin habilitar aún el esquema histórico.
+    for (const form of forms.filter(form => !['bd02','dp01'].includes(form.id))) await t.test(form.id,async() => {
       await open(form.id);
       assert.ok(await page.locator('.adc-document-page').count(),`${form.id} se muestra al abrir`);
       await page.locator('[data-adc-document-pending]').click();
@@ -536,10 +537,52 @@ test('Chrome verifica formularios, borradores, MNC, filas, validación y PDF',{
     await page.reload();
     await open('sr01');
     assert.equal(await page.locator('[data-adc-field="domicilio"]').isEditable(),false);
-    await open('dp01');
-    await page.locator('[data-adc-field="situacion"]').selectOption('Titular');
-    assert.equal(await page.locator('[data-adc-field="numeroDisposicion"]').count(),0);
-    assert.equal(await page.locator('[data-adc-field="reemplazadoDni"]').count(),0);
+    await t.test('DP-01 preparado: documento intacto, acciones y borrador histórico conservado', async () => {
+      const key = 'adc-official-form-dp01-draft-v1';
+      const previous = JSON.stringify({schemaVersion:2,values:{apellido:'Corrección histórica'},marked:['codigoAnexo']});
+      await page.evaluate(({key,previous}) => localStorage.setItem(key,previous),{key,previous});
+      await open('dp01');
+      assert.equal(await page.locator('#adcOfficialForm').getAttribute('data-adc-document-mode'),'original');
+      assert.match(await page.locator('[data-adc-official-notices]').textContent(),/2009/);
+      assert.equal(await page.locator('#adcOfficialForm [data-adc-field]').count(),0);
+      assert.equal(await page.locator('#adcOfficialForm [data-adc-mnc]').count(),0);
+      assert.equal(await page.locator('[data-adc-document-pending]').isVisible(),false);
+      await page.waitForFunction(() => document.querySelector('.adc-prepared-pdf-page')?.naturalWidth > 0);
+      assert.equal(await page.locator('.adc-prepared-pdf-page').evaluate(image => image.complete && image.naturalWidth > 0),true);
+      for (const width of [320,390,1440]) {
+        await page.setViewportSize({width,height:1000});
+        assert.equal(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth),false);
+      }
+      for (const index of [0,1]) {
+        const download = page.waitForEvent('download');
+        await page.locator('[data-adc-official-action="download"]').nth(index).click();
+        const result = await download;
+        assert.equal(result.suggestedFilename(),'DP-01_original.pdf');
+        assert.deepEqual(fs.readFileSync(await result.path()),fs.readFileSync(path.join(root,'assets/formularios/DP-01.pdf')));
+        await page.locator('[data-adc-official-action="preview"]').nth(index).click();
+        const bytes = await page.locator('[data-adc-official-preview] iframe').evaluate(async frame => Array.from(new Uint8Array(await (await fetch(frame.src)).arrayBuffer())));
+        assert.deepEqual(Buffer.from(bytes),fs.readFileSync(path.join(root,'assets/formularios/DP-01.pdf')));
+      }
+      await page.evaluate(() => {
+        window.testPreparedPrints = [];
+        window.testPreparedOriginalOpen = window.open;
+        window.open = url => {window.testPreparedPrints.push(url); return {addEventListener:(_,callback)=>callback(),print:()=>window.testPreparedPrintCalled=true};};
+      });
+      for (const index of [0,1]) await page.locator('[data-adc-official-action="print"]').nth(index).click();
+      await page.waitForFunction(() => window.testPreparedPrintCalled);
+      assert.equal(await page.evaluate(() => testPreparedPrints.length),2);
+      const printed = await page.evaluate(async () => Array.from(new Uint8Array(await (await fetch(testPreparedPrints[1])).arrayBuffer())));
+      assert.deepEqual(Buffer.from(printed),fs.readFileSync(path.join(root,'assets/formularios/DP-01.pdf')));
+      await page.evaluate(() => {window.open = window.testPreparedOriginalOpen;});
+      assert.equal(await page.evaluate(key => localStorage.getItem(key),key),previous);
+      await page.locator('[data-adc-official-back]').click();
+      await open('dp01');
+      assert.equal(await page.locator('.adc-prepared-pdf-page').count(),1);
+      await open('sr01');
+      assert.equal(await page.locator('#adcOfficialForm').getAttribute('data-adc-document-mode'),'editable');
+      assert.ok(await page.locator('#adcOfficialForm [data-adc-field]').count());
+      assert.equal(await page.locator('[data-adc-official-mnc-help]').isVisible(),true);
+    });
     await open('form-5');
     await page.locator('[data-adc-field="opcion"][value="Renuncia"]').check();
     await page.locator('[data-adc-field="opcion"][value="Activo / jubilado"]').check();

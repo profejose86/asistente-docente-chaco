@@ -1,0 +1,45 @@
+/* DL-01 sigue el contenido fuera del editor; no borra ajustes guardados. */
+@media screen {
+  body:not(.adcDesignActive) #license > section > button,
+  body:not(.adcDesignActive) #license .adc-request-heading {
+    translate: none !important;
+    width: auto !important;
+    max-width: 100% !important;
+    height: auto !important;
+    min-height: 0 !important;
+    overflow: visible !important;
+  }
+  #license > section {margin-bottom: 12px; padding: 16px; min-width: 0;}
+  #license #adcRequestTitle {margin: 12px 0 8px;}
+  #license #elegido {margin-top: 8px !important;}
+  #license .adc-request-heading {display: block; margin: 12px 0;}
+  #license .adc-request-heading h2 {margin-bottom: 8px;}
+  #license #adcSharedCalendar {width: 100%; min-width: 0;}
+  #license #adcSharedCalendar > summary {padding: 8px 0;}
+  #license .adc-calendar-panel {position: static; width: auto; max-width: 100%; box-sizing: border-box; box-shadow: none; margin-top: 6px;}
+  #license .fields {align-items: start; gap: 10px;}
+  #license .adc-present-school {display: block; margin-bottom: 10px;}
+  #license #adcDL01ProfileSummary {padding: 10px 12px; border: 1px solid #dce3ec; border-radius: 8px; background: #f7f9fd;}
+  #license #adcDL01ProfileSummary h3 {margin: 0 0 6px; font-size: 1rem;}
+  #license #adcDL01ProfileSummary p {margin: 4px 0; overflow-wrap: anywhere;}
+  #license #adcDL01ProfileSummary ul {padding-left: 20px; margin: 6px 0 0;}
+  #license #adcDL01ProfileSummary li {margin: 4px 0; overflow-wrap: anywhere;}
+  #license #review {overflow-x: auto;}
+  #license #review table {min-width: 0; width: 100%; table-layout: fixed;}
+  #license #review :is(td,th) {overflow-wrap: anywhere;}
+  #license .toolbar {display: flex; flex-wrap: wrap; gap: 8px;}
+  #license .toolbar button {flex: 1 1 190px; margin: 0;}
+  #license #pdfResult iframe {display: block; width: 100%; height: 78vh; min-height: 360px; border: 1px solid #cbd5e1; box-sizing: border-box; margin-top: 12px;}
+  #license #adcDL01GenerationStatus:not(:empty) {padding: 8px 0;}
+  #license .adc-calendar-panel .fields {grid-template-columns: repeat(2,minmax(0,1fr));}
+  #license .adc-calendar-panel .fields > * {min-width: 0;}
+  html[data-theme=dark] #license #adcDL01ProfileSummary {background: #17263a; border-color: #526782;}
+  html[data-theme=dark] #license .adc-calendar-panel {background: #17263a; color: #e5edf8;}
+  @media (max-width:650px) {
+    #license > section {padding: 12px;}
+    #license .fields {grid-template-columns: minmax(0,1fr);}
+    #license .toolbar button {flex-basis: 100%;}
+    #license .adc-calendar-panel {padding: 10px;}
+    #license .adc-month-menu {grid-template-columns: repeat(3,minmax(0,1fr));}
+  }
+}

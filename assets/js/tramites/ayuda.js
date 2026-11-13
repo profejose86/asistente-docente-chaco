@@ -9,12 +9,13 @@
    if(!button||!list.contains(button))return;
    const name=button.dataset.adcTramite;
    adcLastCatalogTrigger={list:id,name};
-   choose(name);
+   const unified=adcDL01Ready.has(name)&&window.adcDL01Open;
+   if(unified)window.adcDL01Open(name);
+   else choose(name);
    clearTimeout(timer);
    const options=document.querySelectorAll('#frecuentes button[data-adc-tramite], #listaTramites button[data-adc-tramite]');
    for(const option of options)option.setAttribute('aria-pressed',String(option.dataset.adcTramite===selected));
-   tab('license');
-   adcDocsStart(name);
+   if(!unified){tab('license');adcDocsStart(name);}
    const summary=$('elegido');
    bubble.textContent='Elegiste '+adcTramiteLabel(name);
    const anchor=summary.getBoundingClientRect();

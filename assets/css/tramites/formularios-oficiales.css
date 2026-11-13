@@ -67,6 +67,7 @@ html[data-theme=dark] .adc-form-grid .adc-catalog-active small{color:#c0cde0}
 #adcOfficialForm .adc-document-size{position:relative;margin:0 auto}
 #adcOfficialForm [data-adc-official-sheet]{position:relative;transform-origin:top left;max-width:none;margin:0;padding:0;border:0;isolation:isolate;color:#182433;font-family:Arial,sans-serif}
 #adcOfficialForm .adc-document-page{position:absolute;left:0;z-index:-1;display:block;background:white;box-shadow:0 2px 9px #20304435}
+#adcOfficialForm .adc-prepared-pdf-page{max-width:none;margin:0;object-fit:contain}
 #adcOfficialForm .adc-official-section,#adcOfficialForm .adc-official-repeat,#adcOfficialForm .adc-official-repeat-row,#adcOfficialForm [data-adc-official-sheet] .fields,#adcOfficialForm .adc-official-repeat-heading{display:contents}
 #adcOfficialForm .adc-official-section>h3,#adcOfficialForm .adc-official-section>p,#adcOfficialForm .adc-official-repeat-heading h4,#adcOfficialForm .adc-official-repeat-row>legend,#adcOfficialForm .adc-document-field>label,#adcOfficialForm .adc-document-field>small,#adcOfficialForm .adc-official-options>legend{position:absolute!important;width:1px!important;height:1px!important;padding:0!important;margin:-1px!important;overflow:hidden!important;clip-path:inset(50%);white-space:nowrap!important;border:0!important}
 #adcOfficialForm .adc-document-field{position:absolute;margin:0;padding:0;border:0;background:transparent;box-sizing:border-box}
