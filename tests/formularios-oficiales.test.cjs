@@ -92,7 +92,7 @@ test('Chrome verifica formularios, borradores, MNC, filas, validación y PDF',{
       });
     }
     // DP-01 se revisa como PDF preparado, sin habilitar aún el esquema histórico.
-    for (const form of forms.filter(form => !['bd02','dp01'].includes(form.id))) await t.test(form.id,async() => {
+    for (const form of forms.filter(form => !['bd02','dp01','sr01'].includes(form.id))) await t.test(form.id,async() => {
       await open(form.id);
       assert.ok(await page.locator('.adc-document-page').count(),`${form.id} se muestra al abrir`);
       await page.locator('[data-adc-document-pending]').click();
@@ -517,10 +517,10 @@ test('Chrome verifica formularios, borradores, MNC, filas, validación y PDF',{
     assert.equal(await page.locator('[data-adc-zoom-value]').textContent(),beforeZoom);
     await page.evaluate(() => {document.activeElement.blur();document.querySelector('.adc-document-viewport').scrollTop=0;});
     await page.locator('.adc-document-viewport').screenshot({path:path.join(output,'lienzo-celular.png')});
-    await open('sr01');
+    await open('cf01');
     await fillRequired();
     await page.locator('[data-adc-field="domicilio"]').fill('PALABRA '.repeat(900)+'FIN_DOMICILIO');
-    await page.locator('[data-adc-field="noJustificada"]').fill('OBSERVACION '.repeat(900)+'FIN_OBSERVACION');
+    await page.locator('[data-adc-field="funcionesAreas"]').fill('OBSERVACION '.repeat(900)+'FIN_OBSERVACION');
     const download = page.waitForEvent('download');
     await page.locator('[data-adc-official-action="download"]').first().click();
     await (await download).saveAs(path.join(output,'texto-largo.pdf'));
@@ -625,7 +625,7 @@ test('Chrome verifica formularios, borradores, MNC, filas, validación y PDF',{
       await page.waitForFunction(()=>!document.querySelector('[data-adc-official-action="download"]').disabled);
       assert.match(await page.locator('[data-adc-official-status]').textContent(),/PDF descargado/);
       await open('sr01');
-      assert.equal(await page.locator('#adcOfficialForm').getAttribute('data-adc-document-mode'),'editable');
+      assert.equal(await page.locator('#adcOfficialForm').getAttribute('data-adc-document-mode'),'overlay');
       assert.ok(await page.locator('#adcOfficialForm [data-adc-field]').count());
     });
     await open('form-5');

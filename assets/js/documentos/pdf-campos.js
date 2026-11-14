@@ -17,6 +17,11 @@
       const box={...setting,field,page:setting.page||0,y:height-setting.top-setting.height,size:setting.fontSize||12,lines:['']};
       result.fields.push(box);
       const commands=result.pages[box.page];
+      if(setting.overflow){
+        result.extraHeight=Math.max(result.extraHeight||0,setting.top+setting.height-height+24);
+        if(String(values[field.path]||'').trim()||marked.has(field.path))result.errors.push(`${field.repeatLabel}: el registro ${field.repeatIndex+1} excede las columnas del PDF. El dato se conserva debajo del documento; reorganizá o quitá esa entrada antes de exportar.`);
+        continue;
+      }
       if(setting.replacePrintedYear){
         const patch=setting.replacePrintedYear;
         commands.push({kind:'rectangle',x:patch.x,y:height-patch.top-patch.height,width:patch.width,height:patch.height,color:{type:'RGB',red:1,green:1,blue:1}});
@@ -24,6 +29,7 @@
       if(setting.options){
         const selected=values[field.path];
         for(const option of setting.options)if(option.value===selected){
+          if(option.marker==='underline'){const y=height-option.top-(option.height||12);commands.push({kind:'line',start:{x:option.x,y},end:{x:option.x+(option.width||10),y},thickness:.8,color:black});continue;}
           const x=option.x+1,y=height-option.top-8;
           commands.push({kind:'line',start:{x,y},end:{x:x+7,y:y+7},thickness:1,color:black},{kind:'line',start:{x,y:y+7},end:{x:x+7,y},thickness:1,color:black});
         }
@@ -33,7 +39,8 @@
         const g=window.adcMnc.geometry,y=box.y+box.height/2;
         commands.push({kind:'line',start:{x:box.x+box.width*g.start,y},end:{x:box.x+box.width*g.end,y},color:black,thickness:g.thickness});continue;
       }
-      const value=String(presented(field,values[field.path])||'');if(!value)continue;
+      let value=String(presented(field,values[field.path])||'');if(!value)continue;
+      if(setting.dateFormat==='dmy')value=value.replace(/^(\d{4})-(\d{2})-(\d{2})$/,'$3/$2/$1');
       if(setting.dateParts){
         const [year,month,day]=value.split('-');
         if(setting.printedYear&&!setting.replacePrintedYear&&Number(year)!==setting.printedYear){result.errors.push(`${field.label}: el original tiene ${setting.printedYear} impreso. Necesitamos aprobar su corrección antes de exportar esta fecha.`);}

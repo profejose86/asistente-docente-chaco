@@ -44,6 +44,7 @@
     let projectPage=null,loaded=false,pendingProject=[];
     window.adcDocumentEditor?.attach(api);
     window.adcVisualElements?.attach(api);
+    window.adcDocumentBackground?.attach(api);
     const button=document.createElement('button');button.type='button';button.dataset.projectExport='';
     button.textContent='Exportar ajustes al proyecto';panel.append(button);
     const help=document.createElement('p');help.textContent=window.adcLocalEditorBridge?'Usá Commit to local para guardar directamente. La exportación manual queda como respaldo opcional. No se envían los valores del perfil ni los campos completados de los formularios.':'Exportá los ajustes y compartí el archivo con Codex para incorporarlo al código. Los datos del perfil y los borradores no se incluyen automáticamente.';panel.append(help);

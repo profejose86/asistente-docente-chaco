@@ -26,12 +26,14 @@ for(const screen of ['ADC_Ingreso_Editable.html','index.html?adc-preview=1'])tes
     await page.locator('#adcMouseButton').dblclick();
     assert.equal(await page.evaluate(()=>mouseActions),0);
     assert.equal(await page.locator('#adcMouseButton').getAttribute('data-adc-design-selected'),'');
+    assert.equal(await page.locator('#adcMouseButton').getAttribute('contenteditable'),'true');
+    await page.locator('#adcMouseButton').press('Enter');
     assert.equal(await page.locator('#adcMouseButton').evaluate(node=>getComputedStyle(node).outlineStyle),'dashed');
-    await page.waitForSelector('#adcDesignMarks .adc-edge');
+    await page.mouse.move(650,320);await page.waitForSelector('[data-studio-grip=e]');
     await page.mouse.move(650,320);await page.mouse.down();await page.mouse.move(950,320,{steps:8});await page.mouse.up();
     let box=await page.locator('#adcMouseButton').boundingBox();assert.ok(box.x>880,'se permite cruzar y solapar el bloque');
     assert.equal(await page.evaluate(({x,y})=>document.elementFromPoint(x,y)?.closest('button')?.id,{x:box.x+50,y:box.y+20}),'adcMouseButton');
-    await page.waitForFunction(()=>document.querySelector('#adcDesignMarks .adc-edge'));
+    await page.mouse.move(box.x+box.width/2,box.y+box.height/2);await page.waitForSelector('[data-studio-grip=e]');
     await page.mouse.move(box.x+box.width,box.y+box.height/2);await page.mouse.down();await page.mouse.move(box.x+box.width+60,box.y+box.height/2,{steps:6});await page.mouse.up();
     box=await page.locator('#adcMouseButton').boundingBox();assert.ok(box.width>180,'redimensionado con mouse');
     assert.equal(await page.locator('#adcMouseButton').evaluate(node=>getComputedStyle(node).outlineStyle),'dashed');

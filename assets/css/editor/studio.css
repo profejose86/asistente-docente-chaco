@@ -58,3 +58,25 @@ html[data-adc-brand-theme] .accent-rule,html[data-adc-brand-theme] .adc-divider{
 html[data-adc-brand-theme] .wrap>header{background-color:var(--adc-brand-primary,#2453a3)}
 @media(max-width:600px){#adcDesignPanel[data-orientation=horizontal] .adc-studio-content>[role=tabpanel]{grid-template-columns:1fr}#adcDesignPanel[data-orientation=horizontal] .adc-studio-tabs{grid-template-columns:repeat(2,minmax(0,1fr))}.adc-studio-top{padding:7px}.adc-studio-global{gap:1px}#adcStudioInspector{max-width:calc(100vw - 16px)}}
 @media print{#adcDesignPanel,#adcDesignGear,[data-adc-studio-ui],.adc-studio-guide{display:none!important}}
+body.adcDesignActive [data-adc-studio-editing]{outline:2px solid #e89a4a!important;outline-offset:3px;cursor:text!important;caret-color:#2453a3;user-select:text;touch-action:auto;white-space:pre-wrap}
+body.adc-studio-typing #adcStudioHover,body.adc-studio-typing #adcDesignMarks{display:none!important}
+#adcStudioSmartGuides{position:fixed;inset:0;pointer-events:none;z-index:9006}
+#adcStudioSmartGuides[hidden]{display:none!important}
+.adc-studio-laser{position:absolute;background:#dc448d;box-shadow:0 0 4px #dc448d80;pointer-events:none}
+.adc-studio-laser.x{top:0;width:1px;height:100%}.adc-studio-laser.y{left:0;top:0;height:1px;width:100%}
+.adc-studio-laser span{position:absolute;left:6px;top:6px;padding:2px 5px;color:#902a5a;background:#fff0f8;border:1px solid #eeb1cf;border-radius:4px;white-space:nowrap;font:10px system-ui}
+.adc-studio-laser.y span{top:3px;left:12px}
+#adcStudioDragMetrics{position:absolute;padding:6px 9px;border:1px solid #9eb4d0;border-radius:6px;background:#13243e;color:white;box-shadow:0 3px 12px #13243e30;font:11px system-ui;white-space:nowrap;max-width:calc(100vw - 16px);overflow:hidden;pointer-events:none}
+#adcStudioPlaceholderEditor{box-sizing:border-box;background:#fff;color:#13243e;border:2px solid #d9822b;border-radius:4px;padding:4px 8px;font:14px system-ui;outline:none}
+#adcStudioInspector [data-studio-palette]{position:relative;min-width:70px}#adcStudioInspector [data-studio-palette][open]{padding:6px;border:1px solid #a8bcd4;border-radius:6px;background:#fff;color:#13243e;max-width:260px}
+body.adcDesignActive [data-adc-studio-locked]{outline:1px dashed #d9822b!important;cursor:default!important}
+#adcDesignPanel[data-adc-studio]{z-index:2147483200}
+#adcStudioInspector{max-height:35vh;overflow:auto}
+[data-commit-local][data-save-state=saving]{background:#9a6700!important;color:white!important;cursor:wait}
+[data-commit-local][data-save-state=saved]{background:#17643c!important;color:white!important}
+[data-commit-local][data-save-state=unchanged]{background:#315779!important;color:white!important}
+[data-commit-local][data-save-state=error]{background:#a32b31!important;color:white!important}
+[data-commit-feedback]{display:block;max-width:100%;font:12px/1.4 system-ui;white-space:normal;overflow-wrap:anywhere}
+[data-commit-feedback][data-save-state=error]{color:#a32b31;background:#fff1f2;padding:6px;border-radius:5px}
+#adcDesignPanel input[type=file][hidden]{display:none!important}
+[data-background-target]{display:block;font-size:12px;font-weight:600;margin-bottom:6px}

@@ -112,3 +112,11 @@ html[data-theme=dark] #adcOfficialForm .adc-document-tools{background:#17263a}
 #adcOfficialForm .adc-prepared-date-picker{position:absolute;right:-12px;top:0;width:12px;min-width:0;height:100%;max-height:20px;padding:0;margin:0;border:0;background:transparent;color:#334155}
 #adcOfficialForm .adc-prepared-date-picker svg{display:block;width:11px;height:11px;fill:none;stroke:currentColor;stroke-width:1.4}
 #adcOfficialForm .adc-official-control:has(input[readonly]) .adc-prepared-date-picker{display:none}
+#adcOfficialForm .adc-prepared-repeat-tools{margin:.7rem 0;padding:.5rem;border:1px solid #b8c6d6;border-radius:.5rem}
+#adcOfficialForm .adc-prepared-repeat-tools>div{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin:.3rem 0}
+#adcOfficialForm .adc-prepared-repeat-tools .adc-official-row-actions,#adcOfficialForm .adc-prepared-repeat-tools [data-adc-repeat-add]{position:static;display:inline-flex;flex-wrap:wrap}
+#adcOfficialForm [data-adc-option-marker=underline] input{width:100%;height:100%}
+#adcOfficialForm [data-adc-option-marker=underline] input:checked{background:none!important;border-bottom:1.0667px solid #111;border-radius:0}
+#adcOfficialForm .adc-prepared-overflow-field>label{position:absolute!important;top:-18px;width:auto!important;height:auto!important;clip-path:none!important;white-space:normal!important;overflow:visible!important;font-size:11px}
+#adcOfficialForm .adc-prepared-overflow-field .adc-official-control :is(input,textarea){color:#141a21!important;background:white!important}
+#adcOfficialForm[data-adc-form-id=sr01] .adc-prepared-date-picker{right:0}

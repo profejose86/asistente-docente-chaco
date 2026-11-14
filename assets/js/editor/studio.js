@@ -24,11 +24,13 @@
   tabs.onkeydown=event=>{const keys=Object.keys(groups),current=keys.indexOf(panel.dataset.studioTab);if(!['ArrowRight','ArrowLeft','Home','End'].includes(event.key))return;event.preventDefault();event.stopPropagation();const index=event.key==='Home'?0:event.key==='End'?keys.length-1:(current+(event.key==='ArrowRight'?1:-1)+keys.length)%keys.length;openTab(keys[index]);tabButtons[keys[index]].focus();};
   panel.replaceChildren(top,tabs,content);
   const commit=original.find(node=>node.matches('[data-commit-local]'));
+  const commitFeedback=original.find(node=>node.matches('[data-commit-feedback]'));
   if(commit)top.insertBefore(commit,global);
   else{const unavailable=button('Commit to local','El guardado directo sólo funciona en la página local de tu PC.',()=>{},top);unavailable.disabled=true;unavailable.dataset.studioLocalDisabled='';top.insertBefore(unavailable,global);}
   const globalActs=new Set(['navigate','undo','redo']);
   for(const node of original){
    if(node===commit)continue;
+   if(node===commitFeedback){top.insertBefore(node,global);continue;}
    if(node.matches('[data-status]')){top.append(node);continue;}
    if(node.matches('br,strong'))continue;
    for(const item of [node,...node.querySelectorAll('[data-act]')])if(globalActs.has(item.dataset.act))global.append(item);
@@ -77,7 +79,7 @@
   },panes.plantillas);
   const history=document.createElement('details');history.className='adc-studio-history';history.innerHTML='<summary title="Ver las últimas acciones y volver al estado elegido.">Historial / Time travel</summary><div></div>';top.append(history);
   let historySignature='';
-  const labels={style:'Movimiento / tamaño / estilo',text:'Edición de texto',front:'Cambio de capa',preset:'Plantilla pedagógica',studioGuide:'Guía de referencia',theme:'Colores institucionales',duplicate:'Duplicación',hideOriginal:'Elemento ocultado',annotation:'Anotación',documentTransform:'Documento movido / escalado'};
+  const labels={placeholder:'Texto de sugerencia',studioLock:'Candado individual',studioLayer:'Orden de capas',studioFormat:'Formato visual',style:'Movimiento / tamaño / estilo',text:'Edición de texto',front:'Cambio de capa',preset:'Plantilla pedagógica',studioGuide:'Guía de referencia',theme:'Colores institucionales',duplicate:'Duplicación',hideOriginal:'Elemento ocultado',annotation:'Anotación',documentTransform:'Documento movido / escalado'};
   function updateHistory(){
    if(!api.history)return;const {operations,redo}=api.history(),all=[...operations,...redo.slice().reverse()],signature=operations.length+':'+all.length+':'+all.slice(-1).map(op=>op.kind+op.target);if(signature===historySignature)return;historySignature=signature;
    const list=history.querySelector('div');list.replaceChildren();const floor=api.baseline.length;
@@ -94,22 +96,50 @@
   const measures=document.createElement('output');badge.append(measures);
   const positionFields={};
   for(const key of ['x','y','width','height']){const label=document.createElement('label');label.textContent=({x:'X',y:'Y',width:'Ancho',height:'Alto'})[key];const input=document.createElement('input');input.type='number';input.step='.01';input.title='Ajusta '+label.textContent.toLowerCase()+' en las unidades elegidas.';input.setAttribute('aria-label','Inspector '+key);label.append(input);badge.append(label);positionFields[key]=input;input.onchange=()=>setMeasure(key,Number(input.value));}
-  const badgeColor=document.createElement('input');badgeColor.type='color';badgeColor.title='Color de fondo del elemento seleccionado';badgeColor.setAttribute('aria-label','Color del elemento');badgeColor.onchange=()=>{const n=api.selected();if(n)api.commit({kind:'style',target:api.keyFor(n),background:badgeColor.value});};badge.append(badgeColor);
-  button('Al frente','Lleva el elemento seleccionado por encima de las otras capas.',()=>{const n=api.selected();if(n)api.commit({kind:'front',target:api.keyFor(n),level:Math.min(5000,1+Math.max(500,...api.operations().filter(op=>op.kind==='front').map(op=>op.level)))});},badge);
-  button('Texto','Abre el editor de texto de la selección.',()=>{openTab('elementos');const formatting=panel.querySelector('#adcDesignFormatting');if(!formatting.hidden)formatting.open=true;},badge);
+  let copiedFormat=null,badgeTarget=null,dismissedTarget=null;
+  button('×','Oculta el inspector para seleccionar elementos que estén debajo; reaparece al cambiar la selección.',()=>{dismissedTarget=api.selected();badge.hidden=true;},badge).dataset.studioDismiss='';
+  const formatKeys=window.adcProjectLayoutData.studioAllowed.studioFormat;
+  const palette=document.createElement('details');palette.dataset.studioPalette='';const paletteTitle=document.createElement('summary');paletteTitle.textContent='Colores';paletteTitle.title='Paleta institucional para fondo, borde y texto';palette.append(paletteTitle);badge.append(palette);
+  const paintTarget=selectControl('Pintar',[['backgroundColor','Fondo'],['borderColor','Borde'],['color','Texto']],()=>{},palette);
+  function paintColor(value){const n=api.selected();if(!n)return;const op={kind:'studioFormat',target:api.keyFor(n),[paintTarget.value]:value};if(paintTarget.value==='borderColor'){op.borderStyle='solid';op.borderWidth=getComputedStyle(n).borderWidth==='0px'?'1px':getComputedStyle(n).borderWidth;}api.commit(op);updateBadge();}
+  for(const [label,value] of [['Azul ADC','#2453a3'],['Cian','#23b5d3'],['Naranja','#d9822b'],['Gris','#e5e7eb'],['Negro','#000000']]){const swatch=button(label,'Aplicar '+label.toLowerCase()+' al destino elegido',()=>paintColor(value),palette);swatch.style.borderBottom='5px solid '+value;swatch.dataset.studioSwatch=value;}
+  const badgeColor=document.createElement('input');badgeColor.type='color';badgeColor.title='Elegir otro color para fondo, borde o texto';badgeColor.setAttribute('aria-label','Color del elemento');badgeColor.onchange=()=>paintColor(badgeColor.value);palette.append(badgeColor);
+  function layer(direction){const n=api.selected();if(!n)return;const siblings=[...n.parentElement.children].filter(item=>!P().isUi(item));const levels=siblings.map(item=>parseInt(getComputedStyle(item).zIndex)||0);const level=direction==='front'?Math.min(5000,Math.max(500,...levels)+1):Math.max(0,Math.min(...levels)-1);api.commit({kind:'studioLayer',target:api.keyFor(n),direction,level});updateBadge();}
+  const frontButton=button('Al frente','Traer al frente dentro del contenedor; conserva IDs y enlaces de datos.',()=>layer('front'),badge);frontButton.dataset.studioLayer='front';
+  const backButton=button('Al fondo','Llevar al fondo dentro del contenedor; conserva IDs y enlaces de datos.',()=>layer('back'),badge);backButton.dataset.studioLayer='back';
+  const lockButton=button('Bloquear','Impide mover, deformar o editar esta caja hasta desbloquearla.',()=>{const n=api.selected();if(n)api.commit({kind:'studioLock',target:api.keyFor(n),locked:!n.hasAttribute('data-adc-studio-locked')});updateBadge();},badge);lockButton.dataset.studioLock='';
+  button('Copiar estilo','Copia colores, fuente y bordes. No copia datos, medidas, IDs ni acciones.',()=>{const n=api.selected();if(!n)return;const computed=getComputedStyle(n);copiedFormat=Object.fromEntries(formatKeys.map(key=>[key,computed[key]]));say('Estilo copiado. Seleccioná otra caja y pulsá Pegar estilo.');updateBadge();},badge).dataset.studioCopyStyle='';
+  const pasteStyle=button('Pegar estilo','Aplica el estilo copiado a la selecci\u00f3n; Deshacer revierte el cambio.',()=>{const n=api.selected();if(n&&copiedFormat)api.commit({kind:'studioFormat',target:api.keyFor(n),...copiedFormat});updateBadge();},badge);pasteStyle.dataset.studioPasteStyle='';
+  button('Texto','Edita este texto directamente en la página. Enter o clic afuera aplica; Esc cancela.',()=>{if(!window.adcStudioText.begin(api.selected()))say('Seleccioná un texto sin campos ni controles internos.');},badge);
+  const duplicateButton=button('Duplicar','Crea una copia visual con sus clases y estilos, sin copiar acciones de trámites. Atajo: Ctrl+D.',duplicateSelection,badge);duplicateButton.dataset.studioDuplicate='';
+  function duplicateSelection(){
+   window.adcStudioText.finish();const node=api.selected();
+   if(!P().canDuplicate(node)){say('No se duplican formularios, campos de datos ni contenedores protegidos.');return;}
+   const id=P().uid();if(api.commit({kind:'duplicate',target:api.keyFor(node),id})){api.select(api.resolve(id));say('Copia creada y seleccionada. Conserva clases y estilos; los botones copiados no ejecutan trámites.');}
+  }
   document.body.append(badge);
+  window.addEventListener('contextmenu',()=>{
+   const menu=document.getElementById('adcDesignContext');if(!menu||menu.hidden||panel.hidden)return;
+   button('Traer al frente','Cambia la capa dentro del contenedor actual.',()=>{layer('front');menu.hidden=true;},menu);
+   button('Llevar al fondo','Cambia la capa dentro del contenedor actual.',()=>{layer('back');menu.hidden=true;},menu);
+  });
   const factor=node=>{const r=node.getBoundingClientRect();return {x:r.width/(node.offsetWidth||r.width)||1,y:r.height/(node.offsetHeight||r.height)||1};};
   function updateBadge(){
-   const n=api.selected();if(panel.hidden||!n?.isConnected||!n.getClientRects().length){badge.hidden=true;return;}
+   const n=api.selected();if(dismissedTarget&&dismissedTarget!==n)dismissedTarget=null;if(panel.hidden||dismissedTarget===n||!['','size'].includes(api.tool())||window.adcStudioText?.isEditing()||!n?.isConnected||!n.getClientRects().length){badge.hidden=true;return;}
+   if(badgeTarget!==n){palette.open=false;badgeTarget=n;}
    const r=n.getBoundingClientRect(),unit=units.value,conversion=unit==='cm'?P().pxPerCm:1;badge.hidden=false;
+   const locked=P().locked(n);duplicateButton.disabled=locked||!P().canDuplicate(n);pasteStyle.disabled=locked||!copiedFormat;frontButton.disabled=backButton.disabled=locked||P().anchored(n);lockButton.textContent=n.hasAttribute('data-adc-studio-locked')?'🔓 Desbloquear':'🔒 Bloquear';lockButton.setAttribute('aria-pressed',String(n.hasAttribute('data-adc-studio-locked')));badge.dataset.locked=String(locked);
    measures.textContent=(P().anchored(n)?'🔒 Estructura protegida · ':'')+(r.width/conversion).toFixed(2)+' × '+(r.height/conversion).toFixed(2)+' '+unit;
-   const values={x:r.left+scrollX,y:r.top+scrollY,width:r.width,height:r.height};for(const [key,input] of Object.entries(positionFields)){if(document.activeElement!==input)input.value=(values[key]/conversion).toFixed(2);input.disabled=P().anchored(n);}
-   let left=Math.max(8,Math.min(innerWidth-badge.offsetWidth-8,r.left)),top=Math.max(8,Math.min(innerHeight-badge.offsetHeight-8,r.top>badge.offsetHeight+16?r.top-badge.offsetHeight-8:r.bottom+8));
-   const area=panel.getBoundingClientRect();if(left<area.right&&left+badge.offsetWidth>area.left&&top<area.bottom&&top+badge.offsetHeight>area.top){if(area.right+badge.offsetWidth+16<innerWidth)left=area.right+8;else top=Math.min(innerHeight-badge.offsetHeight-8,area.bottom+8);}
-   badge.style.left=left+'px';badge.style.top=top+'px';
+   const values={x:r.left+scrollX,y:r.top+scrollY,width:r.width,height:r.height};for(const [key,input] of Object.entries(positionFields)){if(document.activeElement!==input)input.value=(values[key]/conversion).toFixed(2);input.disabled=P().anchored(n)||P().locked(n);}
+   const anchor=(n.closest('.adc-interactive-card,.adc-design-created')||n).getBoundingClientRect(),area=panel.getBoundingClientRect(),w=badge.offsetWidth,h=badge.offsetHeight;
+   const candidates=[[anchor.left,anchor.top-h-8],[anchor.left,anchor.bottom+8],[anchor.right+8,anchor.top],[anchor.left-w-8,anchor.top]].map(([x,y])=>{const left=Math.max(8,Math.min(innerWidth-w-8,x)),top=Math.max(8,Math.min(innerHeight-h-8,y));return {left,top,right:left+w,bottom:top+h};});
+   const overlaps=(a,b)=>a.left<b.right&&a.right>b.left&&a.top<b.bottom&&a.bottom>b.top;
+   const scan=[];for(let y=8;y+h<=innerHeight-8;y+=32)for(let x=8;x+w<=innerWidth-8;x+=32)scan.push({left:x,top:y,right:x+w,bottom:y+h});
+   const position=candidates.find(box=>!overlaps(box,anchor)&&!overlaps(box,area))||scan.find(box=>!overlaps(box,anchor)&&!overlaps(box,area))||scan.find(box=>!overlaps(box,area))||candidates[0];
+   badge.style.left=position.left+'px';badge.style.top=position.top+'px';
   }
   function setMeasure(key,value){
-   const n=api.selected();if(!n||!Number.isFinite(value)||P().anchored(n))return;const r=n.getBoundingClientRect(),scale=factor(n),pixels=value*(units.value==='cm'?P().pxPerCm:1),op={kind:'style',target:api.keyFor(n)};
+   const n=api.selected();if(!n||!Number.isFinite(value)||P().anchored(n)||P().locked(n))return;const r=n.getBoundingClientRect(),scale=factor(n),pixels=value*(units.value==='cm'?P().pxPerCm:1),op={kind:'style',target:api.keyFor(n),space:'local'};
    if(key==='x'||key==='y'){op.x=key==='x'?(pixels-r.left-scrollX)/scale.x:0;op.y=key==='y'?(pixels-r.top-scrollY)/scale.y:0;}else op[key]=pixels/scale[key==='width'?'x':'y'];
    api.commit(op);updateBadge();
   }
@@ -133,9 +163,11 @@
    iframe.srcdoc='<!doctype html><html lang="es" data-theme="'+document.documentElement.dataset.theme+'" style="'+document.documentElement.style.cssText.replaceAll('"','&quot;')+'"'+(document.documentElement.hasAttribute('data-adc-brand-theme')?' data-adc-brand-theme':'')+'><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><base href="'+location.href.replaceAll('"','&quot;')+'">'+head+'</head>'+source.outerHTML+'</html>';
    scroller.append(iframe);modal.append(scroller);document.body.append(modal);modal.showModal();
   }
-  const ui={openTab,button,units:()=>units.value,active:()=>!panel.hidden,direct:()=>direct.querySelector('input').checked,snap:()=>snap.querySelector('input').checked,updateBadge,factor,host};
-  window.adcStudioDirect?.attach(api,ui);window.adcStudioGuides?.attach(api,ui);
+  const ui={openTab,button,units:()=>units.value,active:()=>!panel.hidden,direct:()=>direct.querySelector('input').checked,snap:()=>snap.querySelector('input').checked,updateBadge,factor,host,duplicate:duplicateSelection};
+  palette.addEventListener('toggle',updateBadge);
+  window.adcStudioText.attach(api,ui);window.adcStudioDirect?.attach(api,ui);window.adcStudioGuides?.attach(api,ui);
   window.addEventListener('adc:studio-selection',updateBadge);window.addEventListener('scroll',updateBadge,true);window.addEventListener('resize',updateBadge);
+  window.addEventListener('adc:studio-text-start',updateBadge);window.addEventListener('adc:studio-text-end',updateBadge);
   new MutationObserver(()=>{updateBadge();updateHistory();}).observe(panel,{attributes:true,attributeFilter:['hidden']});
   updateHistory();tooltip(panel);
  }

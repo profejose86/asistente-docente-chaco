@@ -59,14 +59,14 @@
       return ()=>before===null?node.removeAttribute('src'):node.setAttribute('src',before);
     }
     if(op.kind!=='image'||!node.matches('main,section,article,aside,div,header,footer')||!validSource(op.src)||!/^new-[a-z0-9-]+$/i.test(op.id||''))return;
-    if(![op.left,op.top,op.width,op.height].every(value=>Number.isFinite(value)&&Math.abs(value)<=5000)||op.width<24||op.height<20)return;
+    if(![op.left,op.top,op.width,op.height].every(value=>Number.isFinite(value)&&Math.abs(value)<=5000)||op.width<(op.unit==='percent'?.01:24)||op.height<(op.unit==='percent'?.01:20))return;
     const wrapper=document.createElement('div'),image=document.createElement('img');
     wrapper.className='adc-design-created adc-design-image';image.src=op.src;image.alt=String(op.alt||'Imagen agregada').slice(0,180);image.draggable=false;
     Object.assign(wrapper.style,{position:'absolute',left:op.left+'px',top:op.top+'px',width:op.width+'px',height:op.height+'px',zIndex:'5'});
     Object.assign(image.style,{display:'block',width:'100%',height:'100%',objectFit:'contain',pointerEvents:'none'});
     const position=node.style.position;
     if(getComputedStyle(node).position==='static')node.style.position='relative';
-    wrapper.append(image);register(wrapper,op.id);register(image,op.id+'/0');node.append(wrapper);
+    wrapper.append(image);register(wrapper,op.id);register(image,op.id+'/0');node.append(wrapper);if(op.unit==='percent')window.adcDocumentBackground.place(wrapper,op);
     return ()=>{wrapper.remove();node.style.position=position;};
   }
   function attach(api){
@@ -74,14 +74,14 @@
     const designButton=target=>target instanceof Element?target.closest('button,[role="button"],input[type="button"],input[type="submit"]'):null;
     const freeEdit=()=>!panel.hidden&&['','size'].includes(api.tool());
     window.addEventListener('click',event=>{
-      if(freeEdit()&&designButton(event.target)&&!event.target.closest('#adcDesignPanel,#adcDesignGear,#adcDesignContext')){
+      if(freeEdit()&&designButton(event.target)&&!event.target.closest('#adcDesignPanel,#adcDesignGear,#adcDesignContext,[data-adc-studio-ui]')){
         event.preventDefault();event.stopImmediatePropagation();
         say('Doble clic para seleccionar y ajustar el botón. Para usarlo normalmente, cerrá Ajustes.');
       }
     },true);
     window.addEventListener('dblclick',event=>{
       const node=designButton(event.target);
-      if(!freeEdit()||!node||node.closest('#adcDesignPanel,#adcDesignGear,#adcDesignContext'))return;
+      if(!freeEdit()||!node||node.closest('#adcDesignPanel,#adcDesignGear,#adcDesignContext,[data-adc-studio-ui]'))return;
       event.preventDefault();event.stopImmediatePropagation();
       api.select(node);api.setTool('size');say('Botón seleccionado. Arrastrá para moverlo o usá sus bordes para ajustar el tamaño. Se permiten solapamientos.');
     },true);
@@ -179,7 +179,7 @@
     const node=resolve(op.target),page=node?.closest('.adc-design-pdf-page');
     if(node?.matches('.adc-design-pdf')&&op.kind==='style'){op={...op};delete op.height;}
     if(op.kind==='image')return op; // El trazado de imágenes ya convierte la escala del contenedor.
-    if(!page)return op;
+    if(!page||op.unit==='percent'||op.kind==='relativeBox'||op.kind==='backgroundOffset')return op;
     const scale=Number(page.dataset.adcPdfScale)||1;
     const result={...op};
     for(const key of ['left','top','width','height','x','y','x1','y1','x2','y2'])if(typeof result[key]==='number')result[key]/=scale;
@@ -192,5 +192,5 @@
     observer.observe(document.body,{childList:true,subtree:true});
     return ()=>{observer.disconnect();reverse?.();};
   }
-  window.adcVisualElements={apply,attach,validSource,normalize,defer};
+  window.adcVisualElements={apply,attach,validSource,normalize,defer,openPdf};
 })();

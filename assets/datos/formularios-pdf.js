@@ -1,6 +1,61 @@
 // Configuración de documentos originales y coordenadas de sus controles.
 // Solo los formularios registrados aquí utilizan este modo; los demás conservan su implementación.
 window.adcPreparedPdfForms = Object.freeze({
+  sr01: Object.freeze({
+    pdf:'assets/formularios/SR-01.pdf',
+    pages:[{image:'assets/formularios/SR-01-pagina-1.png',width:612,height:1008}],
+    stage:'editable',
+    sha256:'ec47028ba244717fdf2cc996c08d8fd386261ba2d929d7c320493ce1cb806f54',
+    source:'assets/formularios/SR-01.pdf',
+    sourceLabel:'Ver PDF original de SR-01',
+    institutionField:'reparticion',
+    note:'PDF aportado por el usuario. Nueve columnas de licencias; la respuesta y las firmas corresponden a sus responsables.',
+    repeats:{licenciasPrevias:{slots:9}},
+    fields:{
+      reparticion:{x:159,top:140,width:367,height:14,fontSize:10,institution:'name'},
+      lugar:{x:333,top:161,width:104,height:14,fontSize:10},
+      fecha:{x:441,top:161,width:85,height:14,fontSize:10,dateFormat:'dmy'},
+      establecimientoSanitario:{x:332,top:225,width:194,height:14,fontSize:10},
+      apellido:{x:126,top:290,width:124,height:14,fontSize:10},
+      nombres:{x:251,top:290,width:126,height:14,fontSize:10},
+      dni:{x:419,top:290,width:104,height:14,fontSize:10},
+      domicilio:{x:163,top:312,width:361,height:14,fontSize:10},
+      zonaResidencia:{x:284,top:333,width:241,height:14,fontSize:10},
+      revista:{x:211,top:348,width:209,height:18,options:[{value:'Titular',x:214,top:352},{value:'Interino',x:306,top:352},{value:'Suplente',x:406,top:351}]},
+      inasistenciaDesde:{x:172,top:376,width:213,height:14,fontSize:10,dateFormat:'dmy'},
+      tipoConsulta:{x:72,top:398,width:230,height:57,options:[{value:'Consultorio',x:295,top:401},{value:'Domicilio / internación',x:73,top:423},{value:'Fuera del lugar de residencia',x:73,top:444}]},
+      consultorio:{x:448,top:398,width:78,height:14,fontSize:10},
+      lugarConsulta:{x:230,top:419,width:296,height:14,fontSize:10},
+      lugarFueraResidencia:{x:277,top:441,width:248,height:14,fontSize:10},
+      familiarNombre:{x:283,top:462,width:241,height:14,fontSize:10},
+      familiarParentesco:{x:323,top:484,width:201,height:14,fontSize:10},
+      familiarLugar:{x:295,top:505,width:228,height:14,fontSize:10},
+      ...Object.fromEntries([147.35,188.55,231.25,274.3,319.55,363.9,405.95,448.85,492.55].flatMap((x,index)=>{
+        const right=[188.55,231.25,274.3,319.55,363.9,405.95,448.85,492.55,535.6][index];
+        return [[`licenciasPrevias.${index}.dias`,{x:x+1,top:572,width:right-x-2,height:15,fontSize:10}],
+          [`licenciasPrevias.${index}.motivo`,{x:x+1,top:590,width:right-x-2,height:21,fontSize:8.5,multiline:true}]];
+      })),
+      ...Object.fromEntries([9,10,11].flatMap(index=>[
+        [`licenciasPrevias.${index}.dias`,{x:85,top:1040+(index-9)*52,width:65,height:18,fontSize:10,overflow:true}],
+        [`licenciasPrevias.${index}.motivo`,{x:170,top:1040+(index-9)*52,width:350,height:26,fontSize:10,multiline:true,overflow:true}]
+      ])),
+      firmaSolicitante:{x:383,top:635,width:139,height:17,fontSize:10},
+      establecimientoRespuesta:{x:252,top:685,width:274,height:14,fontSize:10},
+      lugarRespuesta:{x:325,top:718,width:112,height:14,fontSize:10},
+      fechaExamen:{x:441,top:718,width:85,height:14,fontSize:10},
+      examenRealizado:{x:398,top:754,width:52,height:16,options:[{value:'Sí',x:401,top:757},{value:'No',x:436,top:757}]},
+      examinado:{x:204,top:783,width:150,height:14,fontSize:10},
+      documentoExaminado:{x:392,top:783,width:128,height:14,fontSize:10},
+      licenciaJustificada:{x:93,top:802,width:54,height:12,options:[{value:'Sí',x:94,top:802,width:10,height:12,marker:'underline'},{value:'No',x:134,top:802,width:15,height:12,marker:'underline'}]},
+      motivoJustificacion:{x:280,top:801,width:110,height:14,fontSize:10},
+      licenciaDesde:{x:431,top:801,width:94,height:14,fontSize:10,dateFormat:'dmy'},
+      licenciaHasta:{x:121,top:818,width:141,height:14,fontSize:10,dateFormat:'dmy'},
+      diasCorridos:{x:279,top:818,width:180,height:14,fontSize:10},
+      noJustificada:{x:196,top:835,width:330,height:14,fontSize:10},
+      noJustificadaContinuacion:{x:86,top:853,width:439,height:14,fontSize:10},
+      firmaMedico:{x:348,top:886,width:174,height:17,fontSize:10}
+    }
+  }),
   dp01: Object.freeze({
     pdf: 'assets/formularios/DP-01.pdf',
     pages: [{ image: 'assets/formularios/DP-01-pagina-1.png', width: 612, height: 1008 }],

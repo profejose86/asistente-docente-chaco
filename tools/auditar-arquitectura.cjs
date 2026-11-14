@@ -1,7 +1,7 @@
 // Inventario reproducible del código propio. Nunca lee .env, perfiles ni respaldos.
 const fs=require('node:fs'),path=require('node:path'),crypto=require('node:crypto');
 const defaultRoot=path.resolve(__dirname,'..');
-const ignored=new Set(['.git','.adc-tools','node_modules','dist','tmp','output']);
+const ignored=new Set(['.git','.adc-tools','node_modules','dist','tmp','output','materiales']);
 const textExtensions=new Set(['.js','.cjs','.css','.html','.json','.md','.sql','.yml','.cmd','.py']);
 function audit(root=defaultRoot){
  const files=[];

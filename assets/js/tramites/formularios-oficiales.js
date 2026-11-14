@@ -98,7 +98,7 @@
     const property=preparedDocument()?.fields?.[field.path||field.key]?.institution;
     if(!property)return '';
     const known=inst.filter(item=>item.name?.trim());
-    const school=known.find(item=>normalized(item.name)===normalized(values.establecimiento))||(known.length===1?known[0]:null);
+    const school=known.find(item=>normalized(item.name)===normalized(values[preparedDocument()?.institutionField||'establecimiento']))||(known.length===1?known[0]:null);
     return String(school?.[property]||'');
   }
   function presented(field, value) {
@@ -388,7 +388,7 @@
       }
       group.append(row);
     }
-    const max = Math.max(0,Number(field.maxRows) || 50);
+    const max = preparedDocument()?.repeats?.[field.key]?.slots || Math.max(0,Number(field.maxRows) || 50);
     if (count < max) {
       const add = document.createElement('button');
       add.type = 'button';
@@ -407,7 +407,9 @@
   }
   function renderFields() {
     if (!activeForm) return;
+    const openRepeatTools=new Set([...section.querySelectorAll('.adc-prepared-repeat-tools[open]')].map(node=>node.dataset.preparedRepeat));
     sheet.replaceChildren();
+    section.querySelectorAll('.adc-prepared-repeat-tools').forEach(node=>node.remove());
     if (preparedReadOnly()) {
       layoutDocument();
       section.querySelector('[data-adc-profile-conflicts]').replaceChildren();
@@ -429,12 +431,20 @@
       grid.className = 'fields';
       for (const field of group.fields) {
         if (!available(field,field.key)) continue;
-        if (preparedDocument()?.fields && !preparedDocument().fields[field.key]) continue;
+        if (preparedDocument()?.fields && !preparedDocument().fields[field.key] && !(field.type==='repeat'&&preparedDocument().repeats?.[field.key])) continue;
         if (field.type === 'repeat') renderRepeat(field,grid);
         else renderSimpleField(field,field.key,grid);
       }
       sectionFields.append(grid);
       sheet.append(sectionFields);
+    }
+    for(const [key,settings] of Object.entries(preparedDocument()?.repeats||{})){
+      const tools=document.createElement('details');tools.className='adc-prepared-repeat-tools';tools.dataset.preparedRepeat=key;tools.open=openRepeatTools.has(key);
+      const summary=document.createElement('summary');summary.textContent=`Organizar licencias previas (${settings.slots} columnas del PDF)`;tools.append(summary);
+      for(const row of sheet.querySelectorAll('[data-adc-repeat-row]'))if(row.dataset.adcRepeatRow.startsWith(key+'.')){
+        const controls=row.querySelector('.adc-official-row-actions'),wrap=document.createElement('div'),label=document.createElement('span');label.textContent='Columna '+(Number(row.dataset.adcRepeatRow.split('.').at(-1))+1);wrap.append(label,controls);tools.append(wrap);
+      }
+      const add=[...sheet.querySelectorAll('[data-adc-repeat-add]')].find(node=>node.dataset.adcRepeatAdd===key);if(add)tools.append(add);viewport.before(tools);
     }
     for (const field of formFields()) updateMnc(field.path,field);
     layoutDocument();
@@ -510,7 +520,7 @@
     }
     const previousPages = new Map([...sheet.querySelectorAll('.adc-document-page')].map(canvas => [Number(canvas.dataset.adcPage),canvas]));
     sheet.querySelectorAll('.adc-document-continuation').forEach(element => element.remove());
-    const totalHeight = documentLayout.pages.length*(documentLayout.height+paperGap)-paperGap;
+    const totalHeight = documentLayout.pages.length*(documentLayout.height+paperGap)-paperGap+(documentLayout.extraHeight||0);
     Object.assign(sheet.style,{width:`${documentLayout.width*pointToPixel}px`,height:`${totalHeight*pointToPixel}px`});
     documentLayout.pages.forEach((commands,index) => {
       const ratio = Math.min(2,Math.max(1.5,window.devicePixelRatio || 1));
@@ -562,11 +572,13 @@
       const wrapper = [...sheet.querySelectorAll('[data-adc-field-wrapper]')].find(element => element.dataset.adcFieldWrapper === box.field.path);
       if (!wrapper) continue;
       wrapper.classList.add('adc-document-field');
+      wrapper.classList.toggle('adc-prepared-overflow-field',Boolean(box.overflow));
       place(wrapper,box);
       if (prepared?.fields && box.options) {
         const labels=wrapper.querySelectorAll('.adc-official-options label');
         box.options.forEach((option,index)=>{const label=labels[index];if(!label)return;
-          Object.assign(label.style,{top:`${(option.top-box.top)*pointToPixel}px`,left:`${(option.x-box.x)*pointToPixel}px`,width:'13.333px',height:'13.333px',padding:'0'});
+          Object.assign(label.style,{top:`${(option.top-box.top)*pointToPixel}px`,left:`${(option.x-box.x)*pointToPixel}px`,width:`${(option.width||10)*pointToPixel}px`,height:`${(option.height||10)*pointToPixel}px`,padding:'0'});
+          if(option.marker)label.dataset.adcOptionMarker=option.marker;else delete label.dataset.adcOptionMarker;
           label.querySelector('input').setAttribute('aria-label',`${box.field.label}: ${option.value}`);
           label.querySelector('span').textContent='';
         });
@@ -649,7 +661,7 @@
   function syncPreparedInstitution() {
     const template=preparedDocument();if(!template?.fields)return false;
     const known=inst.filter(school=>school.name?.trim());
-    const name=String(values.establecimiento||'');
+    const name=String(values[template.institutionField||'establecimiento']||'');
     const school=known.find(item=>normalized(item.name)===normalized(name))||(!name&&known.length===1?known[0]:null);
     if(!school)return false;
     let changed=false;
@@ -1139,7 +1151,7 @@
       button.textContent = preparedReadOnly() ? 'Descargar PDF' : 'Descargar PDF Completado';
     });
     if (prepared) {
-      description.textContent = 'Prueba de la pantalla común: PDF preparado en su diseño original. Los campos editables, la precarga y las preguntas se configurarán después de aprobar esta base.';
+      description.textContent = prepared.fields?'PDF original con campos editables. Verificá los datos del Perfil Docente y completá lo que corresponda.':'Prueba de la pantalla común: PDF preparado en su diseño original. Los campos editables, la precarga y las preguntas se configurarán después de aprobar esta base.';
       if(prepared.fields)description.textContent='Verificá los datos precargados del Perfil Docente y completá el documento original. Los cambios y las marcas MNC se guardan en este dispositivo.';
       if(preparedReadOnly())notices.replaceChildren();
       const note = document.createElement('p');
@@ -1159,7 +1171,7 @@
     sourceLink.textContent = form.sourceUrl ? 'Consultar documento oficial' : 'Consultar formularios y planillas oficiales';
     if (prepared) {
       sourceLink.href = prepared.source;
-      sourceLink.textContent = 'Ver carpeta de origen en Drive';
+      sourceLink.textContent = prepared.sourceLabel || 'Ver carpeta de origen en Drive';
     }
     preview.replaceChildren();
     preview.hidden = true;

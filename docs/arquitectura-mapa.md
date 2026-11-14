@@ -19,10 +19,13 @@ Scripts en orden de carga:
 - `assets/js/editor/ajustes-proyecto-datos.js`
 - `assets/js/editor/documentos.js`
 - `assets/js/editor/elementos.js`
+- `assets/js/editor/documento-fondo.js`
 - `assets/js/editor/puente-local.js`
 - `assets/js/editor/ajustes-proyecto.js`
 - `assets/js/editor/studio-politicas.js`
 - `assets/js/editor/studio-operaciones.js`
+- `assets/js/editor/studio-texto.js`
+- `assets/js/editor/studio-alineacion.js`
 - `assets/js/editor/studio-directo.js`
 - `assets/js/editor/studio-guias.js`
 - `assets/js/editor/studio.js`
@@ -89,10 +92,13 @@ Scripts en orden de carga:
 - `assets/js/editor/ajustes-proyecto-datos.js`
 - `assets/js/editor/documentos.js`
 - `assets/js/editor/elementos.js`
+- `assets/js/editor/documento-fondo.js`
 - `assets/js/editor/puente-local.js`
 - `assets/js/editor/ajustes-proyecto.js`
 - `assets/js/editor/studio-politicas.js`
 - `assets/js/editor/studio-operaciones.js`
+- `assets/js/editor/studio-texto.js`
+- `assets/js/editor/studio-alineacion.js`
 - `assets/js/editor/studio-directo.js`
 - `assets/js/editor/studio-guias.js`
 - `assets/js/editor/studio.js`
@@ -154,9 +160,9 @@ Hojas de estilo en orden de carga:
 | --- | ---: | ---: |
 | `assets/datos/config-publica.js` | 3 | 0 |
 | `assets/datos/escuelas-chaco.js` | 2 | 0 |
-| `assets/datos/formularios-pdf.js` | 58 | 0 |
+| `assets/datos/formularios-pdf.js` | 113 | 0 |
 | `assets/js/acceso/autenticacion.js` | 56 | 3 |
-| `assets/js/acceso/editor.js` | 962 | 34 |
+| `assets/js/acceso/editor.js` | 956 | 34 |
 | `assets/js/acceso/efectos.js` | 33 | 4 |
 | `assets/js/acceso/ingreso.js` | 59 | 2 |
 | `assets/js/acceso/marca.js` | 12 | 0 |
@@ -169,23 +175,26 @@ Hojas de estilo en orden de carga:
 | `assets/js/core/mnc.js` | 72 | 7 |
 | `assets/js/core/validacion-guiada.js` | 139 | 11 |
 | `assets/js/documentos/acciones.js` | 16 | 3 |
-| `assets/js/documentos/pdf-campos.js` | 65 | 2 |
+| `assets/js/documentos/pdf-campos.js` | 72 | 2 |
 | `assets/js/documentos/pdf-utilidades.js` | 28 | 6 |
 | `assets/js/documentos/plantillas-dl01.js` | 3 | 0 |
 | `assets/js/editor/acceso-ajustes.js` | 41 | 3 |
-| `assets/js/editor/ajustes-proyecto-datos.js` | 58 | 3 |
-| `assets/js/editor/ajustes-proyecto.js` | 133 | 4 |
+| `assets/js/editor/ajustes-proyecto-datos.js` | 68 | 3 |
+| `assets/js/editor/ajustes-proyecto.js` | 134 | 4 |
 | `assets/js/editor/comun.js` | 91 | 8 |
-| `assets/js/editor/documentos.js` | 96 | 4 |
-| `assets/js/editor/editor.js` | 1053 | 38 |
+| `assets/js/editor/documento-fondo.js` | 90 | 13 |
+| `assets/js/editor/documentos.js` | 101 | 4 |
+| `assets/js/editor/editor.js` | 1047 | 38 |
 | `assets/js/editor/elementos.js` | 197 | 6 |
 | `assets/js/editor/modo-local.js` | 3 | 0 |
-| `assets/js/editor/puente-local.js` | 28 | 1 |
-| `assets/js/editor/studio-directo.js` | 105 | 6 |
-| `assets/js/editor/studio-guias.js` | 36 | 2 |
-| `assets/js/editor/studio-operaciones.js` | 54 | 3 |
-| `assets/js/editor/studio-politicas.js` | 22 | 2 |
-| `assets/js/editor/studio.js` | 144 | 11 |
+| `assets/js/editor/puente-local.js` | 31 | 2 |
+| `assets/js/editor/studio-alineacion.js` | 53 | 5 |
+| `assets/js/editor/studio-directo.js` | 98 | 5 |
+| `assets/js/editor/studio-guias.js` | 38 | 3 |
+| `assets/js/editor/studio-operaciones.js` | 81 | 3 |
+| `assets/js/editor/studio-politicas.js` | 28 | 2 |
+| `assets/js/editor/studio-texto.js` | 74 | 3 |
+| `assets/js/editor/studio.js` | 176 | 14 |
 | `assets/js/interfaz/espacio-trabajo.js` | 91 | 3 |
 | `assets/js/interfaz/inicio-local.js` | 10 | 0 |
 | `assets/js/interfaz/navegacion.js` | 13 | 5 |
@@ -218,11 +227,11 @@ Hojas de estilo en orden de carga:
 | `assets/js/tramites/dl01-interfaz.js` | 115 | 2 |
 | `assets/js/tramites/dl01-pdf.js` | 211 | 11 |
 | `assets/js/tramites/dl01-reglas.js` | 108 | 14 |
-| `assets/js/tramites/formularios-oficiales-datos.js` | 1273 | 0 |
-| `assets/js/tramites/formularios-oficiales.js` | 1230 | 49 |
+| `assets/js/tramites/formularios-oficiales-datos.js` | 1275 | 0 |
+| `assets/js/tramites/formularios-oficiales.js` | 1242 | 49 |
 | `assets/js/tramites/mnc-adaptadores.js` | 49 | 1 |
 | `assets/js/tramites/ol01.js` | 441 | 31 |
-| `assets/js/tramites/sc01.js` | 744 | 26 |
+| `assets/js/tramites/sc01.js` | 745 | 26 |
 | `assets/js/tramites/solicitudes.js` | 120 | 7 |
 | `supabase/migrations/202611130001_adc_tester_profiles.sql` | 36 | 0 |
 | `tests/acceso-ajustes.test.cjs` | 33 | 0 |
@@ -230,23 +239,28 @@ Hojas de estilo en orden de carga:
 | `tests/arquitectura.test.cjs` | 20 | 0 |
 | `tests/cursos.test.cjs` | 32 | 0 |
 | `tests/dl01-interfaz.test.cjs` | 161 | 0 |
-| `tests/editor-botones.test.cjs` | 49 | 0 |
+| `tests/documento-fondo.test.cjs` | 34 | 4 |
+| `tests/editor-botones.test.cjs` | 51 | 0 |
 | `tests/editor-comun.test.cjs` | 21 | 0 |
 | `tests/editor-documentos.test.cjs` | 46 | 0 |
 | `tests/editor-elementos.test.cjs` | 77 | 0 |
+| `tests/editor-herramientas.test.cjs` | 48 | 3 |
 | `tests/formularios-oficiales.test.cjs` | 672 | 1 |
 | `tests/geografia.test.cjs` | 60 | 0 |
 | `tests/ingreso.test.cjs` | 63 | 0 |
 | `tests/local-editor-bridge.test.cjs` | 40 | 0 |
-| `tests/local-editor-ui.test.cjs` | 36 | 0 |
+| `tests/local-editor-ui.test.cjs` | 45 | 0 |
 | `tests/mbit.test.cjs` | 145 | 0 |
 | `tests/ol01-interfaz.test.cjs` | 63 | 0 |
 | `tests/ol01-perfil.test.cjs` | 54 | 1 |
 | `tests/pdf-blank-line.test.cjs` | 23 | 0 |
 | `tests/pdf-campos.test.cjs` | 33 | 0 |
 | `tests/publicacion.test.cjs` | 29 | 0 |
-| `tests/studio-contrato.test.cjs` | 17 | 0 |
-| `tests/studio.test.cjs` | 58 | 1 |
+| `tests/sr01-pdf.test.cjs` | 28 | 1 |
+| `tests/studio-alineacion.test.cjs` | 12 | 0 |
+| `tests/studio-contrato.test.cjs` | 26 | 0 |
+| `tests/studio-inplace.test.cjs` | 54 | 2 |
+| `tests/studio.test.cjs` | 59 | 1 |
 | `tests/supabase-auth.test.cjs` | 68 | 0 |
 | `tests/supabase-config.test.cjs` | 13 | 0 |
 | `tests/supabase-management.test.cjs` | 21 | 0 |

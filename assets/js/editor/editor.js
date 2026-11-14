@@ -256,10 +256,12 @@
      const x=host.left+op.left-r.left,y=host.top+op.top-r.top;
      added.style.translate=x+'px '+y+'px';added.dataset.adcDesignX=x;added.dataset.adcDesignY=y;
    }
+   if(op.unit==='percent')window.adcDocumentBackground.place(added,op);
    return () => added.remove();
  }
  function commit(op) {
    if(window.adcStudioPolicy&&!window.adcStudioPolicy.allows(op,resolve)){say('Estructura protegida: los campos oficiales de DJ-01, DJ-02 y DL-01 no se mueven ni se eliminan. Pod?s agregar notas y burbujas.');return false;}
+   op=window.adcDocumentBackground?.normalize(op,resolve)||op;
    op=window.adcVisualElements?.normalize(op,resolve)||op;
    const reverse = apply(op);
    if (!reverse) { say('Esta acción requiere otro elemento o una sección compatible.'); return false; }
@@ -370,7 +372,7 @@
  if(typeof ResizeObserver==='function')new ResizeObserver(positionSettings).observe(panel);
  positionSettings();
  document.addEventListener('click',event => {
-   if (panel.hidden || event.target.closest('#adcDesignContext') || event.target.closest('#adcThemeSwitch') || panel.contains(event.target) || gear.contains(event.target)||marks.contains(event.target)) return;
+   if (panel.hidden || event.target.closest('#adcDesignContext,[data-adc-studio-ui]') || event.target.closest('#adcThemeSwitch') || panel.contains(event.target) || gear.contains(event.target)||marks.contains(event.target)) return;
    if(suppressClick){event.preventDefault();event.stopImmediatePropagation();return}
    const node = event.target.closest(selector);
    if (!node || !keyFor(node)) return;
@@ -378,7 +380,7 @@
    event.stopImmediatePropagation();
    if (grouping) {
      const destination = node.closest('.adc-design-section');
-     if (destination) { commit({kind:'group',target:grouping,destination:keyFor(destination)}); grouping = null; }
+     if (destination) { const source=resolve(grouping);if(commit({kind:'group',target:grouping,destination:keyFor(destination)})){setTool('');select(source);} }
      else say('Elegí una sección creada con el editor.');
      return;
    }
@@ -419,15 +421,7 @@
    };
  }
  function load(incoming) {
-   const allowed={
-     ...window.adcProjectLayoutData.studioAllowed,
-     annotation:['id','shape','title','left','top','width','height','color','strokeWidth','reverse','x1','y1','x2','y2'],lineEndpoints:['x1','y1','x2','y2'],hideOriginal:[],front:['level'],documentTransform:['x','y','scale'],image:['id','src','alt','left','top','width','height'],replaceImage:['src'],pdf:['id','src','title'],style:['x','y','width','height','center','background','color','strokeWidth'],text:['html'],
-     reorder:['direction'],group:['destination'],split:['id','title','fold','open'],
-     section:['id','title','fold','open','width','height','left','top'],box:['id','title','width','height','left','top'],
-     button:['id','title','action','left','top','tone'],bubble:['id','title','tone','popup','left','top'],
-     dropdown:['id','title','direction'],fold:['open'],detailsOpen:['open'],
-     restoreStyle:[],restoreFold:[],always:[],unfold:[],removeAdded:[],hideOLEdges:[],removeBackground:[]
-   };
+   const allowed=window.adcProjectLayoutData.operationFields;
    if(!Array.isArray(incoming)||incoming.length>2000||incoming.some(op=>{
      if(!op||!Object.hasOwn(allowed,op.kind)||typeof op.target!=='string')return true;
      return Object.entries(op).some(([key,value])=>!['kind','target',...allowed[op.kind]].includes(key)||
@@ -467,12 +461,12 @@
    if (act === 'navigate') { toggle(); return; }
    if (act === 'undo') {
      if(operations.length<=initialLayout.length){say('La distribuci?n base est? protegida. No hay m?s cambios nuevos para deshacer.');return;}
-     if (operations.length) { reversals.pop()(); redo.push(operations.pop());dirty=true;select(null); say('Cambio deshecho.'); }
+     if (operations.length) { setTool(''); reversals.pop()(); redo.push(operations.pop());dirty=true;select(null); say('Cambio deshecho.'); }
      return;
    }
    if (act === 'redo') {
      const op = redo.pop();
-     if (op) { const reverse = apply(op); if (reverse) { operations.push(op); reversals.push(reverse);dirty=true;scheduleMarks();say('Cambio rehecho.'); } }
+     if (op) { setTool(''); const reverse = apply(op); if (reverse) { operations.push(op); reversals.push(reverse);dirty=true;scheduleMarks();say('Cambio rehecho.'); } }
      return;
    }
    if (act === 'save') {
@@ -512,7 +506,7 @@
      if (parent) { keyFor(parent); select(parent); }
    }
    if (act === 'up' || act === 'down') commit({kind:'reorder',target,direction:act === 'up' ? -1 : 1});
-   if (act === 'group') { grouping = target; say('Ahora seleccioná la sección de destino.'); }
+   if (act === 'group') { setTool('group'); grouping = target; say('Ahora seleccioná la sección de destino.'); }
    if (act === 'text') commit({kind:'text',target,html:editor.innerHTML});
    if (act === 'link') {
      const url = prompt('URL https:// o ancla de ADC (#nombre)');

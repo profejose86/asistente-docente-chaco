@@ -7,6 +7,7 @@
     "dist",
     "tmp",
     "output",
+    "materiales",
     ".env*",
     "assets/vendor/ (sólo inventario de nombres)"
   ],
@@ -65,6 +66,8 @@
     "assets/formularios/DP-01.pdf",
     "assets/formularios/SC-01-plantilla.png",
     "assets/formularios/SC-01.pdf",
+    "assets/formularios/SR-01-pagina-1.png",
+    "assets/formularios/SR-01.pdf",
     "assets/img/acceso/fondo-escolar-dark.png",
     "assets/img/acceso/fondo-escolar-light.png",
     "assets/img/acceso/logo-adc.png",
@@ -89,15 +92,18 @@
     "assets/js/editor/ajustes-proyecto-datos.js",
     "assets/js/editor/ajustes-proyecto.js",
     "assets/js/editor/comun.js",
+    "assets/js/editor/documento-fondo.js",
     "assets/js/editor/documentos.js",
     "assets/js/editor/editor.js",
     "assets/js/editor/elementos.js",
     "assets/js/editor/modo-local.js",
     "assets/js/editor/puente-local.js",
+    "assets/js/editor/studio-alineacion.js",
     "assets/js/editor/studio-directo.js",
     "assets/js/editor/studio-guias.js",
     "assets/js/editor/studio-operaciones.js",
     "assets/js/editor/studio-politicas.js",
+    "assets/js/editor/studio-texto.js",
     "assets/js/editor/studio.js",
     "assets/js/interfaz/espacio-trabajo.js",
     "assets/js/interfaz/inicio-local.js",
@@ -179,6 +185,7 @@
     "docs/arquitectura-inventario.json",
     "docs/arquitectura-mapa.md",
     "docs/codigo-ajustes.md",
+    "docs/documentos-fondo-relativo.md",
     "docs/editor-local.md",
     "docs/estructura.md",
     "docs/formularios-pdf-preparados.md",
@@ -189,6 +196,8 @@
     "docs/referencias/nomenclatura-licencias.md",
     "docs/referencias/nomenclatura-texto.txt",
     "docs/referencias/Nomenclatura.pdf",
+    "docs/revision-ajustes-2026-11-14.md",
+    "docs/sr01-pdf-original.md",
     "docs/structure-manifest.json",
     "docs/supabase-staging.md",
     "docs/unificacion-main.md",
@@ -202,10 +211,12 @@
     "tests/arquitectura.test.cjs",
     "tests/cursos.test.cjs",
     "tests/dl01-interfaz.test.cjs",
+    "tests/documento-fondo.test.cjs",
     "tests/editor-botones.test.cjs",
     "tests/editor-comun.test.cjs",
     "tests/editor-documentos.test.cjs",
     "tests/editor-elementos.test.cjs",
+    "tests/editor-herramientas.test.cjs",
     "tests/formularios-oficiales.test.cjs",
     "tests/geografia.test.cjs",
     "tests/ingreso.test.cjs",
@@ -217,7 +228,10 @@
     "tests/pdf-blank-line.test.cjs",
     "tests/pdf-campos.test.cjs",
     "tests/publicacion.test.cjs",
+    "tests/sr01-pdf.test.cjs",
+    "tests/studio-alineacion.test.cjs",
     "tests/studio-contrato.test.cjs",
+    "tests/studio-inplace.test.cjs",
     "tests/studio.test.cjs",
     "tests/supabase-auth.test.cjs",
     "tests/supabase-config.test.cjs",
@@ -254,10 +268,13 @@
         "assets/js/editor/ajustes-proyecto-datos.js",
         "assets/js/editor/documentos.js",
         "assets/js/editor/elementos.js",
+        "assets/js/editor/documento-fondo.js",
         "assets/js/editor/puente-local.js",
         "assets/js/editor/ajustes-proyecto.js",
         "assets/js/editor/studio-politicas.js",
         "assets/js/editor/studio-operaciones.js",
+        "assets/js/editor/studio-texto.js",
+        "assets/js/editor/studio-alineacion.js",
         "assets/js/editor/studio-directo.js",
         "assets/js/editor/studio-guias.js",
         "assets/js/editor/studio.js",
@@ -323,10 +340,13 @@
         "assets/js/editor/ajustes-proyecto-datos.js",
         "assets/js/editor/documentos.js",
         "assets/js/editor/elementos.js",
+        "assets/js/editor/documento-fondo.js",
         "assets/js/editor/puente-local.js",
         "assets/js/editor/ajustes-proyecto.js",
         "assets/js/editor/studio-politicas.js",
         "assets/js/editor/studio-operaciones.js",
+        "assets/js/editor/studio-texto.js",
+        "assets/js/editor/studio-alineacion.js",
         "assets/js/editor/studio-directo.js",
         "assets/js/editor/studio-guias.js",
         "assets/js/editor/studio.js",
@@ -395,8 +415,8 @@
     },
     {
       "file": "ADC_Ingreso_Editable.html",
-      "bytes": 11061,
-      "lines": 92,
+      "bytes": 11255,
+      "lines": 95,
       "generated": false,
       "functions": [],
       "globals": [],
@@ -539,8 +559,8 @@
     },
     {
       "file": "assets/css/editor/studio.css",
-      "bytes": 7828,
-      "lines": 61,
+      "bytes": 10387,
+      "lines": 83,
       "generated": false,
       "functions": [],
       "globals": [],
@@ -728,8 +748,8 @@
     },
     {
       "file": "assets/css/tramites/formularios-oficiales.css",
-      "bytes": 13723,
-      "lines": 115,
+      "bytes": 14828,
+      "lines": 123,
       "generated": false,
       "functions": [],
       "globals": [],
@@ -764,7 +784,7 @@
     },
     {
       "file": "assets/datos/config-publica.js",
-      "bytes": 358,
+      "bytes": 356,
       "lines": 3,
       "generated": false,
       "functions": [],
@@ -786,8 +806,8 @@
     },
     {
       "file": "assets/datos/formularios-pdf.js",
-      "bytes": 4035,
-      "lines": 58,
+      "bytes": 8196,
+      "lines": 113,
       "generated": false,
       "functions": [],
       "globals": [
@@ -810,8 +830,8 @@
     },
     {
       "file": "assets/js/acceso/editor.js",
-      "bytes": 58067,
-      "lines": 962,
+      "bytes": 57419,
+      "lines": 956,
       "generated": false,
       "functions": [
         "showNotes",
@@ -1064,8 +1084,8 @@
     },
     {
       "file": "assets/js/documentos/pdf-campos.js",
-      "bytes": 4562,
-      "lines": 65,
+      "bytes": 5303,
+      "lines": 72,
       "generated": false,
       "functions": [
         "layout",
@@ -1116,8 +1136,8 @@
     },
     {
       "file": "assets/js/editor/ajustes-proyecto-datos.js",
-      "bytes": 5696,
-      "lines": 58,
+      "bytes": 7761,
+      "lines": 68,
       "generated": false,
       "functions": [
         "empty",
@@ -1129,8 +1149,8 @@
     },
     {
       "file": "assets/js/editor/ajustes-proyecto.js",
-      "bytes": 8285,
-      "lines": 133,
+      "bytes": 8333,
+      "lines": 134,
       "generated": false,
       "functions": [
         "describe",
@@ -1166,9 +1186,34 @@
       "storageKeys": []
     },
     {
+      "file": "assets/js/editor/documento-fondo.js",
+      "bytes": 12549,
+      "lines": 90,
+      "generated": false,
+      "functions": [
+        "bounds",
+        "box",
+        "place",
+        "eligible",
+        "normalize",
+        "prepare",
+        "offset",
+        "apply",
+        "pdfTemplate",
+        "attach",
+        "selected",
+        "calibrate",
+        "sync"
+      ],
+      "globals": [
+        "adcDocumentBackground"
+      ],
+      "storageKeys": []
+    },
+    {
       "file": "assets/js/editor/documentos.js",
-      "bytes": 9132,
-      "lines": 96,
+      "bytes": 9841,
+      "lines": 101,
       "generated": false,
       "functions": [
         "apply",
@@ -1183,8 +1228,8 @@
     },
     {
       "file": "assets/js/editor/editor.js",
-      "bytes": 67575,
-      "lines": 1053,
+      "bytes": 66886,
+      "lines": 1047,
       "generated": false,
       "functions": [
         "linePointValues",
@@ -1235,7 +1280,7 @@
     },
     {
       "file": "assets/js/editor/elementos.js",
-      "bytes": 16494,
+      "bytes": 16742,
       "lines": 197,
       "generated": false,
       "functions": [
@@ -1262,10 +1307,11 @@
     },
     {
       "file": "assets/js/editor/puente-local.js",
-      "bytes": 1996,
-      "lines": 28,
+      "bytes": 2780,
+      "lines": 31,
       "generated": false,
       "functions": [
+        "state",
         "request"
       ],
       "globals": [
@@ -1274,17 +1320,31 @@
       "storageKeys": []
     },
     {
+      "file": "assets/js/editor/studio-alineacion.js",
+      "bytes": 4065,
+      "lines": 53,
+      "generated": false,
+      "functions": [
+        "match",
+        "attach",
+        "align",
+        "render",
+        "hide"
+      ],
+      "globals": [],
+      "storageKeys": []
+    },
+    {
       "file": "assets/js/editor/studio-directo.js",
-      "bytes": 8925,
-      "lines": 105,
+      "bytes": 8267,
+      "lines": 98,
       "generated": false,
       "functions": [
         "attach",
         "paint",
         "begin",
         "restore",
-        "finish",
-        "snap"
+        "finish"
       ],
       "globals": [
         "adcStudioDirect"
@@ -1293,12 +1353,13 @@
     },
     {
       "file": "assets/js/editor/studio-guias.js",
-      "bytes": 4185,
-      "lines": 36,
+      "bytes": 4389,
+      "lines": 38,
       "generated": false,
       "functions": [
         "attach",
-        "render"
+        "render",
+        "cancel"
       ],
       "globals": [
         "adcStudioGuides"
@@ -1307,8 +1368,8 @@
     },
     {
       "file": "assets/js/editor/studio-operaciones.js",
-      "bytes": 4138,
-      "lines": 54,
+      "bytes": 6022,
+      "lines": 81,
       "generated": false,
       "functions": [
         "theme",
@@ -1322,8 +1383,8 @@
     },
     {
       "file": "assets/js/editor/studio-politicas.js",
-      "bytes": 1430,
-      "lines": 22,
+      "bytes": 2141,
+      "lines": 28,
       "generated": false,
       "functions": [
         "anchored",
@@ -1335,9 +1396,24 @@
       "storageKeys": []
     },
     {
+      "file": "assets/js/editor/studio-texto.js",
+      "bytes": 7139,
+      "lines": 74,
+      "generated": false,
+      "functions": [
+        "attach",
+        "finish",
+        "begin"
+      ],
+      "globals": [
+        "adcStudioText"
+      ],
+      "storageKeys": []
+    },
+    {
       "file": "assets/js/editor/studio.js",
-      "bytes": 22417,
-      "lines": 144,
+      "bytes": 27936,
+      "lines": 176,
       "generated": false,
       "functions": [
         "attach",
@@ -1348,6 +1424,9 @@
         "syncTheme",
         "updateHistory",
         "travel",
+        "paintColor",
+        "layer",
+        "duplicateSelection",
         "updateBadge",
         "setMeasure",
         "preview"
@@ -1541,7 +1620,7 @@
     },
     {
       "file": "assets/js/servicios/supabase-runtime.js",
-      "bytes": 227301,
+      "bytes": 227272,
       "lines": 30,
       "generated": true,
       "functions": [],
@@ -2004,8 +2083,8 @@
     },
     {
       "file": "assets/js/tramites/formularios-oficiales-datos.js",
-      "bytes": 86372,
-      "lines": 1273,
+      "bytes": 86572,
+      "lines": 1275,
       "generated": false,
       "functions": [],
       "globals": [
@@ -2015,8 +2094,8 @@
     },
     {
       "file": "assets/js/tramites/formularios-oficiales.js",
-      "bytes": 65266,
-      "lines": 1230,
+      "bytes": 67118,
+      "lines": 1242,
       "generated": false,
       "functions": [
         "matches",
@@ -2128,8 +2207,8 @@
     },
     {
       "file": "assets/js/tramites/sc01.js",
-      "bytes": 39274,
-      "lines": 744,
+      "bytes": 39410,
+      "lines": 745,
       "generated": false,
       "functions": [
         "position",
@@ -2196,8 +2275,8 @@
     },
     {
       "file": "docs/adc-studio.md",
-      "bytes": 6404,
-      "lines": 69,
+      "bytes": 10443,
+      "lines": 91,
       "generated": false,
       "functions": [],
       "globals": [],
@@ -2231,6 +2310,15 @@
       "storageKeys": []
     },
     {
+      "file": "docs/documentos-fondo-relativo.md",
+      "bytes": 5012,
+      "lines": 41,
+      "generated": false,
+      "functions": [],
+      "globals": [],
+      "storageKeys": []
+    },
+    {
       "file": "docs/editor-local.md",
       "bytes": 4246,
       "lines": 52,
@@ -2250,8 +2338,8 @@
     },
     {
       "file": "docs/formularios-pdf-preparados.md",
-      "bytes": 4795,
-      "lines": 53,
+      "bytes": 5086,
+      "lines": 55,
       "generated": false,
       "functions": [],
       "globals": [],
@@ -2303,6 +2391,24 @@
       "storageKeys": []
     },
     {
+      "file": "docs/revision-ajustes-2026-11-14.md",
+      "bytes": 4227,
+      "lines": 41,
+      "generated": false,
+      "functions": [],
+      "globals": [],
+      "storageKeys": []
+    },
+    {
+      "file": "docs/sr01-pdf-original.md",
+      "bytes": 4663,
+      "lines": 44,
+      "generated": false,
+      "functions": [],
+      "globals": [],
+      "storageKeys": []
+    },
+    {
       "file": "docs/structure-manifest.json",
       "bytes": 14819,
       "lines": 359,
@@ -2331,8 +2437,8 @@
     },
     {
       "file": "index.html",
-      "bytes": 44769,
-      "lines": 154,
+      "bytes": 44963,
+      "lines": 157,
       "generated": false,
       "functions": [],
       "globals": [],
@@ -2429,9 +2535,27 @@
       ]
     },
     {
+      "file": "tests/documento-fondo.test.cjs",
+      "bytes": 11589,
+      "lines": 34,
+      "generated": false,
+      "functions": [
+        "pdf",
+        "run",
+        "selectSheet",
+        "replace"
+      ],
+      "globals": [
+        "originalCard",
+        "originalSCInput",
+        "originalSCListener"
+      ],
+      "storageKeys": []
+    },
+    {
       "file": "tests/editor-botones.test.cjs",
-      "bytes": 4588,
-      "lines": 49,
+      "bytes": 4797,
+      "lines": 51,
       "generated": false,
       "functions": [],
       "globals": [
@@ -2469,8 +2593,23 @@
       "storageKeys": []
     },
     {
+      "file": "tests/editor-herramientas.test.cjs",
+      "bytes": 9862,
+      "lines": 48,
+      "generated": false,
+      "functions": [
+        "run",
+        "draw",
+        "exportDraft"
+      ],
+      "globals": [
+        "__editorAuditCreate"
+      ],
+      "storageKeys": []
+    },
+    {
       "file": "tests/formularios-oficiales.test.cjs",
-      "bytes": 52276,
+      "bytes": 52283,
       "lines": 672,
       "generated": false,
       "functions": [
@@ -2528,8 +2667,8 @@
     },
     {
       "file": "tests/local-editor-ui.test.cjs",
-      "bytes": 5235,
-      "lines": 36,
+      "bytes": 7263,
+      "lines": 45,
       "generated": false,
       "functions": [],
       "globals": [],
@@ -2596,18 +2735,58 @@
       "storageKeys": []
     },
     {
-      "file": "tests/studio-contrato.test.cjs",
-      "bytes": 2214,
-      "lines": 17,
+      "file": "tests/sr01-pdf.test.cjs",
+      "bytes": 8496,
+      "lines": 28,
+      "generated": false,
+      "functions": [
+        "run"
+      ],
+      "globals": [
+        "srLines"
+      ],
+      "storageKeys": [
+        "adc-official-form-sr01-draft-v1"
+      ]
+    },
+    {
+      "file": "tests/studio-alineacion.test.cjs",
+      "bytes": 1006,
+      "lines": 12,
       "generated": false,
       "functions": [],
       "globals": [],
       "storageKeys": []
     },
     {
+      "file": "tests/studio-contrato.test.cjs",
+      "bytes": 3051,
+      "lines": 26,
+      "generated": false,
+      "functions": [],
+      "globals": [],
+      "storageKeys": []
+    },
+    {
+      "file": "tests/studio-inplace.test.cjs",
+      "bytes": 10295,
+      "lines": 54,
+      "generated": false,
+      "functions": [
+        "run",
+        "exported"
+      ],
+      "globals": [
+        "evil",
+        "sameInput",
+        "originalInput"
+      ],
+      "storageKeys": []
+    },
+    {
       "file": "tests/studio.test.cjs",
-      "bytes": 11046,
-      "lines": 58,
+      "bytes": 11321,
+      "lines": 59,
       "generated": false,
       "functions": [
         "withPage"
@@ -2696,7 +2875,7 @@
     },
     {
       "file": "tools/auditar-arquitectura.cjs",
-      "bytes": 6050,
+      "bytes": 6063,
       "lines": 73,
       "generated": false,
       "functions": [
@@ -2954,6 +3133,12 @@
     },
     {
       "from": "ADC_Ingreso_Editable.html",
+      "to": "assets/js/editor/documento-fondo.js",
+      "kind": "script",
+      "exists": true
+    },
+    {
+      "from": "ADC_Ingreso_Editable.html",
       "to": "assets/js/editor/puente-local.js",
       "kind": "script",
       "exists": true
@@ -2973,6 +3158,18 @@
     {
       "from": "ADC_Ingreso_Editable.html",
       "to": "assets/js/editor/studio-operaciones.js",
+      "kind": "script",
+      "exists": true
+    },
+    {
+      "from": "ADC_Ingreso_Editable.html",
+      "to": "assets/js/editor/studio-texto.js",
+      "kind": "script",
+      "exists": true
+    },
+    {
+      "from": "ADC_Ingreso_Editable.html",
+      "to": "assets/js/editor/studio-alineacion.js",
       "kind": "script",
       "exists": true
     },
@@ -3458,6 +3655,12 @@
     },
     {
       "from": "index.html",
+      "to": "assets/js/editor/documento-fondo.js",
+      "kind": "script",
+      "exists": true
+    },
+    {
+      "from": "index.html",
       "to": "assets/js/editor/puente-local.js",
       "kind": "script",
       "exists": true
@@ -3477,6 +3680,18 @@
     {
       "from": "index.html",
       "to": "assets/js/editor/studio-operaciones.js",
+      "kind": "script",
+      "exists": true
+    },
+    {
+      "from": "index.html",
+      "to": "assets/js/editor/studio-texto.js",
+      "kind": "script",
+      "exists": true
+    },
+    {
+      "from": "index.html",
+      "to": "assets/js/editor/studio-alineacion.js",
       "kind": "script",
       "exists": true
     },
@@ -3697,6 +3912,30 @@
       "exists": true
     },
     {
+      "from": "tests/documento-fondo.test.cjs",
+      "to": "assets/js/editor/ajustes-proyecto-datos.js",
+      "kind": "literal-module",
+      "exists": true
+    },
+    {
+      "from": "tests/documento-fondo.test.cjs",
+      "to": "tools/local-editor-bridge.cjs",
+      "kind": "literal-module",
+      "exists": true
+    },
+    {
+      "from": "tests/documento-fondo.test.cjs",
+      "to": "tests/support/ajustes.cjs",
+      "kind": "literal-module",
+      "exists": true
+    },
+    {
+      "from": "tests/documento-fondo.test.cjs",
+      "to": "tests/support/demo-config.cjs",
+      "kind": "literal-module",
+      "exists": true
+    },
+    {
       "from": "tests/editor-botones.test.cjs",
       "to": "tests/support/demo-config.cjs",
       "kind": "literal-module",
@@ -3855,6 +4094,24 @@
     {
       "from": "tests/editor-elementos.test.cjs",
       "to": "tests/support/ajustes.cjs",
+      "kind": "literal-module",
+      "exists": true
+    },
+    {
+      "from": "tests/editor-herramientas.test.cjs",
+      "to": "assets/js/editor/ajustes-proyecto-datos.js",
+      "kind": "literal-module",
+      "exists": true
+    },
+    {
+      "from": "tests/editor-herramientas.test.cjs",
+      "to": "tests/support/ajustes.cjs",
+      "kind": "literal-module",
+      "exists": true
+    },
+    {
+      "from": "tests/editor-herramientas.test.cjs",
+      "to": "tests/support/demo-config.cjs",
       "kind": "literal-module",
       "exists": true
     },
@@ -3931,18 +4188,6 @@
       "exists": true
     },
     {
-      "from": "tests/local-editor-ui.test.cjs",
-      "to": "tests/support/ajustes.cjs",
-      "kind": "literal-module",
-      "exists": true
-    },
-    {
-      "from": "tests/local-editor-ui.test.cjs",
-      "to": "tests/support/ajustes.cjs",
-      "kind": "literal-module",
-      "exists": true
-    },
-    {
       "from": "tests/mbit.test.cjs",
       "to": "tests/support/demo-config.cjs",
       "kind": "literal-module",
@@ -3967,6 +4212,24 @@
       "exists": true
     },
     {
+      "from": "tests/sr01-pdf.test.cjs",
+      "to": "tests/support/demo-config.cjs",
+      "kind": "literal-module",
+      "exists": true
+    },
+    {
+      "from": "tests/sr01-pdf.test.cjs",
+      "to": "assets/js/editor/ajustes-proyecto-datos.js",
+      "kind": "literal-module",
+      "exists": true
+    },
+    {
+      "from": "tests/studio-alineacion.test.cjs",
+      "to": "assets/js/editor/studio-alineacion.js",
+      "kind": "literal-module",
+      "exists": true
+    },
+    {
       "from": "tests/studio-contrato.test.cjs",
       "to": "assets/js/editor/ajustes-proyecto-datos.js",
       "kind": "literal-module",
@@ -3975,6 +4238,24 @@
     {
       "from": "tests/studio-contrato.test.cjs",
       "to": "tools/ajustes-store.cjs",
+      "kind": "literal-module",
+      "exists": true
+    },
+    {
+      "from": "tests/studio-inplace.test.cjs",
+      "to": "assets/js/editor/ajustes-proyecto-datos.js",
+      "kind": "literal-module",
+      "exists": true
+    },
+    {
+      "from": "tests/studio-inplace.test.cjs",
+      "to": "tests/support/demo-config.cjs",
+      "kind": "literal-module",
+      "exists": true
+    },
+    {
+      "from": "tests/studio-inplace.test.cjs",
+      "to": "tests/support/ajustes.cjs",
       "kind": "literal-module",
       "exists": true
     },
@@ -4930,9 +5211,9 @@
     ]
   },
   "summary": {
-    "files": 227,
-    "ownTextModules": 176,
-    "ownJavaScript": 110,
+    "files": 240,
+    "ownTextModules": 187,
+    "ownJavaScript": 118,
     "vendorFiles": 35,
     "missingLiteralReferences": 0
   }

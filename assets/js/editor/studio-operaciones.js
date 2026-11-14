@@ -15,6 +15,33 @@
   if(all.length)theme(all.at(-1));
  }
  function apply(op,{node,register}){
+  if(['relativeBox','replacePdfBackground','backgroundOffset'].includes(op.kind))return window.adcDocumentBackground.apply(op,node);
+  if(op.kind==='labelText'){
+   if(!node.matches('label'))return;
+   const nodes=[...node.childNodes].filter(child=>child.nodeType===3),old=nodes.map(child=>child.textContent),added=nodes.length?null:document.createTextNode('');if(added){node.prepend(added);nodes.push(added);}
+   nodes.forEach((child,index)=>child.textContent=index===0?op.text:'');
+   return ()=>{if(added)added.remove();else nodes.forEach((child,index)=>child.textContent=old[index]);};
+  }
+  if(op.kind==='placeholder'){
+   if(!node.matches('input:not([type=hidden]),textarea'))return;
+   const before=node.getAttribute('placeholder');node.setAttribute('placeholder',op.text);
+   return ()=>{if(before===null)node.removeAttribute('placeholder');else node.setAttribute('placeholder',before);};
+  }
+  if(op.kind==='studioLock'){
+   const before=node.hasAttribute('data-adc-studio-locked');node.toggleAttribute('data-adc-studio-locked',op.locked);
+   return ()=>node.toggleAttribute('data-adc-studio-locked',before);
+  }
+  if(op.kind==='studioFormat'){
+   const before=node.getAttribute('style');for(const key of window.adcProjectLayoutData.studioAllowed.studioFormat)if(op[key]!==undefined)node.style[key]=op[key];
+   return ()=>{if(before===null)node.removeAttribute('style');else node.setAttribute('style',before);};
+  }
+  if(op.kind==='studioLayer'){
+   const parent=node.parentNode,next=node.nextSibling,before=node.getAttribute('style');
+   if(!parent||node.matches('html,body,main'))return;
+   if(getComputedStyle(node).position==='static')node.style.position='relative';node.style.zIndex=String(op.level);
+   if(op.direction==='front')parent.append(node);else parent.prepend(node);
+   return ()=>{parent.insertBefore(node,next?.parentNode===parent?next:null);if(before===null)node.removeAttribute('style');else node.setAttribute('style',before);};
+  }
   if(op.kind==='theme')return theme(op);
   if(op.kind==='studioGuide'){
    const guide=document.createElement('div');guide.className='adc-design-created adc-studio-guide';guide.dataset.guideAxis=op.axis;
@@ -30,7 +57,7 @@
    register(section,op.id);node.append(section);return ()=>section.remove();
   }
   if(op.kind==='duplicate'){
-   if(window.adcStudioPolicy.anchored(node)||node.matches('input,select,textarea,form,main,body,html')||node.querySelector('input,select,textarea,form'))return;
+   if(!window.adcStudioPolicy.canDuplicate(node))return;
    const clone=node.cloneNode(true);clone.querySelectorAll('script,iframe,object,embed,style').forEach(child=>child.remove());
    const nodes=[clone,...clone.querySelectorAll('*')],ids=new Map();
    for(const [index,child] of nodes.entries()){

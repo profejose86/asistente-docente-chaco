@@ -15,6 +15,8 @@
     Object.assign(layer.style,{position:'fixed',inset:'0',pointerEvents:'none',zIndex:'9001'});document.body.append(layer);
     const rootFor=target=>{
       if(!(target instanceof Element)||target.closest('#adcDesignPanel,#adcDesignGear,#adcDesignMarks,#adcDocumentSelection,#adcDesignContext,[data-adc-studio-ui]'))return null;
+      const overlay=target.closest('.adc-design-created,.adc-interactive-card');
+      if(overlay&&!overlay.matches('.adc-design-pdf')&&overlay.closest(papers))return null;
       const imported=target.closest('.adc-design-pdf');if(imported)return imported;
       return target.closest(papers)||target.closest('.adc-document-editor-shield')?.parentElement||target.closest('iframe,object,embed')?.parentElement||null;
     };
@@ -32,7 +34,7 @@
     }
     const schedule=()=>{cancelAnimationFrame(frame);frame=requestAnimationFrame(paint);};
     function begin(event,node,side){
-      if(window.adcStudioPolicy?.anchored(node)){api.say('Documento oficial anclado: agreg? notas sin mover sus campos.');return;}
+      if((window.adcStudioPolicy?.anchored(node)||window.adcStudioPolicy?.locked(node))){api.say('Documento oficial anclado: agreg? notas sin mover sus campos.');return;}
       api.select(node);api.setTool('doc-size');
       const computed=getComputedStyle(node),parts=computed.translate.split(' '),component=(value,size)=>value?.endsWith('%')?parseFloat(value)*size/100:parseFloat(value)||0;
       gesture={node,side,x:event.clientX,y:event.clientY,rect:node.getBoundingClientRect(),before:snapshot(node),scale:parseFloat(computed.scale)||1,tx:component(parts[0],node.offsetWidth),ty:component(parts[1],node.offsetHeight),current:null,pointerId:event.pointerId};
@@ -59,18 +61,21 @@
         ratio=g.side.length===2?(Math.abs(rx-1)>Math.abs(ry-1)?rx:ry):g.side==='e'||g.side==='w'?rx:ry;
         ratio=Math.max(0.1/g.scale,Math.min(5/g.scale,ratio));
       }
-      const targetLeft=g.side==='move'?g.rect.left+dx:g.side.includes('w')?g.rect.right-g.rect.width*ratio:g.rect.left;
-      const targetTop=g.side==='move'?g.rect.top+dy:g.side.includes('n')?g.rect.bottom-g.rect.height*ratio:g.rect.top;
+      let targetLeft=g.side==='move'?g.rect.left+dx:g.side.includes('w')?g.rect.right-g.rect.width*ratio:g.rect.left;
+      let targetTop=g.side==='move'?g.rect.top+dy:g.side.includes('n')?g.rect.bottom-g.rect.height*ratio:g.rect.top;
+      const smart=window.adcStudioAlignment?.current;
+      const matched=smart?.align(g.node,{left:targetLeft,top:targetTop,width:g.rect.width*ratio,height:g.rect.height*ratio},{free:g.side!=='move'||smart.free(event)});
+      if(matched&&g.side==='move'){targetLeft+=matched.x;targetTop+=matched.y;}
       restore(g.node,g.before);g.node.style.scale=String(g.scale*ratio);
       const actual=g.node.getBoundingClientRect(),parent=g.node.parentElement,parentRect=parent.getBoundingClientRect(),sx=parent.offsetWidth?parentRect.width/parent.offsetWidth:1,sy=parent.offsetHeight?parentRect.height/parent.offsetHeight:1;
       const x=g.tx+(targetLeft-actual.left)/(sx||1),y=g.ty+(targetTop-actual.top)/(sy||1);
-      g.node.style.translate=x+'px '+y+'px';g.current={kind:'documentTransform',target:api.keyFor(g.node),x,y,scale:g.scale*ratio};schedule();
+      g.node.style.translate=x+'px '+y+'px';g.current={kind:'documentTransform',target:api.keyFor(g.node),x,y,scale:g.scale*ratio};smart?.render(g.node,event,matched,{x:targetLeft-g.rect.left,y:targetTop-g.rect.top});schedule();
     },true);
-    const finish=(event,cancel)=>{const g=gesture;if(!g)return;stop(event);gesture=null;restore(g.node,g.before);if(!cancel&&g.current)api.commit(g.current);schedule();};
+    const finish=(event,cancel)=>{const g=gesture;if(!g)return;stop(event);gesture=null;restore(g.node,g.before);window.adcStudioAlignment?.current?.hide();if(!cancel&&g.current)api.commit(g.current);schedule();};
     window.addEventListener('pointerup',event=>finish(event,false),true);
     window.addEventListener('pointercancel',event=>finish(event,true),true);
-    window.addEventListener('keydown',event=>{if(event.key==='Escape'&&gesture){restore(gesture.node,gesture.before);gesture=null;schedule();}},true);
-    window.addEventListener('click',event=>{if(suppressClick&&!event.target.closest?.('#adcDesignPanel,#adcDesignGear')){suppressClick=false;stop(event);}},true);
+    window.addEventListener('keydown',event=>{if(event.key==='Escape'&&gesture){restore(gesture.node,gesture.before);gesture=null;window.adcStudioAlignment?.current?.hide();schedule();}},true);
+    window.addEventListener('click',event=>{if(suppressClick&&!event.target.closest?.('#adcDesignPanel,#adcDesignGear,[data-adc-studio-ui]')){suppressClick=false;stop(event);}},true);
     window.addEventListener('scroll',schedule,true);window.addEventListener('resize',schedule);
     // Un iframe nativo no propaga los gestos al documento padre. En Ajustes,
     // un escudo transparente permite seleccionar su contenedor sin navegar dentro.

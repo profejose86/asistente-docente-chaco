@@ -27,8 +27,10 @@
    ruler.onpointerup=event=>{if(!drag||event.pointerId!==drag.pointer)return;event.preventDefault();event.stopImmediatePropagation();if(drag.kind==='guide'){
     const host=ui.host(),state=states[axis];api.commit({kind:'studioGuide',target:api.keyFor(host),id:window.adcStudioPolicy.uid(),axis:axis==='x'?'y':'x',left:axis==='x'?state.left:event.clientX,top:axis==='x'?event.clientY:state.top,length:state.length});api.say('Guía creada. Se guarda con el diseño y no se imprime.');
    }drag=null;};
-   ruler.onpointercancel=()=>{drag=null;};
+   ruler.onpointercancel=cancel;
   }
+  function cancel(){if(!drag)return;states[drag.axis]={...drag.before};drag=null;render();}
+  window.addEventListener('keydown',event=>{if(event.key==='Escape')cancel();});window.addEventListener('blur',cancel);
   document.getElementById('adcDevRules').addEventListener('change',render);window.addEventListener('adc:studio-units',render);window.addEventListener('resize',render);new MutationObserver(render).observe(api.panel,{attributes:true,attributeFilter:['hidden']});render();
  }
  window.adcStudioGuides=Object.freeze({attach});

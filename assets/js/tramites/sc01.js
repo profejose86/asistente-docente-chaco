@@ -603,7 +603,8 @@
       if (!response.ok) throw Error('No se pudo cargar la plantilla oficial.');
       pdfBytes = await response.arrayBuffer();
     }
-    const pdf = await PDFLib.PDFDocument.load(pdfBytes.slice(0));
+    const backgroundBytes=window.adcDocumentBackground?await adcDocumentBackground.pdfTemplate(sheet,pdfBytes,PDFLib):pdfBytes;
+    const pdf = await PDFLib.PDFDocument.load(backgroundBytes.slice(0));
     const page = pdf.getPages()[0];
     const form = pdf.getForm();
     const font = await pdf.embedFont(PDFLib.StandardFonts.Helvetica);

@@ -26,9 +26,10 @@
           text("dni","DNI",{"required":true,"profileId":"dni","inputmode":"numeric","document":true}),
           text("domicilio","Domicilio",{"profileId":"perfilDomicilio"}),
           text("zonaResidencia","Residencia por la que percibe bonificación de zona"),
-          select("revista","Situación de revista",["Titular","Interino","Suplente"]),
+          choices("revista","Situación de revista",["Titular","Interino","Suplente"]),
           date("inasistenciaDesde","Inasistencia desde"),
-          select("tipoConsulta","Tipo de reconocimiento",["Consultorio","Domicilio / internación","Fuera del lugar de residencia"],{"required":true}),
+          choices("tipoConsulta","Tipo de reconocimiento",["Consultorio","Domicilio / internación","Fuera del lugar de residencia"],{"required":true}),
+          text("consultorio","Consultorio / servicio (si corresponde)"),
           text("lugarConsulta","Lugar de consulta / internación",{"requiredWhen":{"key":"tipoConsulta","values":["Domicilio / internación"]},"mnc":false}),
           text("lugarFueraResidencia","Lugar fuera de residencia",{"requiredWhen":{"key":"tipoConsulta","values":["Fuera del lugar de residencia"]},"mnc":false})
         ]},
@@ -41,7 +42,7 @@
           repeat("licenciasPrevias","Licencias previas",[
             text("dias","Días"),
             text("motivo","Motivo")
-          ],{"minRows":0,"maxRows":12,"addLabel":"Agregar licencia"})
+          ],{"minRows":0,"initialRows":9,"maxRows":12,"addLabel":"Agregar licencia"})
         ]},
         {title:"A completar por Reconocimientos Médicos",notice:"Para completar por Reconocimientos Médicos, con firma y sello del profesional.",fields:[
           text("fechaExamen","Fecha del examen"),
@@ -53,7 +54,8 @@
           date("licenciaDesde","Licencia desde"),
           date("licenciaHasta","Licencia hasta",{"after":"licenciaDesde"}),
           text("diasCorridos","Días corridos"),
-          area("noJustificada","Si no se justifica, indicar motivo",{"wide":true}),
+          text("noJustificada","Si no se justifica, indicar motivo",{"wide":true}),
+          text("noJustificadaContinuacion","Continuación del motivo de no justificación",{"wide":true}),
           text("firmaSolicitante","Firma y sello de quien solicita",{"signature":true,"mnc":false}),
           text("firmaMedico","Firma y sello médico",{"signature":true,"mnc":false}),
           text("establecimientoRespuesta","Establecimiento sanitario que realiza el reconocimiento"),

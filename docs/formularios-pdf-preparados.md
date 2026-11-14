@@ -1,5 +1,7 @@
 # Formularios sobre PDF original: modelo DP-01
 
+SR-01 también utiliza ahora este motor con el PDF aportado en `materiales/`, sus controles y las nueve columnas originales. Ver [configuración y pruebas de SR-01](sr01-pdf-original.md). Los apartados siguientes documentan la implementación original de DP-01 y su revisión histórica.
+
 DP-01 es el primer modelo editable para incorporar documentos preparados en serie. Conserva el PDF original, una página de 612 × 1008 puntos, la navegación de ADC y las acciones superiores e inferiores de vista preliminar, descarga e impresión. El papel se muestra completo; el zoom permite acercarlo.
 
 DJ-01, DJ-02, OL-01, SC-01 y DL-01 están protegidos por indicación del usuario. Sus implementaciones y recursos propios no se modifican. SC-01 es una referencia de apariencia y comportamiento. El nuevo modo del motor compartido se activa únicamente cuando el registro del formulario contiene coordenadas.
