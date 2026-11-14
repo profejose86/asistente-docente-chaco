@@ -28,6 +28,10 @@ La base es PostgreSQL PGlite descartable en memoria. Ejecuta la migración real 
 
 ## Recorrido
 
+Corrección del guardado de perfil: la primera versión de staging dependía del botón manual «Guardar perfil», aunque la barra mostraba la última copia remota verificada. `perfil/autoguardado.js` ahora persiste los cambios reales de inputs/selects del perfil al editar y los cambios estructurales de instituciones al pulsar sus controles, sin esperar al debounce remoto. La barra pasa inmediatamente a pendiente y sólo vuelve a verificado después de la comprobación remota. El aviso antiguo de «sin servidor ni cuenta» se sustituye en modo autenticado. El modo demo conserva su contrato anterior.
+
+Regresión comprobada: escribir «Anabella» en `#perfilNombres`, recargar antes del debounce, recuperar desde un segundo contexto limpio y volver a iniciar sesión. También se probó la edición del correo. Las pruebas focalizadas locales pasaron 12/12; Chrome contra Supabase real recuperó Anabella desde otra sesión. La cuenta ficticia A se conserva con ese nombre. La herramienta de verificación remota ya no restablece los perfiles existentes a «Ana/Bruno»: compara con sus valores actuales para conservar las modificaciones de quien prueba.
+
 1. Entrar como Ana (A). Se prepara un perfil ficticio local. Rechazar la importación: no debe subirse nada. Luego abrir «Mis datos / sincronización», leer el aviso y autorizar.
 2. Abrir la misma dirección en incógnito o un perfil distinto de Chrome y entrar como Ana. Debe recuperar el perfil de la base de prueba. Autorizar sincronización en ese dispositivo si se quiere guardar cambios desde allí.
 3. Entrar como Bruno (B): debe tener su propio perfil y no acceder al de Ana. Las cuentas están separadas por namespace local y RLS remota.

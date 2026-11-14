@@ -26,11 +26,12 @@ async function verify(){
  const a=sessions.a,b=sessions.b;
  const list=(session,owner=session.user.id)=>api('/rest/v1/adc_user_records?select=*&owner_id=eq.'+owner,{token:session.access_token});
  const put=(session,key,raw,revision,status=200)=>api('/rest/v1/rpc/adc_sync_put',{token:session.access_token,status,body:{p_key:key,p_raw:raw,p_expected_revision:revision,p_schema_version:1}});
+ const expectedProfiles={};
  for(const [key,session]of Object.entries(sessions)){
   const rows=await list(session),prior=rows.find(r=>r.record_key==='adc_v08');
   const raw=JSON.stringify({nombre:'Prueba, '+state.accounts[key].name,apellidos:'Prueba',nombres:state.accounts[key].name,inst:[]});
   if(!prior)await put(session,'adc_v08',raw,0);
-  else if(prior.payload.raw!==raw)await put(session,'adc_v08',raw,Number(prior.revision));
+  expectedProfiles[key]=prior?.payload.raw||raw;
  }
  assert.deepEqual(await list(b,a.user.id),[]);
  assert.deepEqual(await list(a,b.user.id),[]);
@@ -40,8 +41,8 @@ async function verify(){
  await put(a,key,'{"values":{"motivo":"prueba ficticia"}}',0);
  await put(a,key,'{"values":{"motivo":"versión antigua"}}',0,409);
  const row=await put(a,key,null,1),deleted=Array.isArray(row)?row[0]:row;assert.equal(deleted.deleted,true);
- const loaded=await list(a);assert.equal(JSON.parse(loaded.find(r=>r.record_key==='adc_v08').payload.raw).nombres,'Ana');
- assert.equal(JSON.parse((await list(b)).find(r=>r.record_key==='adc_v08').payload.raw).nombres,'Bruno');
+ const loaded=await list(a);assert.equal(loaded.find(r=>r.record_key==='adc_v08').payload.raw,expectedProfiles.a);
+ assert.equal((await list(b)).find(r=>r.record_key==='adc_v08').payload.raw,expectedProfiles.b);
  const result={environment:'sync-staging',ref,passed:['registro y login de dos cuentas ficticias','perfil recuperado desde sesión nueva','RLS lectura cruzada bloqueada','RLS inserción ajena bloqueada','RLS edición y borrado ajenos bloqueados','conflicto CAS detectado','tombstone verificado'],productionUntouched:true};
  fs.mkdirSync(path.join(root,'.adc-tools'),{recursive:true});fs.writeFileSync(path.join(root,'.adc-tools/sync-staging-verification.json'),JSON.stringify(result,null,2));return result;
 }

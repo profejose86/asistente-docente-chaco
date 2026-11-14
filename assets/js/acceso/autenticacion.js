@@ -7,7 +7,7 @@
  const email=document.getElementById('adcLoginEmail'),password=document.getElementById('adcLoginPassword');
  email.autocomplete='username';password.autocomplete='current-password';
  for(const input of document.querySelectorAll('#adcLoginCard input[type=password]'))input.minLength=12;
- message(window.adcConfig.emailConfirmationsRequired===false?'Prueba piloto: creá tu cuenta e ingresá directamente, sin confirmar el correo. Tus borradores permanecen en este dispositivo.':'Entorno de prueba ADC. Ingresá con tu cuenta. Los borradores de formularios permanecen en este dispositivo.');
+ message(window.adcConfig.emailConfirmationsRequired===false?'Prueba piloto: creá tu cuenta e ingresá directamente, sin confirmar el correo. Tus datos se sincronizan sólo si lo autorizás.':'Entorno de prueba ADC. Ingresá con tu cuenta. Tus datos se sincronizan sólo si lo autorizás.');
  let busy=false;
  function friendly(error){
   if(error?.code==='invalid_credentials')return 'Correo o contraseña incorrectos.';
@@ -40,7 +40,7 @@
   action(async()=>{await auth.resetPassword(email.value.trim());message('Si el correo corresponde a una cuenta, recibirás las instrucciones para recuperarla.');});
  });
  const recovery=document.createElement('form');recovery.id='adcRecoveryForm';recovery.hidden=true;
- recovery.innerHTML='<label>Nueva contraseña<input type="password" minlength="12" required autocomplete="new-password" aria-label="Nueva contraseña"></label><button class="adc-login" type="submit">Guardar nueva contraseña</button>';
+ recovery.innerHTML='<label>Nueva contraseña<input type="password" minlength="12" required autocomplete="new-password" aria-label="Nueva contraseña" aria-describedby="adcRecoveryPasswordAdvice"></label><p class="adc-password-advice" id="adcRecoveryPasswordAdvice">Elegí una clave exclusiva para ADC, distinta a la de tu correo, de al menos 12 caracteres.</p><button class="adc-login" type="submit">Guardar nueva contraseña</button>';
  status.before(recovery);
  recovery.addEventListener('submit',event=>{event.preventDefault();if(!recovery.reportValidity())return;action(async()=>{try{await auth.updatePassword(recovery.querySelector('input').value);await auth.signOut();location.replace(new URL('ADC_Ingreso_Editable.html',location.href).href);}finally{recovery.reset();}});});
  async function resume(){

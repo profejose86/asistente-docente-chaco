@@ -36,6 +36,9 @@ test('SDK oficial en Chrome: registro, login real, guard, perfil mínimo, recupe
    return json({message:'Unexpected request'},500);
   });
   await page.goto(base+'index.html?adc-preview=1');await page.waitForURL(base+'ADC_Ingreso_Editable.html');
+  assert.match(await page.locator('#adcLoginPasswordAdvice').textContent(),/no la de tu correo/);
+  assert.equal(await page.locator('#adcSignupPassword').getAttribute('aria-describedby'),'adcSignupPasswordAdvice');
+  assert.match(await page.locator('#adcSignupPasswordAdvice').textContent(),/distinta a la de tu correo/);
   assert.equal(await page.locator('#adcLoginForm').evaluate(form=>form.noValidate),false);
   await page.locator('#adcOpenSignup').click();await page.locator('#adcSignupEmail').fill('tester@example.test');await page.locator('#adcSignupPassword').fill('Prueba-Segura-2026');await page.locator('#adcSignupForm button[type=submit]').click();
   await page.waitForFunction(()=>document.querySelector('#adcLoginStatus').textContent.includes('recibirás un correo'));

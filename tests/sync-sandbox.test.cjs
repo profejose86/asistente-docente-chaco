@@ -17,6 +17,16 @@ test('Sandbox en Chrome: importación autorizada, segundo dispositivo y cuenta B
   const secondContext=await browser.newContext(),second=await secondContext.newPage();
   await second.goto(base+'/sandbox');await second.evaluate(s=>localStorage.setItem('adc-supabase-auth',s),await first.evaluate(()=>localStorage.getItem('adc-supabase-auth')));
   await second.goto(base+'/index.html');await second.waitForSelector('#adcSessionBar');assert.equal(await second.locator('#perfilNombres').inputValue(),'Ana');
+  await first.locator('#perfilNombres').fill('Anabella');
+  assert.equal(await first.evaluate(()=>JSON.parse(adcUserStorage.getItem('adc_v08')).nombres),'Anabella');
+  assert.equal(await first.evaluate(()=>adcSyncUI.engine.state().status),'pending');
+  // Recargar inmediatamente, antes del debounce remoto, no pierde la edición.
+  await first.reload();await first.waitForSelector('#adcSessionBar');assert.equal(await first.locator('#perfilNombres').inputValue(),'Anabella');
+  await first.waitForFunction(()=>adcSyncUI.engine.state().status==='saved');
+  await second.reload();await second.waitForSelector('#adcSessionBar');assert.equal(await second.locator('#perfilNombres').inputValue(),'Anabella');
+  await first.locator('#correo').fill('anabella@example.test');await first.locator('#correo').blur();
+  await first.waitForFunction(()=>adcSyncUI.engine.state().status==='saved');
+  await second.reload();await second.waitForSelector('#adcSessionBar');assert.equal(await second.locator('#correo').inputValue(),'anabella@example.test');
   await second.screenshot({path:path.join(__dirname,'../.adc-tools/sync-ana-segundo-dispositivo.png'),fullPage:false});
   const other=await open('b');assert.equal(await other.locator('#perfilNombres').inputValue(),'Bruno');assert.equal(await other.evaluate(()=>adcUserStorage.scope()),ids[1]);
   await other.screenshot({path:path.join(__dirname,'../.adc-tools/sync-bruno-aislado.png'),fullPage:false});

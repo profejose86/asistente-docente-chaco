@@ -29,14 +29,16 @@
 <div class="adc-separator">o ingresá con tu correo</div>
 <form id="adcLoginForm" autocomplete="off">
 <label>Correo electrónico<input id="adcLoginEmail" name="email" type="email" autocomplete="off" required></label>
-<label>Contraseña<input id="adcLoginPassword" name="password" type="password" autocomplete="off" required></label>
+<label>Contraseña<input id="adcLoginPassword" name="password" type="password" autocomplete="off" aria-describedby="adcLoginPasswordAdvice" required></label>
+<p class="adc-password-advice" id="adcLoginPasswordAdvice">Ingresá tu contraseña de ADC, no la de tu correo. Usá una clave distinta para cada servicio.</p>
 <button class="adc-login" type="submit">Ingresar</button>
 <button class="adc-recover" type="button" id="adcRecover">Olvidé mi contraseña</button>
 </form>
 <p class="adc-signup-prompt" id="adcSignupPrompt">¿Todavía no tenés cuenta? <button class="adc-recover" type="button" id="adcOpenSignup" aria-controls="adcSignupForm">Crear cuenta</button></p>
 <form id="adcSignupForm" hidden>
 <label>Correo electrónico<input id="adcSignupEmail" name="email" type="email" autocomplete="email" required></label>
-<label>Contraseña<input id="adcSignupPassword" name="password" type="password" autocomplete="new-password" required></label>
+<label>Contraseña<input id="adcSignupPassword" name="password" type="password" autocomplete="new-password" aria-describedby="adcSignupPasswordAdvice" required></label>
+<p class="adc-password-advice" id="adcSignupPasswordAdvice">Creá una contraseña exclusiva para ADC, distinta a la de tu correo y de al menos 12 caracteres. ADC nunca necesita la contraseña de Gmail.</p>
 <button class="adc-login" type="submit">Crear cuenta</button>
 <button class="adc-recover" type="button" id="adcBackToLogin">Volver a ingresar</button>
 </form>

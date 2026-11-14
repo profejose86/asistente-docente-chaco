@@ -118,6 +118,7 @@
     "assets/js/interfaz/navegacion.js",
     "assets/js/interfaz/sesion.js",
     "assets/js/interfaz/sincronizacion.js",
+    "assets/js/perfil/autoguardado.js",
     "assets/js/perfil/contactos-instituciones.js",
     "assets/js/perfil/datos-personales.js",
     "assets/js/perfil/geografia.js",
@@ -197,12 +198,14 @@
     "docs/arquitectura-inventario.json",
     "docs/arquitectura-mapa.md",
     "docs/cf01-pdf-original.md",
+    "docs/cierre-publicacion-sincronizacion.md",
     "docs/codigo-ajustes.md",
     "docs/documentos-fondo-relativo.md",
     "docs/editor-local.md",
     "docs/estructura.md",
     "docs/formularios-pdf-preparados.md",
     "docs/funciones-respaldo.md",
+    "docs/google-y-recuperacion-staging.md",
     "docs/ol01-revision.md",
     "docs/prueba-sincronizacion.md",
     "docs/publicacion-online.md",
@@ -399,7 +402,8 @@
         "assets/js/tramites/bd02.js",
         "assets/js/tramites/busqueda-inteligente.js",
         "assets/js/tramites/buscador.js",
-        "assets/js/tramites/dl01-interfaz.js"
+        "assets/js/tramites/dl01-interfaz.js",
+        "assets/js/perfil/autoguardado.js"
       ],
       "styles": [
         "assets/css/acceso/autenticacion.css",
@@ -443,7 +447,7 @@
   "modules": [
     {
       "file": ".github/workflows/pages.yml",
-      "bytes": 1784,
+      "bytes": 1785,
       "lines": 60,
       "generated": false,
       "functions": [],
@@ -452,8 +456,8 @@
     },
     {
       "file": "ADC_Ingreso_Editable.html",
-      "bytes": 11255,
-      "lines": 95,
+      "bytes": 11707,
+      "lines": 97,
       "generated": false,
       "functions": [],
       "globals": [],
@@ -470,8 +474,8 @@
     },
     {
       "file": "assets/css/acceso/autenticacion.css",
-      "bytes": 1760,
-      "lines": 18,
+      "bytes": 3044,
+      "lines": 25,
       "generated": false,
       "functions": [],
       "globals": [],
@@ -863,7 +867,7 @@
     },
     {
       "file": "assets/js/acceso/autenticacion.js",
-      "bytes": 5259,
+      "bytes": 5450,
       "lines": 56,
       "generated": false,
       "functions": [
@@ -1541,8 +1545,8 @@
     },
     {
       "file": "assets/js/interfaz/sincronizacion.js",
-      "bytes": 7524,
-      "lines": 80,
+      "bytes": 7620,
+      "lines": 83,
       "generated": false,
       "functions": [
         "button",
@@ -1552,6 +1556,22 @@
         "adcSyncUI"
       ],
       "storageKeys": []
+    },
+    {
+      "file": "assets/js/perfil/autoguardado.js",
+      "bytes": 1979,
+      "lines": 33,
+      "generated": false,
+      "functions": [
+        "mount",
+        "persist"
+      ],
+      "globals": [
+        "adcProfileDraft"
+      ],
+      "storageKeys": [
+        "adc_v08"
+      ]
     },
     {
       "file": "assets/js/perfil/contactos-instituciones.js",
@@ -1707,8 +1727,8 @@
     },
     {
       "file": "assets/js/servicios/sincronizacion-usuario.js",
-      "bytes": 7785,
-      "lines": 99,
+      "bytes": 7919,
+      "lines": 100,
       "generated": false,
       "functions": [
         "create",
@@ -2436,6 +2456,15 @@
       "storageKeys": []
     },
     {
+      "file": "docs/cierre-publicacion-sincronizacion.md",
+      "bytes": 3295,
+      "lines": 32,
+      "generated": false,
+      "functions": [],
+      "globals": [],
+      "storageKeys": []
+    },
+    {
       "file": "docs/codigo-ajustes.md",
       "bytes": 8544,
       "lines": 143,
@@ -2464,7 +2493,7 @@
     },
     {
       "file": "docs/estructura.md",
-      "bytes": 34515,
+      "bytes": 34655,
       "lines": 236,
       "generated": false,
       "functions": [],
@@ -2490,6 +2519,15 @@
       "storageKeys": []
     },
     {
+      "file": "docs/google-y-recuperacion-staging.md",
+      "bytes": 4850,
+      "lines": 59,
+      "generated": false,
+      "functions": [],
+      "globals": [],
+      "storageKeys": []
+    },
+    {
       "file": "docs/ol01-revision.md",
       "bytes": 5954,
       "lines": 43,
@@ -2500,8 +2538,8 @@
     },
     {
       "file": "docs/prueba-sincronizacion.md",
-      "bytes": 6645,
-      "lines": 44,
+      "bytes": 7807,
+      "lines": 48,
       "generated": false,
       "functions": [],
       "globals": [],
@@ -2563,8 +2601,8 @@
     },
     {
       "file": "docs/sincronizacion-usuarios.md",
-      "bytes": 11839,
-      "lines": 78,
+      "bytes": 12361,
+      "lines": 80,
       "generated": false,
       "functions": [],
       "globals": [],
@@ -2617,7 +2655,7 @@
     },
     {
       "file": "index.html",
-      "bytes": 45250,
+      "bytes": 45306,
       "lines": 161,
       "generated": false,
       "functions": [],
@@ -2635,7 +2673,7 @@
     },
     {
       "file": "package.json",
-      "bytes": 1782,
+      "bytes": 1874,
       "lines": 34,
       "generated": false,
       "functions": [],
@@ -3077,8 +3115,8 @@
     },
     {
       "file": "tests/supabase-auth.test.cjs",
-      "bytes": 7825,
-      "lines": 70,
+      "bytes": 8150,
+      "lines": 73,
       "generated": false,
       "functions": [],
       "globals": [
@@ -3141,21 +3179,22 @@
     },
     {
       "file": "tests/sync-sandbox.test.cjs",
-      "bytes": 4235,
-      "lines": 43,
+      "bytes": 5274,
+      "lines": 53,
       "generated": false,
       "functions": [
         "open"
       ],
       "globals": [],
       "storageKeys": [
-        "adc-supabase-auth"
+        "adc-supabase-auth",
+        "adc_v08"
       ]
     },
     {
       "file": "tests/sync-staging.test.cjs",
-      "bytes": 766,
-      "lines": 11,
+      "bytes": 1959,
+      "lines": 22,
       "generated": false,
       "functions": [],
       "globals": [],
@@ -3334,8 +3373,8 @@
     },
     {
       "file": "tools/sync-staging-browser.cjs",
-      "bytes": 4364,
-      "lines": 37,
+      "bytes": 4119,
+      "lines": 36,
       "generated": false,
       "functions": [
         "run",
@@ -3348,8 +3387,8 @@
     },
     {
       "file": "tools/sync-staging-verify.cjs",
-      "bytes": 4785,
-      "lines": 50,
+      "bytes": 4755,
+      "lines": 51,
       "generated": false,
       "functions": [
         "verify",
@@ -3360,14 +3399,15 @@
     },
     {
       "file": "tools/sync-staging.cjs",
-      "bytes": 7401,
-      "lines": 77,
+      "bytes": 8878,
+      "lines": 91,
       "generated": false,
       "functions": [
         "readState",
         "saveState",
         "assertIsolated",
         "management",
+        "stagingAuthOptions",
         "provision",
         "prepare",
         "check"
@@ -4235,6 +4275,12 @@
       "exists": true
     },
     {
+      "from": "index.html",
+      "to": "assets/js/perfil/autoguardado.js",
+      "kind": "script",
+      "exists": true
+    },
+    {
       "from": "tests/acceso-ajustes.test.cjs",
       "to": "tests/support/demo-config.cjs",
       "kind": "literal-module",
@@ -4769,6 +4815,12 @@
       "exists": true
     },
     {
+      "from": "tests/sync-staging.test.cjs",
+      "to": "tools/sync-staging.cjs",
+      "kind": "literal-module",
+      "exists": true
+    },
+    {
       "from": "tests/traslado-pdf.test.cjs",
       "to": "tests/support/demo-config.cjs",
       "kind": "literal-module",
@@ -4879,6 +4931,12 @@
     {
       "from": "tools/sync-staging.cjs",
       "to": "tools/env.cjs",
+      "kind": "literal-module",
+      "exists": true
+    },
+    {
+      "from": "tools/sync-staging.cjs",
+      "to": "tools/supabase-auth-settings.cjs",
       "kind": "literal-module",
       "exists": true
     },
@@ -5696,9 +5754,9 @@
     ]
   },
   "summary": {
-    "files": 273,
-    "ownTextModules": 213,
-    "ownJavaScript": 134,
+    "files": 276,
+    "ownTextModules": 216,
+    "ownJavaScript": 135,
     "vendorFiles": 35,
     "missingLiteralReferences": 0
   }

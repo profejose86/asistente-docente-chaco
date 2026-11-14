@@ -119,6 +119,7 @@ Scripts en orden de carga:
 - `assets/js/tramites/busqueda-inteligente.js`
 - `assets/js/tramites/buscador.js`
 - `assets/js/tramites/dl01-interfaz.js`
+- `assets/js/perfil/autoguardado.js`
 
 Hojas de estilo en orden de carga:
 
@@ -203,7 +204,8 @@ Hojas de estilo en orden de carga:
 | `assets/js/interfaz/inicio-local.js` | 19 | 0 |
 | `assets/js/interfaz/navegacion.js` | 13 | 5 |
 | `assets/js/interfaz/sesion.js` | 44 | 2 |
-| `assets/js/interfaz/sincronizacion.js` | 80 | 2 |
+| `assets/js/interfaz/sincronizacion.js` | 83 | 2 |
+| `assets/js/perfil/autoguardado.js` | 33 | 2 |
 | `assets/js/perfil/contactos-instituciones.js` | 100 | 5 |
 | `assets/js/perfil/datos-personales.js` | 96 | 12 |
 | `assets/js/perfil/geografia.js` | 152 | 4 |
@@ -211,7 +213,7 @@ Hojas de estilo en orden de carga:
 | `assets/js/perfil/nombres.js` | 6 | 2 |
 | `assets/js/perfil/respaldos.js` | 36 | 8 |
 | `assets/js/servicios/almacenamiento-usuario.js` | 89 | 7 |
-| `assets/js/servicios/sincronizacion-usuario.js` | 99 | 4 |
+| `assets/js/servicios/sincronizacion-usuario.js` | 100 | 4 |
 | `assets/js/servicios/supabase-runtime.js` | 30 | generado |
 | `assets/js/servicios/supabaseClient.js` | 94 | 4 |
 | `assets/js/tema/controles.js` | 15 | 1 |
@@ -276,14 +278,14 @@ Hojas de estilo en orden de carga:
 | `tests/studio-contrato.test.cjs` | 26 | 0 |
 | `tests/studio-inplace.test.cjs` | 54 | 2 |
 | `tests/studio.test.cjs` | 59 | 1 |
-| `tests/supabase-auth.test.cjs` | 70 | 0 |
+| `tests/supabase-auth.test.cjs` | 73 | 0 |
 | `tests/supabase-config.test.cjs` | 13 | 0 |
 | `tests/supabase-management.test.cjs` | 21 | 0 |
 | `tests/supabase-rls.test.cjs` | 46 | 0 |
 | `tests/support/ajustes.cjs` | 15 | 0 |
 | `tests/support/demo-config.cjs` | 10 | 1 |
-| `tests/sync-sandbox.test.cjs` | 43 | 1 |
-| `tests/sync-staging.test.cjs` | 11 | 0 |
+| `tests/sync-sandbox.test.cjs` | 53 | 1 |
+| `tests/sync-staging.test.cjs` | 22 | 0 |
 | `tests/traslado-pdf.test.cjs` | 50 | 0 |
 | `tools/ajustes-store.cjs` | 39 | 5 |
 | `tools/auditar-arquitectura.cjs` | 73 | 3 |
@@ -297,9 +299,9 @@ Hojas de estilo en orden de carga:
 | `tools/publicar.cjs` | 38 | 2 |
 | `tools/supabase-auth-settings.cjs` | 21 | 1 |
 | `tools/sync-sandbox.cjs` | 79 | 3 |
-| `tools/sync-staging-browser.cjs` | 37 | 2 |
-| `tools/sync-staging-verify.cjs` | 50 | 2 |
-| `tools/sync-staging.cjs` | 77 | 7 |
+| `tools/sync-staging-browser.cjs` | 36 | 2 |
+| `tools/sync-staging-verify.cjs` | 51 | 2 |
+| `tools/sync-staging.cjs` | 91 | 8 |
 | `tools/verify-structure.cjs` | 46 | 0 |
 
 ## Referencias literales ausentes

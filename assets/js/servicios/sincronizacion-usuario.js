@@ -77,6 +77,7 @@
   }
   return {
    state:()=>state,
+   pending(){if(owner)emit({status:'pending',verified:0,message:'Cambio guardado localmente; pendiente de verificar en Supabase.'})},
    localError(message){emit({status:'error',message})},
    async prepare(id){owner=id;epoch++;return run({boot:true})},
    run:()=>run(),

@@ -6,6 +6,13 @@ html.adc-auth-pending body>#adcAuthGate{visibility:visible!important}
 .adc-session-bar{position:fixed;right:12px;bottom:12px;z-index:8800;display:flex;align-items:center;gap:10px;max-width:calc(100vw - 24px);padding:8px 12px;border:1px solid #aac0df;border-radius:8px;background:#fff;color:#152844;font:13px system-ui;box-sizing:border-box}
 .adc-session-bar span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 #adcLoginStatus[data-error=true]{color:#a52c32}
+@property --adc-password-border-angle{syntax:'<angle>';initial-value:0deg;inherits:false}
+.adc-password-advice{position:relative;box-sizing:border-box;font-size:.88rem;font-weight:600;line-height:1.55;margin:4px 0 16px;padding:13px 15px;color:#78350f;background:#fffbeb;border:2px solid #f59e0b;border-radius:12px;box-shadow:0 3px 12px #f59e0b14}
+.adc-password-advice::before{content:'⚠ CONTRASEÑA EXCLUSIVA ADC';display:block;margin-bottom:5px;color:#92400e;font-size:.76rem;font-weight:800;letter-spacing:.055em}
+:is([data-theme="dark"],.dark-mode) .adc-password-advice,.adc-password-advice.dark-mode{color:#fce7f3;border-color:transparent;background:linear-gradient(#271426,#271426) padding-box,conic-gradient(from var(--adc-password-border-angle),#ec4899,#831843 25%,#fbcfe8 45%,#ec4899 60%,#831843 85%,#ec4899) border-box;box-shadow:0 0 16px #ec48994d;animation:adcPasswordBorderSpin 5s linear infinite}
+:is([data-theme="dark"],.dark-mode) .adc-password-advice::before,.adc-password-advice.dark-mode::before{color:#f9a8d4;text-shadow:0 0 8px #ec489970}
+@keyframes adcPasswordBorderSpin{to{--adc-password-border-angle:360deg}}
+@media(prefers-reduced-motion:reduce){:is([data-theme="dark"],.dark-mode) .adc-password-advice,.adc-password-advice.dark-mode{animation:none}}
 #adcRecoveryForm{display:grid;gap:12px}#adcRecoveryForm[hidden]{display:none}
 @media print{.adc-session-bar,#adcAuthGate{display:none!important}}
 .adc-password-field{position:relative;display:block;margin-top:4px}

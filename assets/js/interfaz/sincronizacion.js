@@ -68,7 +68,10 @@
   if(event.detail.type==='storage-error'){clearTimeout(timer);engine.localError(event.detail.message);panel.open=true;return;}
   if(event.detail.type==='locked')return;
   clearTimeout(timer);
-  if(store.metadata().consent?.version===1)timer=setTimeout(()=>engine.run(),1000);
+  if(store.metadata().consent?.version===1){
+   if(event.detail.type==='change'&&store.syncable(event.detail.key))engine.pending();
+   timer=setTimeout(()=>engine.run(),1000);
+  }
   else if(panel){if(event.detail.type==='local-conflict')panel.open=true;render();}
  });
  window.addEventListener('online',()=>{if(store.metadata().consent?.version===1)engine.run()});

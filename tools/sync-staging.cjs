@@ -1,6 +1,7 @@
 // Administración sólo local; configuración y salida separadas de producción.
 const fs=require('node:fs'),path=require('node:path'),crypto=require('node:crypto');
 const {readEnv,publicConfig}=require('./env.cjs');
+const {authSettings}=require('./supabase-auth-settings.cjs');
 const settings=require('../config/sincronizacion-staging.json');
 const root=path.resolve(__dirname,'..'),stateFile=path.join(root,settings.localStateFile);
 function readState(){return fs.existsSync(stateFile)?JSON.parse(fs.readFileSync(stateFile,'utf8')):{};}
@@ -20,6 +21,17 @@ function management(){
   if(!r.ok)throw Error('Supabase Management HTTP '+r.status+' en '+route+'; no se modificó producción.');
   return r.status===204?null:r.json();
  };
+}
+function stagingAuthOptions(env,previous={}){
+ const scoped={ADC_SITE_URL:settings.siteUrl,ADC_EMAIL_CONFIRMATIONS_REQUIRED:'false'};
+ for(const key of ['HOST','PORT','USER','PASSWORD','SENDER_EMAIL','SENDER_NAME'])if(env['ADC_STAGING_SMTP_'+key])scoped['SMTP_'+key]=env['ADC_STAGING_SMTP_'+key];
+ const patch=authSettings(scoped,previous,false);
+ const callbacks=[...patch.uri_allow_list.split(','),new URL('ADC_Ingreso_Editable',settings.siteUrl).href,new URL('ADC_Ingreso_Editable?flow=recovery',settings.siteUrl).href];
+ patch.uri_allow_list=[...new Set(callbacks)].join(',');
+ const id=env.ADC_STAGING_GOOGLE_CLIENT_ID,secret=env.ADC_STAGING_GOOGLE_CLIENT_SECRET;
+ if(Boolean(id)!==Boolean(secret))throw Error('Completá ambas credenciales OAuth de staging antes de habilitar Google.');
+ if(id){if(!id.endsWith('.apps.googleusercontent.com'))throw Error('Client ID OAuth de Google inválido.');Object.assign(patch,{external_google_enabled:true,external_google_client_id:id,external_google_secret:secret});}
+ return {patch,googleEnabled:!!id||previous.external_google_enabled===true,passwordRecoveryEnabled:!!scoped.SMTP_HOST||!!(previous.smtp_host&&previous.smtp_admin_email)};
 }
 async function provision(){
  const request=management(),state=readState();
@@ -53,7 +65,9 @@ async function provision(){
  const keys=await api('/api-keys'),all=Array.isArray(keys)?keys:keys.keys||keys.api_keys||[],key=all.find(k=>k.type==='publishable')||all.find(k=>k.name==='anon');
  state.publicKey=key?.api_key||key?.key;if(!state.publicKey)throw Error('Falta clave pública de staging.');
  publicConfig({ADC_AUTH_MODE:'supabase',SUPABASE_URL:'https://'+ref+'.supabase.co',SUPABASE_ANON_KEY:state.publicKey});
- await api('/config/auth','PATCH',{site_url:settings.siteUrl,uri_allow_list:new URL('ADC_Ingreso_Editable.html',settings.siteUrl).href,mailer_autoconfirm:true,password_min_length:12,disable_signup:false});
+ const auth=stagingAuthOptions(readEnv(root),await api('/config/auth'));
+ await api('/config/auth','PATCH',{...auth.patch,disable_signup:false});
+ state.googleEnabled=auth.googleEnabled;state.passwordRecoveryEnabled=auth.passwordRecoveryEnabled;
  state.ready=true;saveState(state);return {ref,ready:true,rls:true,productionUntouched:true};
 }
 async function prepare(){
@@ -61,16 +75,16 @@ async function prepare(){
  const target=path.join(root,'.adc-tools/sync-staging-site'),dist=path.join(target,'dist');
  fs.mkdirSync(dist,{recursive:true});fs.cpSync(path.join(root,'assets'),path.join(dist,'assets'),{recursive:true});
  for(const file of ['index.html','ADC_Ingreso_Editable.html'])fs.copyFileSync(path.join(root,file),path.join(dist,file));
- const config=publicConfig({ADC_AUTH_MODE:'supabase',SUPABASE_URL:'https://'+ref+'.supabase.co',SUPABASE_ANON_KEY:state.publicKey,ADC_EMAIL_CONFIRMATIONS_REQUIRED:'false',ADC_PASSWORD_RECOVERY_ENABLED:'false'});
+ const config=publicConfig({ADC_AUTH_MODE:'supabase',SUPABASE_URL:'https://'+ref+'.supabase.co',SUPABASE_ANON_KEY:state.publicKey,ADC_EMAIL_CONFIRMATIONS_REQUIRED:'false',ADC_GOOGLE_AUTH_ENABLED:String(state.googleEnabled===true),ADC_PASSWORD_RECOVERY_ENABLED:String(state.passwordRecoveryEnabled===true)});
  config.environment='sync-staging';
  fs.writeFileSync(path.join(dist,'assets/datos/config-publica.js'),'window.adcConfig=Object.freeze('+JSON.stringify(config)+');\n');
  fs.writeFileSync(path.join(dist,'build-info.json'),JSON.stringify({branch:'pruebas/sincronizacion',environment:'sync-staging',siteUrl:settings.siteUrl}));
  const banner='<div role="note" style="background:#fff1cc;color:#4b3300;padding:10px;text-align:center">ADC · STAGING AISLADO · Usar sólo datos ficticios</div>';
  for(const file of ['index.html','ADC_Ingreso_Editable.html']){const p=path.join(dist,file);fs.writeFileSync(p,fs.readFileSync(p,'utf8').replace(/(<body\b[^>]*>)/i,'$1'+banner));}
- const secrets=[readEnv(root).SUPABASE_ACCESS_TOKEN,state.dbPassword,...Object.values(state.accounts||{}).map(v=>v.password)].filter(Boolean);
+ const env=readEnv(root),secrets=[env.SUPABASE_ACCESS_TOKEN,env.ADC_STAGING_GOOGLE_CLIENT_SECRET,env.ADC_STAGING_SMTP_PASSWORD,state.dbPassword,...Object.values(state.accounts||{}).map(v=>v.password)].filter(Boolean);
  function check(dir){for(const item of fs.readdirSync(dir)){const p=path.join(dir,item);if(fs.lstatSync(p).isSymbolicLink())throw Error('No publicar enlaces simbólicos');if(fs.statSync(p).isDirectory())check(p);else{const bytes=fs.readFileSync(p);if(secrets.some(s=>bytes.includes(Buffer.from(s))))throw Error('Secreto detectado en paquete');}}}check(dist);
  fs.writeFileSync(path.join(target,'package.json'),JSON.stringify({name:'adc-sync-staging',version:'1.0.0',private:true}));
  return {directory:target,siteUrl:settings.siteUrl,ref};
 }
 if(require.main===module)(process.argv.includes('--provision')?provision():prepare()).then(v=>console.log(JSON.stringify(v))).catch(e=>{console.error(e.message);process.exitCode=1;});
-module.exports={assertIsolated,provision,prepare};
+module.exports={assertIsolated,provision,prepare,stagingAuthOptions};

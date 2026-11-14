@@ -15,19 +15,18 @@ async function run(){
    const account=state.accounts[key];await page.evaluate(async({email,password})=>{await adcAuth.signIn(email,password)},account);
    await page.goto(base+'/index.html');await page.waitForSelector('#adcSessionBar',{timeout:30000});return page;
   }
-  const a=await login('a');assert.equal(await a.locator('#perfilNombres').inputValue(),'Ana');assert.equal(await a.evaluate(()=>adcUserStorage.scope()),state.accounts.a.id);
-  const second=await login('a');assert.equal(await second.locator('#perfilNombres').inputValue(),'Ana');
+  const a=await login('a');const initialName=await a.locator('#perfilNombres').inputValue();assert.equal(await a.evaluate(()=>adcUserStorage.scope()),state.accounts.a.id);
+  const second=await login('a');assert.equal(await second.locator('#perfilNombres').inputValue(),initialName);
   await a.locator('#adcSessionBar').getByRole('button',{name:'Mis datos / sincronización',exact:true}).click();
   if(!await a.locator('#adcSyncConsent').isVisible())await a.locator('#adcSyncPanel summary').click();
   await a.locator('#adcSyncConsent').check();await a.getByRole('button',{name:'Autorizar e importar los datos compatibles',exact:true}).click();
   await a.waitForFunction(()=>adcSyncUI.engine.state().status==='saved');
-  await a.evaluate(()=>{const p=JSON.parse(adcUserStorage.getItem('adc_v08'));p.nombres='Ana prueba online';p.nombre='Prueba, Ana prueba online';adcUserStorage.setItem('adc_v08',JSON.stringify(p));});
-  await a.evaluate(()=>adcSyncUI.engine.run());
+  await a.locator('#perfilNombres').fill('Anabella');await a.locator('#perfilNombres').blur();
+  assert.equal(await a.evaluate(()=>JSON.parse(adcUserStorage.getItem('adc_v08')).nombres),'Anabella');
   await a.waitForFunction(()=>adcSyncUI.engine.state().status==='saved');
-  await second.reload();await second.waitForSelector('#adcSessionBar');assert.equal(await second.locator('#perfilNombres').inputValue(),'Ana prueba online');
-  await a.evaluate(()=>{const p=JSON.parse(adcUserStorage.getItem('adc_v08'));p.nombres='Ana';p.nombre='Prueba, Ana';adcUserStorage.setItem('adc_v08',JSON.stringify(p));});
-  await a.evaluate(()=>adcSyncUI.engine.run());
-  await a.waitForFunction(()=>adcSyncUI.engine.state().status==='saved');await second.reload();await second.waitForSelector('#adcSessionBar');assert.equal(await second.locator('#perfilNombres').inputValue(),'Ana');
+  await second.reload();await second.waitForSelector('#adcSessionBar');assert.equal(await second.locator('#perfilNombres').inputValue(),'Anabella');
+  await a.reload();await a.waitForSelector('#adcSessionBar');assert.equal(await a.locator('#perfilNombres').inputValue(),'Anabella');
+  const relogin=await login('a');assert.equal(await relogin.locator('#perfilNombres').inputValue(),'Anabella');
   const b=await login('b');assert.equal(await b.locator('#perfilNombres').inputValue(),'Bruno');assert.equal(await b.evaluate(()=>adcUserStorage.scope()),state.accounts.b.id);
   await second.screenshot({path:path.join(root,'.adc-tools/sync-staging-ana-real.png')});await b.screenshot({path:path.join(root,'.adc-tools/sync-staging-bruno-real.png')});
   assert.deepEqual(errors,[]);console.log(JSON.stringify({passed:['Chrome y cliente ADC contra Auth real','perfil A desde dos contextos limpios','consentimiento y cambio guardado/recuperado en segunda sesión','perfil B aislado','sin errores JavaScript'],note:'Artefacto de publicación servido localmente; conexiones Auth/REST reales al staging.'}));

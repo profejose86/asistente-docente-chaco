@@ -2,7 +2,7 @@
 
 ## Estado y activación
 
-El código está implementado y probado con fixtures locales y con dos cuentas ficticias en Supabase remoto de staging, separado de producción. La copia de staging está publicada con acceso privado del propietario; ver [prueba-sincronizacion.md](prueba-sincronizacion.md). **Producción y main permanecen sin cambios, y no se subieron datos personales reales.** Antes de habilitarlo en producción deben revisarse y aplicarse ambas migraciones `202611140001_adc_user_records.sql` y `202611140002_adc_sync_conflict_http.sql`. El navegador nunca aplica migraciones. Si falta la tabla, se informa y se conserva el funcionamiento local.
+El código se probó con fixtures locales, dos cuentas ficticias en Supabase remoto de staging y la comprobación del usuario desde PC y celular. El 14/11/2026 el usuario autorizó integrar y publicar en `main` y habilitar la estructura de producción: se aplicaron y verificaron ambas migraciones `202611140001_adc_user_records.sql` y `202611140002_adc_sync_conflict_http.sql`, sin modificar los perfiles existentes. Ver [cierre de publicación](cierre-publicacion-sincronizacion.md). El Site privado de [staging](prueba-sincronizacion.md) conserva su base independiente. El navegador nunca aplica migraciones; los datos locales sólo se suben con consentimiento explícito.
 
 No ejecutar un reset ni modificar los datos existentes para instalar esta función. Las migraciones anteriores de perfiles mínimos siguen siendo válidas. El cliente oficial se mantiene único en `servicios/supabaseClient.js`; `supabase-runtime.js` es una salida de `npm run build`.
 
@@ -60,6 +60,8 @@ Al ingresar se leen los registros de la cuenta. Se hidratan sólo cuando no exis
 Dos pestañas sobre el mismo almacenamiento también detectan revisiones locales distintas y conservan un candidato en vez de perder la edición. Los respaldos de resolución permanecen locales.
 
 ## Estado, red y límites
+
+En modo autenticado, `perfil/autoguardado.js` guarda el perfil local en cada edición real de los campos y en las acciones estructurales de instituciones. No requiere el botón manual ni concede consentimiento por sí mismo. La sincronización conserva su debounce de red, pero muestra pendiente inmediatamente después de una escritura local. Las pruebas de regresión deben editar controles del DOM; escribir directamente en `adcUserStorage` no valida el recorrido del usuario.
 
 La barra diferencia guardado local, pendiente, verificado, conflicto y error. Las escrituras locales son durables aunque falle la red. Se reintenta al volver la conexión, al guardar nuevos cambios o con **Comprobar y sincronizar ahora**. Los datos ya presentes se comparan antes de volver a escribir. **Pausar** detiene nuevas operaciones; una petición que el servidor ya recibió puede terminar, y la copia remota existente no se elimina.
 
