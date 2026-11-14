@@ -32,6 +32,20 @@ test('Ingreso demo online: aviso, acceso sin datos, registro, temas y ancho movi
   await page.goto('https://adc-test.example/adc/ADC_Ingreso_Editable.html');
   assert.match(await page.locator('#adcLoginStatus').textContent(), /demostraci/);
   assert.equal(await page.locator('#adcLoginForm').evaluate(f => f.noValidate), true);
+  for(const [inputId,formId] of [['adcLoginPassword','adcLoginForm'],['adcSignupPassword','adcSignupForm']]){
+   if(formId==='adcSignupForm')await page.locator('#adcOpenSignup').click();
+   const input=page.locator('#'+inputId),eye=page.locator('#'+formId+' .adc-password-toggle');
+   await input.fill('Clave-de-prueba-123');
+   assert.equal(await input.getAttribute('type'),'password');
+   await eye.click();assert.equal(await input.getAttribute('type'),'text');
+   assert.equal(await input.inputValue(),'Clave-de-prueba-123');
+   assert.equal(await eye.getAttribute('aria-pressed'),'true');
+   await eye.click();assert.equal(await input.getAttribute('type'),'password');
+   await eye.focus();await page.keyboard.press('Space');assert.equal(await input.getAttribute('type'),'text');
+   if(formId==='adcSignupForm')await page.locator('#adcBackToLogin').click();
+  }
+  assert.equal(await page.locator('#adcLoginPassword').getAttribute('type'),'password');
+  assert.equal(await page.locator('#adcSignupPassword').getAttribute('type'),'password');
   await page.locator('#adcThemeSwitch').click();
   assert.equal(await page.locator('html').getAttribute('data-theme'), 'dark');
   await page.locator('#adcOpenSignup').click();
