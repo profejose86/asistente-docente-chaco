@@ -9,10 +9,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Asistente Docente Chaco · Ingreso</title>
 <link rel="stylesheet" href="assets/css/acceso/ingreso.css">
+<link rel="stylesheet" href="assets/css/acceso/marca.css?v=1">
 </head>
 <body>
 <main class="wrap" id="adcLoginCanvas">
-<header class="adc-header"><span class="adc-emblem"><img alt="" src="assets/img/acceso/logo-adc.png"></span><strong>Asistente Docente Chaco</strong><button type="button" id="adcThemeSwitch" role="switch" aria-label="Tema oscuro" aria-checked="false"><span class="theme-medallion" aria-hidden="true"><svg class="theme-light" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v3m0 14v3M2 12h3m14 0h3M5 5l2 2m10 10 2 2M19 5l-2 2M7 17l-2 2"/></svg><svg class="theme-dark" viewBox="0 0 24 24"><path d="M20 15a8 8 0 0 1-11-11A8.5 8.5 0 1 0 20 15Z"/><path d="M17 4v4m-2-2h4"/></svg></span><span aria-hidden="true"><span class="theme-light">Light</span><span class="theme-dark">Dark</span></span></button></header>
+<header class="adc-header"><div class="adc-brand" tabindex="0" role="img" aria-label="Asistente Docente Chaco"><span class="adc-emblem"><img alt="" src="assets/img/acceso/logo-adc.png"></span><span class="adc-text-viewport" aria-hidden="true"><span class="adc-text-track"><strong class="adc-full-title">Asistente Docente Chaco</strong><span class="adc-short-title"><span class="adc-divider"></span>ADC</span></span></span></div><button type="button" id="adcThemeSwitch" role="switch" aria-label="Tema oscuro" aria-checked="false"><span class="theme-medallion" aria-hidden="true"><svg class="theme-light" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v3m0 14v3M2 12h3m14 0h3M5 5l2 2m10 10 2 2M19 5l-2 2M7 17l-2 2"/></svg><svg class="theme-dark" viewBox="0 0 24 24"><path d="M20 15a8 8 0 0 1-11-11A8.5 8.5 0 1 0 20 15Z"/><path d="M17 4v4m-2-2h4"/></svg></span><span aria-hidden="true"><span class="theme-light">Light</span><span class="theme-dark">Dark</span></span></button></header>
 <div class="adc-stage">
 <section class="adc-intro" aria-labelledby="adcIntroTitle">
 <h1 id="adcIntroTitle">Tus trámites y tu agenda en un solo lugar</h1><div class="accent-rule" aria-hidden="true"></div>
@@ -44,8 +45,10 @@
 <script src="assets/js/acceso/ingreso.js?v=supabase-1"></script>
 <script src="assets/js/acceso/autenticacion.js?v=1"></script>
 <script src="assets/js/acceso/visibilidad-clave.js?v=1"></script>
+<script src="assets/js/acceso/marca.js?v=1"></script>
 <link rel="stylesheet" href="assets/css/acceso/editor.css">
-<button type="button" id="adcDesignGear" aria-expanded="false" aria-controls="adcDesignPanel" title="Clic para abrir. Con Ajustes abierto, arrastrá la tuerquita.">⚙ Ajustes</button>
+<link rel="stylesheet" href="assets/css/editor/acceso-ajustes.css?v=1">
+<button type="button" id="adcDesignGear" data-adc-locked aria-expanded="false" aria-controls="adcDesignPanel" title="Clic para abrir. Con Ajustes abierto, arrastrá la tuerquita.">⚙ Ajustes</button>
 <aside id="adcDesignPanel" hidden aria-label="Editor de diseño">
  <label><input type="checkbox" id="adcDevRules" checked> Mostrar reglas</label><br><label><input type="checkbox" id="adcKeepNotes"> Mantener anotaciones visibles</label><br><strong>Modo Diseño · ADC</strong>
  <p data-status role="status">Mantené presionada una sección y arrastrala.</p>
@@ -66,6 +69,7 @@
  </details>
  <div><button data-act="save">Guardar borrador</button><button data-act="export">Exportar JSON</button><button data-act="import">Importar JSON</button><input type="file" id="adcDesignImport" accept=".json" hidden></div>
 </aside>
+<script src="assets/js/editor/acceso-ajustes.js?v=1"></script>
 <script src="assets/js/editor/ajustes-proyecto-datos.js?v=1"></script>
 <script src="assets/js/editor/documentos.js?v=1"></script>
 <script src="assets/js/editor/elementos.js?v=4"></script>

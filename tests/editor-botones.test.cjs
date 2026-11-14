@@ -22,7 +22,7 @@ for(const screen of ['ADC_Ingreso_Editable.html','index.html?adc-preview=1'])tes
       const blocker=document.createElement('div');blocker.id='adcMouseBlocker';Object.assign(blocker.style,{position:'fixed',left:'850px',top:'280px',width:'240px',height:'160px',background:'red',zIndex:'10'});
       host.append(button,blocker);
     });
-    await page.locator('#adcDesignGear').click();
+    await require('./support/ajustes.cjs').clickGear(page);
     await page.locator('#adcMouseButton').dblclick();
     assert.equal(await page.evaluate(()=>mouseActions),0);
     assert.equal(await page.locator('#adcMouseButton').getAttribute('data-adc-design-selected'),'');
@@ -42,7 +42,7 @@ for(const screen of ['ADC_Ingreso_Editable.html','index.html?adc-preview=1'])tes
     const operations=Object.values(output.pages)[0].operations;
     assert.ok(operations.some(op=>op.kind==='front'&&op.target==='project:#adcMouseButton'));
     assert.ok(operations.some(op=>op.kind==='style'&&op.target==='project:#adcMouseButton'&&op.x>250));
-    await page.locator('#adcDesignGear').click();await page.locator('#adcMouseButton').click();assert.equal(await page.evaluate(()=>mouseActions),1);
+    await require('./support/ajustes.cjs').clickGear(page);await page.locator('#adcMouseButton').click();assert.equal(await page.evaluate(()=>mouseActions),1);
     assert.deepEqual(errors,[]);
   }finally{await browser.close();await new Promise(resolve=>server.close(resolve));}
 });

@@ -82,3 +82,8 @@ Este es un editor visual, no un reemplazo automático del motor de cada trámite
 Para una siguiente etapa se recomienda identificar cada caja con nombre y tipo de dato, indicar qué campo del Perfil Docente corresponde, ofrecer coordenadas finas en milímetros y añadir guías de alineación para casilleros. La validación, MNC y el PDF final se conectarían a esas definiciones, después de revisar visualmente cada documento.
 
 Pruebas: `tests/editor-elementos.test.cjs` usa Chrome aislado en ingreso y aplicación: imagen agregada y redimensionada mediante el mouse, reemplazo/deshacer, eliminación/deshacer, PDF de dos páginas, caja superpuesta, conservación de coordenadas al escalar, copia JSON y recuperación de páginas y caja al recargar.
+## Acceso discreto a Ajustes
+
+El botón flotante empieza transparente y conserva su zona de clic por encima de la página. Cinco clics o toques sobre esa zona lo hacen visible; otro clic abre las herramientas. También se puede revelar con cinco pulsaciones consecutivas de Tab, sin impedir la navegación habitual del teclado.
+
+La visibilidad se conserva al recargar únicamente en la sesión de esa pestaña (`sessionStorage`), asociada a la cuenta activa. Al cerrar sesión o cambiar de cuenta se oculta y se cierra el editor. No se guarda en el proyecto, en la exportación ni en Supabase. Esto es un acceso visual discreto, no un control de autorización.

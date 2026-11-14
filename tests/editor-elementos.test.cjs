@@ -16,7 +16,7 @@ for(const [screen,scope] of [['ADC_Ingreso_Editable.html','ingreso'],['index.htm
   try{
     const page=await browser.newPage({viewport:{width:1600,height:1200}}),errors=[];page.on('pageerror',error=>errors.push(error.stack));page.on('dialog',dialog=>dialog.accept());
     await page.goto(`http://127.0.0.1:${server.address().port}/${screen}`);
-    await page.locator('#adcDesignGear').click();
+    await require('./support/ajustes.cjs').clickGear(page);
     await page.locator('[data-image-import]').setInputFiles({name:'test.png',mimeType:'image/png',buffer:png});
     await page.waitForFunction(()=>document.querySelector('[data-status]').textContent.includes('Dibujá'));
     await page.mouse.move(700,200);await page.mouse.down();await page.mouse.move(900,300,{steps:5});await page.mouse.up();

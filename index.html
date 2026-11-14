@@ -113,7 +113,8 @@
 <link rel="stylesheet" href="assets/css/interfaz/espacio-trabajo.css">
 <script src="assets/js/interfaz/espacio-trabajo.js"></script>
 <link rel="stylesheet" href="assets/css/editor/editor.css?v=lineas-2">
-<button type="button" id="adcDesignGear" aria-expanded="false" aria-controls="adcDesignPanel" title="Clic para abrir. Con Ajustes abierto, arrastrá la tuerquita.">⚙ Ajustes</button>
+<link rel="stylesheet" href="assets/css/editor/acceso-ajustes.css?v=1">
+<button type="button" id="adcDesignGear" data-adc-locked aria-expanded="false" aria-controls="adcDesignPanel" title="Clic para abrir. Con Ajustes abierto, arrastrá la tuerquita.">⚙ Ajustes</button>
 <aside id="adcDesignPanel" hidden aria-label="Editor de diseño">
  <label><input type="checkbox" id="adcDevRules" checked> Mostrar reglas</label><br><strong>Modo Diseño · ADC</strong>
  <p data-status role="status">Mantené presionada una sección y arrastrala.</p>
@@ -134,6 +135,7 @@
  </details>
  <div><button data-act="save">Guardar borrador</button><button data-act="export">Exportar JSON</button><button data-act="import">Importar JSON</button><input type="file" id="adcDesignImport" accept=".json" hidden></div>
 </aside>
+<script src="assets/js/editor/acceso-ajustes.js?v=1"></script>
 <script src="assets/js/editor/ajustes-proyecto-datos.js?v=1"></script>
 <script src="assets/js/editor/documentos.js?v=1"></script>
 <script src="assets/js/editor/elementos.js?v=4"></script>

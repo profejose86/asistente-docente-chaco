@@ -54,7 +54,7 @@ test('SDK oficial en Chrome: registro, login real, guard, perfil mínimo, recupe
   // La URL recovery conserva el flujo en lugar de enviar al usuario a index.
   await page.evaluate(({session})=>localStorage.setItem('adc-supabase-auth',JSON.stringify(session)),{session:session()});
   await page.goto(base+'ADC_Ingreso_Editable.html?flow=recovery');await page.waitForSelector('#adcRecoveryForm');
-  await page.getByRole('textbox',{name:'Nueva contraseña',exact:true}).fill('Nueva-Prueba-Segura-2026');await page.locator('#adcRecoveryForm button').click();await page.waitForURL(base+'ADC_Ingreso_Editable.html');
+  await page.getByRole('textbox',{name:'Nueva contraseña',exact:true}).fill('Nueva-Prueba-Segura-2026');await page.locator('#adcRecoveryForm button[type=submit]').click();await page.waitForURL(base+'ADC_Ingreso_Editable.html');
   assert.ok(requests.some(req=>req.path.endsWith('/user')&&req.method==='PUT'));
   // No mostrar datos si el navegador pertenece a otra cuenta; conservarlos.
   await page.evaluate(({session})=>{localStorage.setItem('adc-supabase-auth',JSON.stringify(session));localStorage.setItem('adc-auth-local-owner','otra-cuenta');localStorage.setItem('adc_v08','{"privado":"conservar"}');},{session:session()});

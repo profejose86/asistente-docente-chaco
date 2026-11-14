@@ -42,7 +42,7 @@ test('Chrome: carga, exportación, deshacer, borrador prioritario y recuperació
     await page.route('**/assets/datos/ajustes-pagina.json',route=>route.fulfill({json:fixture()}));
     const url=`http://127.0.0.1:${server.address().port}/ADC_Ingreso_Editable.html`;
     await page.goto(url);await page.waitForFunction(()=>document.querySelector('#adcLoginTitle')?.style.color==='rgb(18, 52, 86)');
-    await page.locator('#adcDesignGear').click();
+    await require('./support/ajustes.cjs').clickGear(page);
     const download=page.waitForEvent('download');await page.locator('[data-project-export]').click();
     const data=contract.validate(JSON.parse(fs.readFileSync(await (await download).path(),'utf8')));
     assert.deepEqual(data.pages.ingreso,fixture().pages.ingreso);
@@ -60,9 +60,9 @@ test('Chrome: carga, exportación, deshacer, borrador prioritario y recuperació
     await page.evaluate(()=>{localStorage.setItem('adc-login-design-draft',JSON.stringify({schema:'adc-login-design-v1',operations:[]}));localStorage.setItem('adc-profile-test','conservar');});
     await page.reload();await page.waitForSelector('[data-project-export]',{state:'attached'});
     assert.equal(await page.locator('#adcLoginTitle').evaluate(node=>node.style.color),'');
-    await page.locator('#adcDesignGear').click();await page.getByRole('button',{name:'Usar ajustes del proyecto',exact:true}).click();
+    await require('./support/ajustes.cjs').clickGear(page);await page.getByRole('button',{name:'Usar ajustes del proyecto',exact:true}).click();
     await page.waitForFunction(()=>document.querySelector('#adcLoginTitle')?.style.color==='rgb(18, 52, 86)');
-    await page.locator('#adcDesignGear').click();await page.getByRole('button',{name:'Recuperar borrador anterior',exact:true}).click();
+    await require('./support/ajustes.cjs').clickGear(page);await page.getByRole('button',{name:'Recuperar borrador anterior',exact:true}).click();
     await page.waitForFunction(()=>localStorage.getItem('adc-login-design-draft')!==null);
     assert.equal(await page.evaluate(()=>localStorage.getItem('adc-profile-test')),'conservar');
     assert.deepEqual(errors,[]);
