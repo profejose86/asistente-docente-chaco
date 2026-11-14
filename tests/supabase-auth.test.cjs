@@ -47,7 +47,9 @@ test('SDK oficial en Chrome: registro, login real, guard, perfil mínimo, recupe
   await page.waitForFunction(()=>document.querySelector('#adcLoginStatus').textContent.includes('incorrectos'),null,{timeout:5000}).catch(async error=>{throw Error(JSON.stringify({status:await page.locator('#adcLoginStatus').textContent(),errors,requests:requests.map(({path,method})=>({path,method}))}));});
   assert.equal(await page.locator('#adcLoginPassword').inputValue(),'');
   await page.locator('#adcLoginEmail').fill('tester@example.test');await page.locator('#adcRecover').click();await page.waitForFunction(()=>document.querySelector('#adcLoginStatus').textContent.includes('recuperarla'));
-  await page.locator('#adcGoogle').click();await page.waitForFunction(()=>document.querySelector('#adcLoginStatus').textContent.includes('Google no está habilitado'));
+  assert.equal(await page.locator('#adcGoogle').isDisabled(),true);
+  assert.equal(await page.locator('#adcGoogle .adc-unavailable-badge').textContent(),'NO DISPONIBLE AÚN');
+  assert.equal(await page.locator('#adcRecover').isDisabled(),false);
   await page.locator('#adcLoginPassword').fill('Prueba-Segura-2026');await page.locator('#adcLoginForm button[type=submit]').click();await page.waitForURL(base+'index.html');
   const claim=page.getByRole('button',{name:'Usar mis datos de este navegador'});await page.waitForFunction(()=>document.querySelector('#adcSessionBar')||document.querySelector('#adcAuthGate button'));
   if(await claim.isVisible())await claim.click();await page.waitForSelector('#adcSessionBar');
@@ -67,6 +69,22 @@ test('SDK oficial en Chrome: registro, login real, guard, perfil mínimo, recupe
   assert.equal(await page.evaluate(()=>localStorage.getItem('adc_v08')),'{"privado":"conservar"}');
   assert.equal(await page.locator('html').evaluate(node=>node.classList.contains('adc-auth-pending')),false);
   assert.notEqual(await page.evaluate(()=>adcUserStorage.getItem('adc_v08')),'{"privado":"conservar"}');
+  const unavailable=await browser.newPage({viewport:{width:390,height:844}});
+  await unavailable.route('**/assets/datos/config-publica.js*',r=>r.fulfill({contentType:'application/javascript',body:'window.adcConfig='+JSON.stringify({...config,passwordRecoveryEnabled:false})}));
+  await unavailable.goto(base+'ADC_Ingreso_Editable.html');
+  assert.equal(await unavailable.locator('#adcGoogle').isDisabled(),true);
+  assert.equal(await unavailable.locator('#adcRecover').isDisabled(),true);
+  assert.equal(await unavailable.locator('.adc-unavailable-badge').count(),2);
+  assert.equal(await unavailable.locator('#adcLoginForm button[type=submit]').isEnabled(),true);
+  assert.equal(await unavailable.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false);
+  fs.mkdirSync(path.join(root,'.adc-tools'),{recursive:true});
+  await unavailable.locator('#adcLoginCard').screenshot({path:path.join(root,'.adc-tools/login-no-disponible.png')});
+  const enabled=await browser.newPage();
+  await enabled.route('**/assets/datos/config-publica.js*',r=>r.fulfill({contentType:'application/javascript',body:'window.adcConfig='+JSON.stringify({...config,googleAuthEnabled:true,passwordRecoveryEnabled:true})}));
+  await enabled.goto(base+'ADC_Ingreso_Editable.html');
+  assert.equal(await enabled.locator('#adcGoogle').isEnabled(),true);
+  assert.equal(await enabled.locator('#adcRecover').isEnabled(),true);
+  assert.equal(await enabled.locator('.adc-unavailable-badge').count(),0);
   assert.deepEqual(errors,[]);
  }finally{await browser.close();await new Promise(resolve=>server.close(resolve));}
 });

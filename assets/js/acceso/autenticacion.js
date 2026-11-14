@@ -5,6 +5,16 @@
  const landing=()=>new URL('index.html',location.href).href;
  const message=(text,error=false)=>{status.textContent=text;status.dataset.error=String(error);};
  const email=document.getElementById('adcLoginEmail'),password=document.getElementById('adcLoginPassword');
+ function showUnavailable(button,unavailable){
+  if(!unavailable)return;
+  const label=document.createElement('span');label.className='adc-unavailable-label';
+  while(button.firstChild)label.append(button.firstChild);
+  const badge=document.createElement('span');badge.className='adc-unavailable-badge';badge.textContent='NO DISPONIBLE AÚN';
+  button.append(label,badge);button.classList.add('adc-feature-unavailable');button.disabled=true;
+  button.title='Esta función todavía no está disponible. Ingresá con tu correo y contraseña de ADC.';
+ }
+ showUnavailable(document.getElementById('adcGoogle'),window.adcConfig.googleAuthEnabled!==true);
+ showUnavailable(document.getElementById('adcRecover'),window.adcConfig.passwordRecoveryEnabled===false);
  email.autocomplete='username';password.autocomplete='current-password';
  for(const input of document.querySelectorAll('#adcLoginCard input[type=password]'))input.minLength=12;
  message(window.adcConfig.emailConfirmationsRequired===false?'Prueba piloto: creá tu cuenta e ingresá directamente, sin confirmar el correo. Tus datos se sincronizan sólo si lo autorizás.':'Entorno de prueba ADC. Ingresá con tu cuenta. Tus datos se sincronizan sólo si lo autorizás.');
