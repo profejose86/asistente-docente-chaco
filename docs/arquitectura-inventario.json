@@ -191,6 +191,7 @@
     "docs/referencias/Nomenclatura.pdf",
     "docs/structure-manifest.json",
     "docs/supabase-staging.md",
+    "docs/unificacion-main.md",
     "index.html",
     "package-lock.json",
     "package.json",
@@ -385,7 +386,7 @@
   "modules": [
     {
       "file": ".github/workflows/pages.yml",
-      "bytes": 1734,
+      "bytes": 1784,
       "lines": 60,
       "generated": false,
       "functions": [],
@@ -403,7 +404,7 @@
     },
     {
       "file": "AGENTS.md",
-      "bytes": 3861,
+      "bytes": 4063,
       "lines": 30,
       "generated": false,
       "functions": [],
@@ -412,7 +413,7 @@
     },
     {
       "file": "assets/css/acceso/autenticacion.css",
-      "bytes": 1743,
+      "bytes": 1760,
       "lines": 18,
       "generated": false,
       "functions": [],
@@ -430,7 +431,7 @@
     },
     {
       "file": "assets/css/acceso/efectos.css",
-      "bytes": 549,
+      "bytes": 556,
       "lines": 8,
       "generated": false,
       "functions": [],
@@ -448,7 +449,7 @@
     },
     {
       "file": "assets/css/acceso/marca.css",
-      "bytes": 2194,
+      "bytes": 2219,
       "lines": 26,
       "generated": false,
       "functions": [],
@@ -511,7 +512,7 @@
     },
     {
       "file": "assets/css/editor/acceso-ajustes.css",
-      "bytes": 448,
+      "bytes": 453,
       "lines": 6,
       "generated": false,
       "functions": [],
@@ -538,7 +539,7 @@
     },
     {
       "file": "assets/css/editor/studio.css",
-      "bytes": 7768,
+      "bytes": 7828,
       "lines": 61,
       "generated": false,
       "functions": [],
@@ -754,7 +755,7 @@
     },
     {
       "file": "assets/datos/ajustes-pagina.json",
-      "bytes": 22937,
+      "bytes": 23773,
       "lines": 837,
       "generated": false,
       "functions": [],
@@ -763,7 +764,7 @@
     },
     {
       "file": "assets/datos/config-publica.js",
-      "bytes": 356,
+      "bytes": 358,
       "lines": 3,
       "generated": false,
       "functions": [],
@@ -796,7 +797,7 @@
     },
     {
       "file": "assets/js/acceso/autenticacion.js",
-      "bytes": 5204,
+      "bytes": 5259,
       "lines": 56,
       "generated": false,
       "functions": [
@@ -856,7 +857,7 @@
     },
     {
       "file": "assets/js/acceso/efectos.js",
-      "bytes": 2069,
+      "bytes": 2101,
       "lines": 33,
       "generated": false,
       "functions": [
@@ -884,7 +885,7 @@
     },
     {
       "file": "assets/js/acceso/marca.js",
-      "bytes": 668,
+      "bytes": 679,
       "lines": 12,
       "generated": false,
       "functions": [],
@@ -893,7 +894,7 @@
     },
     {
       "file": "assets/js/acceso/visibilidad-clave.js",
-      "bytes": 1406,
+      "bytes": 1430,
       "lines": 25,
       "generated": false,
       "functions": [
@@ -1063,7 +1064,7 @@
     },
     {
       "file": "assets/js/documentos/pdf-campos.js",
-      "bytes": 4498,
+      "bytes": 4562,
       "lines": 65,
       "generated": false,
       "functions": [
@@ -1102,7 +1103,7 @@
     },
     {
       "file": "assets/js/editor/acceso-ajustes.js",
-      "bytes": 2211,
+      "bytes": 2251,
       "lines": 41,
       "generated": false,
       "functions": [
@@ -1252,7 +1253,7 @@
     },
     {
       "file": "assets/js/editor/modo-local.js",
-      "bytes": 230,
+      "bytes": 232,
       "lines": 3,
       "generated": false,
       "functions": [],
@@ -1261,7 +1262,7 @@
     },
     {
       "file": "assets/js/editor/puente-local.js",
-      "bytes": 1969,
+      "bytes": 1996,
       "lines": 28,
       "generated": false,
       "functions": [
@@ -1274,7 +1275,7 @@
     },
     {
       "file": "assets/js/editor/studio-directo.js",
-      "bytes": 8821,
+      "bytes": 8925,
       "lines": 105,
       "generated": false,
       "functions": [
@@ -1292,7 +1293,7 @@
     },
     {
       "file": "assets/js/editor/studio-guias.js",
-      "bytes": 4150,
+      "bytes": 4185,
       "lines": 36,
       "generated": false,
       "functions": [
@@ -1306,7 +1307,7 @@
     },
     {
       "file": "assets/js/editor/studio-operaciones.js",
-      "bytes": 4085,
+      "bytes": 4138,
       "lines": 54,
       "generated": false,
       "functions": [
@@ -1321,7 +1322,7 @@
     },
     {
       "file": "assets/js/editor/studio-politicas.js",
-      "bytes": 1409,
+      "bytes": 1430,
       "lines": 22,
       "generated": false,
       "functions": [
@@ -1335,7 +1336,7 @@
     },
     {
       "file": "assets/js/editor/studio.js",
-      "bytes": 22274,
+      "bytes": 22417,
       "lines": 144,
       "generated": false,
       "functions": [
@@ -1540,7 +1541,7 @@
     },
     {
       "file": "assets/js/servicios/supabase-runtime.js",
-      "bytes": 227272,
+      "bytes": 227301,
       "lines": 30,
       "generated": true,
       "functions": [],
@@ -1549,7 +1550,7 @@
     },
     {
       "file": "assets/js/servicios/supabaseClient.js",
-      "bytes": 4150,
+      "bytes": 4218,
       "lines": 69,
       "generated": false,
       "functions": [
@@ -2186,7 +2187,7 @@
     },
     {
       "file": "config/publicacion.json",
-      "bytes": 186,
+      "bytes": 193,
       "lines": 7,
       "generated": false,
       "functions": [],
@@ -2195,7 +2196,7 @@
     },
     {
       "file": "docs/adc-studio.md",
-      "bytes": 6336,
+      "bytes": 6404,
       "lines": 69,
       "generated": false,
       "functions": [],
@@ -2213,7 +2214,7 @@
     },
     {
       "file": "docs/arquitectura-auditoria.md",
-      "bytes": 12527,
+      "bytes": 12656,
       "lines": 107,
       "generated": false,
       "functions": [],
@@ -2222,7 +2223,7 @@
     },
     {
       "file": "docs/codigo-ajustes.md",
-      "bytes": 8402,
+      "bytes": 8544,
       "lines": 143,
       "generated": false,
       "functions": [],
@@ -2231,7 +2232,7 @@
     },
     {
       "file": "docs/editor-local.md",
-      "bytes": 4195,
+      "bytes": 4246,
       "lines": 52,
       "generated": false,
       "functions": [],
@@ -2240,7 +2241,7 @@
     },
     {
       "file": "docs/estructura.md",
-      "bytes": 34118,
+      "bytes": 33791,
       "lines": 234,
       "generated": false,
       "functions": [],
@@ -2267,7 +2268,7 @@
     },
     {
       "file": "docs/publicacion-online.md",
-      "bytes": 5045,
+      "bytes": 5274,
       "lines": 62,
       "generated": false,
       "functions": [],
@@ -2312,8 +2313,17 @@
     },
     {
       "file": "docs/supabase-staging.md",
-      "bytes": 10360,
+      "bytes": 10471,
       "lines": 112,
+      "generated": false,
+      "functions": [],
+      "globals": [],
+      "storageKeys": []
+    },
+    {
+      "file": "docs/unificacion-main.md",
+      "bytes": 1930,
+      "lines": 26,
       "generated": false,
       "functions": [],
       "globals": [],
@@ -2330,7 +2340,7 @@
     },
     {
       "file": "package-lock.json",
-      "bytes": 18892,
+      "bytes": 19509,
       "lines": 618,
       "generated": false,
       "functions": [],
@@ -2357,7 +2367,7 @@
     },
     {
       "file": "supabase/migrations/202611130001_adc_tester_profiles.sql",
-      "bytes": 2014,
+      "bytes": 2049,
       "lines": 36,
       "generated": false,
       "functions": [],
@@ -2389,7 +2399,7 @@
     },
     {
       "file": "tests/arquitectura.test.cjs",
-      "bytes": 1593,
+      "bytes": 1612,
       "lines": 20,
       "generated": false,
       "functions": [],
@@ -2431,7 +2441,7 @@
     },
     {
       "file": "tests/editor-comun.test.cjs",
-      "bytes": 2836,
+      "bytes": 2856,
       "lines": 21,
       "generated": false,
       "functions": [],
@@ -2509,7 +2519,7 @@
     },
     {
       "file": "tests/local-editor-bridge.test.cjs",
-      "bytes": 3936,
+      "bytes": 3975,
       "lines": 40,
       "generated": false,
       "functions": [],
@@ -2587,7 +2597,7 @@
     },
     {
       "file": "tests/studio-contrato.test.cjs",
-      "bytes": 2198,
+      "bytes": 2214,
       "lines": 17,
       "generated": false,
       "functions": [],
@@ -2649,7 +2659,7 @@
     },
     {
       "file": "tests/support/ajustes.cjs",
-      "bytes": 761,
+      "bytes": 775,
       "lines": 15,
       "generated": false,
       "functions": [],
@@ -2658,7 +2668,7 @@
     },
     {
       "file": "tests/support/demo-config.cjs",
-      "bytes": 772,
+      "bytes": 781,
       "lines": 10,
       "generated": false,
       "functions": [
@@ -2686,7 +2696,7 @@
     },
     {
       "file": "tools/auditar-arquitectura.cjs",
-      "bytes": 5978,
+      "bytes": 6050,
       "lines": 73,
       "generated": false,
       "functions": [
@@ -2699,7 +2709,7 @@
     },
     {
       "file": "tools/build.cjs",
-      "bytes": 934,
+      "bytes": 945,
       "lines": 12,
       "generated": false,
       "functions": [
@@ -2712,7 +2722,7 @@
     },
     {
       "file": "tools/configurar-supabase.cjs",
-      "bytes": 7322,
+      "bytes": 7399,
       "lines": 78,
       "generated": false,
       "functions": [
@@ -2738,7 +2748,7 @@
     },
     {
       "file": "tools/env.cjs",
-      "bytes": 2179,
+      "bytes": 2209,
       "lines": 31,
       "generated": false,
       "functions": [
@@ -2790,7 +2800,7 @@
     },
     {
       "file": "tools/publicar.cjs",
-      "bytes": 3174,
+      "bytes": 3224,
       "lines": 38,
       "generated": false,
       "functions": [
@@ -2802,7 +2812,7 @@
     },
     {
       "file": "tools/supabase-auth-settings.cjs",
-      "bytes": 1844,
+      "bytes": 1864,
       "lines": 21,
       "generated": false,
       "functions": [
@@ -4920,8 +4930,8 @@
     ]
   },
   "summary": {
-    "files": 226,
-    "ownTextModules": 175,
+    "files": 227,
+    "ownTextModules": 176,
     "ownJavaScript": 110,
     "vendorFiles": 35,
     "missingLiteralReferences": 0

@@ -3,7 +3,7 @@
 ## Antes de implementar
 
 - Consultar `docs/arquitectura-auditoria.md` y `docs/estructura.md`. El mapa de carga actual está en `docs/arquitectura-mapa.md`; el inventario se regenera con `npm run architecture:audit`.
-- Revisar `git status` y conservar los cambios locales. No hacer commit, push o cambios de rama sin autorización aplicable del usuario. El flujo de publicación aprobado pasa por `log-in` antes de `main`.
+- Revisar `git status` y conservar los cambios locales. No hacer commit, push o cambios de rama sin autorización aplicable del usuario. Tras la unificación aprobada, sólo se mantiene `main` local y `origin/main`; Pages publica desde `main`. Crear nuevas ramas únicamente cuando el usuario lo solicite para una nueva etapa. No recrear `log-in` ni `log-in-2` automáticamente.
 - Reutilizar los módulos existentes antes de crear otro motor, componente o servicio. No agregar un framework ni mover archivos masivamente como efecto secundario.
 
 ## Contratos que deben conservarse

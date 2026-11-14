@@ -23,7 +23,7 @@ La aplicación es una web estática modular con scripts clásicos y estado compa
 | Editor visual | `editor/comun.js`, `editor/*.js`, `acceso/editor.js`, `css/editor/` | Utilidades comunes, dos motores con variantes, imágenes/PDF, capas y guardado visual. |
 | Servicio remoto | `servicios/supabaseClient.js` → `supabase-runtime.js` | Único cliente oficial, autenticación y perfil mínimo de tester. RLS reside en `supabase/migrations/`. No equivale a sincronización del perfil docente. |
 | Guardado local | `tools/ajustes-store.cjs`, `local-editor-bridge.cjs`, `importar-ajustes.cjs` | Un único almacenamiento versionable, con respaldo y escritura atómica. HTTP restringido a loopback/orígenes autorizados. |
-| Construcción y publicación | `build.cjs`, `publicar.cjs`, `config/publicacion.json`, `.github/workflows/pages.yml` | Compilar SDK, filtrar secretos y publicar sólo el artefacto web. `log-in` es la rama del piloto. |
+| Construcción y publicación | `build.cjs`, `publicar.cjs`, `config/publicacion.json`, `.github/workflows/pages.yml` | Compilar SDK, filtrar secretos y publicar sólo el artefacto web. Tras la consolidación aprobada, publica desde `main`. |
 | Soporte | `tests/`, `docs/`, `tools/auditar-arquitectura.cjs` | Regresión funcional, reglas de arquitectura y mapa reproducible. |
 
 ## Rutas reales

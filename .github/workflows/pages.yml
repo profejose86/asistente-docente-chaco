@@ -1,8 +1,8 @@
-name: Publicar ADC staging
+name: Publicar ADC desde main
 
 on:
   push:
-    branches: [log-in, main]
+    branches: [main]
   workflow_dispatch:
 
 permissions:
@@ -14,7 +14,7 @@ concurrency:
 
 jobs:
   build:
-    if: github.ref_name == (vars.ADC_PAGES_BRANCH || 'log-in')
+    if: github.ref_name == (vars.ADC_PAGES_BRANCH || 'main')
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -43,7 +43,7 @@ jobs:
           path: dist
 
   deploy:
-    if: github.ref_name == (vars.ADC_PAGES_BRANCH || 'log-in')
+    if: github.ref_name == (vars.ADC_PAGES_BRANCH || 'main')
     needs: build
     runs-on: ubuntu-latest
     permissions:

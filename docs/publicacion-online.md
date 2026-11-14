@@ -2,18 +2,18 @@
 
 URL: https://profejose86.github.io/asistente-docente-chaco/
 
-El piloto utiliza la rama **log-in**, Supabase real y registro directo sin confirmación de correo, por decisión explícita del responsable. `main` se conserva hasta aprobar la versión online. No se necesita SMTP para crear cuentas o ingresar en este modo.
+La publicación unificada utiliza **main**, que incorpora todos los cambios aprobados de `log-in` y `log-in-2`. Se conserva Supabase real y el registro directo sin confirmación de correo por decisión explícita del responsable. Cambiar la rama no cambia las cuentas, RLS ni los borradores. No se necesita SMTP para crear cuentas o ingresar en este modo.
 
 ## Flujo de publicación
 
-1. Trabajar y revisar en `log-in`.
+1. Trabajar y revisar en `main`. Crear una rama futura sólo por pedido del usuario.
 2. Ejecutar pruebas locales. `npm run test:ci` verifica configuración, RLS y preparación del artefacto; las pruebas de interfaz se ejecutan localmente con Chrome.
 3. `npm run build:pages` compila y prepara `dist/` con sólo las entradas HTML y `assets/`.
-4. Commit y push autorizados a `log-in` disparan `.github/workflows/pages.yml`.
+4. Commit y push autorizados a `main` disparan `.github/workflows/pages.yml`.
 5. GitHub Actions instala dependencias reproducibles, ejecuta las comprobaciones, construye el artefacto y publica en Pages. Las versiones de las acciones oficiales están fijadas por commit.
 6. Verificar la ejecución y `build-info.json`, además de probar el ingreso en la URL pública.
 
-El archivo `config/publicacion.json` centraliza repositorio, URL y rama de staging. La variable de repositorio `ADC_PAGES_BRANCH=log-in` decide qué rama puede publicar. El workflow admite eventos de `main` y `log-in`, pero no publica la otra rama mientras esta variable no cambie. No se crean ramas adicionales.
+El archivo `config/publicacion.json` centraliza repositorio, URL y `publishingBranch: main`. La variable del repositorio es `ADC_PAGES_BRANCH=main` y el workflow recibe pushes sólo de `main`. Se conserva `environment: staging` como configuración del piloto de autenticación; esta consolidación no convierte ni resetea la base de datos.
 
 ## Configuración pública de GitHub
 
@@ -21,7 +21,7 @@ Variables del repositorio, sin contraseñas ni claves privilegiadas:
 
 - `SUPABASE_URL`
 - `SUPABASE_ANON_KEY` (publishable/anon)
-- `ADC_PAGES_BRANCH=log-in`
+- `ADC_PAGES_BRANCH=main`
 - `ADC_EMAIL_CONFIRMATIONS_REQUIRED=false`
 - `ADC_PASSWORD_RECOVERY_ENABLED=false`
 
@@ -51,7 +51,7 @@ Antes de pasar de piloto a un uso estable: configurar correo, validar confirmaci
 
 Después de publicar, comprobar:
 
-1. `build-info.json` corresponde al commit y a `log-in`.
+1. `build-info.json` corresponde al commit y a `main`.
 2. La portada dirige al ingreso; `adc-preview=1` no salta la sesión real.
 3. El registro nuevo abre ADC sin exigir correo, y cerrar sesión vuelve al ingreso.
 4. Una cuenta no accede a datos de otra; el navegador avisa si conserva borradores de otro propietario.

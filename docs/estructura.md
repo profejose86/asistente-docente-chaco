@@ -4,7 +4,7 @@ El mapa vigente está en [arquitectura-mapa.md](arquitectura-mapa.md); la [audit
 
 Los apartados históricos que mencionan acceso sin datos describen únicamente el modo demo. En el piloto configurado con Supabase no se omite el inicio de sesión ni se usa `adc-preview=1` como autenticación.
 
-La publicación online del piloto utiliza `config/publicacion.json`, `tools/publicar.cjs` y `.github/workflows/pages.yml`. El artefacto `dist/` contiene sólo los recursos web y requiere Supabase real. La rama que publica se controla con `ADC_PAGES_BRANCH` y permanece en `log-in` hasta la aprobación de `main`. Ver [publicación, configuración del piloto y recuperación](publicacion-online.md).
+La publicación unificada utiliza `config/publicacion.json`, `tools/publicar.cjs` y `.github/workflows/pages.yml`. El artefacto `dist/` contiene sólo los recursos web y requiere Supabase real. Publica desde `main`, con `ADC_PAGES_BRANCH=main`, tras incorporar los cambios aprobados de `log-in` y `log-in-2`. Ver [publicación, configuración del piloto y recuperación](publicacion-online.md).
 
 La autenticación de staging se organiza en `assets/js/servicios/supabaseClient.js`, `assets/js/acceso/autenticacion.js` y `assets/js/interfaz/sesion.js`. El cliente oficial se instala con npm y se compila localmente para mantener la web estática. `.env.local` está excluido de Git; sólo `assets/datos/config-publica.js` puede llegar al navegador. La migración inicial con RLS vive en `supabase/migrations/`. Ver [configuración, modos, pruebas y pendientes remotos](supabase-staging.md). Los párrafos siguientes sobre acceso sin datos describen exclusivamente el modo de demostración: en modo Supabase, `adc-preview=1` no salta la autenticación.
 
@@ -12,7 +12,7 @@ El modelo de documentos preparados utiliza el registro `assets/datos/formularios
 
 La entrada de la aplicación es `index.html`. Los estilos están en `assets/css/` y los scripts en `assets/js/`, agrupados por área.
 
-En la rama `log-in`, la entrada local y online abre `ADC_Ingreso_Editable.html`. El botón Ingresar permite acceder a `index.html?adc-preview=1` con los campos vacíos durante los ajustes. `assets/js/interfaz/inicio-local.js` conserva su nombre por compatibilidad y aplica ahora el recorrido también en GitHub Pages. El parámetro de navegación no autentica al usuario. La pantalla muestra un aviso de demostración sin autenticación real. El registro conserva su validación y sus acciones de demostración. El perfil sigue utilizando el almacenamiento del mismo origen. Antes de habilitar cuentas reales se debe reemplazar este acceso de prueba por autenticación y sesiones verificadas. La publicación de prueba utiliza esta rama sin fusionarla con `main`.
+La entrada local y online abre `ADC_Ingreso_Editable.html` y valida la sesión de Supabase antes de mostrar la aplicación. `assets/js/interfaz/inicio-local.js` conserva su nombre por compatibilidad y aplica el recorrido también en GitHub Pages. `adc-preview=1` no autentica. El ingreso sin datos corresponde únicamente al modo demo explícito, que no puede publicarse mediante el workflow real. El perfil y sus borradores siguen utilizando almacenamiento del mismo origen.
 
 La pantalla de acceso conserva su entrada en `ADC_Ingreso_Editable.html`. Sus estilos y comportamiento se organizan en `assets/css/acceso/` y `assets/js/acceso/`, con archivos separados para ingreso y Ajustes. Los fondos Light/Dark y el logo se guardan en `assets/img/acceso/`. El editor de acceso conserva sus claves de almacenamiento y permanece separado del editor de formularios.
 
@@ -93,7 +93,7 @@ Las plantillas, imágenes y fuentes incrustadas permanecen en sus bloques origin
 
 ### Flujo de ramas acordado
 
-El repositorio utiliza únicamente `main` y `log-in`. Los cambios se desarrollan y prueban en `log-in`, se guardan mediante commit y se suben a esa misma rama para comprobarlos en GitHub Pages. Una vez revisado el resultado online con el usuario, se integran en `main`. No se crean ramas adicionales. Mientras dure la prueba actual, GitHub Pages publica desde `log-in`.
+El repositorio queda con `main` local y `origin/main`. Se incorporaron las mejoras aprobadas de `log-in` y `log-in-2` conservando sus commits. GitHub Pages publica desde `main`. Las ramas anteriores se retiran después de verificar su integración; se podrán crear ramas nuevas cuando el usuario lo solicite para una etapa posterior.
 
 Antes de retirar una rama con cambios exclusivos, se conserva su commit mediante una etiqueta de archivo. Estas etiquetas preservan versiones históricas y no son ramas de desarrollo. No se reemplaza una versión de `main` mediante un push forzado.
 

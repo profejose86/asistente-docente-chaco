@@ -1,6 +1,6 @@
 {
   "repository": "profejose86/asistente-docente-chaco",
   "siteUrl": "https://profejose86.github.io/asistente-docente-chaco/",
-  "stagingBranch": "log-in",
+  "publishingBranch": "main",
   "environment": "staging"
 }

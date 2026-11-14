@@ -29,7 +29,7 @@ async function prepare(){
  fs.writeFileSync(path.join(target,'404.html'),'<!doctype html><html lang="es"><meta charset="utf-8"><title>ADC · Página no encontrada</title><h1>Página no encontrada</h1><p><a href="'+deployment.siteUrl+'">Volver a Asistente Docente Chaco</a></p></html>');
  let commit=process.env.GITHUB_SHA||null,branch=process.env.GITHUB_REF_NAME||null;
  try{commit||=execFileSync('git',['rev-parse','HEAD'],{cwd:root,encoding:'utf8'}).trim();branch||=execFileSync('git',['branch','--show-current'],{cwd:root,encoding:'utf8'}).trim();}catch{}
- const info={commit,branch,environment:'staging',authMode:config.authMode,siteUrl:deployment.siteUrl};
+ const info={commit,branch,environment:deployment.environment,authMode:config.authMode,siteUrl:deployment.siteUrl};
  fs.writeFileSync(path.join(target,'build-info.json'),JSON.stringify(info,null,2)+'\n');
  return info;
 }
