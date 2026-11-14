@@ -135,7 +135,7 @@
         source=data;mode='image';api.setTool('element-image');say('Dibujá con el mouse el espacio de la imagen sobre la página. Esc cancela.');
       }catch(error){cancel();say(error.message||'No se pudo leer la imagen.');}
     };
-    const usable=target=>target instanceof Element&&!target.closest('#adcDesignPanel,#adcDesignGear,#adcDesignMarks,#adcDesignContext');
+    const usable=target=>target instanceof Element&&!target.closest('#adcDesignPanel,#adcDesignGear,#adcDesignMarks,#adcDesignContext,[data-adc-studio-ui]');
     document.addEventListener('pointerdown',event=>{
       if(!mode||panel.hidden||event.button!==0||!usable(event.target))return;
       suppressNextClick=true;

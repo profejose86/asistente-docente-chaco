@@ -14,7 +14,7 @@
     const layer=document.createElement('div');layer.id='adcDocumentSelection';
     Object.assign(layer.style,{position:'fixed',inset:'0',pointerEvents:'none',zIndex:'9001'});document.body.append(layer);
     const rootFor=target=>{
-      if(!(target instanceof Element)||target.closest('#adcDesignPanel,#adcDesignGear,#adcDesignMarks,#adcDocumentSelection,#adcDesignContext'))return null;
+      if(!(target instanceof Element)||target.closest('#adcDesignPanel,#adcDesignGear,#adcDesignMarks,#adcDocumentSelection,#adcDesignContext,[data-adc-studio-ui]'))return null;
       const imported=target.closest('.adc-design-pdf');if(imported)return imported;
       return target.closest(papers)||target.closest('.adc-document-editor-shield')?.parentElement||target.closest('iframe,object,embed')?.parentElement||null;
     };
@@ -32,6 +32,7 @@
     }
     const schedule=()=>{cancelAnimationFrame(frame);frame=requestAnimationFrame(paint);};
     function begin(event,node,side){
+      if(window.adcStudioPolicy?.anchored(node)){api.say('Documento oficial anclado: agreg? notas sin mover sus campos.');return;}
       api.select(node);api.setTool('doc-size');
       const computed=getComputedStyle(node),parts=computed.translate.split(' '),component=(value,size)=>value?.endsWith('%')?parseFloat(value)*size/100:parseFloat(value)||0;
       gesture={node,side,x:event.clientX,y:event.clientY,rect:node.getBoundingClientRect(),before:snapshot(node),scale:parseFloat(computed.scale)||1,tx:component(parts[0],node.offsetWidth),ty:component(parts[1],node.offsetHeight),current:null,pointerId:event.pointerId};
@@ -76,7 +77,7 @@
     const shields=new Map();
     const update=()=>{
       for(const iframe of document.querySelectorAll('iframe,object[type="application/pdf"],embed[type="application/pdf"]')){
-        if(iframe.closest('#adcDesignPanel')||!iframe.getClientRects().length)continue;
+        if(iframe.closest('#adcDesignPanel,[data-adc-studio-ui]')||!iframe.getClientRects().length)continue;
         const parent=iframe.parentElement;
         if(!api.panel.hidden&&!shields.has(parent)){
           const shield=document.createElement('div');shield.className='adc-document-editor-shield';
@@ -87,7 +88,7 @@
       if(api.panel.hidden)for(const [parent,{shield,position}] of shields){shield.remove();parent.style.position=position;shields.delete(parent);}
       schedule();
     };
-    const observer=new MutationObserver(records=>{if(records.every(record=>record.target instanceof Element&&(record.target.closest('#adcDocumentSelection,#adcDesignMarks,#adcDevRulers')||record.type==='childList'&&record.target.closest('#adcDesignPanel'))))return;observer.disconnect();update();observer.observe(document.body,{childList:true,subtree:true,attributes:true,attributeFilter:['class','hidden','data-adc-design-selected']});});
+    const observer=new MutationObserver(records=>{if(records.every(record=>record.target instanceof Element&&(record.target.closest('#adcDocumentSelection,#adcDesignMarks,#adcDevRulers,[data-adc-studio-ui]')||record.type==='childList'&&record.target.closest('#adcDesignPanel'))))return;observer.disconnect();update();observer.observe(document.body,{childList:true,subtree:true,attributes:true,attributeFilter:['class','hidden','data-adc-design-selected']});});
     observer.observe(document.body,{childList:true,subtree:true,attributes:true,attributeFilter:['class','hidden','data-adc-design-selected']});update();
   }
   window.adcDocumentEditor={apply,attach};

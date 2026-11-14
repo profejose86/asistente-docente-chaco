@@ -1,5 +1,7 @@
 # Código que hace funcionar Ajustes (la tuerquita)
 
+La nueva interfaz se documenta en [ADC Studio](adc-studio.md): `studio.js`, `studio-directo.js`, `studio-guias.js`, `studio-politicas.js`, `studio-operaciones.js` y `assets/css/editor/studio.css`. Son extensiones compartidas de los motores y el guardado existentes.
+
 Actualización de arquitectura: ambos motores reutilizan `assets/js/editor/comun.js` (registro, saneamiento, geometría y paleta) y `assets/css/editor/base.css`. El puente y el importador comparten `tools/ajustes-store.cjs`. Ver [auditoría modular](arquitectura-auditoria.md). Los dos motores siguen existiendo por sus diferencias intencionales.
 
 Este es el mapa de la implementación actual. El editor tiene dos motores existentes: uno para el ingreso y otro para la página principal. Ambos reutilizan las herramientas y el guardado compartidos. Este documento no crea una segunda implementación ni cambia el funcionamiento.

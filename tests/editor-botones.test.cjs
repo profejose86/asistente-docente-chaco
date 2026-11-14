@@ -35,14 +35,14 @@ for(const screen of ['ADC_Ingreso_Editable.html','index.html?adc-preview=1'])tes
     await page.mouse.move(box.x+box.width,box.y+box.height/2);await page.mouse.down();await page.mouse.move(box.x+box.width+60,box.y+box.height/2,{steps:6});await page.mouse.up();
     box=await page.locator('#adcMouseButton').boundingBox();assert.ok(box.width>180,'redimensionado con mouse');
     assert.equal(await page.locator('#adcMouseButton').evaluate(node=>getComputedStyle(node).outlineStyle),'dashed');
-    await page.locator('[data-act=undo]').click();assert.ok((await page.locator('#adcMouseButton').boundingBox()).width<160);
-    await page.locator('[data-act=redo]').click();assert.ok((await page.locator('#adcMouseButton').boundingBox()).width>180);
-    const download=page.waitForEvent('download');await page.locator('[data-project-export]').click();
+    await require('./support/ajustes.cjs').clickTool(page,'[data-act=undo]');assert.ok((await page.locator('#adcMouseButton').boundingBox()).width<160);
+    await require('./support/ajustes.cjs').clickTool(page,'[data-act=redo]');assert.ok((await page.locator('#adcMouseButton').boundingBox()).width>180);
+    const download=page.waitForEvent('download');await require('./support/ajustes.cjs').clickTool(page,'[data-project-export]');
     const output=JSON.parse(fs.readFileSync(await (await download).path(),'utf8'));
     const operations=Object.values(output.pages)[0].operations;
     assert.ok(operations.some(op=>op.kind==='front'&&op.target==='project:#adcMouseButton'));
     assert.ok(operations.some(op=>op.kind==='style'&&op.target==='project:#adcMouseButton'&&op.x>250));
-    await require('./support/ajustes.cjs').clickGear(page);await page.locator('#adcMouseButton').click();assert.equal(await page.evaluate(()=>mouseActions),1);
+    await require('./support/ajustes.cjs').clickGear(page);await require('./support/ajustes.cjs').clickTool(page,'#adcMouseButton');assert.equal(await page.evaluate(()=>mouseActions),1);
     assert.deepEqual(errors,[]);
   }finally{await browser.close();await new Promise(resolve=>server.close(resolve));}
 });

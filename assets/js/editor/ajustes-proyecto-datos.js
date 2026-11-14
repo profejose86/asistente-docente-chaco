@@ -5,7 +5,9 @@
   else root.adcProjectLayoutData=api;
 })(typeof window==='object'?window:globalThis,()=>{
   const schema='adc-project-layout-v1';
+  const studioAllowed={theme:['primary','accent','stamp'],studioGuide:['id','axis','left','top','length'],preset:['id','variant','title','body','width'],duplicate:['id']};
   const allowed={
+    ...studioAllowed,
     annotation:['id','shape','title','left','top','width','height','color','strokeWidth','reverse','x1','y1','x2','y2','stroke','flip'],
     image:['id','src','alt','left','top','width','height'],replaceImage:['src'],pdf:['id','src','title'],
     lineEndpoints:['x1','y1','x2','y2'],hideOriginal:[],front:['level'],documentTransform:['x','y','scale'],style:['x','y','width','height','center','background','color','strokeWidth'],text:['html'],
@@ -43,9 +45,13 @@
         if(op.kind==='pdf'&&!/^data:application\/pdf;base64,[A-Za-z0-9+/]+={0,2}$/.test(op.src||''))throw Error('PDF no admitido.');
         if(op.kind==='documentTransform'&&(![op.x,op.y,op.scale].every(Number.isFinite)||op.scale<0.1||op.scale>5))throw Error('Escala de documento no admitida.');
         if(op.id&&!/^new-[a-z0-9-]+$/i.test(op.id))throw Error('Identificador de elemento creado inválido.');
+        if(op.kind==='theme'&&(!/^\d{12,16}$/.test(op.stamp||'')||![op.primary,op.accent].some(Boolean)||[op.primary,op.accent].some(value=>value!==undefined&&!/^#[0-9a-f]{6}$/i.test(value))))throw Error('Tema no admitido.');
+        if(op.kind==='studioGuide'&&(!op.id||!['x','y'].includes(op.axis)||![op.left,op.top,op.length].every(Number.isFinite)||op.length<24))throw Error('Guía no admitida.');
+        if(op.kind==='preset'&&(!op.id||!['alert','heading','normativa'].includes(op.variant)))throw Error('Plantilla no admitida.');
+        if(op.kind==='duplicate'&&!op.id)throw Error('Falta identificador de la copia.');
       }
     }
     return document;
   }
-  return Object.freeze({schema,scopes,empty,validate});
+  return Object.freeze({schema,scopes,empty,validate,studioAllowed:Object.freeze(studioAllowed)});
 });

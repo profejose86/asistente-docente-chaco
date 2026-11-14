@@ -228,6 +228,6 @@ El PDF final carga la plantilla adjunta, agrega los datos, actualiza las aparien
 La muestra `output/pdf/BD-02-ejemplo.pdf` contiene datos ficticios para revisar la alineación y una marca MNC. Sus imágenes están en la misma carpeta. La conformidad visual del usuario precede al trabajo sobre otro formulario.
 # Ajustes visuales versionables
 
-La edición visual ahora es exclusiva de localhost. **Commit to local** conecta `assets/js/editor/puente-local.js` con `tools/local-editor-bridge.cjs` y guarda directamente en el registro versionable. Inicio: `npm run dev:editor`. Ver [editor local, respaldo y límites](editor-local.md).
+ADC Studio permite edición visual local y online por sesión; sólo el guardado directo es exclusivo de localhost. **Commit to local** conecta `assets/js/editor/puente-local.js` con `tools/local-editor-bridge.cjs` y guarda directamente en el registro versionable. Inicio: `npm run dev:editor`. Ver [editor local, respaldo y límites](editor-local.md) y [ADC Studio](adc-studio.md).
 
 La tuerquita puede exportar ajustes para incorporarlos a `assets/datos/ajustes-pagina.json`. El puente compartido vive en `assets/js/editor/ajustes-proyecto*.js`; `tools/importar-ajustes.cjs` valida e incorpora el archivo sin ejecutar Git. Ver [flujo, conservación y límites](ajustes-visuales.md).

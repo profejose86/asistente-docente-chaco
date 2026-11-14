@@ -1,0 +1,16 @@
+const {test}=require('node:test'),assert=require('node:assert/strict'),fs=require('node:fs'),path=require('node:path'),os=require('node:os');
+const contract=require('../assets/js/editor/ajustes-proyecto-datos.js'),{persistChanges,revision}=require('../tools/ajustes-store.cjs');
+const fixture=()=>({schema:contract.schema,pages:{ingreso:{editorSchema:contract.scopes.ingreso,targets:{'project:#adcLoginCanvas':{tag:'main',id:'adcLoginCanvas'}},operations:[
+ {kind:'theme',target:'project:#adcLoginCanvas',primary:'#345678',accent:'#d9822b',stamp:'1794650400000'},
+ {kind:'studioGuide',target:'project:#adcLoginCanvas',id:'new-guide',axis:'x',left:200,top:100,length:400},
+ {kind:'preset',target:'project:#adcLoginCanvas',id:'new-alert',variant:'alert',title:'Aviso',body:'Verificar'},
+ {kind:'duplicate',target:'new-alert',id:'new-copy'}
+ ]}}});
+test('Studio: contrato v1 conserva nuevas acciones y rechaza colores, guías y presets inválidos',()=>{
+ assert.equal(contract.validate(fixture()).schema,'adc-project-layout-v1');
+ for(const change of [data=>data.pages.ingreso.operations[0].primary='url(javascript:1)',data=>data.pages.ingreso.operations[0].stamp=123,data=>data.pages.ingreso.operations[1].axis='z',data=>data.pages.ingreso.operations[1].length=10,data=>data.pages.ingreso.operations[2].variant='script']){const data=fixture();change(data);assert.throws(()=>contract.validate(data));}
+});
+test('Studio: guardado fuente y recuperación conservan tema, guía, preset, copia y la otra pantalla',()=>{
+ const root=fs.mkdtempSync(path.join(os.tmpdir(),'adc-studio-store-'));fs.mkdirSync(path.join(root,'assets/datos'),{recursive:true});const target=path.join(root,'assets/datos/ajustes-pagina.json'),initial=contract.empty();fs.writeFileSync(target,JSON.stringify(initial));
+ try{const data=fixture(),result=persistChanges(root,data,{expectedRevision:revision(initial.pages.ingreso),singleScope:true});assert.equal(result.changed,true);const recovered=contract.validate(JSON.parse(fs.readFileSync(target)));assert.deepEqual(recovered.pages.ingreso,data.pages.ingreso);assert.deepEqual(recovered.pages.pagina,initial.pages.pagina);}finally{fs.rmSync(root,{recursive:true,force:true});}
+});

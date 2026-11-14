@@ -2,7 +2,7 @@
 
 La persistencia común del puente y del importador reside en `tools/ajustes-store.cjs`. El endpoint conserva su dirección y su contrato; las operaciones visuales compartidas viven en `assets/js/editor/comun.js`.
 
-La edición visual y la tuerquita están disponibles únicamente por HTTP en `localhost`, `127.0.0.1` o `::1`. La web publicada aplica los diseños guardados, pero no muestra estas herramientas ni se conecta al puente.
+ADC Studio y la tuerquita pueden abrirse también online, con activación por pestaña. Sólo **Commit to local** y el puente están restringidos a HTTP en `localhost`, `127.0.0.1` o `::1`. La web publicada no se conecta al puente. Ver [ADC Studio](adc-studio.md).
 
 ## Iniciar
 

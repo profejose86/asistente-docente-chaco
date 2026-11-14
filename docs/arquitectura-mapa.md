@@ -21,6 +21,11 @@ Scripts en orden de carga:
 - `assets/js/editor/elementos.js`
 - `assets/js/editor/puente-local.js`
 - `assets/js/editor/ajustes-proyecto.js`
+- `assets/js/editor/studio-politicas.js`
+- `assets/js/editor/studio-operaciones.js`
+- `assets/js/editor/studio-directo.js`
+- `assets/js/editor/studio-guias.js`
+- `assets/js/editor/studio.js`
 - `assets/js/editor/comun.js`
 - `assets/js/acceso/editor.js`
 
@@ -32,6 +37,7 @@ Hojas de estilo en orden de carga:
 - `assets/css/editor/base.css`
 - `assets/css/acceso/editor.css`
 - `assets/css/editor/acceso-ajustes.css`
+- `assets/css/editor/studio.css`
 
 ### index.html
 
@@ -83,6 +89,11 @@ Scripts en orden de carga:
 - `assets/js/editor/elementos.js`
 - `assets/js/editor/puente-local.js`
 - `assets/js/editor/ajustes-proyecto.js`
+- `assets/js/editor/studio-politicas.js`
+- `assets/js/editor/studio-operaciones.js`
+- `assets/js/editor/studio-directo.js`
+- `assets/js/editor/studio-guias.js`
+- `assets/js/editor/studio.js`
 - `assets/js/editor/comun.js`
 - `assets/js/editor/editor.js`
 - `assets/js/tramites/dj02-registro.js`
@@ -127,6 +138,7 @@ Hojas de estilo en orden de carga:
 - `assets/css/editor/base.css`
 - `assets/css/editor/editor.css`
 - `assets/css/editor/acceso-ajustes.css`
+- `assets/css/editor/studio.css`
 - `assets/css/tramites/dj02-registro.css`
 - `assets/css/interfaz/responsive.css`
 - `assets/css/tramites/sc01.css`
@@ -142,7 +154,7 @@ Hojas de estilo en orden de carga:
 | `assets/datos/escuelas-chaco.js` | 2 | 0 |
 | `assets/datos/formularios-pdf.js` | 58 | 0 |
 | `assets/js/acceso/autenticacion.js` | 56 | 3 |
-| `assets/js/acceso/editor.js` | 953 | 34 |
+| `assets/js/acceso/editor.js` | 962 | 34 |
 | `assets/js/acceso/ingreso.js` | 59 | 2 |
 | `assets/js/acceso/marca.js` | 12 | 0 |
 | `assets/js/acceso/visibilidad-clave.js` | 25 | 1 |
@@ -157,15 +169,20 @@ Hojas de estilo en orden de carga:
 | `assets/js/documentos/pdf-campos.js` | 65 | 2 |
 | `assets/js/documentos/pdf-utilidades.js` | 28 | 6 |
 | `assets/js/documentos/plantillas-dl01.js` | 3 | 0 |
-| `assets/js/editor/acceso-ajustes.js` | 42 | 3 |
-| `assets/js/editor/ajustes-proyecto-datos.js` | 52 | 3 |
-| `assets/js/editor/ajustes-proyecto.js` | 128 | 4 |
+| `assets/js/editor/acceso-ajustes.js` | 41 | 3 |
+| `assets/js/editor/ajustes-proyecto-datos.js` | 58 | 3 |
+| `assets/js/editor/ajustes-proyecto.js` | 133 | 4 |
 | `assets/js/editor/comun.js` | 91 | 8 |
-| `assets/js/editor/documentos.js` | 95 | 4 |
-| `assets/js/editor/editor.js` | 1044 | 38 |
+| `assets/js/editor/documentos.js` | 96 | 4 |
+| `assets/js/editor/editor.js` | 1053 | 38 |
 | `assets/js/editor/elementos.js` | 197 | 6 |
 | `assets/js/editor/modo-local.js` | 3 | 0 |
 | `assets/js/editor/puente-local.js` | 28 | 1 |
+| `assets/js/editor/studio-directo.js` | 105 | 6 |
+| `assets/js/editor/studio-guias.js` | 36 | 2 |
+| `assets/js/editor/studio-operaciones.js` | 54 | 3 |
+| `assets/js/editor/studio-politicas.js` | 22 | 2 |
+| `assets/js/editor/studio.js` | 144 | 11 |
 | `assets/js/interfaz/espacio-trabajo.js` | 91 | 3 |
 | `assets/js/interfaz/inicio-local.js` | 10 | 0 |
 | `assets/js/interfaz/navegacion.js` | 13 | 5 |
@@ -225,11 +242,13 @@ Hojas de estilo en orden de carga:
 | `tests/pdf-blank-line.test.cjs` | 23 | 0 |
 | `tests/pdf-campos.test.cjs` | 33 | 0 |
 | `tests/publicacion.test.cjs` | 29 | 0 |
+| `tests/studio-contrato.test.cjs` | 17 | 0 |
+| `tests/studio.test.cjs` | 58 | 1 |
 | `tests/supabase-auth.test.cjs` | 68 | 0 |
 | `tests/supabase-config.test.cjs` | 13 | 0 |
 | `tests/supabase-management.test.cjs` | 21 | 0 |
 | `tests/supabase-rls.test.cjs` | 46 | 0 |
-| `tests/support/ajustes.cjs` | 6 | 0 |
+| `tests/support/ajustes.cjs` | 15 | 0 |
 | `tests/support/demo-config.cjs` | 10 | 1 |
 | `tools/ajustes-store.cjs` | 39 | 5 |
 | `tools/auditar-arquitectura.cjs` | 73 | 3 |

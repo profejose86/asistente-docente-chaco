@@ -1,5 +1,4 @@
 (() => {
- if(!document.documentElement.hasAttribute('data-adc-local-editor'))return;
  const gear=document.getElementById('adcDesignGear'),panel=document.getElementById('adcDesignPanel');
  if(!gear||!panel)return;
  const key='adc-adjustments-tab-session';

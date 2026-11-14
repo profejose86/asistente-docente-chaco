@@ -28,16 +28,16 @@ test('Documentos: doble clic sostenido, ocho extremos, proporciones, deshacer y 
     const grip=await page.locator('[data-document-grip=se]').boundingBox();
     await page.mouse.move(grip.x+7,grip.y+7);await page.mouse.down();await page.mouse.move(grip.x+67,grip.y+87,{steps:6});await page.mouse.up();
     const resized=await sheet.boundingBox();assert.ok(resized.width>moved.width+30);assert.ok(Math.abs(resized.width/resized.height-before.width/before.height)<0.001);
-    await page.locator('[data-act=undo]').click();const undone=await sheet.boundingBox();assert.ok(Math.abs(undone.width-moved.width)<2);
-    await page.locator('[data-act=redo]').click();assert.ok((await sheet.boundingBox()).width>moved.width+30);
-    const download=page.waitForEvent('download');await page.locator('[data-project-export]').click();
+    await require('./support/ajustes.cjs').clickTool(page,'[data-act=undo]');const undone=await sheet.boundingBox();assert.ok(Math.abs(undone.width-moved.width)<2);
+    await require('./support/ajustes.cjs').clickTool(page,'[data-act=redo]');assert.ok((await sheet.boundingBox()).width>moved.width+30);
+    const download=page.waitForEvent('download');await require('./support/ajustes.cjs').clickTool(page,'[data-project-export]');
     const data=JSON.parse(fs.readFileSync(await (await download).path(),'utf8'));assert.ok(data.pages.pagina.operations.some(op=>op.kind==='documentTransform'&&op.target==='project:#adcSC01Sheet'));
     await require('./support/ajustes.cjs').clickGear(page);assert.equal(await page.locator('[data-document-grip]').count(),0);
     // Soporte común: páginas preparadas, BD-02, DJ-02 y visor nativo.
     await page.evaluate(()=>{adcSC01Open();const host=document.querySelector('#adcSC01');for(const className of ['adc-bd02-document','dj02-paper','adc-design-pdf']){const node=document.createElement('div');node.className=className;node.dataset.testPaper=className;Object.assign(node.style,{width:'400px',height:'200px',background:'#fff',marginLeft:'400px'});host.append(node);}const preview=document.createElement('div');preview.className='adc-official-preview';preview.dataset.testPaper='iframe';Object.assign(preview.style,{width:'400px',height:'200px',marginLeft:'400px'});const iframe=document.createElement('iframe');iframe.srcdoc='<p>PDF simulado</p>';Object.assign(iframe.style,{width:'100%',height:'100%'});preview.append(iframe);host.append(preview);});
     await require('./support/ajustes.cjs').clickGear(page);
     for(const name of ['adc-bd02-document','dj02-paper','adc-design-pdf','iframe']){
-      const paper=page.locator('[data-test-paper="'+name+'"]');await paper.scrollIntoViewIfNeeded();const r=await paper.boundingBox();await page.mouse.dblclick(r.x+30,r.y+30);assert.equal(await paper.getAttribute('data-adc-design-selected'),'');assert.equal(await page.locator('[data-document-grip]').count(),8);
+      const paper=page.locator('[data-test-paper="'+name+'"]');await paper.scrollIntoViewIfNeeded();const r=await paper.boundingBox();await page.mouse.dblclick(r.x+30,r.y+30);assert.equal(await paper.getAttribute('data-adc-design-selected'),'',name);await page.waitForSelector('[data-document-grip=se]');assert.equal(await page.locator('[data-document-grip]').count(),8);
     }
     await require('./support/ajustes.cjs').clickGear(page);assert.equal(await page.locator('.adc-document-editor-shield').count(),0);
     assert.deepEqual(errors,[]);

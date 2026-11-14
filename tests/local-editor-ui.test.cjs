@@ -22,14 +22,14 @@ test('Chrome: guardar texto con un clic, recargar desde fuente, proteger concurr
   });
   const page=await context.newPage(),errors=[];page.setDefaultTimeout(15000);page.on('pageerror',e=>errors.push(e.message));
   await page.goto(base+'/ADC_Ingreso_Editable.html');await require('./support/ajustes.cjs').clickGear(page);
-  await page.locator('#adcLoginTitle').click();await page.locator('#adcDesignFormatting summary').click();await page.locator('#adcDesignText').fill('Bienvenido a ADC');await page.locator('[data-act=text]').click();
-  await page.locator('[data-commit-local]').click();await page.waitForFunction(()=>document.querySelector('[data-status]').textContent.includes('Guardado local completo'));
+  await require('./support/ajustes.cjs').clickTool(page,'#adcLoginTitle');await require('./support/ajustes.cjs').clickTool(page,'#adcDesignFormatting summary');await page.locator('#adcDesignText').fill('Bienvenido a ADC');await require('./support/ajustes.cjs').clickTool(page,'[data-act=text]');
+  await require('./support/ajustes.cjs').clickTool(page,'[data-commit-local]');await page.waitForFunction(()=>document.querySelector('[data-status]').textContent.includes('Guardado local completo'));
   const saved=JSON.parse(fs.readFileSync(target));assert.ok(saved.pages.ingreso.operations.some(op=>op.kind==='text'&&op.html==='Bienvenido a ADC'));assert.deepEqual(saved.pages.pagina,contract.empty().pages.pagina);
   const fresh=await context.newPage();await fresh.goto(base+'/ADC_Ingreso_Editable.html');await fresh.waitForFunction(()=>document.querySelector('#adcLoginTitle').textContent==='Bienvenido a ADC');
   await require('./support/ajustes.cjs').clickGear(fresh);await fresh.locator('[data-commit-local]').click();await fresh.waitForFunction(()=>document.querySelector('[data-status]').textContent.includes('ya tiene estos ajustes'));
   const changed=JSON.parse(fs.readFileSync(target));changed.pages.ingreso.operations.push({kind:'style',target:'project:#adcLoginTitle',color:'#abcdef'});fs.writeFileSync(target,JSON.stringify(changed));
-  await page.locator('[data-commit-local]').click();await page.waitForFunction(()=>document.querySelector('[data-status]').textContent.includes('Recargá y revisá'));assert.deepEqual(JSON.parse(fs.readFileSync(target)),changed);
+  await require('./support/ajustes.cjs').clickTool(page,'[data-commit-local]');await page.waitForFunction(()=>document.querySelector('[data-status]').textContent.includes('Recargá y revisá'));assert.deepEqual(JSON.parse(fs.readFileSync(target)),changed);
   await page.route('https://adc-online.example/**',async route=>{const relative=new URL(route.request().url()).pathname;const response=await fetch(base+relative);await route.fulfill({status:response.status,headers:{'Content-Type':response.headers.get('content-type')},body:Buffer.from(await response.arrayBuffer())});});
-  await page.goto('https://adc-online.example/ADC_Ingreso_Editable.html');assert.equal(await page.locator('#adcDesignGear').isVisible(),false);assert.equal(await page.locator('[data-commit-local]').count(),0);assert.deepEqual(errors,[]);
+  await page.goto('https://adc-online.example/ADC_Ingreso_Editable.html');assert.notEqual(await page.locator('#adcDesignGear').getAttribute('data-adc-locked'),null);assert.equal(await page.locator('[data-commit-local]').count(),0);assert.deepEqual(errors,[]);
  }finally{await browser.close();await new Promise(resolve=>bridge.close(resolve));await new Promise(resolve=>app.close(resolve));fs.rmSync(workspace,{recursive:true,force:true});}
 });

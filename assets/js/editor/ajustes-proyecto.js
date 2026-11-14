@@ -91,6 +91,7 @@
     }
     fetch(source,{cache:'no-store'}).then(response=>{if(!response.ok)throw Error('HTTP '+response.status);return response.json();}).then(configuration=>{
       projectPage=contract.validate(configuration).pages[scope];loaded=true;
+      window.adcStudioOperations?.restoreTheme(configuration);
       if(!projectPage?.operations.length)return;
       if(api.hasDraft()){
         const use=document.createElement('button');use.type='button';use.textContent='Usar ajustes del proyecto';panel.append(use);
@@ -120,8 +121,12 @@
         }
         observer.observe(document.body,{childList:true,subtree:true});
       };
-      const observer=new MutationObserver(replay);replay();
+      const observer=new MutationObserver(records=>{
+        if(records.every(record=>record.target instanceof Element&&record.target.closest('#adcDesignPanel,#adcDesignMarks,#adcDevRulers,#adcDocumentSelection,#adcDesignContext,[data-adc-studio-ui]')))return;
+        replay();
+      });replay();
     }).catch(error=>say('No se cargaron ajustes del proyecto: '+error.message));
+    window.adcStudio?.attach(api);
   }
   window.adcProjectLayout={describe,resolve,attach};
 })();

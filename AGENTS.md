@@ -16,7 +16,8 @@
 ## Módulos compartidos
 
 - Editor visual: `editor/comun.js` contiene registro, saneamiento, geometría y utilidades comunes; `editor/documentos.js`, `editor/elementos.js` y `editor/ajustes-proyecto*.js` son las extensiones compartidas. Los motores de ingreso y aplicación mantienen diferencias intencionales. No copiar sus utilidades a módulos nuevos.
-- Estilos comunes de Ajustes: `assets/css/editor/base.css`; las variantes por pantalla se cargan después. El editor es sólo local; los diseños guardados sí pueden publicarse.
+- Estilos comunes de Ajustes: `assets/css/editor/base.css`; las variantes por pantalla y `studio.css` se cargan después. ADC Studio puede abrirse local y online mediante cinco clics/toques o Tab, con visibilidad por pestaña/cuenta. Sólo el puente y Commit to local están restringidos a localhost.
+- ADC Studio: reutilizar `studio-politicas.js`, `studio-operaciones.js`, `studio-directo.js`, `studio-guias.js` y `studio.js`. No crear otro historial ni otra persistencia. Los campos y contenedores originales de DJ-01/DJ-02/DL-01 están anclados para nuevas ediciones estructurales; notas y burbujas siguen admitidas.
 - Guardado visual: usar `tools/ajustes-store.cjs` desde el puente o importadores. Preservar validación, respaldo, control de revisión y escritura atómica. No permitir rutas ni comandos recibidos del navegador.
 - Supabase: único cliente en `servicios/supabaseClient.js`; `supabase-runtime.js` se genera con `npm run build`, no se edita manualmente. No crear clientes de base de datos en componentes visuales ni exponer claves privadas. Los datos docentes continúan locales mientras no se acuerde otra política.
 - Rutas y recursos deben funcionar bajo el prefijo de GitHub Pages, no sólo en `/`. Antes de renombrar archivos, verificar referencias estáticas y dinámicas.

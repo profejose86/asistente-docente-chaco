@@ -1,5 +1,4 @@
 /* Zona invisible y operable; no se exporta como ajuste del proyecto. */
-html:not([data-adc-local-editor]) #adcDesignGear,html:not([data-adc-local-editor]) #adcDesignPanel{display:none!important}
 #adcDesignGear[data-adc-locked]{opacity:0!important;z-index:2147483646!important;outline:none!important;cursor:default}
 #adcDesignGear[data-adc-locked]~#adcDesignPanel{display:none!important}
 #adcDesignPanel [data-commit-local]{width:100%;padding:10px 14px;background:#2453a3;color:white;font-weight:700}
