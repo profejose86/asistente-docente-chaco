@@ -5,6 +5,8 @@ test('Sync PostgreSQL: RLS, propietario inmutable, CAS, versiones y borrado entr
  try{
   await db.exec(`create role anon;create role authenticated;create schema auth;create table auth.users(id uuid primary key);create function auth.uid() returns uuid language sql stable as $$select nullif(current_setting('request.jwt.claim.sub',true),'')::uuid$$;grant usage on schema auth,public to authenticated,anon;grant execute on function auth.uid() to authenticated;insert into auth.users values('${a}'),('${b}');`);
   await db.exec(fs.readFileSync(path.join(__dirname,'../supabase/migrations/202611140001_adc_user_records.sql'),'utf8'));
+  await db.exec(fs.readFileSync(path.join(__dirname,'../supabase/migrations/202611140002_adc_sync_conflict_http.sql'),'utf8'));
+  assert.match((await db.query("select pg_get_functiondef('public.adc_sync_put(text,text,bigint,integer)'::regprocedure) as sql")).rows[0].sql,/PT409/);
   assert.deepEqual((await db.query("select relrowsecurity,relforcerowsecurity from pg_class where oid='public.adc_user_records'::regclass")).rows[0],{relrowsecurity:true,relforcerowsecurity:true});
   assert.equal((await db.query("select count(*)::int n from pg_policies where tablename='adc_user_records'")).rows[0].n,4);
   await db.exec(`set role authenticated;select set_config('request.jwt.claim.sub','${a}',false);`);

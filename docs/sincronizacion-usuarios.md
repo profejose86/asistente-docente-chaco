@@ -2,7 +2,7 @@
 
 ## Estado y activación
 
-El código está implementado y se prueba con fixtures locales. **No se aplicó la migración al Supabase remoto, no se publicaron cambios ni se subieron datos reales.** Antes de habilitarlo en un entorno real debe revisarse y aplicar `supabase/migrations/202611140001_adc_user_records.sql`. El navegador nunca aplica migraciones. Si falta la tabla, se informa y se conserva el funcionamiento local.
+El código está implementado y probado con fixtures locales y con dos cuentas ficticias en Supabase remoto de staging, separado de producción. La copia de staging está publicada con acceso privado del propietario; ver [prueba-sincronizacion.md](prueba-sincronizacion.md). **Producción y main permanecen sin cambios, y no se subieron datos personales reales.** Antes de habilitarlo en producción deben revisarse y aplicarse ambas migraciones `202611140001_adc_user_records.sql` y `202611140002_adc_sync_conflict_http.sql`. El navegador nunca aplica migraciones. Si falta la tabla, se informa y se conserva el funcionamiento local.
 
 No ejecutar un reset ni modificar los datos existentes para instalar esta función. Las migraciones anteriores de perfiles mínimos siguen siendo válidas. El cliente oficial se mantiene único en `servicios/supabaseClient.js`; `supabase-runtime.js` es una salida de `npm run build`.
 
@@ -51,7 +51,7 @@ No se recuperan datos borrados del navegador. Un registro no importado no aparec
 
 `adc_user_records` guarda una fila por propietario y clave de documento, con `schema_version`, `revision`, JSON que contiene el valor serializado original, marca de borrado y fecha de servidor. La revisión no la elige el navegador: se incrementa mediante trigger. Los borrados de aplicación son tombstones para evitar resurrecciones desde otro dispositivo.
 
-`adc_sync_put` usa la revisión base esperada: inserta sólo cuando no existe la fila, o actualiza sólo si la revisión coincide. Devuelve `40001 / ADC_SYNC_CONFLICT` ante una carrera. El perfil sigue siendo un agregado porque contiene relaciones e identificadores de cargos; las ediciones concurrentes de sus campos se resuelven por documento, no con una fusión automática de campos. El resto de los formularios se escribe independientemente, sin reemplazar una única bolsa global de datos.
+`adc_sync_put` usa la revisión base esperada: inserta sólo cuando no existe la fila, o actualiza sólo si la revisión coincide. Devuelve `PT409 / ADC_SYNC_CONFLICT` ante una carrera. El perfil sigue siendo un agregado porque contiene relaciones e identificadores de cargos; las ediciones concurrentes de sus campos se resuelven por documento, no con una fusión automática de campos. El resto de los formularios se escribe independientemente, sin reemplazar una única bolsa global de datos.
 
 La RPC usa `security invoker`. La tabla activa y fuerza RLS; SELECT/INSERT/UPDATE/DELETE tienen políticas del propietario `auth.uid()`. Los permisos de columna impiden cambiar propietario, clave o revisión directamente. La función sólo usa el UID autenticado; no recibe un propietario elegido por el cliente. No se utiliza `service_role` ni un token de gestión. Cada petición fija el JWT previamente verificado para que un cambio de sesión durante una operación no envíe datos de A con las credenciales nuevas de B.
 

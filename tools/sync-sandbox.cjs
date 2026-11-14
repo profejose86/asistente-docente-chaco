@@ -10,6 +10,7 @@ async function createSandbox(){
  const db=new PGlite();
  await db.exec(`create role anon;create role authenticated;create schema auth;create table auth.users(id uuid primary key);create function auth.uid() returns uuid language sql stable as $$select nullif(current_setting('request.jwt.claim.sub',true),'')::uuid$$;grant usage on schema auth,public to authenticated,anon;grant execute on function auth.uid() to authenticated;insert into auth.users values('${ids[0]}'),('${ids[1]}');`);
  await db.exec(fs.readFileSync(path.join(root,'supabase/migrations/202611140001_adc_user_records.sql'),'utf8'));
+ await db.exec(fs.readFileSync(path.join(root,'supabase/migrations/202611140002_adc_sync_conflict_http.sql'),'utf8'));
  let queue=Promise.resolve();
  function queryAs(id,sql,args=[]){
   const task=queue.then(()=>db.transaction(async tx=>{
@@ -69,7 +70,7 @@ async function createSandbox(){
    if(!types[ext]||!file.startsWith(root+path.sep))return json({message:'Archivo no permitido'},403);
    const real=await fs.promises.realpath(file);if(!real.toLowerCase().startsWith(root.toLowerCase()+path.sep))return json({message:'Archivo no permitido'},403);
    res.setHeader('Content-Type',types[ext]);res.end(await fs.promises.readFile(real));
-  }catch(error){json({code:error.code||'SANDBOX_ERROR',message:error.message},error.code==='40001'?409:500);}
+  }catch(error){json({code:error.code||'SANDBOX_ERROR',message:error.message},['40001','PT409'].includes(error.code)?409:500);}
  });
  return {server,close:async()=>{if(server.listening)await new Promise(resolve=>server.close(resolve));await queue;await db.close();}};
 }

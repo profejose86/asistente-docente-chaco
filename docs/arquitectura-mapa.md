@@ -242,6 +242,7 @@ Hojas de estilo en orden de carga:
 | `assets/js/tramites/solicitudes.js` | 120 | 7 |
 | `supabase/migrations/202611130001_adc_tester_profiles.sql` | 36 | 0 |
 | `supabase/migrations/202611140001_adc_user_records.sql` | 54 | 0 |
+| `supabase/migrations/202611140002_adc_sync_conflict_http.sql` | 22 | 0 |
 | `tests/acceso-ajustes.test.cjs` | 33 | 0 |
 | `tests/ajustes-proyecto.test.cjs` | 71 | 0 |
 | `tests/arquitectura.test.cjs` | 25 | 0 |
@@ -268,7 +269,7 @@ Hojas de estilo en orden de carga:
 | `tests/publicacion.test.cjs` | 29 | 0 |
 | `tests/reubicacion-pdf.test.cjs` | 40 | 0 |
 | `tests/sincronizacion-browser.test.cjs` | 78 | 2 |
-| `tests/sincronizacion-rls.test.cjs` | 33 | 0 |
+| `tests/sincronizacion-rls.test.cjs` | 35 | 0 |
 | `tests/sincronizacion.test.cjs` | 73 | 2 |
 | `tests/sr01-pdf.test.cjs` | 28 | 1 |
 | `tests/studio-alineacion.test.cjs` | 12 | 0 |
@@ -295,8 +296,10 @@ Hojas de estilo en orden de carga:
 | `tools/local-editor-bridge.cjs` | 45 | 1 |
 | `tools/publicar.cjs` | 38 | 2 |
 | `tools/supabase-auth-settings.cjs` | 21 | 1 |
-| `tools/sync-sandbox.cjs` | 78 | 3 |
-| `tools/sync-staging.cjs` | 76 | 7 |
+| `tools/sync-sandbox.cjs` | 79 | 3 |
+| `tools/sync-staging-browser.cjs` | 37 | 2 |
+| `tools/sync-staging-verify.cjs` | 50 | 2 |
+| `tools/sync-staging.cjs` | 77 | 7 |
 | `tools/verify-structure.cjs` | 46 | 0 |
 
 ## Referencias literales ausentes

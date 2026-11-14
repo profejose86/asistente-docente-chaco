@@ -225,6 +225,7 @@
     "REVIEW_ADC_v60.md",
     "supabase/migrations/202611130001_adc_tester_profiles.sql",
     "supabase/migrations/202611140001_adc_user_records.sql",
+    "supabase/migrations/202611140002_adc_sync_conflict_http.sql",
     "tests/acceso-ajustes.test.cjs",
     "tests/ajustes-proyecto.test.cjs",
     "tests/arquitectura.test.cjs",
@@ -280,6 +281,8 @@
     "tools/publicar.cjs",
     "tools/supabase-auth-settings.cjs",
     "tools/sync-sandbox.cjs",
+    "tools/sync-staging-browser.cjs",
+    "tools/sync-staging-verify.cjs",
     "tools/sync-staging.cjs",
     "tools/verify-structure.cjs"
   ],
@@ -2461,7 +2464,7 @@
     },
     {
       "file": "docs/estructura.md",
-      "bytes": 34354,
+      "bytes": 34515,
       "lines": 236,
       "generated": false,
       "functions": [],
@@ -2497,8 +2500,8 @@
     },
     {
       "file": "docs/prueba-sincronizacion.md",
-      "bytes": 5201,
-      "lines": 40,
+      "bytes": 6645,
+      "lines": 44,
       "generated": false,
       "functions": [],
       "globals": [],
@@ -2560,7 +2563,7 @@
     },
     {
       "file": "docs/sincronizacion-usuarios.md",
-      "bytes": 11604,
+      "bytes": 11839,
       "lines": 78,
       "generated": false,
       "functions": [],
@@ -2661,6 +2664,15 @@
       "file": "supabase/migrations/202611140001_adc_user_records.sql",
       "bytes": 3847,
       "lines": 54,
+      "generated": false,
+      "functions": [],
+      "globals": [],
+      "storageKeys": []
+    },
+    {
+      "file": "supabase/migrations/202611140002_adc_sync_conflict_http.sql",
+      "bytes": 1239,
+      "lines": 22,
       "generated": false,
       "functions": [],
       "globals": [],
@@ -2980,8 +2992,8 @@
     },
     {
       "file": "tests/sincronizacion-rls.test.cjs",
-      "bytes": 4199,
-      "lines": 33,
+      "bytes": 4480,
+      "lines": 35,
       "generated": false,
       "functions": [],
       "globals": [],
@@ -3302,8 +3314,8 @@
     },
     {
       "file": "tools/sync-sandbox.cjs",
-      "bytes": 8742,
-      "lines": 78,
+      "bytes": 8879,
+      "lines": 79,
       "generated": false,
       "functions": [
         "session",
@@ -3321,9 +3333,35 @@
       ]
     },
     {
+      "file": "tools/sync-staging-browser.cjs",
+      "bytes": 4364,
+      "lines": 37,
+      "generated": false,
+      "functions": [
+        "run",
+        "login"
+      ],
+      "globals": [],
+      "storageKeys": [
+        "adc_v08"
+      ]
+    },
+    {
+      "file": "tools/sync-staging-verify.cjs",
+      "bytes": 4785,
+      "lines": 50,
+      "generated": false,
+      "functions": [
+        "verify",
+        "api"
+      ],
+      "globals": [],
+      "storageKeys": []
+    },
+    {
       "file": "tools/sync-staging.cjs",
-      "bytes": 7284,
-      "lines": 76,
+      "bytes": 7401,
+      "lines": 77,
       "generated": false,
       "functions": [
         "readState",
@@ -4827,6 +4865,18 @@
       "exists": true
     },
     {
+      "from": "tools/sync-staging-browser.cjs",
+      "to": "tools/sync-staging.cjs",
+      "kind": "literal-module",
+      "exists": true
+    },
+    {
+      "from": "tools/sync-staging-verify.cjs",
+      "to": "tools/sync-staging.cjs",
+      "kind": "literal-module",
+      "exists": true
+    },
+    {
       "from": "tools/sync-staging.cjs",
       "to": "tools/env.cjs",
       "kind": "literal-module",
@@ -5646,9 +5696,9 @@
     ]
   },
   "summary": {
-    "files": 270,
-    "ownTextModules": 210,
-    "ownJavaScript": 132,
+    "files": 273,
+    "ownTextModules": 213,
+    "ownJavaScript": 134,
     "vendorFiles": 35,
     "missingLiteralReferences": 0
   }

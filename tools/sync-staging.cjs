@@ -47,6 +47,7 @@ async function provision(){
   const existing=await query(`select to_regclass('public.${table}') is not null as exists`);
   if(!existing[0]?.exists)await query(fs.readFileSync(path.join(root,'supabase/migrations',file),'utf8'));
  }
+ await query(fs.readFileSync(path.join(root,'supabase/migrations/202611140002_adc_sync_conflict_http.sql'),'utf8'));
  const rows=await query("select c.relname,c.relrowsecurity,c.relforcerowsecurity,(select count(*)::int from pg_policies p where p.tablename=c.relname and p.schemaname='public') as policies from pg_class c where c.oid in ('public.adc_tester_profiles'::regclass,'public.adc_user_records'::regclass)");
  if(rows.length!==2||rows.some(r=>!r.relrowsecurity||!r.relforcerowsecurity||r.policies!==4))throw Error('RLS de staging no verificada.');
  const keys=await api('/api-keys'),all=Array.isArray(keys)?keys:keys.keys||keys.api_keys||[],key=all.find(k=>k.type==='publishable')||all.find(k=>k.name==='anon');
