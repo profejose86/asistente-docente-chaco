@@ -1,5 +1,9 @@
 # Estructura y ejecución
 
+El mapa vigente está en [arquitectura-mapa.md](arquitectura-mapa.md); la [auditoría y reglas de modularización](arquitectura-auditoria.md) distingue lo refactorizado de la deuda pendiente. `AGENTS.md` registra cómo reutilizar estos módulos. Regenerar con `npm run architecture:audit` y verificar con `npm run architecture:check`.
+
+Los apartados históricos que mencionan acceso sin datos describen únicamente el modo demo. En el piloto configurado con Supabase no se omite el inicio de sesión ni se usa `adc-preview=1` como autenticación.
+
 La publicación online del piloto utiliza `config/publicacion.json`, `tools/publicar.cjs` y `.github/workflows/pages.yml`. El artefacto `dist/` contiene sólo los recursos web y requiere Supabase real. La rama que publica se controla con `ADC_PAGES_BRANCH` y permanece en `log-in` hasta la aprobación de `main`. Ver [publicación, configuración del piloto y recuperación](publicacion-online.md).
 
 La autenticación de staging se organiza en `assets/js/servicios/supabaseClient.js`, `assets/js/acceso/autenticacion.js` y `assets/js/interfaz/sesion.js`. El cliente oficial se instala con npm y se compila localmente para mantener la web estática. `.env.local` está excluido de Git; sólo `assets/datos/config-publica.js` puede llegar al navegador. La migración inicial con RLS vive en `supabase/migrations/`. Ver [configuración, modos, pruebas y pendientes remotos](supabase-staging.md). Los párrafos siguientes sobre acceso sin datos describen exclusivamente el modo de demostración: en modo Supabase, `adc-preview=1` no salta la autenticación.
@@ -223,5 +227,7 @@ El PDF final carga la plantilla adjunta, agrega los datos, actualiza las aparien
 
 La muestra `output/pdf/BD-02-ejemplo.pdf` contiene datos ficticios para revisar la alineación y una marca MNC. Sus imágenes están en la misma carpeta. La conformidad visual del usuario precede al trabajo sobre otro formulario.
 # Ajustes visuales versionables
+
+La edición visual ahora es exclusiva de localhost. **Commit to local** conecta `assets/js/editor/puente-local.js` con `tools/local-editor-bridge.cjs` y guarda directamente en el registro versionable. Inicio: `npm run dev:editor`. Ver [editor local, respaldo y límites](editor-local.md).
 
 La tuerquita puede exportar ajustes para incorporarlos a `assets/datos/ajustes-pagina.json`. El puente compartido vive en `assets/js/editor/ajustes-proyecto*.js`; `tools/importar-ajustes.cjs` valida e incorpora el archivo sin ejecutar Git. Ver [flujo, conservación y límites](ajustes-visuales.md).

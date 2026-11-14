@@ -6,6 +6,10 @@
   "scripts": {
     "build": "node tools/build.cjs",
     "dev": "node tools/dev-server.cjs",
+    "editor:bridge": "node tools/local-editor-bridge.cjs",
+    "dev:editor": "node tools/dev-server.cjs --editor",
+    "architecture:audit": "node tools/auditar-arquitectura.cjs",
+    "architecture:check": "node tools/auditar-arquitectura.cjs --check",
     "test:auth": "node --test tests/supabase*.test.cjs",
     "test": "node --test --test-concurrency=2 tests/*.test.cjs",
     "supabase:create": "node tools/configurar-supabase.cjs --create-project",
@@ -13,7 +17,7 @@
     "supabase:configure": "node tools/configurar-supabase.cjs --apply",
     "build:pages": "node tools/publicar.cjs",
     "supabase:online": "node tools/configurar-supabase.cjs --apply --online",
-    "test:ci": "node --test --test-concurrency=2 tests/supabase-config.test.cjs tests/supabase-management.test.cjs tests/supabase-rls.test.cjs tests/publicacion.test.cjs"
+    "test:ci": "node --test --test-concurrency=2 tests/supabase-config.test.cjs tests/supabase-management.test.cjs tests/supabase-rls.test.cjs tests/publicacion.test.cjs tests/arquitectura.test.cjs tests/local-editor-bridge.test.cjs"
   },
   "dependencies": {
     "@supabase/supabase-js": "2.119.0"

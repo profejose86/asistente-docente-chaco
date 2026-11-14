@@ -1,1 +1,4 @@
 tools/npm-local.cmd text eol=crlf
+# El SDK generado contiene espacios significativos en literales multilínea.
+# Revisar su fuente y las pruebas, sin recortar esos literales automáticamente.
+assets/js/servicios/supabase-runtime.js -whitespace

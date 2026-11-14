@@ -1,5 +1,7 @@
 # Ajustes visuales que pueden incluirse en Git
 
+**Guardado directo local:** ahora podés usar **Commit to local**, sin descargar JSON. Iniciá `npm run dev:editor` o `npm run editor:bridge` si el servidor web ya está activo. Ver [instrucciones del editor local](editor-local.md). La tuerquita y el panel se ocultan en sitios externos, incluida la web publicada; el diseño guardado sí se aplica al publicarlo.
+
 La tuerquita conserva su borrador y sus opciones de deshacer/rehacer. El botón **Exportar ajustes al proyecto**, al final del panel tanto del ingreso como de la aplicación, descarga `ADC_ajustes_ingreso.json` o `ADC_ajustes_pagina.json`.
 
 ## Flujo de trabajo

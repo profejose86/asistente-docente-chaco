@@ -24,14 +24,18 @@ async function user(){
   if(!session)return null;
   return value(await api.auth.getUser()).user;
 }
-async function profile(){
-  const authenticated=await user();if(!authenticated)throw Error('Iniciá sesión para consultar tu cuenta.');
+async function ensureTesterProfile(authenticated){
   const api=fail();
-  let row=value(await api.from('adc_tester_profiles').select('id,display_name,created_at,updated_at').eq('id',authenticated.id).maybeSingle());
+  const select=()=>api.from('adc_tester_profiles').select('id,display_name,created_at,updated_at').eq('id',authenticated.id);
+  const row=value(await select().maybeSingle());
   if(row)return row;
   const inserted=await api.from('adc_tester_profiles').insert({id:authenticated.id,display_name:''}).select('id,display_name,created_at,updated_at').single();
-  if(inserted.error?.code==='23505')return value(await api.from('adc_tester_profiles').select('id,display_name,created_at,updated_at').eq('id',authenticated.id).single());
+  if(inserted.error?.code==='23505')return value(await select().single());
   return value(inserted);
+}
+async function profile(){
+  const authenticated=await user();if(!authenticated)throw Error('Iniciá sesión para consultar tu cuenta.');
+  return ensureTesterProfile(authenticated);
 }
 let recovery=new URL(location.href).searchParams.get('flow')==='recovery'||location.hash.includes('type=recovery');
 if(client)client.auth.onAuthStateChange((event,session)=>{
@@ -59,6 +63,6 @@ window.adcAuth={
   async saveTesterName(displayName){
     const authenticated=await user();if(!authenticated)throw Error('Iniciá sesión.');
     const name=String(displayName).trim();if(name.length>80)throw Error('El nombre admite hasta 80 caracteres.');
-    await profile();return value(await fail().from('adc_tester_profiles').update({display_name:name}).eq('id',authenticated.id).select('id,display_name,created_at,updated_at').single());
+    await ensureTesterProfile(authenticated);return value(await fail().from('adc_tester_profiles').update({display_name:name}).eq('id',authenticated.id).select('id,display_name,created_at,updated_at').single());
   }
 };

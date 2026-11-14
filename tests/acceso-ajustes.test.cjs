@@ -5,12 +5,12 @@ test('Ajustes: cinco clics/toques o Tab, aislamiento por pestaña, recarga y cie
  const browser=await chromium.launch({channel:'chrome',headless:true});
  try{
   const context=await browser.newContext({hasTouch:true});
-  await context.route('https://adc-test.example/adc/**',route=>{
+  await context.route('http://localhost:18765/adc/**',route=>{
    const relative=new URL(route.request().url()).pathname.slice('/adc/'.length);
    if(relative==='assets/datos/config-publica.js')return route.fulfill({contentType:'application/javascript',body:require('./support/demo-config.cjs').script});
    const file=path.join(root,relative);return fs.existsSync(file)?route.fulfill({path:file}):route.abort();
   });
-  const page=await context.newPage();await page.goto('https://adc-test.example/adc/ADC_Ingreso_Editable.html');
+  const page=await context.newPage();await page.goto('http://localhost:18765/adc/ADC_Ingreso_Editable.html');
   const gear=page.locator('#adcDesignGear'),panel=page.locator('#adcDesignPanel');
   assert.equal(await gear.evaluate(e=>getComputedStyle(e).opacity),'0');
   for(let i=0;i<4;i++)await gear.click();
@@ -18,7 +18,7 @@ test('Ajustes: cinco clics/toques o Tab, aislamiento por pestaña, recarga y cie
   await gear.click();assert.equal(await gear.getAttribute('data-adc-locked'),null);assert.equal(await panel.isVisible(),false);
   await gear.click();assert.equal(await panel.isVisible(),true);
   await page.reload();assert.equal(await gear.getAttribute('data-adc-locked'),null);
-  const other=await context.newPage();await other.goto('https://adc-test.example/adc/ADC_Ingreso_Editable.html');
+  const other=await context.newPage();await other.goto('http://localhost:18765/adc/ADC_Ingreso_Editable.html');
   assert.notEqual(await other.locator('#adcDesignGear').getAttribute('data-adc-locked'),null);
   for(let i=0;i<5;i++)await other.keyboard.press('Tab');assert.equal(await other.locator('#adcDesignGear').getAttribute('data-adc-locked'),null);
   await page.locator('#adcDesignGear').click();

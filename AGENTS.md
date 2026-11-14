@@ -1,0 +1,28 @@
+# Arquitectura de Asistente Docente Chaco
+
+## Antes de implementar
+
+- Consultar `docs/arquitectura-auditoria.md` y `docs/estructura.md`. El mapa de carga actual está en `docs/arquitectura-mapa.md`; el inventario se regenera con `npm run architecture:audit`.
+- Revisar `git status` y conservar los cambios locales. No hacer commit, push o cambios de rama sin autorización aplicable del usuario. El flujo de publicación aprobado pasa por `log-in` antes de `main`.
+- Reutilizar los módulos existentes antes de crear otro motor, componente o servicio. No agregar un framework ni mover archivos masivamente como efecto secundario.
+
+## Contratos que deben conservarse
+
+- Mantener identidad visual, accesibilidad, navegación, responsive y comportamiento aprobado. Preservar IDs del DOM, nombres públicos `adc*`, orden de scripts, claves/versiones de almacenamiento, correcciones del usuario y borradores históricos.
+- DJ-01, DJ-02, OL-01, SC-01 y DL-01 son implementaciones protegidas: no reescribir sus plantillas ni módulos específicos sin un pedido explícito para ese formulario. Una auditoría general no levanta esta protección.
+- Para MNC reutilizar `core/mnc.js`, sus adaptadores y la geometría de 0,5 mm / 70%. Para años y divisiones usar `core/cursos.js`. Para validación guiada, `core/validacion-guiada.js`.
+- Los documentos nuevos usan el catálogo y, cuando corresponde, `datos/formularios-pdf.js`, `documentos/pdf-campos.js` y el lienzo de `tramites/formularios-oficiales.js`. No inventar requisitos legales ni modificar el PDF oficial sin autorización.
+
+## Módulos compartidos
+
+- Editor visual: `editor/comun.js` contiene registro, saneamiento, geometría y utilidades comunes; `editor/documentos.js`, `editor/elementos.js` y `editor/ajustes-proyecto*.js` son las extensiones compartidas. Los motores de ingreso y aplicación mantienen diferencias intencionales. No copiar sus utilidades a módulos nuevos.
+- Estilos comunes de Ajustes: `assets/css/editor/base.css`; las variantes por pantalla se cargan después. El editor es sólo local; los diseños guardados sí pueden publicarse.
+- Guardado visual: usar `tools/ajustes-store.cjs` desde el puente o importadores. Preservar validación, respaldo, control de revisión y escritura atómica. No permitir rutas ni comandos recibidos del navegador.
+- Supabase: único cliente en `servicios/supabaseClient.js`; `supabase-runtime.js` se genera con `npm run build`, no se edita manualmente. No crear clientes de base de datos en componentes visuales ni exponer claves privadas. Los datos docentes continúan locales mientras no se acuerde otra política.
+- Rutas y recursos deben funcionar bajo el prefijo de GitHub Pages, no sólo en `/`. Antes de renombrar archivos, verificar referencias estáticas y dinámicas.
+
+## Verificación y documentación
+
+- Ejecutar `npm run architecture:check` y las pruebas relacionadas con el cambio. Después de una refactorización transversal ejecutar la suite completa y compilar el cliente si cambió su fuente.
+- Actualizar el mapa cuando cambien módulos o dependencias. `docs/structure-manifest.json` y `tools/verify-structure.cjs --baseline` describen una extracción histórica, no el objetivo actual de la aplicación.
+- Informar límites de las verificaciones. No afirmar que se probó online cuando sólo se usaron fixtures locales. No hacer cambios remotos en Supabase para pruebas de refactorización.

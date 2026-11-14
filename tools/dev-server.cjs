@@ -14,6 +14,14 @@ async function start(){
     if(!resolved.toLowerCase().startsWith(root.toLowerCase()+path.sep))return res.writeHead(403).end();
     fs.readFile(resolved,(error,data)=>{if(error)return res.writeHead(404).end();res.setHeader('Cache-Control','no-store');res.setHeader('X-Content-Type-Options','nosniff');res.setHeader('Referrer-Policy','same-origin');res.setHeader('Content-Type',({'.html':'text/html; charset=utf-8','.js':'application/javascript; charset=utf-8','.mjs':'application/javascript; charset=utf-8','.css':'text/css; charset=utf-8','.json':'application/json','.pdf':'application/pdf','.wasm':'application/wasm','.svg':'image/svg+xml','.png':'image/png','.jpg':'image/jpeg','.jpeg':'image/jpeg','.webp':'image/webp'})[path.extname(file)]||'application/octet-stream');res.end(data);});
   });
-  server.listen(port,'127.0.0.1',()=>console.log('ADC staging local: http://127.0.0.1:'+port+'/ADC_Ingreso_Editable.html'));
+  server.listen(port,'127.0.0.1',()=>{
+    console.log('ADC staging local: http://127.0.0.1:'+port+'/ADC_Ingreso_Editable.html');
+    if(process.argv.includes('--editor')){
+      const bridge=require('./local-editor-bridge.cjs').createBridge({origins:['http://localhost:'+port,'http://127.0.0.1:'+port]});
+      bridge.on('error',error=>console.error('No se pudo iniciar el puente: '+error.message));
+      bridge.listen(3005,'127.0.0.1',()=>console.log('Editor local listo en http://localhost:3005/commit-local'));
+      server.on('close',()=>bridge.close());
+    }
+  });
 }
 start().catch(error=>{console.error(error.message);process.exitCode=1;});

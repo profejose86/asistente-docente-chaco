@@ -15,7 +15,7 @@ test('Contrato: referencias estables, medidas y acciones permitidas',()=>{
 test('Importador: incorpora una pantalla, conserva la otra y permite comprobar sin escribir',()=>{
   const temp=fs.mkdtempSync(path.join(os.tmpdir(),'adc-layout-import-'));
   try{
-    for(const file of ['tools/importar-ajustes.cjs','assets/js/editor/ajustes-proyecto-datos.js','assets/datos/ajustes-pagina.json']){
+    for(const file of ['tools/importar-ajustes.cjs','tools/ajustes-store.cjs','assets/js/editor/ajustes-proyecto-datos.js','assets/datos/ajustes-pagina.json']){
       fs.mkdirSync(path.dirname(path.join(temp,file)),{recursive:true});fs.copyFileSync(path.join(root,file),path.join(temp,file));
     }
     const input=path.join(temp,'export.json'),target=path.join(temp,'assets/datos/ajustes-pagina.json');fs.writeFileSync(input,JSON.stringify(fixture()));

@@ -1,0 +1,4469 @@
+{
+  "schema": "adc-architecture-v1",
+  "exclusions": [
+    ".git",
+    ".adc-tools",
+    "node_modules",
+    "dist",
+    "tmp",
+    "output",
+    ".env*",
+    "assets/vendor/ (sólo inventario de nombres)"
+  ],
+  "files": [
+    ".gitattributes",
+    ".github/workflows/pages.yml",
+    ".gitignore",
+    "ADC_Ingreso_Editable.html",
+    "AGENTS.md",
+    "assets/css/acceso/autenticacion.css",
+    "assets/css/acceso/editor.css",
+    "assets/css/acceso/ingreso.css",
+    "assets/css/acceso/marca.css",
+    "assets/css/base.css",
+    "assets/css/calendario/base.css",
+    "assets/css/calendario/meses.css",
+    "assets/css/calendario/navegacion.css",
+    "assets/css/calendario/solicitudes.css",
+    "assets/css/documentos/panel.css",
+    "assets/css/editor/acceso-ajustes.css",
+    "assets/css/editor/base.css",
+    "assets/css/editor/editor.css",
+    "assets/css/interfaz/dialogos.css",
+    "assets/css/interfaz/espacio-trabajo.css",
+    "assets/css/interfaz/fondo.css",
+    "assets/css/interfaz/mnc.css",
+    "assets/css/interfaz/navegacion.css",
+    "assets/css/interfaz/responsive.css",
+    "assets/css/interfaz/tema.css",
+    "assets/css/interfaz/validacion-guiada.css",
+    "assets/css/perfil/nombres.css",
+    "assets/css/perfil/revision.css",
+    "assets/css/tramites/bd02.css",
+    "assets/css/tramites/buscador.css",
+    "assets/css/tramites/catalogo.css",
+    "assets/css/tramites/dj01-advertencias.css",
+    "assets/css/tramites/dj01-distribucion.css",
+    "assets/css/tramites/dj02-base.css",
+    "assets/css/tramites/dj02-formulario.css",
+    "assets/css/tramites/dj02-plantilla.css",
+    "assets/css/tramites/dj02-registro.css",
+    "assets/css/tramites/dl01.css",
+    "assets/css/tramites/formularios-oficiales.css",
+    "assets/css/tramites/ol01.css",
+    "assets/css/tramites/sc01.css",
+    "assets/datos/ajustes-pagina.json",
+    "assets/datos/config-publica.js",
+    "assets/datos/escuelas-chaco.js",
+    "assets/datos/formularios-pdf.js",
+    "assets/formularios/BD-02-pagina-1.png",
+    "assets/formularios/BD-02-pagina-2.png",
+    "assets/formularios/BD-02.pdf",
+    "assets/formularios/DP-01-pagina-1.png",
+    "assets/formularios/DP-01.pdf",
+    "assets/formularios/SC-01-plantilla.png",
+    "assets/formularios/SC-01.pdf",
+    "assets/img/acceso/fondo-escolar-dark.png",
+    "assets/img/acceso/fondo-escolar-light.png",
+    "assets/img/acceso/logo-adc.png",
+    "assets/js/acceso/autenticacion.js",
+    "assets/js/acceso/editor.js",
+    "assets/js/acceso/ingreso.js",
+    "assets/js/acceso/marca.js",
+    "assets/js/acceso/visibilidad-clave.js",
+    "assets/js/calendario/calendario.js",
+    "assets/js/calendario/solicitudes.js",
+    "assets/js/core/cursos.js",
+    "assets/js/core/estado.js",
+    "assets/js/core/inicializacion.js",
+    "assets/js/core/mnc.js",
+    "assets/js/core/validacion-guiada.js",
+    "assets/js/documentos/acciones.js",
+    "assets/js/documentos/pdf-campos.js",
+    "assets/js/documentos/pdf-utilidades.js",
+    "assets/js/documentos/plantillas-dl01.js",
+    "assets/js/editor/acceso-ajustes.js",
+    "assets/js/editor/ajustes-proyecto-datos.js",
+    "assets/js/editor/ajustes-proyecto.js",
+    "assets/js/editor/comun.js",
+    "assets/js/editor/documentos.js",
+    "assets/js/editor/editor.js",
+    "assets/js/editor/elementos.js",
+    "assets/js/editor/modo-local.js",
+    "assets/js/editor/puente-local.js",
+    "assets/js/interfaz/espacio-trabajo.js",
+    "assets/js/interfaz/inicio-local.js",
+    "assets/js/interfaz/navegacion.js",
+    "assets/js/interfaz/sesion.js",
+    "assets/js/perfil/contactos-instituciones.js",
+    "assets/js/perfil/datos-personales.js",
+    "assets/js/perfil/geografia.js",
+    "assets/js/perfil/instituciones.js",
+    "assets/js/perfil/nombres.js",
+    "assets/js/perfil/respaldos.js",
+    "assets/js/servicios/supabase-runtime.js",
+    "assets/js/servicios/supabaseClient.js",
+    "assets/js/tema/controles.js",
+    "assets/js/tema/inicial.js",
+    "assets/js/tramites/ayuda.js",
+    "assets/js/tramites/bd02.js",
+    "assets/js/tramites/buscador.js",
+    "assets/js/tramites/busqueda-inteligente.js",
+    "assets/js/tramites/catalogo-datos.js",
+    "assets/js/tramites/dj01-conflictos.js",
+    "assets/js/tramites/dj01-distribucion.js",
+    "assets/js/tramites/dj01-guia.js",
+    "assets/js/tramites/dj01-traslados.js",
+    "assets/js/tramites/dj01-zoom.js",
+    "assets/js/tramites/dj01.js",
+    "assets/js/tramites/dj02-base.js",
+    "assets/js/tramites/dj02-formulario.js",
+    "assets/js/tramites/dj02-plantilla.js",
+    "assets/js/tramites/dj02-registro.js",
+    "assets/js/tramites/dl01-interfaz.js",
+    "assets/js/tramites/dl01-pdf.js",
+    "assets/js/tramites/dl01-reglas.js",
+    "assets/js/tramites/formularios-oficiales-datos.js",
+    "assets/js/tramites/formularios-oficiales.js",
+    "assets/js/tramites/mnc-adaptadores.js",
+    "assets/js/tramites/ol01.js",
+    "assets/js/tramites/sc01.js",
+    "assets/js/tramites/solicitudes.js",
+    "assets/vendor/pdf-lib/LICENSE.md",
+    "assets/vendor/pdf-lib/pdf-lib.min.js",
+    "assets/vendor/pdf-lib/README.md",
+    "assets/vendor/pdfjs/LICENSE",
+    "assets/vendor/pdfjs/pdf.min.mjs",
+    "assets/vendor/pdfjs/pdf.worker.min.mjs",
+    "assets/vendor/pdfjs/README.md",
+    "assets/vendor/pdfjs/standard_fonts/FoxitDingbats.pfb",
+    "assets/vendor/pdfjs/standard_fonts/FoxitFixed.pfb",
+    "assets/vendor/pdfjs/standard_fonts/FoxitFixedBold.pfb",
+    "assets/vendor/pdfjs/standard_fonts/FoxitFixedBoldItalic.pfb",
+    "assets/vendor/pdfjs/standard_fonts/FoxitFixedItalic.pfb",
+    "assets/vendor/pdfjs/standard_fonts/FoxitSerif.pfb",
+    "assets/vendor/pdfjs/standard_fonts/FoxitSerifBold.pfb",
+    "assets/vendor/pdfjs/standard_fonts/FoxitSerifBoldItalic.pfb",
+    "assets/vendor/pdfjs/standard_fonts/FoxitSerifItalic.pfb",
+    "assets/vendor/pdfjs/standard_fonts/FoxitSymbol.pfb",
+    "assets/vendor/pdfjs/standard_fonts/LiberationSans-Bold.ttf",
+    "assets/vendor/pdfjs/standard_fonts/LiberationSans-BoldItalic.ttf",
+    "assets/vendor/pdfjs/standard_fonts/LiberationSans-Italic.ttf",
+    "assets/vendor/pdfjs/standard_fonts/LiberationSans-Regular.ttf",
+    "assets/vendor/pdfjs/standard_fonts/LICENSE_FOXIT",
+    "assets/vendor/pdfjs/standard_fonts/LICENSE_LIBERATION",
+    "assets/vendor/pdfjs/wasm/jbig2.wasm",
+    "assets/vendor/pdfjs/wasm/LICENSE_JBIG2",
+    "assets/vendor/pdfjs/wasm/LICENSE_OPENJPEG",
+    "assets/vendor/pdfjs/wasm/LICENSE_PDFJS_JBIG2",
+    "assets/vendor/pdfjs/wasm/LICENSE_PDFJS_OPENJPEG",
+    "assets/vendor/pdfjs/wasm/LICENSE_PDFJS_QCMS",
+    "assets/vendor/pdfjs/wasm/LICENSE_QCMS",
+    "assets/vendor/pdfjs/wasm/openjpeg_nowasm_fallback.js",
+    "assets/vendor/pdfjs/wasm/openjpeg.wasm",
+    "assets/vendor/pdfjs/wasm/qcms_bg.wasm",
+    "assets/vendor/supabase/LICENSE",
+    "assets/vendor/supabase/README.md",
+    "config/publicacion.json",
+    "docs/ajustes-visuales.md",
+    "docs/arquitectura-auditoria.md",
+    "docs/arquitectura-inventario.json",
+    "docs/arquitectura-mapa.md",
+    "docs/codigo-ajustes.md",
+    "docs/editor-local.md",
+    "docs/estructura.md",
+    "docs/formularios-pdf-preparados.md",
+    "docs/funciones-respaldo.md",
+    "docs/publicacion-online.md",
+    "docs/recuperacion-dl01.md",
+    "docs/referencias/nomenclatura-licencias.json",
+    "docs/referencias/nomenclatura-licencias.md",
+    "docs/referencias/nomenclatura-texto.txt",
+    "docs/referencias/Nomenclatura.pdf",
+    "docs/structure-manifest.json",
+    "docs/supabase-staging.md",
+    "index.html",
+    "package-lock.json",
+    "package.json",
+    "REVIEW_ADC_v60.md",
+    "supabase/migrations/202611130001_adc_tester_profiles.sql",
+    "tests/acceso-ajustes.test.cjs",
+    "tests/ajustes-proyecto.test.cjs",
+    "tests/arquitectura.test.cjs",
+    "tests/cursos.test.cjs",
+    "tests/dl01-interfaz.test.cjs",
+    "tests/editor-botones.test.cjs",
+    "tests/editor-comun.test.cjs",
+    "tests/editor-documentos.test.cjs",
+    "tests/editor-elementos.test.cjs",
+    "tests/formularios-oficiales.test.cjs",
+    "tests/geografia.test.cjs",
+    "tests/ingreso.test.cjs",
+    "tests/local-editor-bridge.test.cjs",
+    "tests/local-editor-ui.test.cjs",
+    "tests/mbit.test.cjs",
+    "tests/ol01-interfaz.test.cjs",
+    "tests/ol01-perfil.test.cjs",
+    "tests/pdf-blank-line.test.cjs",
+    "tests/pdf-campos.test.cjs",
+    "tests/publicacion.test.cjs",
+    "tests/supabase-auth.test.cjs",
+    "tests/supabase-config.test.cjs",
+    "tests/supabase-management.test.cjs",
+    "tests/supabase-rls.test.cjs",
+    "tests/support/ajustes.cjs",
+    "tests/support/demo-config.cjs",
+    "tools/ajustes-store.cjs",
+    "tools/auditar-arquitectura.cjs",
+    "tools/build.cjs",
+    "tools/configurar-supabase.cjs",
+    "tools/dev-server.cjs",
+    "tools/env.cjs",
+    "tools/extract-nomenclatura.py",
+    "tools/importar-ajustes.cjs",
+    "tools/local-editor-bridge.cjs",
+    "tools/npm-local.cmd",
+    "tools/publicar.cjs",
+    "tools/supabase-auth-settings.cjs",
+    "tools/verify-structure.cjs"
+  ],
+  "entries": [
+    {
+      "file": "ADC_Ingreso_Editable.html",
+      "scripts": [
+        "assets/js/editor/modo-local.js",
+        "assets/datos/config-publica.js",
+        "assets/js/servicios/supabase-runtime.js",
+        "assets/js/acceso/ingreso.js",
+        "assets/js/acceso/autenticacion.js",
+        "assets/js/acceso/visibilidad-clave.js",
+        "assets/js/acceso/marca.js",
+        "assets/js/editor/acceso-ajustes.js",
+        "assets/js/editor/ajustes-proyecto-datos.js",
+        "assets/js/editor/documentos.js",
+        "assets/js/editor/elementos.js",
+        "assets/js/editor/puente-local.js",
+        "assets/js/editor/ajustes-proyecto.js",
+        "assets/js/editor/comun.js",
+        "assets/js/acceso/editor.js"
+      ],
+      "styles": [
+        "assets/css/acceso/autenticacion.css",
+        "assets/css/acceso/ingreso.css",
+        "assets/css/acceso/marca.css",
+        "assets/css/editor/base.css",
+        "assets/css/acceso/editor.css",
+        "assets/css/editor/acceso-ajustes.css"
+      ]
+    },
+    {
+      "file": "index.html",
+      "scripts": [
+        "assets/js/editor/modo-local.js",
+        "assets/datos/config-publica.js",
+        "assets/js/servicios/supabase-runtime.js",
+        "assets/js/interfaz/sesion.js",
+        "assets/js/interfaz/inicio-local.js",
+        "assets/js/core/mnc.js",
+        "assets/js/tema/inicial.js",
+        "assets/js/tema/controles.js",
+        "assets/vendor/pdf-lib/pdf-lib.min.js",
+        "assets/js/documentos/plantillas-dl01.js",
+        "assets/js/core/validacion-guiada.js",
+        "assets/js/core/cursos.js",
+        "assets/js/core/estado.js",
+        "assets/js/tramites/catalogo-datos.js",
+        "assets/js/interfaz/navegacion.js",
+        "assets/js/perfil/instituciones.js",
+        "assets/js/perfil/geografia.js",
+        "assets/js/perfil/datos-personales.js",
+        "assets/js/tramites/dj01-traslados.js",
+        "assets/js/perfil/respaldos.js",
+        "assets/js/tramites/solicitudes.js",
+        "assets/js/tramites/dl01-reglas.js",
+        "assets/js/documentos/pdf-utilidades.js",
+        "assets/js/tramites/dl01-pdf.js",
+        "assets/js/tramites/dj01.js",
+        "assets/js/core/inicializacion.js",
+        "assets/js/documentos/acciones.js",
+        "assets/js/tramites/dj01-conflictos.js",
+        "assets/js/tramites/dj01-guia.js",
+        "assets/js/tramites/dj01-distribucion.js",
+        "assets/js/tramites/dj01-zoom.js",
+        "assets/js/tramites/dj02-base.js",
+        "assets/js/tramites/dj02-plantilla.js",
+        "assets/js/perfil/nombres.js",
+        "assets/js/tramites/dj02-formulario.js",
+        "assets/js/calendario/calendario.js",
+        "assets/js/tramites/ayuda.js",
+        "assets/js/calendario/solicitudes.js",
+        "assets/js/tramites/ol01.js",
+        "assets/js/interfaz/espacio-trabajo.js",
+        "assets/js/editor/acceso-ajustes.js",
+        "assets/js/editor/ajustes-proyecto-datos.js",
+        "assets/js/editor/documentos.js",
+        "assets/js/editor/elementos.js",
+        "assets/js/editor/puente-local.js",
+        "assets/js/editor/ajustes-proyecto.js",
+        "assets/js/editor/comun.js",
+        "assets/js/editor/editor.js",
+        "assets/js/tramites/dj02-registro.js",
+        "assets/datos/escuelas-chaco.js",
+        "assets/js/perfil/contactos-instituciones.js",
+        "assets/js/tramites/sc01.js",
+        "assets/js/tramites/formularios-oficiales-datos.js",
+        "assets/datos/formularios-pdf.js",
+        "assets/js/documentos/pdf-campos.js",
+        "assets/js/tramites/formularios-oficiales.js",
+        "assets/js/tramites/bd02.js",
+        "assets/js/tramites/busqueda-inteligente.js",
+        "assets/js/tramites/buscador.js",
+        "assets/js/tramites/dl01-interfaz.js"
+      ],
+      "styles": [
+        "assets/css/acceso/autenticacion.css",
+        "assets/css/base.css",
+        "assets/css/tramites/dj01-advertencias.css",
+        "assets/css/tramites/dj01-distribucion.css",
+        "assets/css/interfaz/navegacion.css",
+        "assets/css/tramites/dj02-base.css",
+        "assets/css/tramites/dj02-plantilla.css",
+        "assets/css/calendario/base.css",
+        "assets/css/tramites/catalogo.css",
+        "assets/css/interfaz/fondo.css",
+        "assets/css/interfaz/tema.css",
+        "assets/css/interfaz/mnc.css",
+        "assets/css/interfaz/validacion-guiada.css",
+        "assets/css/perfil/revision.css",
+        "assets/css/perfil/nombres.css",
+        "assets/css/tramites/dj02-formulario.css",
+        "assets/css/calendario/meses.css",
+        "assets/css/calendario/solicitudes.css",
+        "assets/css/tramites/buscador.css",
+        "assets/css/calendario/navegacion.css",
+        "assets/css/interfaz/dialogos.css",
+        "assets/css/documentos/panel.css",
+        "assets/css/tramites/ol01.css",
+        "assets/css/interfaz/espacio-trabajo.css",
+        "assets/css/editor/base.css",
+        "assets/css/editor/editor.css",
+        "assets/css/editor/acceso-ajustes.css",
+        "assets/css/tramites/dj02-registro.css",
+        "assets/css/interfaz/responsive.css",
+        "assets/css/tramites/sc01.css",
+        "assets/css/tramites/formularios-oficiales.css",
+        "assets/css/tramites/bd02.css",
+        "assets/css/tramites/dl01.css"
+      ]
+    }
+  ],
+  "modules": [
+    {
+      "file": ".github/workflows/pages.yml",
+      "bytes": 1734,
+      "lines": 60,
+      "generated": false,
+      "functions": [],
+      "globals": [],
+      "storageKeys": []
+    },
+    {
+      "file": "ADC_Ingreso_Editable.html",
+      "bytes": 10496,
+      "lines": 84,
+      "generated": false,
+      "functions": [],
+      "globals": [],
+      "storageKeys": []
+    },
+    {
+      "file": "AGENTS.md",
+      "bytes": 3420,
+      "lines": 29,
+      "generated": false,
+      "functions": [],
+      "globals": [],
+      "storageKeys": []
+    },
+    {
+      "file": "assets/css/acceso/autenticacion.css",
+      "bytes": 1743,
+      "lines": 18,
+      "generated": false,
+      "functions": [],
+      "globals": [],
+      "storageKeys": []
+    },
+    {
+      "file": "assets/css/acceso/editor.css",
+      "bytes": 1885,
+      "lines": 23,
+      "generated": false,
+      "functions": [],
+      "globals": [],
+      "storageKeys": []
+    },
+    {
+      "file": "assets/css/acceso/ingreso.css",
+      "bytes": 8348,
+      "lines": 50,
+      "generated": false,
+      "functions": [],
+      "globals": [],
+      "storageKeys": []
+    },
+    {
+      "file": "assets/css/acceso/marca.css",
+      "bytes": 1903,
+      "lines": 24,
+      "generated": false,
+      "functions": [],
+      "globals": [],
+      "storageKeys": []
+    },
+    {
+      "file": "assets/css/base.css",
+      "bytes": 26102,
+      "lines": 224,
+      "generated": false,
+      "functions": [],
+      "globals": [],
+      "storageKeys": []
+    },
+    {
+      "file": "assets/css/calendario/base.css",
+      "bytes": 11767,
+      "lines": 133,
+      "generated": false,
+      "functions": [],
+      "globals": [],
+      "storageKeys": []
+    },
+    {
+      "file": "assets/css/calendario/meses.css",
+      "bytes": 688,
+      "lines": 9,
+      "generated": false,
+      "functions": [],
+      "globals": [],
+      "storageKeys": []
+    },
+    {
+      "file": "assets/css/calendario/navegacion.css",
+      "bytes": 297,
+      "lines": 6,
+      "generated": false,
+      "functions": [],
+      "globals": [],
+      "storageKeys": []
+    },
+    {
+      "file": "assets/css/calendario/solicitudes.css",
+      "bytes": 1903,
+      "lines": 22,
+      "generated": false,
+      "functions": [],
+      "globals": [],
+      "storageKeys": []
+    },
+    {
+      "file": "assets/css/documentos/panel.css",
+      "bytes": 2320,
+      "lines": 34,
+      "generated": false,
+      "functions": [],
+      "globals": [],
+      "storageKeys": []
+    },
+    {
+      "file": "assets/css/editor/acceso-ajustes.css",
+      "bytes": 571,
+      "lines": 7,
+      "generated": false,
+      "functions": [],
+      "globals": [],
+      "storageKeys": []
+    },
+    {
+      "file": "assets/css/editor/base.css",
+      "bytes": 4703,
+      "lines": 51,
+      "generated": false,
+      "functions": [],
+      "globals": [],
+      "storageKeys": []
+    },
+    {
+      "file": "assets/css/editor/editor.css",
+      "bytes": 1836,
+      "lines": 21,
+      "generated": false,
+      "functions": [],
+      "globals": [],
+      "storageKeys": []
+    },
+    {
+      "file": "assets/css/interfaz/dialogos.css",
+      "bytes": 282,
+      "lines": 5,
+      "generated": false,
+      "functions": [],
+      "globals": [],
+      "storageKeys": []
+    },
+    {
+      "file": "assets/css/interfaz/espacio-trabajo.css",
+      "bytes": 2427,
+      "lines": 39,
+      "generated": false,
+      "functions": [],
+      "globals": [],
+      "storageKeys": []
+    },
+    {
+      "file": "assets/css/interfaz/fondo.css",
+      "bytes": 104346,
+      "lines": 1,
+      "generated": false,
+      "functions": [],
+      "globals": [],
+      "storageKeys": []
+    },
+    {
+      "file": "assets/css/interfaz/mnc.css",
+      "bytes": 976,
+      "lines": 8,
+      "generated": false,
+      "functions": [],
+      "globals": [],
+      "storageKeys": []
+    },
+    {
+      "file": "assets/css/interfaz/navegacion.css",
+      "bytes": 548,
+      "lines": 7,
+      "generated": false,
+      "functions": [],
+      "globals": [],
+      "storageKeys": []
+    },
+    {
+      "file": "assets/css/interfaz/responsive.css",
+      "bytes": 1462,
+      "lines": 82,
+      "generated": false,
+      "functions": [],
+      "globals": [],
+      "storageKeys": []
+    },
+    {
+      "file": "assets/css/interfaz/tema.css",
+      "bytes": 106156,
+      "lines": 27,
+      "generated": false,
+      "functions": [],
+      "globals": [],
+      "storageKeys": []
+    },
+    {
+      "file": "assets/css/interfaz/validacion-guiada.css",
+      "bytes": 1049,
+      "lines": 10,
+      "generated": false,
+      "functions": [],
+      "globals": [],
+      "storageKeys": []
+    },
+    {
+      "file": "assets/css/perfil/nombres.css",
+      "bytes": 948,
+      "lines": 11,
+      "generated": false,
+      "functions": [],
+      "globals": [],
+      "storageKeys": []
+    },
+    {
+      "file": "assets/css/perfil/revision.css",
+      "bytes": 966,
+      "lines": 10,
+      "generated": false,
+      "functions": [],
+      "globals": [],
+      "storageKeys": []
+    },
+    {
+      "file": "assets/css/tramites/bd02.css",
+      "bytes": 4262,
+      "lines": 42,
+      "generated": false,
+      "functions": [],
+      "globals": [],
+      "storageKeys": []
+    },
+    {
+      "file": "assets/css/tramites/buscador.css",
+      "bytes": 3111,
+      "lines": 26,
+      "generated": false,
+      "functions": [],
+      "globals": [],
+      "storageKeys": []
+    },
+    {
+      "file": "assets/css/tramites/catalogo.css",
+      "bytes": 555,
+      "lines": 10,
+      "generated": false,
+      "functions": [],
+      "globals": [],
+      "storageKeys": []
+    },
+    {
+      "file": "assets/css/tramites/dj01-advertencias.css",
+      "bytes": 1442,
+      "lines": 15,
+      "generated": false,
+      "functions": [],
+      "globals": [],
+      "storageKeys": []
+    },
+    {
+      "file": "assets/css/tramites/dj01-distribucion.css",
+      "bytes": 4705,
+      "lines": 80,
+      "generated": false,
+      "functions": [],
+      "globals": [],
+      "storageKeys": []
+    },
+    {
+      "file": "assets/css/tramites/dj02-base.css",
+      "bytes": 1329,
+      "lines": 8,
+      "generated": false,
+      "functions": [],
+      "globals": [],
+      "storageKeys": []
+    },
+    {
+      "file": "assets/css/tramites/dj02-formulario.css",
+      "bytes": 4062,
+      "lines": 39,
+      "generated": false,
+      "functions": [],
+      "globals": [],
+      "storageKeys": []
+    },
+    {
+      "file": "assets/css/tramites/dj02-plantilla.css",
+      "bytes": 2767,
+      "lines": 32,
+      "generated": false,
+      "functions": [],
+      "globals": [],
+      "storageKeys": []
+    },
+    {
+      "file": "assets/css/tramites/dj02-registro.css",
+      "bytes": 2456,
+      "lines": 27,
+      "generated": false,
+      "functions": [],
+      "globals": [],
+      "storageKeys": []
+    },
+    {
+      "file": "assets/css/tramites/dl01.css",
+      "bytes": 2727,
+      "lines": 46,
+      "generated": false,
+      "functions": [],
+      "globals": [],
+      "storageKeys": []
+    },
+    {
+      "file": "assets/css/tramites/formularios-oficiales.css",
+      "bytes": 13723,
+      "lines": 115,
+      "generated": false,
+      "functions": [],
+      "globals": [],
+      "storageKeys": []
+    },
+    {
+      "file": "assets/css/tramites/ol01.css",
+      "bytes": 924624,
+      "lines": 44,
+      "generated": false,
+      "functions": [],
+      "globals": [],
+      "storageKeys": []
+    },
+    {
+      "file": "assets/css/tramites/sc01.css",
+      "bytes": 5512,
+      "lines": 299,
+      "generated": false,
+      "functions": [],
+      "globals": [],
+      "storageKeys": []
+    },
+    {
+      "file": "assets/datos/ajustes-pagina.json",
+      "bytes": 22937,
+      "lines": 837,
+      "generated": false,
+      "functions": [],
+      "globals": [],
+      "storageKeys": []
+    },
+    {
+      "file": "assets/datos/config-publica.js",
+      "bytes": 356,
+      "lines": 3,
+      "generated": false,
+      "functions": [],
+      "globals": [
+        "adcConfig"
+      ],
+      "storageKeys": []
+    },
+    {
+      "file": "assets/datos/escuelas-chaco.js",
+      "bytes": 822068,
+      "lines": 2,
+      "generated": false,
+      "functions": [],
+      "globals": [
+        "adcEscuelasChaco"
+      ],
+      "storageKeys": []
+    },
+    {
+      "file": "assets/datos/formularios-pdf.js",
+      "bytes": 4035,
+      "lines": 58,
+      "generated": false,
+      "functions": [],
+      "globals": [
+        "adcPreparedPdfForms"
+      ],
+      "storageKeys": []
+    },
+    {
+      "file": "assets/js/acceso/autenticacion.js",
+      "bytes": 5204,
+      "lines": 56,
+      "generated": false,
+      "functions": [
+        "friendly",
+        "action",
+        "resume"
+      ],
+      "globals": [],
+      "storageKeys": []
+    },
+    {
+      "file": "assets/js/acceso/editor.js",
+      "bytes": 56877,
+      "lines": 953,
+      "generated": false,
+      "functions": [
+        "showNotes",
+        "apply",
+        "commit",
+        "select",
+        "toggle",
+        "positionSettings",
+        "finishSettingsDrag",
+        "format",
+        "load",
+        "mark",
+        "ghost",
+        "siblings",
+        "validMove",
+        "centerRect",
+        "showCenter",
+        "drawGuide",
+        "align",
+        "alignedGesture",
+        "placement",
+        "setTool",
+        "paintRulers",
+        "rule",
+        "scheduleMarks",
+        "start",
+        "geometry",
+        "gap",
+        "directions",
+        "placePanel",
+        "clearErase",
+        "previewErase",
+        "eraseCandidate",
+        "eraseSelected",
+        "toolClick",
+        "closeContextMenu"
+      ],
+      "globals": [],
+      "storageKeys": [
+        "adc-login-keep-notes",
+        "adc-login-design-draft"
+      ]
+    },
+    {
+      "file": "assets/js/acceso/ingreso.js",
+      "bytes": 2833,
+      "lines": 59,
+      "generated": false,
+      "functions": [
+        "setTheme",
+        "showSignup"
+      ],
+      "globals": [],
+      "storageKeys": [
+        "adc-login-theme"
+      ]
+    },
+    {
+      "file": "assets/js/acceso/marca.js",
+      "bytes": 668,
+      "lines": 12,
+      "generated": false,
+      "functions": [],
+      "globals": [],
+      "storageKeys": []
+    },
+    {
+      "file": "assets/js/acceso/visibilidad-clave.js",
+      "bytes": 1406,
+      "lines": 25,
+      "generated": false,
+      "functions": [
+        "show"
+      ],
+      "globals": [],
+      "storageKeys": []
+    },
+    {
+      "file": "assets/js/calendario/calendario.js",
+      "bytes": 28346,
+      "lines": 988,
+      "generated": false,
+      "functions": [
+        "adcCalISO",
+        "adcCalFor",
+        "adcCalendarSelect",
+        "adcCalendarMove",
+        "adcOpenSchoolMonth",
+        "adcCalendarOpen",
+        "adcCalSavePersonal",
+        "adcCalPaintPersonal",
+        "adcCalLabelKey",
+        "adcCalPersonal",
+        "paint",
+        "apply",
+        "filter",
+        "adcCalLabelDates",
+        "adcCalPaintLabelIndex",
+        "adcCalToggleIndex",
+        "adcCalShowLabelDates",
+        "adcCalShowMonth",
+        "dismiss",
+        "select",
+        "adcCalInitDivider",
+        "resize"
+      ],
+      "globals": [],
+      "storageKeys": []
+    },
+    {
+      "file": "assets/js/calendario/solicitudes.js",
+      "bytes": 22217,
+      "lines": 360,
+      "generated": false,
+      "functions": [
+        "plus",
+        "matches",
+        "events",
+        "closed",
+        "count",
+        "nextDuty",
+        "rule",
+        "recalc",
+        "monthButton",
+        "moveMonth",
+        "render",
+        "showDay",
+        "syncRange",
+        "pickHint",
+        "markAdjustedUntil",
+        "clearRequestMarks",
+        "verify"
+      ],
+      "globals": [
+        "adcOLCalendarClosed",
+        "adcRequestDaySummary",
+        "adcDateSnapshot",
+        "adcStoreIssuedDates"
+      ],
+      "storageKeys": []
+    },
+    {
+      "file": "assets/js/core/cursos.js",
+      "bytes": 2532,
+      "lines": 45,
+      "generated": false,
+      "functions": [
+        "ordinalNumber",
+        "part",
+        "parts",
+        "course"
+      ],
+      "globals": [
+        "adcAcademic"
+      ],
+      "storageKeys": []
+    },
+    {
+      "file": "assets/js/core/estado.js",
+      "bytes": 559,
+      "lines": 4,
+      "generated": false,
+      "functions": [],
+      "globals": [],
+      "storageKeys": [
+        "adc_v07_usage"
+      ]
+    },
+    {
+      "file": "assets/js/core/inicializacion.js",
+      "bytes": 823,
+      "lines": 18,
+      "generated": false,
+      "functions": [],
+      "globals": [],
+      "storageKeys": [
+        "adc_dj_institution_order",
+        "adc_dj_presented_at",
+        "adc_v08"
+      ]
+    },
+    {
+      "file": "assets/js/core/mnc.js",
+      "bytes": 4097,
+      "lines": 72,
+      "generated": false,
+      "functions": [
+        "eligible",
+        "help",
+        "apply",
+        "drawPdf",
+        "bind",
+        "refresh",
+        "set"
+      ],
+      "globals": [
+        "adcMnc"
+      ],
+      "storageKeys": []
+    },
+    {
+      "file": "assets/js/core/validacion-guiada.js",
+      "bytes": 7964,
+      "lines": 139,
+      "generated": false,
+      "functions": [
+        "create",
+        "clearHighlight",
+        "finish",
+        "element",
+        "button",
+        "position",
+        "reset",
+        "completed",
+        "showNext",
+        "summary",
+        "controls"
+      ],
+      "globals": [
+        "adcGuidedValidation"
+      ],
+      "storageKeys": []
+    },
+    {
+      "file": "assets/js/documentos/acciones.js",
+      "bytes": 1342,
+      "lines": 16,
+      "generated": false,
+      "functions": [
+        "adcClaveAvisoFecha",
+        "adcOcultarAvisoFecha",
+        "adcActualizarAvisoFecha"
+      ],
+      "globals": [],
+      "storageKeys": []
+    },
+    {
+      "file": "assets/js/documentos/pdf-campos.js",
+      "bytes": 4498,
+      "lines": 65,
+      "generated": false,
+      "functions": [
+        "layout",
+        "draw"
+      ],
+      "globals": [
+        "adcPdfOverlay"
+      ],
+      "storageKeys": []
+    },
+    {
+      "file": "assets/js/documentos/pdf-utilidades.js",
+      "bytes": 1847,
+      "lines": 28,
+      "generated": false,
+      "functions": [
+        "bytes",
+        "pdfText",
+        "adcPdfDrawBlankLine",
+        "splitName",
+        "splitCourse",
+        "ordinalDL01"
+      ],
+      "globals": [],
+      "storageKeys": []
+    },
+    {
+      "file": "assets/js/documentos/plantillas-dl01.js",
+      "bytes": 470132,
+      "lines": 3,
+      "generated": false,
+      "functions": [],
+      "globals": [],
+      "storageKeys": []
+    },
+    {
+      "file": "assets/js/editor/acceso-ajustes.js",
+      "bytes": 2287,
+      "lines": 42,
+      "generated": false,
+      "functions": [
+        "lock",
+        "reveal",
+        "identify"
+      ],
+      "globals": [],
+      "storageKeys": []
+    },
+    {
+      "file": "assets/js/editor/ajustes-proyecto-datos.js",
+      "bytes": 4827,
+      "lines": 52,
+      "generated": false,
+      "functions": [
+        "empty",
+        "reference",
+        "validate"
+      ],
+      "globals": [],
+      "storageKeys": []
+    },
+    {
+      "file": "assets/js/editor/ajustes-proyecto.js",
+      "bytes": 7944,
+      "lines": 128,
+      "generated": false,
+      "functions": [
+        "describe",
+        "resolve",
+        "attach",
+        "collect"
+      ],
+      "globals": [
+        "adcProjectLayout"
+      ],
+      "storageKeys": [
+        "adc-project-backup-"
+      ]
+    },
+    {
+      "file": "assets/js/editor/comun.js",
+      "bytes": 4952,
+      "lines": 91,
+      "generated": false,
+      "functions": [
+        "createRegistry",
+        "register",
+        "keyFor",
+        "resolve",
+        "createHelpers",
+        "cleanHtml",
+        "copy",
+        "makeSection"
+      ],
+      "globals": [
+        "adcEditorCommon"
+      ],
+      "storageKeys": []
+    },
+    {
+      "file": "assets/js/editor/documentos.js",
+      "bytes": 8937,
+      "lines": 95,
+      "generated": false,
+      "functions": [
+        "apply",
+        "attach",
+        "paint",
+        "begin"
+      ],
+      "globals": [
+        "adcDocumentEditor"
+      ],
+      "storageKeys": []
+    },
+    {
+      "file": "assets/js/editor/editor.js",
+      "bytes": 66385,
+      "lines": 1044,
+      "generated": false,
+      "functions": [
+        "linePointValues",
+        "renderLinePoints",
+        "apply",
+        "commit",
+        "select",
+        "toggle",
+        "positionSettings",
+        "finishSettingsDrag",
+        "format",
+        "load",
+        "mark",
+        "ghost",
+        "ghostLine",
+        "siblings",
+        "validMove",
+        "centerRect",
+        "showCenter",
+        "drawGuide",
+        "align",
+        "alignedGesture",
+        "placement",
+        "setTool",
+        "paintRulers",
+        "rule",
+        "scheduleMarks",
+        "start",
+        "updateLineEndpointDrag",
+        "geometry",
+        "gap",
+        "directions",
+        "placePanel",
+        "clearErase",
+        "previewErase",
+        "eraseCandidate",
+        "eraseSelected",
+        "toolClick",
+        "closeContextMenu",
+        "restoreLayout"
+      ],
+      "globals": [],
+      "storageKeys": [
+        "adc-design-draft-v60",
+        "adc-design-draft-v59",
+        "adc-design-draft-v58"
+      ]
+    },
+    {
+      "file": "assets/js/editor/elementos.js",
+      "bytes": 16473,
+      "lines": 197,
+      "generated": false,
+      "functions": [
+        "openPdf",
+        "apply",
+        "attach",
+        "button",
+        "normalize",
+        "defer"
+      ],
+      "globals": [
+        "adcVisualElements"
+      ],
+      "storageKeys": []
+    },
+    {
+      "file": "assets/js/editor/modo-local.js",
+      "bytes": 227,
+      "lines": 3,
+      "generated": false,
+      "functions": [],
+      "globals": [],
+      "storageKeys": []
+    },
+    {
+      "file": "assets/js/editor/puente-local.js",
+      "bytes": 1969,
+      "lines": 28,
+      "generated": false,
+      "functions": [
+        "request"
+      ],
+      "globals": [
+        "adcLocalEditorBridge"
+      ],
+      "storageKeys": []
+    },
+    {
+      "file": "assets/js/interfaz/espacio-trabajo.js",
+      "bytes": 4794,
+      "lines": 91,
+      "generated": false,
+      "functions": [
+        "adc43Fit",
+        "align",
+        "zoom"
+      ],
+      "globals": [],
+      "storageKeys": []
+    },
+    {
+      "file": "assets/js/interfaz/inicio-local.js",
+      "bytes": 463,
+      "lines": 10,
+      "generated": false,
+      "functions": [],
+      "globals": [],
+      "storageKeys": []
+    },
+    {
+      "file": "assets/js/interfaz/navegacion.js",
+      "bytes": 2044,
+      "lines": 13,
+      "generated": false,
+      "functions": [
+        "adcTramiteLabel",
+        "adcOpenLastTramite",
+        "adcBackToTramites",
+        "adcToggleTramites",
+        "tab"
+      ],
+      "globals": [],
+      "storageKeys": []
+    },
+    {
+      "file": "assets/js/interfaz/sesion.js",
+      "bytes": 3227,
+      "lines": 32,
+      "generated": false,
+      "functions": [
+        "screen",
+        "unlock"
+      ],
+      "globals": [],
+      "storageKeys": [
+        "adc-auth-local-owner"
+      ]
+    },
+    {
+      "file": "assets/js/perfil/contactos-instituciones.js",
+      "bytes": 5454,
+      "lines": 100,
+      "generated": false,
+      "functions": [
+        "candidates",
+        "apply",
+        "showSource",
+        "choose",
+        "lookup"
+      ],
+      "globals": [
+        "adcSchoolContacts",
+        "adcSchoolContactsRender"
+      ],
+      "storageKeys": []
+    },
+    {
+      "file": "assets/js/perfil/datos-personales.js",
+      "bytes": 7452,
+      "lines": 96,
+      "generated": false,
+      "functions": [
+        "adcAntiguedadManual",
+        "adcActualizarAntiguedad",
+        "adcSetAntiguedadAuto",
+        "adcRefreshPending",
+        "adcMissingFields",
+        "adcPersonalDigits",
+        "adcPersonalFormat",
+        "adcPersonalValid",
+        "adcSetSharedField",
+        "adcSharedEditorHTML",
+        "adcDeclarationState",
+        "adcDeclarationBannerHTML"
+      ],
+      "globals": [
+        "adcAplicarGeografiaPerfil"
+      ],
+      "storageKeys": [
+        "adc_v08"
+      ]
+    },
+    {
+      "file": "assets/js/perfil/geografia.js",
+      "bytes": 7149,
+      "lines": 152,
+      "generated": false,
+      "functions": [
+        "applyDefault",
+        "syncFields",
+        "bind",
+        "update"
+      ],
+      "globals": [
+        "adcAplicarGeografiaPerfil",
+        "adcVincularGeografiaChaco",
+        "adcBuscarGeografiaChaco"
+      ],
+      "storageKeys": []
+    },
+    {
+      "file": "assets/js/perfil/instituciones.js",
+      "bytes": 15349,
+      "lines": 155,
+      "generated": false,
+      "functions": [
+        "turnoNormalizado",
+        "adcSchoolDefaults",
+        "addInst",
+        "delInst",
+        "addEntry",
+        "delEntry",
+        "updI",
+        "updE",
+        "adcCourseSuffix",
+        "adcCourseInput",
+        "updCoursePart",
+        "adcCourseInputChanged",
+        "updD",
+        "codigoHorasNivel",
+        "perfilToggleInstitucion",
+        "perfilToggleCargo",
+        "perfilActualizarResumenes",
+        "perfilToggleHorarios",
+        "perfilPrepararAcordeones",
+        "render",
+        "updateSelect"
+      ],
+      "globals": [],
+      "storageKeys": []
+    },
+    {
+      "file": "assets/js/perfil/nombres.js",
+      "bytes": 1103,
+      "lines": 6,
+      "generated": false,
+      "functions": [
+        "adcUpdateFullName",
+        "adcSplitSavedName"
+      ],
+      "globals": [],
+      "storageKeys": [
+        "adc_v08"
+      ]
+    },
+    {
+      "file": "assets/js/perfil/respaldos.js",
+      "bytes": 5652,
+      "lines": 36,
+      "generated": false,
+      "functions": [
+        "data",
+        "save",
+        "load",
+        "applyData",
+        "restoreTestProfile",
+        "exportJSON",
+        "validateProfileBackup",
+        "importJSONFile"
+      ],
+      "globals": [
+        "adcAplicarGeografiaPerfil"
+      ],
+      "storageKeys": [
+        "adc_v08"
+      ]
+    },
+    {
+      "file": "assets/js/servicios/supabase-runtime.js",
+      "bytes": 227272,
+      "lines": 30,
+      "generated": true,
+      "functions": [],
+      "globals": [],
+      "storageKeys": []
+    },
+    {
+      "file": "assets/js/servicios/supabaseClient.js",
+      "bytes": 4150,
+      "lines": 69,
+      "generated": false,
+      "functions": [
+        "user",
+        "ensureTesterProfile",
+        "profile"
+      ],
+      "globals": [
+        "adcAuth"
+      ],
+      "storageKeys": []
+    },
+    {
+      "file": "assets/js/tema/controles.js",
+      "bytes": 426,
+      "lines": 15,
+      "generated": false,
+      "functions": [
+        "apply"
+      ],
+      "globals": [],
+      "storageKeys": [
+        "adc_theme"
+      ]
+    },
+    {
+      "file": "assets/js/tema/inicial.js",
+      "bytes": 108,
+      "lines": 1,
+      "generated": false,
+      "functions": [],
+      "globals": [],
+      "storageKeys": [
+        "adc_theme"
+      ]
+    },
+    {
+      "file": "assets/js/tramites/ayuda.js",
+      "bytes": 1408,
+      "lines": 33,
+      "generated": false,
+      "functions": [],
+      "globals": [],
+      "storageKeys": []
+    },
+    {
+      "file": "assets/js/tramites/bd02.js",
+      "bytes": 49798,
+      "lines": 1139,
+      "generated": false,
+      "functions": [
+        "text",
+        "date",
+        "position",
+        "unusedBox",
+        "institutions",
+        "institution",
+        "entryId",
+        "selectedEntry",
+        "stashEntries",
+        "restoreEntries",
+        "renderEntries",
+        "profileValue",
+        "readControls",
+        "save",
+        "invalidate",
+        "rowUsed",
+        "onlyTitulares",
+        "required",
+        "fieldTypeface",
+        "displayed",
+        "textLayout",
+        "textWidth",
+        "dateValue",
+        "issues",
+        "refresh",
+        "conflicts",
+        "write",
+        "syncProfile",
+        "changed",
+        "migrate",
+        "load",
+        "updateSchoolOptions",
+        "updateZoom",
+        "font",
+        "validate",
+        "completedPdf",
+        "action"
+      ],
+      "globals": [
+        "adcBD02Open"
+      ],
+      "storageKeys": []
+    },
+    {
+      "file": "assets/js/tramites/buscador.js",
+      "bytes": 8485,
+      "lines": 110,
+      "generated": false,
+      "functions": [
+        "openDL01",
+        "decorate",
+        "records",
+        "addCategories",
+        "replaceStable",
+        "render",
+        "register"
+      ],
+      "globals": [
+        "adcMBIT"
+      ],
+      "storageKeys": []
+    },
+    {
+      "file": "assets/js/tramites/busqueda-inteligente.js",
+      "bytes": 3138,
+      "lines": 56,
+      "generated": false,
+      "functions": [
+        "near",
+        "rank",
+        "search"
+      ],
+      "globals": [
+        "adcMBITSearch"
+      ],
+      "storageKeys": []
+    },
+    {
+      "file": "assets/js/tramites/catalogo-datos.js",
+      "bytes": 11177,
+      "lines": 14,
+      "generated": false,
+      "functions": [],
+      "globals": [
+        "adcFormSearchMetadata"
+      ],
+      "storageKeys": []
+    },
+    {
+      "file": "assets/js/tramites/dj01-conflictos.js",
+      "bytes": 13964,
+      "lines": 146,
+      "generated": false,
+      "functions": [
+        "conflicts",
+        "active",
+        "saveAcknowledgement",
+        "mark",
+        "clear",
+        "paint",
+        "isSubstitute",
+        "notice",
+        "profileAccess"
+      ],
+      "globals": [],
+      "storageKeys": []
+    },
+    {
+      "file": "assets/js/tramites/dj01-distribucion.js",
+      "bytes": 3869,
+      "lines": 64,
+      "generated": false,
+      "functions": [
+        "setWidth",
+        "applyZoom",
+        "stop"
+      ],
+      "globals": [],
+      "storageKeys": []
+    },
+    {
+      "file": "assets/js/tramites/dj01-guia.js",
+      "bytes": 12119,
+      "lines": 122,
+      "generated": false,
+      "functions": [
+        "issues",
+        "card",
+        "profilePaint",
+        "jumpHours",
+        "djHoursPaint",
+        "checkAdd"
+      ],
+      "globals": [],
+      "storageKeys": []
+    },
+    {
+      "file": "assets/js/tramites/dj01-traslados.js",
+      "bytes": 3645,
+      "lines": 71,
+      "generated": false,
+      "functions": [
+        "adcRevistaPick",
+        "adcDjTransferMode",
+        "adcDjSetMode",
+        "adcTransferOpen",
+        "adcTransferUpdate",
+        "adcTransferIssues"
+      ],
+      "globals": [],
+      "storageKeys": []
+    },
+    {
+      "file": "assets/js/tramites/dj01-zoom.js",
+      "bytes": 1522,
+      "lines": 31,
+      "generated": false,
+      "functions": [
+        "hide",
+        "schedule",
+        "reveal"
+      ],
+      "globals": [],
+      "storageKeys": []
+    },
+    {
+      "file": "assets/js/tramites/dj01.js",
+      "bytes": 448677,
+      "lines": 396,
+      "generated": false,
+      "functions": [
+        "djUid",
+        "djEntries",
+        "djToast",
+        "djPersist",
+        "djSubtab",
+        "djCourseKey",
+        "djSortedItems",
+        "djCourseDisplay",
+        "djToggleCourse",
+        "djToggleGroup",
+        "djToggleAllGroups",
+        "djReorderGroup",
+        "djInstitutionGroups",
+        "djMoveInstitution",
+        "djSetPresentedAt",
+        "djOrderedEntries",
+        "djSnapshotRows",
+        "djSelected",
+        "djSelect",
+        "djSetPeriod",
+        "djNewPeriod",
+        "djSetInterval",
+        "djAddInterval",
+        "djRemoveInterval",
+        "djCopyIntervals",
+        "djPasteIntervals",
+        "djCopyKeyboard",
+        "djColumnWidths",
+        "adcIntervalIssue",
+        "adcPaintIntervalIssues",
+        "adcBind24Clocks",
+        "perfilIntervalosHTML",
+        "profileRefreshWarnings",
+        "profileIntervalChange",
+        "adcNext40Interval",
+        "adcNextInterval",
+        "profileIntervalAdd",
+        "profileIntervalRemove",
+        "djProfileExtras",
+        "djRender",
+        "djCourseOrdinal",
+        "djP2Change",
+        "djP2Date",
+        "djPerfilPage2",
+        "djPage2Current",
+        "adcRenderSharedEditor",
+        "djRenderP2Editor",
+        "djPage2",
+        "djPreviewHTML",
+        "djSaveDeclaration",
+        "djRenderHistory",
+        "djReviewPending",
+        "djPrint"
+      ],
+      "globals": [],
+      "storageKeys": [
+        "adc_v08",
+        "adc_dj_institution_order",
+        "adc_dj_presented_at"
+      ]
+    },
+    {
+      "file": "assets/js/tramites/dj02-base.js",
+      "bytes": 12244,
+      "lines": 188,
+      "generated": false,
+      "functions": [
+        "dj02Val",
+        "dj02Set",
+        "dj02FromProfile",
+        "dj02Open",
+        "dj02Add",
+        "dj02Change",
+        "dj02Remove",
+        "dj02Institutions",
+        "dj02Options",
+        "dj02Motivo",
+        "dj02Distance",
+        "dj02Suggestions",
+        "dj02ExamCargos",
+        "dj02ExamNotice",
+        "dj02SelectMotivo",
+        "dj02Render",
+        "dj02Stored",
+        "dj02SameRecord",
+        "dj02ExcludedPending",
+        "dj02RenderPending",
+        "dj02ConfirmDL01",
+        "dj02Preview",
+        "dj02Save",
+        "dj02Print"
+      ],
+      "globals": [],
+      "storageKeys": [
+        "adc_dj02_v1"
+      ]
+    },
+    {
+      "file": "assets/js/tramites/dj02-formulario.js",
+      "bytes": 4787,
+      "lines": 52,
+      "generated": false,
+      "functions": [
+        "makeCell",
+        "render",
+        "fitAll"
+      ],
+      "globals": [
+        "dj02Preview"
+      ],
+      "storageKeys": []
+    },
+    {
+      "file": "assets/js/tramites/dj02-plantilla.js",
+      "bytes": 110411,
+      "lines": 48,
+      "generated": false,
+      "functions": [
+        "dj02ProfileValues",
+        "dj02SyncProfile",
+        "dj02MissingNotice",
+        "dj02Open",
+        "dj02Date",
+        "dj02Rect",
+        "dj02Preview"
+      ],
+      "globals": [],
+      "storageKeys": [
+        "adc_dj02_v1"
+      ]
+    },
+    {
+      "file": "assets/js/tramites/dj02-registro.js",
+      "bytes": 22739,
+      "lines": 386,
+      "generated": false,
+      "functions": [
+        "adc58Dni",
+        "adc58Id",
+        "adc58Normalize",
+        "adc58Excluded",
+        "adc58Signature",
+        "adc58RowKey",
+        "adc58Read",
+        "adc58Project",
+        "adc58Transition",
+        "say",
+        "read",
+        "write",
+        "safeWrite",
+        "activeLicenses",
+        "refreshOptions",
+        "summarize",
+        "stateAction",
+        "newLicense",
+        "updateField",
+        "pageSkeleton",
+        "rowHeight",
+        "paginate",
+        "addCell",
+        "suggest",
+        "showExam",
+        "render",
+        "validatePrint"
+      ],
+      "globals": [],
+      "storageKeys": []
+    },
+    {
+      "file": "assets/js/tramites/dl01-interfaz.js",
+      "bytes": 5794,
+      "lines": 115,
+      "generated": false,
+      "functions": [
+        "selectOnlySchool",
+        "showProfile"
+      ],
+      "globals": [
+        "adcDL01Open"
+      ],
+      "storageKeys": []
+    },
+    {
+      "file": "assets/js/tramites/dl01-pdf.js",
+      "bytes": 16307,
+      "lines": 211,
+      "generated": false,
+      "functions": [
+        "adcPDFRequestKey",
+        "adcInvalidatePDF",
+        "generatePDF",
+        "text",
+        "crossBox",
+        "dash",
+        "unused",
+        "rect",
+        "dateCells",
+        "fillSlot",
+        "courseField"
+      ],
+      "globals": [],
+      "storageKeys": [
+        "adc_dj02_v1"
+      ]
+    },
+    {
+      "file": "assets/js/tramites/dl01-reglas.js",
+      "bytes": 9377,
+      "lines": 108,
+      "generated": false,
+      "functions": [
+        "date",
+        "fmt",
+        "affected",
+        "classify",
+        "mapping",
+        "adcDueloRelation",
+        "adcDueloCode",
+        "adcDueloEnd",
+        "adcDueloSuggest",
+        "adcDurationLegend",
+        "cargoProfileNotice",
+        "dl01Cargo166",
+        "dl01CodigoCargo",
+        "review"
+      ],
+      "globals": [],
+      "storageKeys": []
+    },
+    {
+      "file": "assets/js/tramites/formularios-oficiales-datos.js",
+      "bytes": 86372,
+      "lines": 1273,
+      "generated": false,
+      "functions": [],
+      "globals": [
+        "adcOfficialFormsData"
+      ],
+      "storageKeys": []
+    },
+    {
+      "file": "assets/js/tramites/formularios-oficiales.js",
+      "bytes": 65266,
+      "lines": 1230,
+      "generated": false,
+      "functions": [
+        "matches",
+        "available",
+        "invalidatePreview",
+        "normalized",
+        "profileValue",
+        "presented",
+        "storageKey",
+        "save",
+        "baseFieldPath",
+        "rowCount",
+        "fieldsFor",
+        "allControls",
+        "fieldControl",
+        "updateMnc",
+        "renderSimpleField",
+        "swapRows",
+        "renderRepeat",
+        "renderFields",
+        "formFields",
+        "requestLayout",
+        "updateZoom",
+        "place",
+        "updatePending",
+        "layoutDocument",
+        "renderProfileConflicts",
+        "readFieldValue",
+        "persistCurrentValues",
+        "syncPreparedInstitution",
+        "updateProfileFields",
+        "loadDraft",
+        "markNotApplicable",
+        "onFieldChange",
+        "isEmptyValue",
+        "validationMessage",
+        "missingField",
+        "validate",
+        "pdfString",
+        "wrap",
+        "loadLayoutFonts",
+        "createLayout",
+        "font",
+        "newPage",
+        "ensureSpace",
+        "drawTextLines",
+        "drawField",
+        "createPdf",
+        "runAction",
+        "loadForm",
+        "replaceCatalogCards"
+      ],
+      "globals": [],
+      "storageKeys": []
+    },
+    {
+      "file": "assets/js/tramites/mnc-adaptadores.js",
+      "bytes": 2323,
+      "lines": 49,
+      "generated": false,
+      "functions": [
+        "persist"
+      ],
+      "globals": [],
+      "storageKeys": [
+        "adc-ol01-mnc-"
+      ]
+    },
+    {
+      "file": "assets/js/tramites/ol01.js",
+      "bytes": 2051870,
+      "lines": 441,
+      "generated": false,
+      "functions": [
+        "adcDocsData",
+        "adcDocsItems",
+        "adcDocsURL",
+        "adcDocsResetEditor",
+        "adcDocsRender",
+        "adcDocsSave",
+        "adcDocsFocusRequest",
+        "adcDocsNavigate",
+        "adcDocsOnTab",
+        "adcDocsStart",
+        "adcOLInvalidate",
+        "adcOLPosts",
+        "adcOLCargo",
+        "adcOLResolve",
+        "adcOLSelection",
+        "adcOLFind",
+        "adcOLSuggest",
+        "adcOLPick",
+        "adcOLRelation",
+        "adcOLBereavementEnd",
+        "adcOLBereavement",
+        "adcOLSyncRule",
+        "adcOLMode",
+        "adcOLPaperVariant",
+        "adcOLSyncTeacherProfile",
+        "adcOLStart",
+        "adcOLDraw",
+        "put",
+        "markSex",
+        "cell",
+        "missing"
+      ],
+      "globals": [],
+      "storageKeys": []
+    },
+    {
+      "file": "assets/js/tramites/sc01.js",
+      "bytes": 39274,
+      "lines": 744,
+      "generated": false,
+      "functions": [
+        "position",
+        "closeVerificationBubble",
+        "matchesNormalizedInstitution",
+        "institutionSuggestions",
+        "closeSchoolSuggestions",
+        "selectSchoolSuggestion",
+        "renderSchoolSuggestions",
+        "updateInstitutions",
+        "updateSurnameNote",
+        "showContactOrigin",
+        "loadInstitution",
+        "setNotApplicable",
+        "updateNotApplicableControl",
+        "read",
+        "write",
+        "save",
+        "splitAddress",
+        "fromProfile",
+        "syncFromProfileEvent",
+        "scPending",
+        "validateForm",
+        "createCompletedPdf",
+        "showPreview",
+        "downloadPdf",
+        "printPdf",
+        "runPdfAction"
+      ],
+      "globals": [
+        "adcSC01Open"
+      ],
+      "storageKeys": [
+        "adc_v08"
+      ]
+    },
+    {
+      "file": "assets/js/tramites/solicitudes.js",
+      "bytes": 136229,
+      "lines": 120,
+      "generated": false,
+      "functions": [
+        "choose",
+        "adcRequestFields",
+        "adcPendingFormMarkup",
+        "adcChoosePendingForm",
+        "adcCheckDJ02Print",
+        "renderFrecuentes",
+        "renderTramites"
+      ],
+      "globals": [],
+      "storageKeys": [
+        "adc_v07_usage"
+      ]
+    },
+    {
+      "file": "config/publicacion.json",
+      "bytes": 186,
+      "lines": 7,
+      "generated": false,
+      "functions": [],
+      "globals": [],
+      "storageKeys": []
+    },
+    {
+      "file": "docs/ajustes-visuales.md",
+      "bytes": 10731,
+      "lines": 92,
+      "generated": false,
+      "functions": [],
+      "globals": [],
+      "storageKeys": []
+    },
+    {
+      "file": "docs/arquitectura-auditoria.md",
+      "bytes": 12527,
+      "lines": 107,
+      "generated": false,
+      "functions": [],
+      "globals": [],
+      "storageKeys": []
+    },
+    {
+      "file": "docs/codigo-ajustes.md",
+      "bytes": 8135,
+      "lines": 141,
+      "generated": false,
+      "functions": [],
+      "globals": [],
+      "storageKeys": []
+    },
+    {
+      "file": "docs/editor-local.md",
+      "bytes": 4149,
+      "lines": 52,
+      "generated": false,
+      "functions": [],
+      "globals": [],
+      "storageKeys": []
+    },
+    {
+      "file": "docs/estructura.md",
+      "bytes": 34024,
+      "lines": 234,
+      "generated": false,
+      "functions": [],
+      "globals": [],
+      "storageKeys": []
+    },
+    {
+      "file": "docs/formularios-pdf-preparados.md",
+      "bytes": 4795,
+      "lines": 53,
+      "generated": false,
+      "functions": [],
+      "globals": [],
+      "storageKeys": []
+    },
+    {
+      "file": "docs/funciones-respaldo.md",
+      "bytes": 7633,
+      "lines": 451,
+      "generated": false,
+      "functions": [],
+      "globals": [],
+      "storageKeys": []
+    },
+    {
+      "file": "docs/publicacion-online.md",
+      "bytes": 5045,
+      "lines": 62,
+      "generated": false,
+      "functions": [],
+      "globals": [],
+      "storageKeys": []
+    },
+    {
+      "file": "docs/recuperacion-dl01.md",
+      "bytes": 5602,
+      "lines": 43,
+      "generated": false,
+      "functions": [],
+      "globals": [],
+      "storageKeys": []
+    },
+    {
+      "file": "docs/referencias/nomenclatura-licencias.json",
+      "bytes": 111875,
+      "lines": 3485,
+      "generated": false,
+      "functions": [],
+      "globals": [],
+      "storageKeys": []
+    },
+    {
+      "file": "docs/referencias/nomenclatura-licencias.md",
+      "bytes": 29024,
+      "lines": 215,
+      "generated": false,
+      "functions": [],
+      "globals": [],
+      "storageKeys": []
+    },
+    {
+      "file": "docs/structure-manifest.json",
+      "bytes": 14819,
+      "lines": 359,
+      "generated": false,
+      "functions": [],
+      "globals": [],
+      "storageKeys": []
+    },
+    {
+      "file": "docs/supabase-staging.md",
+      "bytes": 10360,
+      "lines": 112,
+      "generated": false,
+      "functions": [],
+      "globals": [],
+      "storageKeys": []
+    },
+    {
+      "file": "index.html",
+      "bytes": 44388,
+      "lines": 148,
+      "generated": false,
+      "functions": [],
+      "globals": [],
+      "storageKeys": []
+    },
+    {
+      "file": "package-lock.json",
+      "bytes": 18892,
+      "lines": 618,
+      "generated": false,
+      "functions": [],
+      "globals": [],
+      "storageKeys": []
+    },
+    {
+      "file": "package.json",
+      "bytes": 1377,
+      "lines": 30,
+      "generated": false,
+      "functions": [],
+      "globals": [],
+      "storageKeys": []
+    },
+    {
+      "file": "REVIEW_ADC_v60.md",
+      "bytes": 40351,
+      "lines": 370,
+      "generated": false,
+      "functions": [],
+      "globals": [],
+      "storageKeys": []
+    },
+    {
+      "file": "supabase/migrations/202611130001_adc_tester_profiles.sql",
+      "bytes": 2014,
+      "lines": 36,
+      "generated": false,
+      "functions": [],
+      "globals": [],
+      "storageKeys": []
+    },
+    {
+      "file": "tests/acceso-ajustes.test.cjs",
+      "bytes": 2790,
+      "lines": 33,
+      "generated": false,
+      "functions": [],
+      "globals": [],
+      "storageKeys": [
+        "adc-adjustments-tab-session"
+      ]
+    },
+    {
+      "file": "tests/ajustes-proyecto.test.cjs",
+      "bytes": 6184,
+      "lines": 71,
+      "generated": false,
+      "functions": [],
+      "globals": [],
+      "storageKeys": [
+        "adc-login-design-draft",
+        "adc-profile-test"
+      ]
+    },
+    {
+      "file": "tests/arquitectura.test.cjs",
+      "bytes": 1593,
+      "lines": 20,
+      "generated": false,
+      "functions": [],
+      "globals": [],
+      "storageKeys": []
+    },
+    {
+      "file": "tests/cursos.test.cjs",
+      "bytes": 1940,
+      "lines": 32,
+      "generated": false,
+      "functions": [],
+      "globals": [],
+      "storageKeys": []
+    },
+    {
+      "file": "tests/dl01-interfaz.test.cjs",
+      "bytes": 11518,
+      "lines": 161,
+      "generated": false,
+      "functions": [],
+      "globals": [
+        "testOriginalReview"
+      ],
+      "storageKeys": [
+        "adc_v08"
+      ]
+    },
+    {
+      "file": "tests/editor-botones.test.cjs",
+      "bytes": 4480,
+      "lines": 49,
+      "generated": false,
+      "functions": [],
+      "globals": [
+        "mouseActions"
+      ],
+      "storageKeys": []
+    },
+    {
+      "file": "tests/editor-comun.test.cjs",
+      "bytes": 2836,
+      "lines": 21,
+      "generated": false,
+      "functions": [],
+      "globals": [
+        "evil"
+      ],
+      "storageKeys": []
+    },
+    {
+      "file": "tests/editor-documentos.test.cjs",
+      "bytes": 4885,
+      "lines": 46,
+      "generated": false,
+      "functions": [],
+      "globals": [],
+      "storageKeys": []
+    },
+    {
+      "file": "tests/editor-elementos.test.cjs",
+      "bytes": 7827,
+      "lines": 77,
+      "generated": false,
+      "functions": [],
+      "globals": [],
+      "storageKeys": []
+    },
+    {
+      "file": "tests/formularios-oficiales.test.cjs",
+      "bytes": 52276,
+      "lines": 672,
+      "generated": false,
+      "functions": [
+        "fillRequired"
+      ],
+      "globals": [
+        "testPdfLines",
+        "testPdfBoxes",
+        "testPrintCalls",
+        "print",
+        "fixtureSaves",
+        "fixtureReview",
+        "startReview",
+        "fixtureResult",
+        "testDpLines",
+        "testDpOriginalOpen",
+        "testDpPrintCount",
+        "open"
+      ],
+      "storageKeys": [
+        "adc_v08",
+        "adc-bd02-borrador-v1",
+        "adc-official-form-bd02-draft-v1",
+        "adc_dj02_v1",
+        "adc-official-form-beneficiarios-draft-v1",
+        "adc-official-form-form-4-draft-v1"
+      ]
+    },
+    {
+      "file": "tests/geografia.test.cjs",
+      "bytes": 2331,
+      "lines": 60,
+      "generated": false,
+      "functions": [],
+      "globals": [],
+      "storageKeys": []
+    },
+    {
+      "file": "tests/ingreso.test.cjs",
+      "bytes": 4054,
+      "lines": 63,
+      "generated": false,
+      "functions": [],
+      "globals": [],
+      "storageKeys": []
+    },
+    {
+      "file": "tests/local-editor-bridge.test.cjs",
+      "bytes": 3936,
+      "lines": 40,
+      "generated": false,
+      "functions": [],
+      "globals": [],
+      "storageKeys": []
+    },
+    {
+      "file": "tests/local-editor-ui.test.cjs",
+      "bytes": 5043,
+      "lines": 36,
+      "generated": false,
+      "functions": [],
+      "globals": [],
+      "storageKeys": []
+    },
+    {
+      "file": "tests/mbit.test.cjs",
+      "bytes": 12296,
+      "lines": 145,
+      "generated": false,
+      "functions": [],
+      "globals": [
+        "testMBITOpened"
+      ],
+      "storageKeys": [
+        "adc_v07_usage"
+      ]
+    },
+    {
+      "file": "tests/ol01-interfaz.test.cjs",
+      "bytes": 4362,
+      "lines": 63,
+      "generated": false,
+      "functions": [],
+      "globals": [],
+      "storageKeys": []
+    },
+    {
+      "file": "tests/ol01-perfil.test.cjs",
+      "bytes": 2427,
+      "lines": 54,
+      "generated": false,
+      "functions": [
+        "adcOLSyncTeacherProfile"
+      ],
+      "globals": [],
+      "storageKeys": []
+    },
+    {
+      "file": "tests/pdf-blank-line.test.cjs",
+      "bytes": 1227,
+      "lines": 23,
+      "generated": false,
+      "functions": [],
+      "globals": [],
+      "storageKeys": []
+    },
+    {
+      "file": "tests/pdf-campos.test.cjs",
+      "bytes": 2340,
+      "lines": 33,
+      "generated": false,
+      "functions": [],
+      "globals": [],
+      "storageKeys": []
+    },
+    {
+      "file": "tests/publicacion.test.cjs",
+      "bytes": 2484,
+      "lines": 29,
+      "generated": false,
+      "functions": [],
+      "globals": [],
+      "storageKeys": []
+    },
+    {
+      "file": "tests/supabase-auth.test.cjs",
+      "bytes": 7614,
+      "lines": 68,
+      "generated": false,
+      "functions": [],
+      "globals": [
+        "adcConfig"
+      ],
+      "storageKeys": [
+        "adc-auth-local-owner",
+        "adc-supabase-auth",
+        "adc_v08"
+      ]
+    },
+    {
+      "file": "tests/supabase-config.test.cjs",
+      "bytes": 1248,
+      "lines": 13,
+      "generated": false,
+      "functions": [],
+      "globals": [],
+      "storageKeys": []
+    },
+    {
+      "file": "tests/supabase-management.test.cjs",
+      "bytes": 1780,
+      "lines": 21,
+      "generated": false,
+      "functions": [],
+      "globals": [],
+      "storageKeys": []
+    },
+    {
+      "file": "tests/supabase-rls.test.cjs",
+      "bytes": 4050,
+      "lines": 46,
+      "generated": false,
+      "functions": [],
+      "globals": [],
+      "storageKeys": []
+    },
+    {
+      "file": "tests/support/ajustes.cjs",
+      "bytes": 203,
+      "lines": 6,
+      "generated": false,
+      "functions": [],
+      "globals": [],
+      "storageKeys": []
+    },
+    {
+      "file": "tests/support/demo-config.cjs",
+      "bytes": 772,
+      "lines": 10,
+      "generated": false,
+      "functions": [
+        "serve"
+      ],
+      "globals": [
+        "adcConfig"
+      ],
+      "storageKeys": []
+    },
+    {
+      "file": "tools/ajustes-store.cjs",
+      "bytes": 3144,
+      "lines": 39,
+      "generated": false,
+      "functions": [
+        "fail",
+        "safePath",
+        "readLayout",
+        "persistChanges",
+        "saveLayout"
+      ],
+      "globals": [],
+      "storageKeys": []
+    },
+    {
+      "file": "tools/auditar-arquitectura.cjs",
+      "bytes": 5978,
+      "lines": 73,
+      "generated": false,
+      "functions": [
+        "audit",
+        "walk",
+        "markdown"
+      ],
+      "globals": [],
+      "storageKeys": []
+    },
+    {
+      "file": "tools/build.cjs",
+      "bytes": 934,
+      "lines": 12,
+      "generated": false,
+      "functions": [
+        "build"
+      ],
+      "globals": [
+        "adcConfig"
+      ],
+      "storageKeys": []
+    },
+    {
+      "file": "tools/configurar-supabase.cjs",
+      "bytes": 7322,
+      "lines": 78,
+      "generated": false,
+      "functions": [
+        "management",
+        "createProject",
+        "validPolicies",
+        "writeLocal",
+        "configure"
+      ],
+      "globals": [],
+      "storageKeys": []
+    },
+    {
+      "file": "tools/dev-server.cjs",
+      "bytes": 2495,
+      "lines": 28,
+      "generated": false,
+      "functions": [
+        "start"
+      ],
+      "globals": [],
+      "storageKeys": []
+    },
+    {
+      "file": "tools/env.cjs",
+      "bytes": 2179,
+      "lines": 31,
+      "generated": false,
+      "functions": [
+        "readEnv",
+        "publicConfig"
+      ],
+      "globals": [],
+      "storageKeys": []
+    },
+    {
+      "file": "tools/extract-nomenclatura.py",
+      "bytes": 7400,
+      "lines": 108,
+      "generated": false,
+      "functions": [],
+      "globals": [],
+      "storageKeys": []
+    },
+    {
+      "file": "tools/importar-ajustes.cjs",
+      "bytes": 1355,
+      "lines": 24,
+      "generated": false,
+      "functions": [
+        "incorporate"
+      ],
+      "globals": [],
+      "storageKeys": []
+    },
+    {
+      "file": "tools/local-editor-bridge.cjs",
+      "bytes": 3701,
+      "lines": 45,
+      "generated": false,
+      "functions": [
+        "createBridge"
+      ],
+      "globals": [],
+      "storageKeys": []
+    },
+    {
+      "file": "tools/npm-local.cmd",
+      "bytes": 652,
+      "lines": 18,
+      "generated": false,
+      "functions": [],
+      "globals": [],
+      "storageKeys": []
+    },
+    {
+      "file": "tools/publicar.cjs",
+      "bytes": 3174,
+      "lines": 38,
+      "generated": false,
+      "functions": [
+        "prepare",
+        "copy"
+      ],
+      "globals": [],
+      "storageKeys": []
+    },
+    {
+      "file": "tools/supabase-auth-settings.cjs",
+      "bytes": 1844,
+      "lines": 21,
+      "generated": false,
+      "functions": [
+        "authSettings"
+      ],
+      "globals": [],
+      "storageKeys": []
+    },
+    {
+      "file": "tools/verify-structure.cjs",
+      "bytes": 2605,
+      "lines": 46,
+      "generated": false,
+      "functions": [],
+      "globals": [],
+      "storageKeys": []
+    }
+  ],
+  "references": [
+    {
+      "from": "ADC_Ingreso_Editable.html",
+      "to": "assets/js/editor/modo-local.js",
+      "kind": "script",
+      "exists": true
+    },
+    {
+      "from": "ADC_Ingreso_Editable.html",
+      "to": "assets/css/acceso/autenticacion.css",
+      "kind": "link",
+      "exists": true
+    },
+    {
+      "from": "ADC_Ingreso_Editable.html",
+      "to": "assets/datos/config-publica.js",
+      "kind": "script",
+      "exists": true
+    },
+    {
+      "from": "ADC_Ingreso_Editable.html",
+      "to": "assets/js/servicios/supabase-runtime.js",
+      "kind": "script",
+      "exists": true
+    },
+    {
+      "from": "ADC_Ingreso_Editable.html",
+      "to": "assets/css/acceso/ingreso.css",
+      "kind": "link",
+      "exists": true
+    },
+    {
+      "from": "ADC_Ingreso_Editable.html",
+      "to": "assets/css/acceso/marca.css",
+      "kind": "link",
+      "exists": true
+    },
+    {
+      "from": "ADC_Ingreso_Editable.html",
+      "to": "assets/img/acceso/logo-adc.png",
+      "kind": "img",
+      "exists": true
+    },
+    {
+      "from": "ADC_Ingreso_Editable.html",
+      "to": "assets/js/acceso/ingreso.js",
+      "kind": "script",
+      "exists": true
+    },
+    {
+      "from": "ADC_Ingreso_Editable.html",
+      "to": "assets/js/acceso/autenticacion.js",
+      "kind": "script",
+      "exists": true
+    },
+    {
+      "from": "ADC_Ingreso_Editable.html",
+      "to": "assets/js/acceso/visibilidad-clave.js",
+      "kind": "script",
+      "exists": true
+    },
+    {
+      "from": "ADC_Ingreso_Editable.html",
+      "to": "assets/js/acceso/marca.js",
+      "kind": "script",
+      "exists": true
+    },
+    {
+      "from": "ADC_Ingreso_Editable.html",
+      "to": "assets/css/editor/base.css",
+      "kind": "link",
+      "exists": true
+    },
+    {
+      "from": "ADC_Ingreso_Editable.html",
+      "to": "assets/css/acceso/editor.css",
+      "kind": "link",
+      "exists": true
+    },
+    {
+      "from": "ADC_Ingreso_Editable.html",
+      "to": "assets/css/editor/acceso-ajustes.css",
+      "kind": "link",
+      "exists": true
+    },
+    {
+      "from": "ADC_Ingreso_Editable.html",
+      "to": "assets/js/editor/acceso-ajustes.js",
+      "kind": "script",
+      "exists": true
+    },
+    {
+      "from": "ADC_Ingreso_Editable.html",
+      "to": "assets/js/editor/ajustes-proyecto-datos.js",
+      "kind": "script",
+      "exists": true
+    },
+    {
+      "from": "ADC_Ingreso_Editable.html",
+      "to": "assets/js/editor/documentos.js",
+      "kind": "script",
+      "exists": true
+    },
+    {
+      "from": "ADC_Ingreso_Editable.html",
+      "to": "assets/js/editor/elementos.js",
+      "kind": "script",
+      "exists": true
+    },
+    {
+      "from": "ADC_Ingreso_Editable.html",
+      "to": "assets/js/editor/puente-local.js",
+      "kind": "script",
+      "exists": true
+    },
+    {
+      "from": "ADC_Ingreso_Editable.html",
+      "to": "assets/js/editor/ajustes-proyecto.js",
+      "kind": "script",
+      "exists": true
+    },
+    {
+      "from": "ADC_Ingreso_Editable.html",
+      "to": "assets/js/editor/comun.js",
+      "kind": "script",
+      "exists": true
+    },
+    {
+      "from": "ADC_Ingreso_Editable.html",
+      "to": "assets/js/acceso/editor.js",
+      "kind": "script",
+      "exists": true
+    },
+    {
+      "from": "assets/js/editor/ajustes-proyecto.js",
+      "to": "assets/datos/ajustes-pagina.json",
+      "kind": "literal-module",
+      "exists": true
+    },
+    {
+      "from": "assets/js/editor/elementos.js",
+      "to": "assets/vendor/pdfjs/pdf.min.mjs",
+      "kind": "literal-module",
+      "exists": true
+    },
+    {
+      "from": "index.html",
+      "to": "assets/js/editor/modo-local.js",
+      "kind": "script",
+      "exists": true
+    },
+    {
+      "from": "index.html",
+      "to": "assets/css/acceso/autenticacion.css",
+      "kind": "link",
+      "exists": true
+    },
+    {
+      "from": "index.html",
+      "to": "assets/datos/config-publica.js",
+      "kind": "script",
+      "exists": true
+    },
+    {
+      "from": "index.html",
+      "to": "assets/js/servicios/supabase-runtime.js",
+      "kind": "script",
+      "exists": true
+    },
+    {
+      "from": "index.html",
+      "to": "assets/js/interfaz/sesion.js",
+      "kind": "script",
+      "exists": true
+    },
+    {
+      "from": "index.html",
+      "to": "assets/js/interfaz/inicio-local.js",
+      "kind": "script",
+      "exists": true
+    },
+    {
+      "from": "index.html",
+      "to": "assets/css/base.css",
+      "kind": "link",
+      "exists": true
+    },
+    {
+      "from": "index.html",
+      "to": "assets/css/tramites/dj01-advertencias.css",
+      "kind": "link",
+      "exists": true
+    },
+    {
+      "from": "index.html",
+      "to": "assets/css/tramites/dj01-distribucion.css",
+      "kind": "link",
+      "exists": true
+    },
+    {
+      "from": "index.html",
+      "to": "assets/css/interfaz/navegacion.css",
+      "kind": "link",
+      "exists": true
+    },
+    {
+      "from": "index.html",
+      "to": "assets/css/tramites/dj02-base.css",
+      "kind": "link",
+      "exists": true
+    },
+    {
+      "from": "index.html",
+      "to": "assets/css/tramites/dj02-plantilla.css",
+      "kind": "link",
+      "exists": true
+    },
+    {
+      "from": "index.html",
+      "to": "assets/css/calendario/base.css",
+      "kind": "link",
+      "exists": true
+    },
+    {
+      "from": "index.html",
+      "to": "assets/css/tramites/catalogo.css",
+      "kind": "link",
+      "exists": true
+    },
+    {
+      "from": "index.html",
+      "to": "assets/css/interfaz/fondo.css",
+      "kind": "link",
+      "exists": true
+    },
+    {
+      "from": "index.html",
+      "to": "assets/css/interfaz/tema.css",
+      "kind": "link",
+      "exists": true
+    },
+    {
+      "from": "index.html",
+      "to": "assets/css/interfaz/mnc.css",
+      "kind": "link",
+      "exists": true
+    },
+    {
+      "from": "index.html",
+      "to": "assets/js/core/mnc.js",
+      "kind": "script",
+      "exists": true
+    },
+    {
+      "from": "index.html",
+      "to": "assets/js/tema/inicial.js",
+      "kind": "script",
+      "exists": true
+    },
+    {
+      "from": "index.html",
+      "to": "assets/js/tema/controles.js",
+      "kind": "script",
+      "exists": true
+    },
+    {
+      "from": "index.html",
+      "to": "assets/vendor/pdf-lib/pdf-lib.min.js",
+      "kind": "script",
+      "exists": true
+    },
+    {
+      "from": "index.html",
+      "to": "assets/js/documentos/plantillas-dl01.js",
+      "kind": "script",
+      "exists": true
+    },
+    {
+      "from": "index.html",
+      "to": "assets/css/interfaz/validacion-guiada.css",
+      "kind": "link",
+      "exists": true
+    },
+    {
+      "from": "index.html",
+      "to": "assets/js/core/validacion-guiada.js",
+      "kind": "script",
+      "exists": true
+    },
+    {
+      "from": "index.html",
+      "to": "assets/js/core/cursos.js",
+      "kind": "script",
+      "exists": true
+    },
+    {
+      "from": "index.html",
+      "to": "assets/js/core/estado.js",
+      "kind": "script",
+      "exists": true
+    },
+    {
+      "from": "index.html",
+      "to": "assets/js/tramites/catalogo-datos.js",
+      "kind": "script",
+      "exists": true
+    },
+    {
+      "from": "index.html",
+      "to": "assets/js/interfaz/navegacion.js",
+      "kind": "script",
+      "exists": true
+    },
+    {
+      "from": "index.html",
+      "to": "assets/js/perfil/instituciones.js",
+      "kind": "script",
+      "exists": true
+    },
+    {
+      "from": "index.html",
+      "to": "assets/js/perfil/geografia.js",
+      "kind": "script",
+      "exists": true
+    },
+    {
+      "from": "index.html",
+      "to": "assets/js/perfil/datos-personales.js",
+      "kind": "script",
+      "exists": true
+    },
+    {
+      "from": "index.html",
+      "to": "assets/js/tramites/dj01-traslados.js",
+      "kind": "script",
+      "exists": true
+    },
+    {
+      "from": "index.html",
+      "to": "assets/js/perfil/respaldos.js",
+      "kind": "script",
+      "exists": true
+    },
+    {
+      "from": "index.html",
+      "to": "assets/js/tramites/solicitudes.js",
+      "kind": "script",
+      "exists": true
+    },
+    {
+      "from": "index.html",
+      "to": "assets/js/tramites/dl01-reglas.js",
+      "kind": "script",
+      "exists": true
+    },
+    {
+      "from": "index.html",
+      "to": "assets/js/documentos/pdf-utilidades.js",
+      "kind": "script",
+      "exists": true
+    },
+    {
+      "from": "index.html",
+      "to": "assets/js/tramites/dl01-pdf.js",
+      "kind": "script",
+      "exists": true
+    },
+    {
+      "from": "index.html",
+      "to": "assets/js/tramites/dj01.js",
+      "kind": "script",
+      "exists": true
+    },
+    {
+      "from": "index.html",
+      "to": "assets/js/core/inicializacion.js",
+      "kind": "script",
+      "exists": true
+    },
+    {
+      "from": "index.html",
+      "to": "assets/js/documentos/acciones.js",
+      "kind": "script",
+      "exists": true
+    },
+    {
+      "from": "index.html",
+      "to": "assets/js/tramites/dj01-conflictos.js",
+      "kind": "script",
+      "exists": true
+    },
+    {
+      "from": "index.html",
+      "to": "assets/css/perfil/revision.css",
+      "kind": "link",
+      "exists": true
+    },
+    {
+      "from": "index.html",
+      "to": "assets/js/tramites/dj01-guia.js",
+      "kind": "script",
+      "exists": true
+    },
+    {
+      "from": "index.html",
+      "to": "assets/js/tramites/dj01-distribucion.js",
+      "kind": "script",
+      "exists": true
+    },
+    {
+      "from": "index.html",
+      "to": "assets/js/tramites/dj01-zoom.js",
+      "kind": "script",
+      "exists": true
+    },
+    {
+      "from": "index.html",
+      "to": "assets/js/tramites/dj02-base.js",
+      "kind": "script",
+      "exists": true
+    },
+    {
+      "from": "index.html",
+      "to": "assets/js/tramites/dj02-plantilla.js",
+      "kind": "script",
+      "exists": true
+    },
+    {
+      "from": "index.html",
+      "to": "assets/css/perfil/nombres.css",
+      "kind": "link",
+      "exists": true
+    },
+    {
+      "from": "index.html",
+      "to": "assets/js/perfil/nombres.js",
+      "kind": "script",
+      "exists": true
+    },
+    {
+      "from": "index.html",
+      "to": "assets/css/tramites/dj02-formulario.css",
+      "kind": "link",
+      "exists": true
+    },
+    {
+      "from": "index.html",
+      "to": "assets/js/tramites/dj02-formulario.js",
+      "kind": "script",
+      "exists": true
+    },
+    {
+      "from": "index.html",
+      "to": "assets/js/calendario/calendario.js",
+      "kind": "script",
+      "exists": true
+    },
+    {
+      "from": "index.html",
+      "to": "assets/js/tramites/ayuda.js",
+      "kind": "script",
+      "exists": true
+    },
+    {
+      "from": "index.html",
+      "to": "assets/css/calendario/meses.css",
+      "kind": "link",
+      "exists": true
+    },
+    {
+      "from": "index.html",
+      "to": "assets/js/calendario/solicitudes.js",
+      "kind": "script",
+      "exists": true
+    },
+    {
+      "from": "index.html",
+      "to": "assets/css/calendario/solicitudes.css",
+      "kind": "link",
+      "exists": true
+    },
+    {
+      "from": "index.html",
+      "to": "assets/css/tramites/buscador.css",
+      "kind": "link",
+      "exists": true
+    },
+    {
+      "from": "index.html",
+      "to": "assets/css/calendario/navegacion.css",
+      "kind": "link",
+      "exists": true
+    },
+    {
+      "from": "index.html",
+      "to": "assets/css/interfaz/dialogos.css",
+      "kind": "link",
+      "exists": true
+    },
+    {
+      "from": "index.html",
+      "to": "assets/css/documentos/panel.css",
+      "kind": "link",
+      "exists": true
+    },
+    {
+      "from": "index.html",
+      "to": "assets/css/tramites/ol01.css",
+      "kind": "link",
+      "exists": true
+    },
+    {
+      "from": "index.html",
+      "to": "assets/js/tramites/ol01.js",
+      "kind": "script",
+      "exists": true
+    },
+    {
+      "from": "index.html",
+      "to": "assets/css/interfaz/espacio-trabajo.css",
+      "kind": "link",
+      "exists": true
+    },
+    {
+      "from": "index.html",
+      "to": "assets/js/interfaz/espacio-trabajo.js",
+      "kind": "script",
+      "exists": true
+    },
+    {
+      "from": "index.html",
+      "to": "assets/css/editor/base.css",
+      "kind": "link",
+      "exists": true
+    },
+    {
+      "from": "index.html",
+      "to": "assets/css/editor/editor.css",
+      "kind": "link",
+      "exists": true
+    },
+    {
+      "from": "index.html",
+      "to": "assets/css/editor/acceso-ajustes.css",
+      "kind": "link",
+      "exists": true
+    },
+    {
+      "from": "index.html",
+      "to": "assets/js/editor/acceso-ajustes.js",
+      "kind": "script",
+      "exists": true
+    },
+    {
+      "from": "index.html",
+      "to": "assets/js/editor/ajustes-proyecto-datos.js",
+      "kind": "script",
+      "exists": true
+    },
+    {
+      "from": "index.html",
+      "to": "assets/js/editor/documentos.js",
+      "kind": "script",
+      "exists": true
+    },
+    {
+      "from": "index.html",
+      "to": "assets/js/editor/elementos.js",
+      "kind": "script",
+      "exists": true
+    },
+    {
+      "from": "index.html",
+      "to": "assets/js/editor/puente-local.js",
+      "kind": "script",
+      "exists": true
+    },
+    {
+      "from": "index.html",
+      "to": "assets/js/editor/ajustes-proyecto.js",
+      "kind": "script",
+      "exists": true
+    },
+    {
+      "from": "index.html",
+      "to": "assets/js/editor/comun.js",
+      "kind": "script",
+      "exists": true
+    },
+    {
+      "from": "index.html",
+      "to": "assets/js/editor/editor.js",
+      "kind": "script",
+      "exists": true
+    },
+    {
+      "from": "index.html",
+      "to": "assets/css/tramites/dj02-registro.css",
+      "kind": "link",
+      "exists": true
+    },
+    {
+      "from": "index.html",
+      "to": "assets/js/tramites/dj02-registro.js",
+      "kind": "script",
+      "exists": true
+    },
+    {
+      "from": "index.html",
+      "to": "assets/css/interfaz/responsive.css",
+      "kind": "link",
+      "exists": true
+    },
+    {
+      "from": "index.html",
+      "to": "assets/css/tramites/sc01.css",
+      "kind": "link",
+      "exists": true
+    },
+    {
+      "from": "index.html",
+      "to": "assets/css/tramites/formularios-oficiales.css",
+      "kind": "link",
+      "exists": true
+    },
+    {
+      "from": "index.html",
+      "to": "assets/datos/escuelas-chaco.js",
+      "kind": "script",
+      "exists": true
+    },
+    {
+      "from": "index.html",
+      "to": "assets/js/perfil/contactos-instituciones.js",
+      "kind": "script",
+      "exists": true
+    },
+    {
+      "from": "index.html",
+      "to": "assets/js/tramites/sc01.js",
+      "kind": "script",
+      "exists": true
+    },
+    {
+      "from": "index.html",
+      "to": "assets/js/tramites/formularios-oficiales-datos.js",
+      "kind": "script",
+      "exists": true
+    },
+    {
+      "from": "index.html",
+      "to": "assets/datos/formularios-pdf.js",
+      "kind": "script",
+      "exists": true
+    },
+    {
+      "from": "index.html",
+      "to": "assets/js/documentos/pdf-campos.js",
+      "kind": "script",
+      "exists": true
+    },
+    {
+      "from": "index.html",
+      "to": "assets/js/tramites/formularios-oficiales.js",
+      "kind": "script",
+      "exists": true
+    },
+    {
+      "from": "index.html",
+      "to": "assets/css/tramites/bd02.css",
+      "kind": "link",
+      "exists": true
+    },
+    {
+      "from": "index.html",
+      "to": "assets/js/tramites/bd02.js",
+      "kind": "script",
+      "exists": true
+    },
+    {
+      "from": "index.html",
+      "to": "assets/js/tramites/busqueda-inteligente.js",
+      "kind": "script",
+      "exists": true
+    },
+    {
+      "from": "index.html",
+      "to": "assets/js/tramites/buscador.js",
+      "kind": "script",
+      "exists": true
+    },
+    {
+      "from": "index.html",
+      "to": "assets/css/tramites/dl01.css",
+      "kind": "link",
+      "exists": true
+    },
+    {
+      "from": "index.html",
+      "to": "assets/js/tramites/dl01-interfaz.js",
+      "kind": "script",
+      "exists": true
+    },
+    {
+      "from": "tests/acceso-ajustes.test.cjs",
+      "to": "tests/support/demo-config.cjs",
+      "kind": "literal-module",
+      "exists": true
+    },
+    {
+      "from": "tests/ajustes-proyecto.test.cjs",
+      "to": "assets/js/editor/ajustes-proyecto-datos.js",
+      "kind": "literal-module",
+      "exists": true
+    },
+    {
+      "from": "tests/ajustes-proyecto.test.cjs",
+      "to": "tests/support/demo-config.cjs",
+      "kind": "literal-module",
+      "exists": true
+    },
+    {
+      "from": "tests/ajustes-proyecto.test.cjs",
+      "to": "tests/support/ajustes.cjs",
+      "kind": "literal-module",
+      "exists": true
+    },
+    {
+      "from": "tests/ajustes-proyecto.test.cjs",
+      "to": "tests/support/ajustes.cjs",
+      "kind": "literal-module",
+      "exists": true
+    },
+    {
+      "from": "tests/ajustes-proyecto.test.cjs",
+      "to": "tests/support/ajustes.cjs",
+      "kind": "literal-module",
+      "exists": true
+    },
+    {
+      "from": "tests/arquitectura.test.cjs",
+      "to": "tools/auditar-arquitectura.cjs",
+      "kind": "literal-module",
+      "exists": true
+    },
+    {
+      "from": "tests/dl01-interfaz.test.cjs",
+      "to": "tests/support/demo-config.cjs",
+      "kind": "literal-module",
+      "exists": true
+    },
+    {
+      "from": "tests/editor-botones.test.cjs",
+      "to": "tests/support/demo-config.cjs",
+      "kind": "literal-module",
+      "exists": true
+    },
+    {
+      "from": "tests/editor-botones.test.cjs",
+      "to": "tests/support/ajustes.cjs",
+      "kind": "literal-module",
+      "exists": true
+    },
+    {
+      "from": "tests/editor-botones.test.cjs",
+      "to": "tests/support/ajustes.cjs",
+      "kind": "literal-module",
+      "exists": true
+    },
+    {
+      "from": "tests/editor-documentos.test.cjs",
+      "to": "tests/support/demo-config.cjs",
+      "kind": "literal-module",
+      "exists": true
+    },
+    {
+      "from": "tests/editor-documentos.test.cjs",
+      "to": "tests/support/ajustes.cjs",
+      "kind": "literal-module",
+      "exists": true
+    },
+    {
+      "from": "tests/editor-documentos.test.cjs",
+      "to": "tests/support/ajustes.cjs",
+      "kind": "literal-module",
+      "exists": true
+    },
+    {
+      "from": "tests/editor-documentos.test.cjs",
+      "to": "tests/support/ajustes.cjs",
+      "kind": "literal-module",
+      "exists": true
+    },
+    {
+      "from": "tests/editor-documentos.test.cjs",
+      "to": "tests/support/ajustes.cjs",
+      "kind": "literal-module",
+      "exists": true
+    },
+    {
+      "from": "tests/editor-elementos.test.cjs",
+      "to": "assets/js/editor/ajustes-proyecto-datos.js",
+      "kind": "literal-module",
+      "exists": true
+    },
+    {
+      "from": "tests/editor-elementos.test.cjs",
+      "to": "tests/support/demo-config.cjs",
+      "kind": "literal-module",
+      "exists": true
+    },
+    {
+      "from": "tests/editor-elementos.test.cjs",
+      "to": "tests/support/ajustes.cjs",
+      "kind": "literal-module",
+      "exists": true
+    },
+    {
+      "from": "tests/formularios-oficiales.test.cjs",
+      "to": "tests/support/demo-config.cjs",
+      "kind": "literal-module",
+      "exists": true
+    },
+    {
+      "from": "tests/ingreso.test.cjs",
+      "to": "tests/support/demo-config.cjs",
+      "kind": "literal-module",
+      "exists": true
+    },
+    {
+      "from": "tests/local-editor-bridge.test.cjs",
+      "to": "tools/local-editor-bridge.cjs",
+      "kind": "literal-module",
+      "exists": true
+    },
+    {
+      "from": "tests/local-editor-bridge.test.cjs",
+      "to": "assets/js/editor/ajustes-proyecto-datos.js",
+      "kind": "literal-module",
+      "exists": true
+    },
+    {
+      "from": "tests/local-editor-ui.test.cjs",
+      "to": "tools/local-editor-bridge.cjs",
+      "kind": "literal-module",
+      "exists": true
+    },
+    {
+      "from": "tests/local-editor-ui.test.cjs",
+      "to": "assets/js/editor/ajustes-proyecto-datos.js",
+      "kind": "literal-module",
+      "exists": true
+    },
+    {
+      "from": "tests/local-editor-ui.test.cjs",
+      "to": "tests/support/demo-config.cjs",
+      "kind": "literal-module",
+      "exists": true
+    },
+    {
+      "from": "tests/local-editor-ui.test.cjs",
+      "to": "tests/support/ajustes.cjs",
+      "kind": "literal-module",
+      "exists": true
+    },
+    {
+      "from": "tests/local-editor-ui.test.cjs",
+      "to": "tests/support/ajustes.cjs",
+      "kind": "literal-module",
+      "exists": true
+    },
+    {
+      "from": "tests/mbit.test.cjs",
+      "to": "tests/support/demo-config.cjs",
+      "kind": "literal-module",
+      "exists": true
+    },
+    {
+      "from": "tests/ol01-interfaz.test.cjs",
+      "to": "tests/support/demo-config.cjs",
+      "kind": "literal-module",
+      "exists": true
+    },
+    {
+      "from": "tests/publicacion.test.cjs",
+      "to": "tools/supabase-auth-settings.cjs",
+      "kind": "literal-module",
+      "exists": true
+    },
+    {
+      "from": "tests/publicacion.test.cjs",
+      "to": "tools/publicar.cjs",
+      "kind": "literal-module",
+      "exists": true
+    },
+    {
+      "from": "tests/supabase-auth.test.cjs",
+      "to": "tests/support/demo-config.cjs",
+      "kind": "literal-module",
+      "exists": true
+    },
+    {
+      "from": "tests/supabase-config.test.cjs",
+      "to": "tools/env.cjs",
+      "kind": "literal-module",
+      "exists": true
+    },
+    {
+      "from": "tests/supabase-management.test.cjs",
+      "to": "tools/configurar-supabase.cjs",
+      "kind": "literal-module",
+      "exists": true
+    },
+    {
+      "from": "tests/supabase-rls.test.cjs",
+      "to": "tools/configurar-supabase.cjs",
+      "kind": "literal-module",
+      "exists": true
+    },
+    {
+      "from": "tools/ajustes-store.cjs",
+      "to": "assets/js/editor/ajustes-proyecto-datos.js",
+      "kind": "literal-module",
+      "exists": true
+    },
+    {
+      "from": "tools/build.cjs",
+      "to": "tools/env.cjs",
+      "kind": "literal-module",
+      "exists": true
+    },
+    {
+      "from": "tools/configurar-supabase.cjs",
+      "to": "tools/env.cjs",
+      "kind": "literal-module",
+      "exists": true
+    },
+    {
+      "from": "tools/configurar-supabase.cjs",
+      "to": "tools/build.cjs",
+      "kind": "literal-module",
+      "exists": true
+    },
+    {
+      "from": "tools/configurar-supabase.cjs",
+      "to": "tools/supabase-auth-settings.cjs",
+      "kind": "literal-module",
+      "exists": true
+    },
+    {
+      "from": "tools/dev-server.cjs",
+      "to": "tools/build.cjs",
+      "kind": "literal-module",
+      "exists": true
+    },
+    {
+      "from": "tools/dev-server.cjs",
+      "to": "tools/local-editor-bridge.cjs",
+      "kind": "literal-module",
+      "exists": true
+    },
+    {
+      "from": "tools/importar-ajustes.cjs",
+      "to": "assets/js/editor/ajustes-proyecto-datos.js",
+      "kind": "literal-module",
+      "exists": true
+    },
+    {
+      "from": "tools/importar-ajustes.cjs",
+      "to": "tools/ajustes-store.cjs",
+      "kind": "literal-module",
+      "exists": true
+    },
+    {
+      "from": "tools/local-editor-bridge.cjs",
+      "to": "tools/ajustes-store.cjs",
+      "kind": "literal-module",
+      "exists": true
+    },
+    {
+      "from": "tools/publicar.cjs",
+      "to": "tools/build.cjs",
+      "kind": "literal-module",
+      "exists": true
+    },
+    {
+      "from": "tools/publicar.cjs",
+      "to": "tools/env.cjs",
+      "kind": "literal-module",
+      "exists": true
+    },
+    {
+      "from": "tools/publicar.cjs",
+      "to": "config/publicacion.json",
+      "kind": "literal-module",
+      "exists": true
+    },
+    {
+      "from": "tools/supabase-auth-settings.cjs",
+      "to": "config/publicacion.json",
+      "kind": "literal-module",
+      "exists": true
+    }
+  ],
+  "missing": [],
+  "duplicateWindows": {
+    "method": "Ocho líneas consecutivas normalizadas; candidatos, no equivalencia semántica ni porcentaje de cobertura.",
+    "candidates": [
+      [
+        {
+          "file": "assets/js/acceso/editor.js",
+          "line": 30
+        },
+        {
+          "file": "assets/js/editor/editor.js",
+          "line": 43
+        }
+      ],
+      [
+        {
+          "file": "assets/js/acceso/editor.js",
+          "line": 31
+        },
+        {
+          "file": "assets/js/editor/editor.js",
+          "line": 44
+        }
+      ],
+      [
+        {
+          "file": "assets/js/acceso/editor.js",
+          "line": 57
+        },
+        {
+          "file": "assets/js/editor/editor.js",
+          "line": 77
+        }
+      ],
+      [
+        {
+          "file": "assets/js/acceso/editor.js",
+          "line": 58
+        },
+        {
+          "file": "assets/js/editor/editor.js",
+          "line": 78
+        }
+      ],
+      [
+        {
+          "file": "assets/js/acceso/editor.js",
+          "line": 59
+        },
+        {
+          "file": "assets/js/editor/editor.js",
+          "line": 79
+        }
+      ],
+      [
+        {
+          "file": "assets/js/acceso/editor.js",
+          "line": 60
+        },
+        {
+          "file": "assets/js/editor/editor.js",
+          "line": 80
+        }
+      ],
+      [
+        {
+          "file": "assets/js/acceso/editor.js",
+          "line": 61
+        },
+        {
+          "file": "assets/js/editor/editor.js",
+          "line": 81
+        }
+      ],
+      [
+        {
+          "file": "assets/js/acceso/editor.js",
+          "line": 62
+        },
+        {
+          "file": "assets/js/editor/editor.js",
+          "line": 82
+        }
+      ],
+      [
+        {
+          "file": "assets/js/acceso/editor.js",
+          "line": 63
+        },
+        {
+          "file": "assets/js/editor/editor.js",
+          "line": 83
+        }
+      ],
+      [
+        {
+          "file": "assets/js/acceso/editor.js",
+          "line": 64
+        },
+        {
+          "file": "assets/js/editor/editor.js",
+          "line": 84
+        }
+      ],
+      [
+        {
+          "file": "assets/js/acceso/editor.js",
+          "line": 65
+        },
+        {
+          "file": "assets/js/editor/editor.js",
+          "line": 85
+        }
+      ],
+      [
+        {
+          "file": "assets/js/acceso/editor.js",
+          "line": 66
+        },
+        {
+          "file": "assets/js/editor/editor.js",
+          "line": 86
+        }
+      ],
+      [
+        {
+          "file": "assets/js/acceso/editor.js",
+          "line": 67
+        },
+        {
+          "file": "assets/js/editor/editor.js",
+          "line": 87
+        }
+      ],
+      [
+        {
+          "file": "assets/js/acceso/editor.js",
+          "line": 75
+        },
+        {
+          "file": "assets/js/editor/editor.js",
+          "line": 99
+        }
+      ],
+      [
+        {
+          "file": "assets/js/acceso/editor.js",
+          "line": 76
+        },
+        {
+          "file": "assets/js/editor/editor.js",
+          "line": 100
+        }
+      ],
+      [
+        {
+          "file": "assets/js/acceso/editor.js",
+          "line": 77
+        },
+        {
+          "file": "assets/js/editor/editor.js",
+          "line": 101
+        }
+      ],
+      [
+        {
+          "file": "assets/js/acceso/editor.js",
+          "line": 78
+        },
+        {
+          "file": "assets/js/editor/editor.js",
+          "line": 102
+        }
+      ],
+      [
+        {
+          "file": "assets/js/acceso/editor.js",
+          "line": 79
+        },
+        {
+          "file": "assets/js/editor/editor.js",
+          "line": 103
+        }
+      ],
+      [
+        {
+          "file": "assets/js/acceso/editor.js",
+          "line": 80
+        },
+        {
+          "file": "assets/js/editor/editor.js",
+          "line": 104
+        }
+      ],
+      [
+        {
+          "file": "assets/js/acceso/editor.js",
+          "line": 81
+        },
+        {
+          "file": "assets/js/editor/editor.js",
+          "line": 105
+        }
+      ],
+      [
+        {
+          "file": "assets/js/acceso/editor.js",
+          "line": 82
+        },
+        {
+          "file": "assets/js/editor/editor.js",
+          "line": 106
+        }
+      ],
+      [
+        {
+          "file": "assets/js/acceso/editor.js",
+          "line": 83
+        },
+        {
+          "file": "assets/js/editor/editor.js",
+          "line": 107
+        }
+      ],
+      [
+        {
+          "file": "assets/js/acceso/editor.js",
+          "line": 84
+        },
+        {
+          "file": "assets/js/editor/editor.js",
+          "line": 108
+        }
+      ],
+      [
+        {
+          "file": "assets/js/acceso/editor.js",
+          "line": 85
+        },
+        {
+          "file": "assets/js/editor/editor.js",
+          "line": 109
+        }
+      ],
+      [
+        {
+          "file": "assets/js/acceso/editor.js",
+          "line": 86
+        },
+        {
+          "file": "assets/js/editor/editor.js",
+          "line": 110
+        }
+      ],
+      [
+        {
+          "file": "assets/js/acceso/editor.js",
+          "line": 87
+        },
+        {
+          "file": "assets/js/editor/editor.js",
+          "line": 111
+        }
+      ],
+      [
+        {
+          "file": "assets/js/acceso/editor.js",
+          "line": 88
+        },
+        {
+          "file": "assets/js/editor/editor.js",
+          "line": 112
+        }
+      ],
+      [
+        {
+          "file": "assets/js/acceso/editor.js",
+          "line": 89
+        },
+        {
+          "file": "assets/js/editor/editor.js",
+          "line": 113
+        }
+      ],
+      [
+        {
+          "file": "assets/js/acceso/editor.js",
+          "line": 90
+        },
+        {
+          "file": "assets/js/editor/editor.js",
+          "line": 114
+        }
+      ],
+      [
+        {
+          "file": "assets/js/acceso/editor.js",
+          "line": 91
+        },
+        {
+          "file": "assets/js/editor/editor.js",
+          "line": 115
+        }
+      ],
+      [
+        {
+          "file": "assets/js/acceso/editor.js",
+          "line": 92
+        },
+        {
+          "file": "assets/js/editor/editor.js",
+          "line": 116
+        }
+      ],
+      [
+        {
+          "file": "assets/js/acceso/editor.js",
+          "line": 93
+        },
+        {
+          "file": "assets/js/editor/editor.js",
+          "line": 117
+        }
+      ],
+      [
+        {
+          "file": "assets/js/acceso/editor.js",
+          "line": 94
+        },
+        {
+          "file": "assets/js/editor/editor.js",
+          "line": 118
+        }
+      ],
+      [
+        {
+          "file": "assets/js/acceso/editor.js",
+          "line": 95
+        },
+        {
+          "file": "assets/js/editor/editor.js",
+          "line": 119
+        }
+      ],
+      [
+        {
+          "file": "assets/js/acceso/editor.js",
+          "line": 96
+        },
+        {
+          "file": "assets/js/editor/editor.js",
+          "line": 120
+        }
+      ],
+      [
+        {
+          "file": "assets/js/acceso/editor.js",
+          "line": 97
+        },
+        {
+          "file": "assets/js/editor/editor.js",
+          "line": 121
+        }
+      ],
+      [
+        {
+          "file": "assets/js/acceso/editor.js",
+          "line": 98
+        },
+        {
+          "file": "assets/js/editor/editor.js",
+          "line": 122
+        }
+      ],
+      [
+        {
+          "file": "assets/js/acceso/editor.js",
+          "line": 99
+        },
+        {
+          "file": "assets/js/editor/editor.js",
+          "line": 123
+        }
+      ],
+      [
+        {
+          "file": "assets/js/acceso/editor.js",
+          "line": 100
+        },
+        {
+          "file": "assets/js/editor/editor.js",
+          "line": 124
+        }
+      ],
+      [
+        {
+          "file": "assets/js/acceso/editor.js",
+          "line": 101
+        },
+        {
+          "file": "assets/js/editor/editor.js",
+          "line": 125
+        }
+      ],
+      [
+        {
+          "file": "assets/js/acceso/editor.js",
+          "line": 102
+        },
+        {
+          "file": "assets/js/editor/editor.js",
+          "line": 126
+        }
+      ],
+      [
+        {
+          "file": "assets/js/acceso/editor.js",
+          "line": 103
+        },
+        {
+          "file": "assets/js/editor/editor.js",
+          "line": 127
+        }
+      ],
+      [
+        {
+          "file": "assets/js/acceso/editor.js",
+          "line": 104
+        },
+        {
+          "file": "assets/js/editor/editor.js",
+          "line": 128
+        }
+      ],
+      [
+        {
+          "file": "assets/js/acceso/editor.js",
+          "line": 105
+        },
+        {
+          "file": "assets/js/editor/editor.js",
+          "line": 129
+        }
+      ],
+      [
+        {
+          "file": "assets/js/acceso/editor.js",
+          "line": 106
+        },
+        {
+          "file": "assets/js/editor/editor.js",
+          "line": 130
+        }
+      ],
+      [
+        {
+          "file": "assets/js/acceso/editor.js",
+          "line": 107
+        },
+        {
+          "file": "assets/js/editor/editor.js",
+          "line": 131
+        }
+      ],
+      [
+        {
+          "file": "assets/js/acceso/editor.js",
+          "line": 108
+        },
+        {
+          "file": "assets/js/editor/editor.js",
+          "line": 132
+        }
+      ],
+      [
+        {
+          "file": "assets/js/acceso/editor.js",
+          "line": 109
+        },
+        {
+          "file": "assets/js/editor/editor.js",
+          "line": 133
+        }
+      ],
+      [
+        {
+          "file": "assets/js/acceso/editor.js",
+          "line": 110
+        },
+        {
+          "file": "assets/js/editor/editor.js",
+          "line": 134
+        }
+      ],
+      [
+        {
+          "file": "assets/js/acceso/editor.js",
+          "line": 111
+        },
+        {
+          "file": "assets/js/editor/editor.js",
+          "line": 135
+        }
+      ],
+      [
+        {
+          "file": "assets/js/acceso/editor.js",
+          "line": 112
+        },
+        {
+          "file": "assets/js/editor/editor.js",
+          "line": 136
+        }
+      ],
+      [
+        {
+          "file": "assets/js/acceso/editor.js",
+          "line": 113
+        },
+        {
+          "file": "assets/js/editor/editor.js",
+          "line": 137
+        }
+      ],
+      [
+        {
+          "file": "assets/js/acceso/editor.js",
+          "line": 114
+        },
+        {
+          "file": "assets/js/editor/editor.js",
+          "line": 138
+        }
+      ],
+      [
+        {
+          "file": "assets/js/acceso/editor.js",
+          "line": 115
+        },
+        {
+          "file": "assets/js/editor/editor.js",
+          "line": 139
+        }
+      ],
+      [
+        {
+          "file": "assets/js/acceso/editor.js",
+          "line": 116
+        },
+        {
+          "file": "assets/js/editor/editor.js",
+          "line": 140
+        }
+      ],
+      [
+        {
+          "file": "assets/js/acceso/editor.js",
+          "line": 117
+        },
+        {
+          "file": "assets/js/editor/editor.js",
+          "line": 141
+        }
+      ],
+      [
+        {
+          "file": "assets/js/acceso/editor.js",
+          "line": 118
+        },
+        {
+          "file": "assets/js/editor/editor.js",
+          "line": 142
+        }
+      ],
+      [
+        {
+          "file": "assets/js/acceso/editor.js",
+          "line": 119
+        },
+        {
+          "file": "assets/js/editor/editor.js",
+          "line": 143
+        }
+      ],
+      [
+        {
+          "file": "assets/js/acceso/editor.js",
+          "line": 120
+        },
+        {
+          "file": "assets/js/editor/editor.js",
+          "line": 144
+        }
+      ],
+      [
+        {
+          "file": "assets/js/acceso/editor.js",
+          "line": 121
+        },
+        {
+          "file": "assets/js/editor/editor.js",
+          "line": 145
+        }
+      ],
+      [
+        {
+          "file": "assets/js/acceso/editor.js",
+          "line": 122
+        },
+        {
+          "file": "assets/js/editor/editor.js",
+          "line": 146
+        }
+      ],
+      [
+        {
+          "file": "assets/js/acceso/editor.js",
+          "line": 123
+        },
+        {
+          "file": "assets/js/editor/editor.js",
+          "line": 147
+        }
+      ],
+      [
+        {
+          "file": "assets/js/acceso/editor.js",
+          "line": 124
+        },
+        {
+          "file": "assets/js/editor/editor.js",
+          "line": 148
+        }
+      ],
+      [
+        {
+          "file": "assets/js/acceso/editor.js",
+          "line": 125
+        },
+        {
+          "file": "assets/js/editor/editor.js",
+          "line": 149
+        }
+      ],
+      [
+        {
+          "file": "assets/js/acceso/editor.js",
+          "line": 126
+        },
+        {
+          "file": "assets/js/editor/editor.js",
+          "line": 150
+        }
+      ],
+      [
+        {
+          "file": "assets/js/acceso/editor.js",
+          "line": 127
+        },
+        {
+          "file": "assets/js/editor/editor.js",
+          "line": 151
+        }
+      ],
+      [
+        {
+          "file": "assets/js/acceso/editor.js",
+          "line": 128
+        },
+        {
+          "file": "assets/js/editor/editor.js",
+          "line": 152
+        }
+      ],
+      [
+        {
+          "file": "assets/js/acceso/editor.js",
+          "line": 129
+        },
+        {
+          "file": "assets/js/editor/editor.js",
+          "line": 153
+        }
+      ],
+      [
+        {
+          "file": "assets/js/acceso/editor.js",
+          "line": 130
+        },
+        {
+          "file": "assets/js/editor/editor.js",
+          "line": 154
+        }
+      ],
+      [
+        {
+          "file": "assets/js/acceso/editor.js",
+          "line": 131
+        },
+        {
+          "file": "assets/js/editor/editor.js",
+          "line": 155
+        }
+      ],
+      [
+        {
+          "file": "assets/js/acceso/editor.js",
+          "line": 132
+        },
+        {
+          "file": "assets/js/editor/editor.js",
+          "line": 156
+        }
+      ],
+      [
+        {
+          "file": "assets/js/acceso/editor.js",
+          "line": 133
+        },
+        {
+          "file": "assets/js/editor/editor.js",
+          "line": 157
+        }
+      ],
+      [
+        {
+          "file": "assets/js/acceso/editor.js",
+          "line": 134
+        },
+        {
+          "file": "assets/js/editor/editor.js",
+          "line": 158
+        }
+      ],
+      [
+        {
+          "file": "assets/js/acceso/editor.js",
+          "line": 135
+        },
+        {
+          "file": "assets/js/editor/editor.js",
+          "line": 159
+        }
+      ],
+      [
+        {
+          "file": "assets/js/acceso/editor.js",
+          "line": 136
+        },
+        {
+          "file": "assets/js/editor/editor.js",
+          "line": 160
+        }
+      ],
+      [
+        {
+          "file": "assets/js/acceso/editor.js",
+          "line": 137
+        },
+        {
+          "file": "assets/js/editor/editor.js",
+          "line": 161
+        }
+      ],
+      [
+        {
+          "file": "assets/js/acceso/editor.js",
+          "line": 138
+        },
+        {
+          "file": "assets/js/editor/editor.js",
+          "line": 162
+        }
+      ],
+      [
+        {
+          "file": "assets/js/acceso/editor.js",
+          "line": 139
+        },
+        {
+          "file": "assets/js/editor/editor.js",
+          "line": 163
+        }
+      ],
+      [
+        {
+          "file": "assets/js/acceso/editor.js",
+          "line": 140
+        },
+        {
+          "file": "assets/js/editor/editor.js",
+          "line": 164
+        }
+      ],
+      [
+        {
+          "file": "assets/js/acceso/editor.js",
+          "line": 141
+        },
+        {
+          "file": "assets/js/editor/editor.js",
+          "line": 165
+        }
+      ]
+    ]
+  },
+  "summary": {
+    "files": 215,
+    "ownTextModules": 164,
+    "ownJavaScript": 102,
+    "vendorFiles": 35,
+    "missingLiteralReferences": 0
+  }
+}
