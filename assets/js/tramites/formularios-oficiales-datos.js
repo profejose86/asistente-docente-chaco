@@ -76,17 +76,18 @@
         {title:"Persona solicitante",fields:[
           text("apellido","Apellido",{"required":true,"profileId":"perfilApellidos"}),
           text("nombres","Nombres",{"required":true,"profileId":"perfilNombres"}),
-          text("dni","DNI",{"required":true,"profileId":"dni","inputmode":"numeric","document":true}),
-          select("genero","Género",["F","M","Otro"]),
+          text("dni","DNI del borrador anterior (sin casillero en este PDF)",{"legacyOnly":true,"inputmode":"numeric","document":true}),
+          select("genero","Género",["F","M","Otro"],{profileId:"sexo"}),
           text("cuil","CUIL",{"inputmode":"numeric"}),
           text("telefono","Teléfono",{"profileId":"perfilTelefonoFijo"}),
           text("domicilio","Domicilio",{"profileId":"perfilDomicilio"}),
           text("organismoSolicitante","Organismo solicitante",{"required":true})
         ]},
-        {title:"Funciones / cargos involucrados",notice:"Agregá una fila por cargo o asignatura. Repetí la unidad educativa cuando tenga varios cargos; conservá juntos los del mismo establecimiento.",fields:[
+        {title:"Establecimientos y cargos",notice:"El original admite tres establecimientos con tres filas de cargos cada uno. Conservá juntos los cargos de cada establecimiento.",fields:[
           repeat("funciones","Establecimiento y cargo / función",[
-            text("codigoOficina","Código de oficina"),
-            text("codigoAnexo","Código de anexo"),
+            text("codigoOficina","Código de oficina del borrador anterior",{legacyOnly:true}),
+            text("codigoAnexo","Código de anexo del borrador anterior",{legacyOnly:true}),
+            text("numeroUE","Número de unidad educativa"),
             text("establecimiento","Unidad educativa / establecimiento"),
             text("nivel","Nivel"),
             text("modalidad","Modalidad"),
@@ -94,43 +95,53 @@
             text("zona","Zona"),
             text("jornada","Jornada"),
             text("localidad","Localidad o paraje"),
-            text("nombre","Nombre"),
+            text("nombre","Nombre del borrador anterior (revisar establecimiento)",{legacyOnly:true}),
             text("especialidad","Especialidad"),
             text("denominacionCargo","Denominación del cargo"),
-            select("situacionRevista","Situación de revista",["Titular","Interino","Suplente"]),
+            choices("situacionRevista","Situación de revista",["Titular","Interino","Suplente"]),
             text("asignatura","Asignatura"),
             text("anio","Año",{academicPart:"year"}),
             text("division","División",{academicPart:"division"}),
             text("turno","Turno"),
             text("horasCatedra","Horas cátedra"),
+            ...[2,3].flatMap(row=>[
+              text("denominacionCargo"+row,"Denominación del cargo · fila "+row),
+              choices("situacionRevista"+row,"Situación de revista · fila "+row,["Titular","Interino","Suplente"]),
+              text("asignatura"+row,"Asignatura · fila "+row),
+              text("anio"+row,"Año · fila "+row,{academicPart:"year"}),
+              text("division"+row,"División · fila "+row,{academicPart:"division"}),
+              text("turno"+row,"Turno · fila "+row),
+              text("horasCatedra"+row,"Horas cátedra · fila "+row)
+            ]),
             text("firmaDirector","Firma y sello del director de la unidad educativa",{"signature":true,"mnc":false})
-          ],{"minRows":1,"maxRows":50,"initialRows":3,"addLabel":"Agregar función"})
+          ],{"minRows":1,"maxRows":50,"initialRows":3,"addLabel":"Agregar establecimiento"})
         ]},
         {title:"Período y conformidades",fields:[
           date("periodoDesde","Período desde"),
           date("periodoHasta","Período hasta",{"after":"periodoDesde"}),
           area("funcionesAreas","Funciones y áreas a afectar",{"wide":true}),
-          text("fechaNotificacion","Fecha de notificación"),
+          date("fechaNotificacion","Fecha de notificación"),
           text("firmaOrganismo","Firma y sello del organismo solicitante",{"signature":true,"mnc":false}),
           text("conformidadDocente","Conformidad / firma del docente",{"signature":true,"mnc":false})
         ]},
         {title:"Planilla anexa · Anexo IV",fields:[
-          text("anexoCuil","CEIC"),
-          text("anexoDenominacion","Denominación del cargo y/o cantidad de horas cátedra"),
-          text("anexoSituacion","Situación de revista"),
-          text("oficinaOrigen","Oficina o establecimiento de origen"),
-          text("cuofOrigen","CUOF de origen"),
-          text("oficinaDestino","Oficina o institución de destino"),
-          text("cuofDestino","CUOF de destino"),
-          text("tipoCambio","Tipo de cambio de función")
+          text("anexoCuil","CEIC",{legacyOnly:true}),
+          text("anexoDenominacion","Denominación del cargo y/o cantidad de horas cátedra",{legacyOnly:true}),
+          text("anexoSituacion","Situación de revista",{legacyOnly:true}),
+          text("oficinaOrigen","Oficina o establecimiento de origen",{legacyOnly:true}),
+          text("cuofOrigen","CUOF de origen",{legacyOnly:true}),
+          text("oficinaDestino","Oficina o institución de destino",{legacyOnly:true}),
+          text("cuofDestino","CUOF de destino",{legacyOnly:true}),
+          text("tipoCambio","Tipo de cambio de función",{legacyOnly:true})
         ]},
       ]
     },
     {
       id:"traslado-inicial",
       code:"TRASLADO",
-      title:"Solicitud de traslado transitorio · Nivel Inicial",
-      catalogTitle:"Solicitud de traslado transitorio",
+      title:"Solicitud de Traslado Transitorio",
+      displayTitle:"Solicitud de Traslado Transitorio",
+      catalogTitle:"Solicitud de Traslado Transitorio",
       sourceUrl:"https://drive.google.com/file/d/1YZdAd1WqyyjuRSHMwAxpMuIA0vlTXPIq/view?usp=drive_link",
       sensitive:true,
       notices:["Declaro bajo juramento que los datos consignados son veraces y exactos. Me notifico que cualquier falsedad dejará sin efecto el traslado otorgado, sin perjuicio de las sanciones disciplinarias que correspondieren."],
@@ -145,9 +156,9 @@
           text("localidad","Localidad",{"profileId":"perfilLocalidad"}),
           text("codigoPostal","Código postal",{"profileId":"perfilCodigoPostal"}),
           text("titulo","Título docente",{"profileId":"perfilTitulo"}),
-          text("situacionRevista","Situación de revista"),
-          text("cargoActual","Cargo / horas actuales"),
-          text("establecimientoActual","Establecimiento actual"),
+          text("situacionRevista","Situación de revista",{legacyOnly:true}),
+          text("cargoActual","Cargo / horas actuales",{legacyOnly:true}),
+          text("establecimientoActual","Establecimiento actual",{legacyOnly:true}),
           text("distancia","Distancia al establecimiento"),
           text("transporte","Medio de transporte"),
           date("fechaTraslado","Fecha del traslado"),
@@ -155,21 +166,22 @@
         ]},
         {title:"Destino y antecedentes",fields:[
           area("otrosCargos","Otros cargos / establecimientos",{"wide":true}),
-          text("destinoSolicitado","Destino solicitado"),
+          text("destinoSolicitado","Destino solicitado del borrador anterior",{legacyOnly:true}),
           area("trasladosAnteriores","Traslados transitorios anteriores",{"wide":true}),
-          area("concursosTraslado","Participación en concursos de traslado permanente",{"wide":true})
+          area("concursosTraslado","Participación en concursos de traslado permanente",{"wide":true,"legacyOnly":true})
         ]},
         {title:"Fundamento y documentación",fields:[
-          area("fundamentoSalud","Fundamentos relacionados con la salud del agente o familiar",{"wide":true}),
-          text("familiarVinculo","Vínculo del familiar, si corresponde"),
+          area("fundamentoSalud","Fundamentos relacionados con la salud del agente o familiar",{"wide":true,"legacyOnly":true}),
+          choices("saludSolicitante","Razones de salud",["Del agente","Del cónyuge","De familiares consanguíneos de primer grado"]),
+          text("familiarVinculo","Vínculo del familiar del borrador anterior",{legacyOnly:true}),
           text("certificadoMedico","Certificado médico / constancias presentadas"),
           text("duracionTratamiento","Duración del tratamiento"),
-          area("antecedentesSalud","Antecedentes pertinentes para la solicitud",{"wide":true}),
-          area("integracionFamiliar","Integración familiar / causas del traslado",{"wide":true}),
-          date("fechaSolicitada","Fecha solicitada"),
+          area("antecedentesSalud","Antecedentes pertinentes para la solicitud",{"wide":true,"legacyOnly":true}),
+          area("integracionFamiliar","Integración familiar / causas del traslado",{"wide":true,"legacyOnly":true}),
+          date("fechaSolicitada","Fecha solicitada del borrador anterior",{legacyOnly:true}),
           area("otrasCausas","Otras causas",{"wide":true}),
           text("firma","Firma del solicitante",{"signature":true,"mnc":false}),
-          checks("declaracion","Declaración jurada",["Declaro que los datos consignados son correctos"],{"required":true})
+          checks("declaracion","Confirmación del borrador anterior",["Declaro que los datos consignados son correctos"],{"legacyOnly":true})
         ]},
         {title:"Establecimiento donde revista como titular",fields:[
           text("titularNumero","Jardín / biblioteca N.º"),

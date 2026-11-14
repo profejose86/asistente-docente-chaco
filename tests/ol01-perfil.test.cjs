@@ -21,6 +21,7 @@ fields.reason.value = 'Borrador conservado';
 const context = {
   adcOLForm: { elements: fields, reset() { throw new Error('No debe reiniciar el mismo borrador'); } },
   adcOLDraftKey: 'standalone',
+  adcOLProfileAutomatic:{},adcOLRefreshSchools(){},adcOLSyncRule(){},
   $: id => profile[id],
   adcOLInvalidate: () => invalidations++,
   adcOLPaperVariant: () => paperUpdates++,
@@ -35,7 +36,7 @@ assert.equal(fields.teacherDni.value, '12345678');
 assert.equal(fields.teacherSex.value, 'F');
 assert.equal(fields.teacherAddress.value, 'Calle de prueba');
 assert.equal(fields.teacherLocality.value, 'Localidad');
-assert.equal(fields.place.value, 'Localidad');
+assert.equal(fields.place.value, ''); // Lugar pertenece a la escuela, no al domicilio.
 assert.equal(fields.reason.value, 'Borrador conservado');
 assert.equal(invalidations, 1);
 context.adcOLStart(false);

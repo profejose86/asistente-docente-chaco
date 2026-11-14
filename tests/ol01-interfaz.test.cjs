@@ -23,8 +23,9 @@ test('OL-01: tiradores históricos no cubren la plantilla y permiten editar y ge
     await page.route('**/*',route=>route.request().url().startsWith('http://127.0.0.1:')||route.request().url().startsWith('blob:')?route.continue():route.abort());
     await page.goto(`http://127.0.0.1:${server.address().port}/index.html?adc-preview=1`);
     await page.evaluate(()=>{
-      inst=[];addInst({name:'IES San Fernando Rey',office:'1438',level:'Superior',entries:[{type:'asignatura',subject:'Matemática',course:'2 1',revista:'Titular',turno:'Mañana',schedule:[2,0,0,0,0,0,0]}]});
+      inst=[];addInst({name:'IES San Fernando Rey',localidad:'Resistencia',office:'1438',level:'Superior',entries:[{type:'asignatura',subject:'Matemática',course:'2 1',revista:'Titular',turno:'Mañana',schedule:[2,0,0,0,0,0,0]}]});
       adcSetSharedField('perfilApellidos','Prueba');adcSetSharedField('perfilNombres','Docente');adcSetSharedField('dni','12345678');tab('tramites');
+      $('sexo').value='M';$('perfilDomicilio').value='Calle de prueba';$('perfilLocalidad').value='Barranqueras';
     });
     await page.locator('.adc-form-catalog button').filter({hasText:'OL-01'}).click();
     // Reproduce también un ajuste guardado: no se elimina del almacenamiento.
@@ -35,7 +36,7 @@ test('OL-01: tiradores históricos no cubren la plantilla y permiten editar y ge
         const bounds=await page.locator('#'+id).boundingBox();
         assert.ok(bounds.width<=28&&bounds.height<=24,`${id} a ${width}px`);
       }
-      assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false,`sin desborde a ${width}px`);
+      assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false,`sin desborde a ${width}px `+await page.evaluate(()=>JSON.stringify([...document.querySelectorAll('body *')].filter(n=>n.getClientRects().length&&n.getBoundingClientRect().right>innerWidth+2&&!n.closest('.adc-ol-scroll')).map(n=>[n.tagName,n.id,n.className,n.getBoundingClientRect().width]).slice(0,10))));
       const input=page.locator('#adcOL [name=teacherGiven]');
       await input.click();
       assert.equal(await page.evaluate(()=>document.activeElement.name),'teacherGiven');
@@ -47,7 +48,7 @@ test('OL-01: tiradores históricos no cubren la plantilla y permiten editar y ge
     assert.ok(await page.locator('#adcOLPosts input:checked').count());
     await page.locator('#adcOL [name=from]').fill('2026-12-01');
     await page.locator('#adcOL [name=until]').fill('2026-12-02');
-    await page.locator('#adcOL button[type=submit]').click();
+    await page.locator('#adcOL [data-ol-action=preview]').first().click();
     await page.waitForSelector('#adcOLPreview iframe');
     const pdf=await page.locator('#adcOLPreview iframe').evaluate(async frame=>{
       const bytes=await(await fetch(frame.src)).arrayBuffer();return {length:bytes.byteLength,pages:(await PDFLib.PDFDocument.load(bytes)).getPageCount()};

@@ -120,3 +120,9 @@ html[data-theme=dark] #adcOfficialForm .adc-document-tools{background:#17263a}
 #adcOfficialForm .adc-prepared-overflow-field>label{position:absolute!important;top:-18px;width:auto!important;height:auto!important;clip-path:none!important;white-space:normal!important;overflow:visible!important;font-size:11px}
 #adcOfficialForm .adc-prepared-overflow-field .adc-official-control :is(input,textarea){color:#141a21!important;background:white!important}
 #adcOfficialForm[data-adc-form-id=sr01] .adc-prepared-date-picker{right:0}
+#adcOfficialForm[data-adc-form-id=cf01] .adc-prepared-date-picker{right:0}
+#adcOfficialForm[data-adc-form-id=traslado-inicial]{width:calc(100vw - 32px);max-width:none;margin-left:calc((100% - 100vw)/2 + 16px);box-sizing:border-box}
+#adcOfficialForm[data-adc-form-id=traslado-inicial] .adc-prepared-date-picker{right:0}
+#adcOfficialForm .adc-document-exit-fullscreen{display:none}
+#adcOfficialForm .adc-document-viewport:fullscreen{height:100vh;max-height:none;min-height:0;width:100vw;overflow:auto;background:#dce3eb;padding:48px 12px 12px;border:0;border-radius:0}
+#adcOfficialForm .adc-document-viewport:fullscreen .adc-document-exit-fullscreen{display:block;position:fixed;top:8px;right:16px;z-index:10;margin:0}

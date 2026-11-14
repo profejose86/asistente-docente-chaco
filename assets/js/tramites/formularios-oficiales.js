@@ -68,6 +68,16 @@
   let fontsPromise = null;
   let layoutFrame = null;
   const pointToPixel = 96/72;
+  const fullScreenButton=document.createElement('button');fullScreenButton.type='button';fullScreenButton.className='alt';fullScreenButton.textContent='Pantalla completa';fullScreenButton.dataset.adcDocumentFullscreen='';fullScreenButton.hidden=true;
+  section.querySelector('.adc-document-tools').append(fullScreenButton);
+  const exitFullScreen=document.createElement('button');exitFullScreen.type='button';exitFullScreen.className='alt adc-document-exit-fullscreen';exitFullScreen.textContent='Salir de pantalla completa';
+  const fullScreenHost=section.querySelector('.adc-document-viewport');fullScreenHost.append(exitFullScreen);
+  fullScreenButton.onclick=async()=>{
+    try{if(!fullScreenHost.requestFullscreen)throw Error('El navegador no admite pantalla completa.');await fullScreenHost.requestFullscreen();updateZoom()}
+    catch(error){status.textContent='No se pudo activar pantalla completa. '+error.message}
+  };
+  exitFullScreen.onclick=()=>document.exitFullscreen?.();
+  document.addEventListener('fullscreenchange',()=>{requestAnimationFrame(updateZoom);if(!document.fullscreenElement)fullScreenButton.focus({preventScroll:true})});
   const paperGap = 18;
   const preparedDocument = () => window.adcPreparedPdfForms?.[activeForm?.id];
   const preparedReadOnly = () => Boolean(preparedDocument() && !preparedDocument().fields);
@@ -440,9 +450,9 @@
     }
     for(const [key,settings] of Object.entries(preparedDocument()?.repeats||{})){
       const tools=document.createElement('details');tools.className='adc-prepared-repeat-tools';tools.dataset.preparedRepeat=key;tools.open=openRepeatTools.has(key);
-      const summary=document.createElement('summary');summary.textContent=`Organizar licencias previas (${settings.slots} columnas del PDF)`;tools.append(summary);
+      const summary=document.createElement('summary');summary.textContent=settings.label||`Organizar licencias previas (${settings.slots} columnas del PDF)`;tools.append(summary);
       for(const row of sheet.querySelectorAll('[data-adc-repeat-row]'))if(row.dataset.adcRepeatRow.startsWith(key+'.')){
-        const controls=row.querySelector('.adc-official-row-actions'),wrap=document.createElement('div'),label=document.createElement('span');label.textContent='Columna '+(Number(row.dataset.adcRepeatRow.split('.').at(-1))+1);wrap.append(label,controls);tools.append(wrap);
+        const controls=row.querySelector('.adc-official-row-actions'),wrap=document.createElement('div'),label=document.createElement('span');label.textContent=(settings.rowLabel||'Columna')+' '+(Number(row.dataset.adcRepeatRow.split('.').at(-1))+1);wrap.append(label,controls);tools.append(wrap);
       }
       const add=[...sheet.querySelectorAll('[data-adc-repeat-add]')].find(node=>node.dataset.adcRepeatAdd===key);if(add)tools.append(add);viewport.before(tools);
     }
@@ -459,7 +469,7 @@
   }
   function updateZoom() {
     if (!documentLayout || !viewport.clientWidth) return;
-    if (fitWidth) zoom = Math.min(1,(viewport.clientWidth-24)/(documentLayout.width*pointToPixel));
+    if (fitWidth) zoom = Math.min(preparedDocument()?.fullScreen?2:1,(viewport.clientWidth-24)/(documentLayout.width*pointToPixel));
     zoom = Math.max(.25,Math.min(2,zoom));
     sheet.style.transform = `scale(${zoom})`;
     documentSize.style.width = `${documentLayout.width*pointToPixel*zoom}px`;
@@ -718,6 +728,14 @@
       }
     } catch (error) {
       status.textContent = `No se pudo recuperar el borrador guardado. ${error.message}`;
+    }
+    for(const key of preparedDocument()?.draftDates||[]){
+      const raw=String(values[key]||'');if(!raw||/^\d{4}-\d{2}-\d{2}$/.test(raw))continue;
+      const parts=raw.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/);
+      const iso=parts?`${parts[3]}-${parts[2].padStart(2,'0')}-${parts[1].padStart(2,'0')}`:'';
+      const parsed=iso?new Date(iso+'T12:00:00Z'):null;
+      if(parsed&&Number.isFinite(+parsed)&&parsed.toISOString().slice(0,10)===iso)values[key]=iso;
+      else{values['legacy_'+key]=raw;values[key]='';const warning=`Fecha anterior conservada para revisar: ${raw}. Volvé a elegirla en el calendario.`;if(!draftWarnings.includes(warning))draftWarnings.push(warning)}
     }
     for (const [from,to] of form.migrations || []) {
       if (draftVersion >= 2) break;
@@ -1130,6 +1148,7 @@
     invalidatePreview();
     activeForm = form;
     const prepared = preparedDocument();
+    fullScreenButton.hidden=!prepared?.fullScreen;
     section.dataset.adcDocumentMode = preparedReadOnly() ? 'original' : prepared?.fields ? 'overlay' : 'editable';
     returnFocus = trigger;
     loadDraft(form);
@@ -1144,7 +1163,7 @@
       link.href = source.url; link.textContent = source.label;
       link.target = '_blank'; link.rel = 'noopener'; notices.append(link);
     }
-    title.textContent = `${form.title}${form.code ? ` · ${form.code}` : ''}`;
+    title.textContent = form.displayTitle || `${form.title}${form.code ? ` · ${form.code}` : ''}`;
     description.textContent = 'Revisá los datos del documento y completá los campos pendientes. El borrador se guarda en este dispositivo.';
     section.querySelector('[data-adc-official-mnc-help]').hidden = preparedReadOnly();
     section.querySelectorAll('[data-adc-official-action="download"]').forEach(button => {

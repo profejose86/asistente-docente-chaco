@@ -1,6 +1,6 @@
 # Formularios sobre PDF original: modelo DP-01
 
-SR-01 también utiliza ahora este motor con el PDF aportado en `materiales/`, sus controles y las nueve columnas originales. Ver [configuración y pruebas de SR-01](sr01-pdf-original.md). Los apartados siguientes documentan la implementación original de DP-01 y su revisión histórica.
+SR-01 también utiliza ahora este motor con el PDF aportado en `materiales/`, sus controles y las nueve columnas originales. Ver [configuración y pruebas de SR-01](sr01-pdf-original.md). CF-01 usa el mismo patrón sobre el PDF aportado, con tres establecimientos y nueve filas de cargos: [configuración y revisión de CF-01](cf01-pdf-original.md). La [Solicitud de Traslado Transitorio](traslado-transitorio-pdf.md) conserva sus dos páginas e incorpora edición en pantalla completa. Los apartados siguientes documentan la implementación original de DP-01 y su revisión histórica.
 
 DP-01 es el primer modelo editable para incorporar documentos preparados en serie. Conserva el PDF original, una página de 612 × 1008 puntos, la navegación de ADC y las acciones superiores e inferiores de vista preliminar, descarga e impresión. El papel se muestra completo; el zoom permite acercarlo.
 

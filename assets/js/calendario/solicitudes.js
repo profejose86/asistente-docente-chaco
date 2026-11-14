@@ -32,6 +32,8 @@ function events(d){
 }
 function closed(d,i){return events(d).filter(e=>e.closed&&(e.ies?isIES(i):matches(e,i)))}
 window.adcOLCalendarClosed=(d,i)=>closed(d,i).length>0||(d.startsWith('2026-')&&adcSummaryHolidays2026.has(d.slice(5)));
+// Cobertura conocida, no se confunde una lista nacional parcial con un calendario escolar completo.
+window.adcOLCalendarCoverage=(d,i)=>d.startsWith('2026-')&&isIES(i);
 // Feriados nacionales de 2026 que no cubre la base de fechas fijas.
 const adcSummaryHolidays2026=new Set([
  '02-16','02-17','04-03','06-15','08-17','10-12','11-23'

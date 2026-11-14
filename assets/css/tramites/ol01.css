@@ -41,3 +41,8 @@
 .adc-ol-field input.adc-ol-sex{appearance:none;border:0;background:transparent;display:block;cursor:pointer}
 .adc-ol-field input.adc-ol-sex:checked::after{content:"";width:100%;height:100%;background:linear-gradient(45deg,transparent 43%,#153f7e 44% 56%,transparent 57%),linear-gradient(-45deg,transparent 43%,#153f7e 44% 56%,transparent 57%);display:block}
 .adc-ol-field input.adc-ol-sex:focus-visible{outline:2px solid #234f98}
+#adcOLPosts input[type=checkbox]{display:inline-block;width:1em;height:1em;min-height:0;margin:0 .25em 0 0;padding:0;vertical-align:middle}
+.adc-ol-field input.adc-ol-sex:disabled::after{display:none}
+.adc-ol-actions{display:flex;flex-wrap:wrap;gap:12px;max-width:100%}
+.adc-ol-actions button{flex:1 1 180px;min-width:0}
+#adcOLPresentationNote{overflow-wrap:anywhere}

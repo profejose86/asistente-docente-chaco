@@ -134,5 +134,46 @@
     }
     return [...groups.values()];
   }
-  window.adcGuidedValidation=Object.freeze({create,controls});
+  // Bloqueo estricto optativo: cada formulario conserva sus propias reglas.
+  function createBlocking({root,collect,save=()=>{}}) {
+    const panel=document.createElement('aside');
+    panel.className='adc-pending-card';panel.hidden=true;panel.setAttribute('role','alert');
+    panel.setAttribute('aria-label','Datos que impiden generar el documento');document.body.append(panel);
+    let marked=new Set(),attempted=false;
+    function clear(input){input.classList.remove('adc-pending-field','adc-pending-pulse');input.removeAttribute('aria-invalid');input.removeAttribute('data-adc-pending-message');marked.delete(input);}
+    function refresh(focus=false){
+      const items=collect(),current=new Set(items.flatMap(item=>item.controls||[]));
+      for(const input of [...marked])if(!current.has(input))clear(input);
+      panel.replaceChildren();panel.hidden=!items.length;
+      if(!items.length)return true;
+      const title=document.createElement('strong');title.textContent='Revisá estos datos para continuar';panel.append(title);
+      const list=document.createElement('ol');panel.append(list);
+      for(const item of items){
+        const li=document.createElement('li'),link=document.createElement('button');link.type='button';link.textContent=item.message||item.label;
+        const reveal=()=>{
+          item.reveal?.();const input=item.controls?.find(node=>!node.disabled);
+          if(!input)return;
+          for(let parent=input.parentElement;parent;parent=parent.parentElement)if(parent.tagName==='DETAILS')parent.open=true;
+          input.scrollIntoView({block:'center',inline:'nearest',behavior:'instant'});input.focus({preventScroll:true});
+        };
+        link.addEventListener('click',reveal);li.append(link);
+        if(item.profile){const profile=document.createElement('button');profile.type='button';profile.textContent='Corregir en Mi perfil docente';profile.onclick=()=>{save();item.profile()};li.append(profile)}
+        list.append(li);
+        for(const input of item.controls||[]){
+          if(input.disabled)continue;
+          input.classList.add('adc-pending-field');input.setAttribute('aria-invalid','true');input.dataset.adcPendingMessage=item.message||item.label;
+          if(focus){input.classList.remove('adc-pending-pulse');void input.offsetWidth;input.classList.add('adc-pending-pulse');setTimeout(()=>input.classList.remove('adc-pending-pulse'),2000)}
+          marked.add(input);
+        }
+        if(focus&&item===items[0])reveal();
+      }
+      return false;
+    }
+    const api={check(){attempted=true;save();return refresh(true)},refresh(){if(attempted)refresh()},cancel(){attempted=false;panel.hidden=true;for(const input of [...marked])clear(input)},panel};
+    root.addEventListener('input',()=>api.refresh());root.addEventListener('change',()=>api.refresh());
+    const observer=new MutationObserver(()=>{if(root.hidden||root.closest('.hide'))api.cancel()});
+    observer.observe(root,{attributes:true,attributeFilter:['class','hidden']});
+    return api;
+  }
+  window.adcGuidedValidation=Object.freeze({create,controls,createBlocking});
 })();

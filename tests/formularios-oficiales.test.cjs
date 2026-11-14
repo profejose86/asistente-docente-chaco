@@ -92,7 +92,7 @@ test('Chrome verifica formularios, borradores, MNC, filas, validación y PDF',{
       });
     }
     // DP-01 se revisa como PDF preparado, sin habilitar aún el esquema histórico.
-    for (const form of forms.filter(form => !['bd02','dp01','sr01'].includes(form.id))) await t.test(form.id,async() => {
+    for (const form of forms.filter(form => !['bd02','dp01','sr01','cf01','traslado-inicial'].includes(form.id))) await t.test(form.id,async() => {
       await open(form.id);
       assert.ok(await page.locator('.adc-document-page').count(),`${form.id} se muestra al abrir`);
       await page.locator('[data-adc-document-pending]').click();
@@ -417,9 +417,9 @@ test('Chrome verifica formularios, borradores, MNC, filas, validación y PDF',{
         adcOLForm.elements.from.value='';adcOLForm.elements.until.value='';
         adcOLForm.requestSubmit();
       });
-      await page.waitForSelector('.adc-review[data-adc-review-stage=summary]:not([hidden])');
-      await page.getByRole('button',{name:'Continuar igual',exact:true}).click();
-      await page.waitForSelector('#adcOLPreview iframe');
+      await page.waitForSelector('.adc-pending-card:not([hidden])');
+      assert.equal(await page.locator('#adcOLPreview iframe').count(),0);
+      await page.evaluate(()=>adcOLGuided.cancel());
       assert.equal(await page.evaluate(()=>adcOLForm.elements.from.value),'');
       await page.evaluate(()=>{window.testPrintCalls=0;window.print=()=>testPrintCalls++;tab('dj');djRender();djPrint();});
       await page.waitForSelector('.adc-review[data-adc-review-stage=summary]:not([hidden])');
@@ -521,13 +521,10 @@ test('Chrome verifica formularios, borradores, MNC, filas, validación y PDF',{
     await fillRequired();
     await page.locator('[data-adc-field="domicilio"]').fill('PALABRA '.repeat(900)+'FIN_DOMICILIO');
     await page.locator('[data-adc-field="funcionesAreas"]').fill('OBSERVACION '.repeat(900)+'FIN_OBSERVACION');
-    const download = page.waitForEvent('download');
     await page.locator('[data-adc-official-action="download"]').first().click();
-    await (await download).saveAs(path.join(output,'texto-largo.pdf'));
-    const continuation = page.locator('.adc-document-continuation').first();
-    assert.ok(await continuation.count());
-    await continuation.click();
-    assert.ok(await page.evaluate(() => document.activeElement.hasAttribute('data-adc-field')));
+    assert.match(await page.locator('[data-adc-official-status]').textContent(),/7 puntos/);
+    assert.match(await page.locator('[data-adc-field="domicilio"]').inputValue(),/FIN_DOMICILIO$/);
+    assert.match(await page.locator('[data-adc-field="funcionesAreas"]').inputValue(),/FIN_OBSERVACION$/);
     // Required exceptions stay confined to their official form. Profile changes preserve optional MNC.
     await open('sr01');
     await page.locator('[data-adc-field="domicilio"]').fill('');

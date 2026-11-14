@@ -19,7 +19,7 @@
       const commands=result.pages[box.page];
       if(setting.overflow){
         result.extraHeight=Math.max(result.extraHeight||0,setting.top+setting.height-height+24);
-        if(String(values[field.path]||'').trim()||marked.has(field.path))result.errors.push(`${field.repeatLabel}: el registro ${field.repeatIndex+1} excede las columnas del PDF. El dato se conserva debajo del documento; reorganizá o quitá esa entrada antes de exportar.`);
+        if(String(values[field.path]||'').trim()||marked.has(field.path))result.errors.push(setting.overflowMessage?`${field.label}: ${setting.overflowMessage}`:`${field.repeatLabel}: el registro ${field.repeatIndex+1} excede las columnas del PDF. El dato se conserva debajo del documento; reorganizá o quitá esa entrada antes de exportar.`);
         continue;
       }
       if(setting.replacePrintedYear){

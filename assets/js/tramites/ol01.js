@@ -12,11 +12,7 @@ const adcDocsDefaults={'Enfermedad o lesión común':[
 const adcDocsDock=$('adcDocsDock'),adcDocsPanel=$('adcDocsPanel');
 const adcDocsForm=$('adcDocsForm'),adcOLForm=$('adcOLForm');
 adcOLForm.noValidate=true;
-const adcOLGuided=adcGuidedValidation.create({root:adcOLForm,collect:()=>{
- const relative=adcOLForm.elements.mode.value==='relative';
- const keys=['teacherSurname','teacherGiven','teacherDni',...(relative?['surname','given','dni','sex','address','relation','place','signDate']:['reason','from','until','law','article','description'])];
- return keys.map(key=>({key,input:adcOLForm.elements[key]})).filter(({input})=>input&&!input.disabled&&!input.value.trim()&&!input.hasAttribute('data-adc-mnc-marked')).map(({key,input})=>({key,label:input.getAttribute('aria-label')||input.labels?.[0]?.textContent.trim()||key,controls:[input]}));
-}});
+const adcOLGuided=adcGuidedValidation.createBlocking({root:$('adcOL'),collect:()=>adcOLPending(),save:()=>adcOLSaveDraft()});
 let adcDocsContext='',adcDocsView='',adcDocsEditing=-1;
 let adcOLUrl='',adcOLGeneration=0;
 const adcDocsKey='adc_documentos_tramite_v1';
@@ -132,14 +128,13 @@ function adcOLInvalidate(){
  if(adcOLUrl)URL.revokeObjectURL(adcOLUrl);
  adcOLUrl='';$('adcOLPreview').replaceChildren();
 }
-function adcOLPosts(schoolId,contextual=false){
+function adcOLPosts(schoolId,contextual=false,selection=null){
  const group=$('adcOLPosts');group.replaceChildren();
  const school=inst.find(i=>String(i.id)===schoolId);
- const relevant=contextual&&schoolId===$('escuelaSelect').value?new Set(affected().map(row=>row.e)):null;
  for(const [index,entry] of (school?.entries||[]).entries()){
-  const cargo=adcOLCargo(entry);if(!cargo)continue;
+  const cargo=adcOLCargo(entry)||'Cargo sin denominación';
   const label=document.createElement('label'),box=document.createElement('input');
-  box.type='checkbox';box.setAttribute('form','adcOLForm');box.name='post';box.value=String(index);box.checked=!relevant?.size||relevant.has(entry);
+  box.type='checkbox';box.setAttribute('form','adcOLForm');box.name='post';box.value=String(index);box.dataset.postKey=entry.djUid||String(index);box.checked=selection===null||selection.includes(box.dataset.postKey);
   box.setAttribute('aria-label','Incluir '+cargo);
   for(const value of [school.name,cargo,entry.revista||'']){
    const span=document.createElement('span');span.textContent=value;span.title=value;label.append(span);
@@ -153,22 +148,24 @@ function adcOLResolve(reason,school,entries,pay,relation){
  if(!reason)return {message:'1. Confirmá un motivo de la lista.'};
  if(!school)return {message:'2. Elegí en qué escuela vas a presentar la solicitud.'};
  if(!entries.length)return {message:'Elegí al menos un cargo u hora cátedra.'};
+ if(reason==='Enfermedad de un miembro del grupo familiar'&&adcOLFamilyStage.value==='extension'&&entries.some(e=>e.revista!=='Titular'))return {message:'Prórroga familiar pendiente de verificar para: '+entries.filter(e=>e.revista!=='Titular').map(adcOLCargo).join('; ')+'. El nomenclador sólo distingue una prórroga para titular.'};
  if(reason==='Exámenes'){
   const excluded=entries.filter(e=>e.revista==='Suplente');
   if(excluded.length)return {message:'Exámenes no corresponde a estos cargos suplentes: '+excluded.map(adcOLCargo).join(', ')+'. Desmarcalos para continuar con los cargos titulares o interinos.'};
  }
  const rows=entries.map(e=>{
   const blood={Titular:['381','320-C'],Interino:['382','334-B'],Suplente:['383','343-B']};
-  const [code,article]=reason==='Duelo'?adcDueloCode(e.revista,relation):reason==='Donación de sangre'?blood[e.revista]||['','']:mapping(e,reason,pay);
+  const family={Titular:[adcOLFamilyStage.value==='extension'?'152':'151','309-D'],Interino:['155','331-E'],Suplente:['156','340-E']};
+  const [code,article]=reason==='Enfermedad de un miembro del grupo familiar'?family[e.revista]||['','']:reason==='Duelo'?adcDueloCode(e.revista,relation):reason==='Donación de sangre'?blood[e.revista]||['','']:mapping(e,reason,pay);
   return {code,article,description:adcTramiteLabel(reason),label:adcOLCargo(e)+' · '+(e.revista||'Sin situación de revista')};
  });
- if(rows.some(row=>!row.code||!row.article))return {message:reason==='Duelo'&&!relation?'Encuadre pendiente: confirmá el parentesco del fallecido.':'Encuadre pendiente de verificar para el motivo y los cargos seleccionados.'};
+ if(rows.some(row=>!row.code||!row.article))return {message:reason==='Duelo'&&!relation?'Encuadre pendiente: confirmá el parentesco del fallecido.':'Encuadre pendiente de verificar: '+rows.filter(row=>!row.code||!row.article).map(row=>row.label).join('; ')+'.'};
  const first=rows[0];
  if(rows.some(row=>row.code!==first.code||row.article!==first.article||row.description!==first.description))
   return {message:'Encuadres distintos. Seleccioná cargos compatibles: '+rows.map(row=>row.label+' ('+row.code+' / '+row.article+')').join('; ')};
  const confirmed=[adcOLConfirmedReason,'Exámenes'].includes(reason)&&['superior','terciario'].includes(norm(school.level).trim());
- const previewOnly=norm(school.level).trim()==='secundario';
- return {row:first,confirmed,previewOnly,message:previewOnly?'Nivel Secundario: vista previa de prueba, no válida para presentar.':confirmed?'Encuadre tomado del DL-01 según la situación de revista seleccionada.':'Encuadre disponible. Uso del OL-01 pendiente de confirmar para este motivo y nivel.'};
+ const previewOnly=norm(school.level).trim()==='secundario'&&[adcOLConfirmedReason,'Exámenes'].includes(reason);
+ return {row:first,confirmed,previewOnly,message:previewOnly?'Nivel Secundario: vista previa de prueba, no válida para presentar.':confirmed?'Encuadre tomado del DL-01 según la situación de revista seleccionada.':reason==='Enfermedad de un miembro del grupo familiar'?'Encuadre documental del nomenclador. Falta confirmar la aplicabilidad del OL-01 para este motivo/nivel y la antigüedad en el cargo y establecimiento cuando corresponda.':'Encuadre disponible. Uso del OL-01 pendiente de confirmar para este motivo y nivel.'};
 }
 function adcOLSelection(){
  const data=new FormData(adcOLForm),school=inst.find(i=>String(i.id)===adcOLForm.elements.school.value);
@@ -198,12 +195,14 @@ function adcOLSuggest(){
  adcOLSuggestions.hidden=false;
 }
 function adcOLPick(reason,guide=false){
+ if(adcOLFields.until.value===adcOLPresentation.oneDay)adcOLFields.until.value='';
  adcOLFields.catalogReason.value=reason;
+ if(reason==='Donación de sangre'){adcOLFields.until.value=adcOLFields.from.value;adcOLPresentation.oneDay=adcOLFields.from.value}
  adcOLQuery.value=reason?adcTramiteLabel(reason):'';
  adcOLFields.reason.value=adcOLQuery.value;
  adcOLSuggestions.hidden=true;
  adcOLFields.bereavement.value='';
- adcOLSyncRule();adcOLInvalidate();
+ adcOLSuggestSchool();adcOLSyncRule();adcOLSaveDraft();adcOLInvalidate();
  if(guide){adcOLFields.school.classList.add('adc-ol-step-next');adcOLFields.school.focus()}
 }
 function adcOLRelation(){
@@ -219,7 +218,7 @@ function adcOLBereavementEnd(start,days,school,isClosed){
  return '';
 }
 function adcOLBereavement(rule,school){
- const f=adcOLFields,isDuelo=f.catalogReason.value==='Duelo',active=isDuelo&&f.mode.value!=='relative',relation=adcOLRelation();
+ const f=adcOLFields,isDuelo=f.catalogReason.value==='Duelo',active=isDuelo,relation=adcOLRelation();
  $('adcOLKin').hidden=!active;
  f.bereavement.disabled=!active;
  if(f.until.value===adcOLAutoUntil)f.until.value='';
@@ -239,7 +238,7 @@ function adcOLBereavement(rule,school){
  if(!active||!relation||!rule.row||!school)return '';
  const days=[0,8,2,1][relation[1]];
  adcOLAutoUntil=adcOLBereavementEnd(f.from.value,days,school,window.adcOLCalendarClosed);
- if(adcOLAutoUntil)f.until.value=adcOLAutoUntil;
+ if(adcOLAutoUntil&&!f.until.value)f.until.value=adcOLAutoUntil;
  return days+' día(s) hábiles.'+(adcOLAutoUntil?' Hasta estimado: '+fmt(adcOLAutoUntil)+' según el calendario cargado.':' Elegí Desde para calcular Hasta.');
 }
 adcOLQuery.addEventListener('focus',adcOLSuggest);
@@ -266,16 +265,143 @@ function adcOLSyncRule(){
  fields.law.value=rule.row?.code||'';fields.article.value=rule.row?.article||'';fields.description.value=rule.row?.description||'';
  $('adcOLRuleStatus').textContent=[rule.message,adcOLBereavement(rule,school)].filter(Boolean).join('\n');
  $('adcOLRuleStatus').className=rule.confirmed?'status':'warning';
- fields.school.disabled=!fields.catalogReason.value;
+ fields.school.disabled=false;
  fields.school.classList.toggle('adc-ol-step-next',Boolean(fields.catalogReason.value&&!school));
+ adcOLMode();adcOLPresentation();
 }
 let adcOLDraftKey=null;
+let adcOLProfileAutomatic={};
+// La decisión del catálogo gobierna el bloque; el radio impreso no es un selector de trámite.
+function adcOLFamily(){return adcOLFields.catalogReason.value==='Enfermedad de un miembro del grupo familiar'}
+// Las tres acciones, arriba y abajo, comparten el mismo submit y el mismo guardián.
+for(const position of ['top','bottom']){
+ const bar=document.createElement('div');bar.className='toolbar adc-ol-actions';bar.setAttribute('aria-label','Acciones OL-01 '+position);
+ for(const [action,label] of [['preview','Ver Vista Preliminar'],['download','Descargar PDF Completado'],['print','Imprimir']]){
+  const button=document.createElement('button');button.type='submit';button.setAttribute('form','adcOLForm');button.dataset.olAction=action;button.textContent=label;bar.append(button);
+  button.addEventListener('click',event=>{event.preventDefault();adcOLForm.requestSubmit(button)});
+ }
+ document.addEventListener('DOMContentLoaded',()=>{
+  if(position==='top')$('adcOLSheet').before(bar);else $('adcOLStatus').before(bar);
+ },{once:true});
+}
+document.addEventListener('DOMContentLoaded',()=>$('adcOLStatus').parentElement.querySelector('button[type=submit]:not([data-ol-action])')?.remove(),{once:true});
+const adcOLCross=$('adcOLRelativeCross');adcOLCross.querySelector('path').setAttribute('d','M0 100L100 0M0 0L100 100');
+// Misma geometría que el PDF: x=422.8, y=320.9, derecha=805.3, fin=489.
+adcOLCross.parentElement.style.height=(168.1/595.32*100)+'%';
+const adcOLFamilyStage=document.createElement('select');
+adcOLFamilyStage.id='adcOLFamilyStage';adcOLFamilyStage.setAttribute('aria-label','Solicitud familiar inicial o prórroga');
+adcOLFamilyStage.append(new Option('Inicial','initial'),new Option('Prórroga','extension'));
+const adcOLFamilyLabel=document.createElement('label');adcOLFamilyLabel.textContent='¿La solicitud familiar es inicial o una prórroga?';adcOLFamilyLabel.append(adcOLFamilyStage);adcOLFamilyLabel.hidden=true;
+document.addEventListener('DOMContentLoaded',()=>$('adcOLRuleStatus').before(adcOLFamilyLabel),{once:true});
+adcOLFamilyStage.onchange=()=>{adcOLSyncRule();adcOLSaveDraft();adcOLInvalidate()};
+const adcOLPresentationNote=document.createElement('p');adcOLPresentationNote.id='adcOLPresentationNote';adcOLPresentationNote.setAttribute('role','status');
+const adcOLApplyDate=document.createElement('button');adcOLApplyDate.type='button';adcOLApplyDate.textContent='Aplicar fecha sugerida';adcOLApplyDate.hidden=true;
+document.addEventListener('DOMContentLoaded',()=>$('adcOLSheet').after(adcOLPresentationNote,adcOLApplyDate),{once:true});
+let adcOLAutomaticPlace='',adcOLAutomaticSign='',adcOLSuggestedSign='',adcOLManualSign=false;
+adcOLApplyDate.onclick=()=>{adcOLFields.signDate.value=adcOLSuggestedSign;adcOLAutomaticSign=adcOLSuggestedSign;adcOLManualSign=false;adcOLSaveDraft();adcOLInvalidate();adcOLGuided.refresh()};
+function adcOLPresentation(){
+ const {school,entries}=adcOLSelection(),f=adcOLFields;
+ adcOLFamilyLabel.hidden=!adcOLFamily();
+ const place=school?.localidad||school?.locality||'';
+ if(!f.place.value||f.place.value===adcOLAutomaticPlace)f.place.value=place;
+ // Un cambio de escuela exige su localidad, no la del domicilio del docente.
+ if(adcOLPresentation.lastSchool!==f.school.value){f.place.value=place;adcOLPresentation.lastSchool=f.school.value}
+ adcOLAutomaticPlace=place;
+ if(f.catalogReason.value==='Donación de sangre'&&f.from.value&&(!f.until.value||f.until.value===adcOLPresentation.oneDay))f.until.value=f.from.value;
+ adcOLPresentation.oneDay=f.catalogReason.value==='Donación de sangre'?f.from.value:'';
+ const result=adcOLNextDuty(f.until.value,school,entries);
+ adcOLSuggestedSign=result.date||'';
+ if(!adcOLManualSign&&(!f.signDate.value||f.signDate.value===adcOLAutomaticSign)){f.signDate.value=adcOLSuggestedSign;adcOLAutomaticSign=adcOLSuggestedSign}
+ adcOLApplyDate.hidden=!adcOLSuggestedSign||f.signDate.value===adcOLSuggestedSign;
+ adcOLPresentationNote.textContent=[!place?'Completá Lugar: falta la localidad de la institución en Mi perfil docente.':'Lugar tomado de la institución.',result.message,adcOLManualSign?'Se conserva la fecha de presentación que ingresaste.':'',
+  'Días disponibles: pendientes. El historial no acredita que estén registradas todas las licencias; faltan confirmar el saldo anual y, cuando corresponda, la antigüedad en el cargo/establecimiento.'].filter(Boolean).join(' ');
+}
+function adcOLNextDuty(until,school,entries){
+ if(!date(until))return {message:'Completá Hasta para sugerir la presentación.'};
+ if(!school)return {message:'Elegí la institución para consultar sus horarios.'};
+ const weekdays=new Set(entries.flatMap(entry=>{
+  const intervals=(entry.djIntervals||[]).filter(slot=>slot.start&&slot.end&&slot.end>slot.start).map(slot=>Number(slot.day));
+  return [...intervals,...(entry.schedule||[]).flatMap((n,day)=>Number(n)>0?[day]:[])].filter(day=>day>=0&&day<5);
+ }));
+ if(!weekdays.size)return {message:'Faltan horarios de esta institución. Completá la fecha de presentación manualmente.'};
+ const covered=window.adcOLCalendarCoverage?.(until,school);
+ if(!covered)return {message:'Falta confirmar el calendario escolar y los asuetos de esta institución/año. Completá la presentación manualmente.'};
+ const day=new Date(until+'T12:00:00Z');
+ for(let count=0;count<366;count++){
+  day.setUTCDate(day.getUTCDate()+1);const iso=day.toISOString().slice(0,10);
+  if(!window.adcOLCalendarCoverage?.(iso,school))break;
+  if(weekdays.has((day.getUTCDay()+6)%7)&&!window.adcOLCalendarClosed(iso,school))return {date:iso,message:'Presentación sugerida: '+fmt(iso)+', primera obligación posterior a Hasta; se excluyen fines de semana y días no laborables del calendario cargado. Podés editarla.'};
+ }
+ return {message:'No hay una obligación próxima con calendario confirmado. Completá la presentación manualmente.'};
+}
+function adcOLRefreshSchools(){
+ const previous=adcOLFields.school.value;
+ const selection=[...$('adcOLPosts').querySelectorAll('input:checked')].map(input=>input.dataset.postKey);
+ adcOLFields.school.replaceChildren(new Option('Elegí una institución',''),...inst.map(i=>new Option(i.name,String(i.id))));
+ adcOLFields.school.value=previous;adcOLPosts(adcOLFields.school.value,false,selection);
+}
+function adcOLSuggestSchool(){
+ if(adcOLFields.school.value||!adcOLFields.catalogReason.value)return;
+ let store;try{store=JSON.parse(localStorage.getItem('adc_dj02_v1')||'{}')}catch{return}
+ const dni=adcPersonalDigits($('dni').value),reason=norm(dj02Motivo(adcOLFields.catalogReason.value));
+ // Sólo solicitudes DL-01 del mismo DNI y motivo; no adivinar por la última escuela usada.
+ const licenses=[...(store.adc58?.licenses||[]).filter(item=>item.source==='DL-01'&&item.status!=='deleted'&&adcPersonalDigits(item.dni)===dni),...(store.pending||[]).filter(item=>adcPersonalDigits(item.dni)===dni)];
+ const names=new Set(licenses.flatMap(item=>item.records||[]).filter(row=>norm(row.motivo)===reason&&(!adcOLFields.from.value||row.desde===adcOLFields.from.value)&&(!adcOLFields.until.value||row.hasta===adcOLFields.until.value)).map(row=>norm(row.unidad)));
+ const schools=inst.filter(school=>names.has(norm(school.name)));
+ if(names.size===1&&schools.length===1){adcOLFields.school.value=String(schools[0].id);adcOLPosts(adcOLFields.school.value);$('adcOLSource').textContent='Institución sugerida desde un DL-01 relacionado. Verificá Presentada ante; podés cambiarla.'}
+}
+function adcOLSaveDraft(){
+ if(adcOLDraftKey===null)return;
+ const values={};for(const control of adcOLForm.elements)if(control.name&&!['post','mode'].includes(control.name)&&!['radio','checkbox'].includes(control.type))values[control.name]=control.value;
+ for(const key of ['teacherSex','sex'])values[key]=adcOLFields[key].value;
+ const posts=[...$('adcOLPosts').querySelectorAll('input:checked')].map(input=>input.dataset.postKey);
+ const draft={version:1,values,posts,profileAutomatic:adcOLProfileAutomatic,stage:adcOLFamilyStage.value,manualSign:adcOLManualSign,automaticSign:adcOLAutomaticSign,automaticPlace:adcOLAutomaticPlace};
+ try{localStorage.setItem('adc-ol01-draft-'+adcOLDraftKey,JSON.stringify(draft))}catch{$('adcOLStatus').textContent='No se pudo guardar el borrador en este navegador. No cierres el formulario.'}
+}
+function adcOLRestoreDraft(){
+ let draft;try{draft=JSON.parse(localStorage.getItem('adc-ol01-draft-'+adcOLDraftKey)||'null')}catch{}
+ adcOLRestoreDraft.posts=null;
+ if(!draft)return;
+ adcOLRestoreDraft.posts=Array.isArray(draft.posts)?draft.posts:null;
+ for(const [key,original] of Object.entries(draft.profileAutomatic||{}))if(draft.values?.[key]!==original&&adcOLFields[key])adcOLFields[key].value=draft.values[key];
+ for(const [key,value] of Object.entries(draft.values||{}))if(adcOLFields[key]&&!['post','mode','teacherSurname','teacherGiven','teacherDni','teacherSex','teacherAddress','teacherLocality'].includes(key))adcOLFields[key].value=String(value||'');
+ adcOLQuery.value=adcOLFields.catalogReason.value?adcTramiteLabel(adcOLFields.catalogReason.value):'';
+ adcOLFamilyStage.value=draft.stage||'initial';adcOLManualSign=Boolean(draft.manualSign);adcOLAutomaticSign=draft.automaticSign||'';adcOLAutomaticPlace=draft.automaticPlace||'';
+ adcOLPresentation.lastSchool=adcOLFields.school.value;
+}
+function adcOLPending(){
+ const f=adcOLFields,{school,entries,rule}=adcOLSelection(),items=[];
+ const controls=key=>key==='catalogReason'?[adcOLQuery]:key==='post'?[...$('adcOLPosts').querySelectorAll('input')]:f[key]?.length&& !f[key].tagName?[...f[key]]:[f[key]].filter(Boolean);
+ const profileMap={teacherSurname:'perfilApellidos',teacherGiven:'perfilNombres',teacherDni:'dni',teacherSex:'sexo',teacherAddress:'perfilDomicilio',teacherLocality:'perfilLocalidad',school:'instituciones'};
+ function add(key,message){items.push({key,message,controls:controls(key),profile:profileMap[key]?()=>adcOLGoProfile(profileMap[key]):null})}
+ for(const key of ['teacherSurname','teacherGiven','teacherDni','teacherSex','teacherAddress','teacherLocality'])if(!f[key].value.trim()&&!f[key].adcMnc?.marked)add(key,'Completá '+(controls(key)[0]?.getAttribute('aria-label')||key)+'.');
+ if(f.teacherDni.value&&!adcPersonalValid(f.teacherDni.value,7,8))add('teacherDni','Ingresá un DNI del docente válido (7 u 8 dígitos).');
+ if(!school)add('school','Seleccioná la institución donde vas a presentar la solicitud.');
+ if(school&&!entries.length)add('school','La institución no tiene cargos seleccionados. Cargalos en Mi perfil docente o seleccioná los cargos.');
+ if(entries.length>12)add('post','El OL-01 admite 12 filas; seleccioná hasta 12 cargos para este documento.');
+ if(!f.catalogReason.value)add('catalogReason','Seleccioná y confirmá un motivo del catálogo.');
+ if(f.catalogReason.value&&school&&entries.length&&!rule.confirmed&&!rule.previewOnly)add('post',rule.message);
+ for(const key of ['reason','from','until','law','article','description'])if(!f[key].value.trim())add(key,'Completá '+f[key].getAttribute('aria-label')+'.');
+ if(f.from.value&&f.until.value&&(!date(f.from.value)||!date(f.until.value)||f.until.value<f.from.value))add('until','Hasta debe ser una fecha válida igual o posterior a Desde.');
+ if(f.catalogReason.value==='Donación de sangre'&&f.from.value&&f.until.value!==f.from.value)add('until','Donación de sangre está configurada como un día: Desde y Hasta deben coincidir.');
+ if(rule.row&&(f.law.value!==rule.row.code||f.article.value!==rule.row.article))add('law','Ley N.º (código) y Artículo deben coincidir con el encuadre de los cargos: '+rule.row.code+' / '+rule.row.article+'.');
+ if(adcOLFamily())for(const key of ['surname','given','dni','sex','address','relation'])if(!f[key].value.trim())add(key,'Completá '+(controls(key)[0]?.getAttribute('aria-label')||key)+'.');
+ if(adcOLFamily()&&f.dni.value&&!adcPersonalValid(f.dni.value,7,8))add('dni','Ingresá un DNI válido del pariente (7 u 8 dígitos).');
+ for(const key of ['place','signDate'])if(!f[key].value.trim())add(key,key==='place'?'Completá Lugar con la localidad de la institución.':'Completá la fecha de presentación; podés usar el calendario.');
+ return items;
+}
+function adcOLGoProfile(id){
+ adcOLSaveDraft();tab('profile');const target=$(id);target?.closest('details')?.setAttribute('open','');target?.scrollIntoView({block:'center'});target?.focus();
+ let back=$('adcOLResume');if(!back){back=document.createElement('button');back.id='adcOLResume';back.type='button';back.textContent='Retomar OL-01';$('profile').prepend(back);back.onclick=()=>{adcOLStart(adcOLDraftKey!=='standalone');back.remove()}}
+}
 function adcOLMode(){
- const fields=adcOLForm.elements,relative=fields.mode.value==='relative';
- for(const key of ['reason','from','until','law','article','description'])fields[key].disabled=relative;
+ const fields=adcOLForm.elements,relative=fields.catalogReason.value==='Enfermedad de un miembro del grupo familiar';
+ fields.mode.value=relative?'relative':'reason';
+ for(const input of fields.mode)input.disabled=true;
+ for(const key of ['reason','from','until','law','article','description','place','signDate'])fields[key].disabled=false;
  for(const key of ['surname','given','dni','address','relation'])fields[key].disabled=!relative;
  for(const input of fields.sex)input.disabled=!relative;
- $('adcOLReasonCross').toggleAttribute('hidden',!relative);$('adcOLRelativeCross').toggleAttribute('hidden',relative);
+ $('adcOLReasonCross').hidden=true;$('adcOLRelativeCross').toggleAttribute('hidden',relative);
 }
 function adcOLPaperVariant(){
  $('adcOLPaperImage').src='data:image/png;base64,'+adcOLPaperImages[adcOLForm.elements.teacherSex.value==='M'?1:0];
@@ -294,17 +420,21 @@ function adcOLSyncTeacherProfile(){
  for(const [field,id] of Object.entries(profileFields)){
   if(fields[field].adcMnc?.marked)continue;
   const value=$(id).value;
-  if(fields[field].value!==value){fields[field].value=value;changed=true}
+  const previous=adcOLProfileAutomatic[field];
+  if(!fields[field].value||previous===undefined||fields[field].value===previous){
+   if(fields[field].value!==value){fields[field].value=value;changed=true}
+  }
+  adcOLProfileAutomatic[field]=value;
  }
- const place=$('perfilLocalidad').value;
- if(!fields.place.adcMnc?.marked&&fields.place.value!==place){fields.place.value=place;changed=true}
  if(changed)adcOLInvalidate();
  adcOLPaperVariant();
 }
 function adcOLStart(contextual){
  const key=contextual?JSON.stringify([selected,$('escuelaSelect').value,$('desde').value,$('hasta').value]):'standalone';
- if(adcOLDraftKey===key){adcOLSyncTeacherProfile();tab('ol01');$('adcOLTitle').focus();return}
- adcOLDraftKey=key;adcOLInvalidate();adcOLForm.reset();
+ if(adcOLDraftKey===key){adcOLSyncTeacherProfile();adcOLRefreshSchools();adcOLSyncRule();tab('ol01');$('adcOLTitle').focus();return}
+ adcOLSaveDraft();adcOLGuided.cancel();
+ adcOLDraftKey=key;adcOLInvalidate();adcOLForm.reset();adcOLProfileAutomatic={};adcOLFamilyStage.value='initial';
+ adcOLManualSign=false;adcOLAutomaticSign='';adcOLAutomaticPlace='';adcOLPresentation.oneDay='';
  const fields=adcOLForm.elements;
  fields.school.replaceChildren(new Option('Elegí una institución',''),...inst.map(i=>new Option(i.name,String(i.id))));
  if(contextual){
@@ -321,18 +451,23 @@ function adcOLStart(contextual){
  adcOLSyncTeacherProfile();
  adcOLMode();$('adcOLStatus').textContent='';
  $('adcOLSource').textContent=contextual?'Datos tomados de la solicitud. Podés ajustarlos para este OL-01.':'Completá la solicitud con los datos de tu perfil docente.';
+ adcOLRestoreDraft();adcOLSuggestSchool();adcOLPosts(fields.school.value,false,adcOLRestoreDraft.posts);adcOLSyncRule();
  tab('ol01');$('adcOLTitle').focus();
 }
 $('adcOL').addEventListener('change',event=>{
  const name=event.target.name;
+ if(name==='signDate')adcOLManualSign=true;
  if(name==='school'){adcOLPosts(event.target.value);adcOLFields.school.classList.remove('adc-ol-step-next')}
  if(name==='bereavement'&&adcOLRelation())adcOLFields.bereavement.value=adcOLRelation()[0];
- if(['school','post','bereavement','from','mode'].includes(name))adcOLSyncRule();
+ if(['school','post','bereavement','from','until','mode'].includes(name))adcOLSyncRule();
+ adcOLSaveDraft();adcOLGuided.refresh();
 });
 for(const input of adcOLForm.elements.teacherSex)input.addEventListener('change',adcOLPaperVariant);
-$('adcOL').addEventListener('input',()=>{
+$('adcOL').addEventListener('input',event=>{
+ if(event.target.name==='signDate')adcOLManualSign=true;
  adcOLMode();
  adcOLInvalidate();$('adcOLStatus').textContent='';
+ adcOLSaveDraft();adcOLGuided.refresh();
 });
 function adcOLDraw(page,font,values){
  function put(value,x,top,w,center=false,size=10){
@@ -386,7 +521,8 @@ function adcOLDraw(page,font,values){
  if(values.cross){
   const [x,top,right,bottom]=values.relative?[421.9,127.55,804.4,308.75]:[422.8,320.9,805.3,489];
   const h=page.getHeight();
-  if(values.relative)page.drawLine({start:{x,y:h-top},end:{x:right,y:h-bottom},thickness:1.3});
+  page.drawRectangle({x,y:h-bottom,width:right-x,height:bottom-top,color:PDFLib.rgb(.86,.88,.91),opacity:.3});
+  page.drawLine({start:{x,y:h-top},end:{x:right,y:h-bottom},thickness:1.3});
   page.drawLine({start:{x,y:h-bottom},end:{x:right,y:h-top},thickness:1.3});
  }
  if(values.relative){
@@ -398,11 +534,11 @@ function adcOLDraw(page,font,values){
 }
 adcOLForm.addEventListener('submit',async event=>{
  event.preventDefault();
- if(!await adcOLGuided.review())return;
+ if(!adcOLGuided.check())return;
  adcOLInvalidate();const generation=adcOLGeneration;
  const note=$('adcOLStatus'),fields=adcOLForm.elements;
  const v=Object.fromEntries(new FormData(adcOLForm)),{school,entries:posts,rule}=adcOLSelection();
- const relative=v.mode==='relative';
+ const relative=adcOLFamily();
  function missing(key,message){
   note.textContent=message;
   const field=fields[key];
@@ -415,10 +551,11 @@ adcOLForm.addEventListener('submit',async event=>{
  if(v.teacherDni&&!adcPersonalValid(v.teacherDni,7,8)){note.textContent='Revisá el DNI en la plantilla.';return}
  const entries=posts.map(e=>({cargo:adcOLCargo(e),revista:e.revista||''}));
  if(entries.length>12){note.textContent='El OL-01 admite hasta 12 filas.';return}
- if(!relative){
+ {
   if((v.from&&!date(v.from))||(v.until&&!date(v.until))||(v.from&&v.until&&v.until<v.from)){missing('until','Revisá el rango de fechas.');return}
   if((v.law&&v.law.trim()!==rule.row.code)||(v.article&&v.article.trim()!==rule.row.article)){missing('law','El código y el artículo deben coincidir con el encuadre del cargo seleccionado.');return}
- }else{
+ }
+ if(relative){
   if(v.dni&&!adcPersonalValid(v.dni,7,8)){missing('dni','Ingresá un DNI válido del pariente.');return}
  }
  if(!window.PDFLib){note.textContent='Se necesita conexión para cargar la biblioteca PDF.';return}
@@ -426,15 +563,25 @@ adcOLForm.addEventListener('submit',async event=>{
  try{
   const {PDFDocument,StandardFonts}=window.PDFLib;
   const pdf=await PDFDocument.load(bytes(v.teacherSex==='M'?adcOLMaleTemplate:adcOLTemplate));const font=await pdf.embedFont(StandardFonts.HelveticaBold);
-  adcOLDraw(pdf.getPage(0),font,{...v,cross:true,previewOnly:rule.previewOnly,reason:v.reason||'',surname,given,school:school.name,entries,dni:adcPersonalFormat(v.teacherDni,'dni'),sex:v.teacherSex,address:v.teacherAddress,locality:v.teacherLocality,from:v.from?displayDate(v.from):'',until:v.until?displayDate(v.until):'',signDate:v.signDate?displayDate(v.signDate):'',relative:v.mode==='relative'?{...v,dni:adcPersonalFormat(v.dni,'dni')}:null});
+  adcOLDraw(pdf.getPage(0),font,{...v,cross:!relative,previewOnly:rule.previewOnly,reason:v.reason||'',surname,given,school:school.name,entries,dni:adcPersonalFormat(v.teacherDni,'dni'),sex:v.teacherSex,address:v.teacherAddress,locality:v.teacherLocality,from:v.from?displayDate(v.from):'',until:v.until?displayDate(v.until):'',signDate:v.signDate?displayDate(v.signDate):'',relative:relative?{...v,dni:adcPersonalFormat(v.dni,'dni')}:null});
   const result=await pdf.save();if(generation!==adcOLGeneration)return;
   adcOLUrl=URL.createObjectURL(new Blob([result],{type:'application/pdf'}));
   const link=document.createElement('a');link.href=adcOLUrl;link.download='OL-01_solicitud_de_licencia.pdf';link.textContent='Descargar OL-01';
   const open=document.createElement('a');open.href=adcOLUrl;open.target='_blank';open.rel='noopener';open.textContent='Abrir PDF para imprimir';
   const actions=document.createElement('div');actions.className='toolbar';actions.append(link,open);
-  const preview=document.createElement('iframe');preview.title='Vista previa de impresión del OL-01';preview.src=adcOLUrl;
+  const action=event.submitter?.dataset.olAction||'preview';
+  const preview=document.createElement('iframe');preview.title='Vista previa de impresión del OL-01';
+  let printTimer;
+  if(action==='print')preview.addEventListener('load',()=>{
+   clearTimeout(printTimer);if(generation!==adcOLGeneration)return;
+   try{preview.contentWindow.focus();preview.contentWindow.print()}
+   catch(error){note.textContent='No se pudo abrir el diálogo de impresión. Usá Abrir PDF para imprimir. '+error.message}
+  },{once:true});
+  if(action==='print')printTimer=setTimeout(()=>{if(generation===adcOLGeneration)note.textContent='Chrome no confirmó la carga para imprimir. Usá el enlace Abrir PDF para imprimir.'},15000);
+  preview.src=adcOLUrl;
   $('adcOLPreview').append(actions,preview);
-  note.textContent=rule.previewOnly?'Vista previa de prueba para Secundario. No válida para presentar.':'Vista previa de impresión lista.';
+  if(action==='download')link.click();
+  note.textContent=rule.previewOnly?'Vista previa de prueba para Secundario. No válida para presentar.':action==='print'?'Preparando el PDF para imprimir… También podés usar Abrir PDF para imprimir.':'Vista previa de impresión lista.';
   $('adcOLPreview').scrollIntoView({block:'start'});
  }catch(error){if(generation===adcOLGeneration)note.textContent='No se pudo generar el OL-01. '+error.message}
 });
