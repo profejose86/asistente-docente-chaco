@@ -1,6 +1,6 @@
 .adc-brand{display:inline-flex;align-items:center;gap:14px;min-width:0;cursor:pointer;color:#fff}
 .adc-text-viewport{display:block;overflow:hidden;width:var(--adc-title-width,300px);height:36px;transition:width .75s cubic-bezier(.22,1,.36,1)}
-.adc-text-track{display:flex;align-items:center;width:max-content;height:100%;white-space:nowrap;transform:translateX(0);transition:transform .75s cubic-bezier(.22,1,.36,1)}
+.adc-text-track{display:flex;align-items:center;width:max-content;height:100%;white-space:nowrap;transform:translateX(0);text-shadow:0 0 0 transparent;transition:transform .75s cubic-bezier(.22,1,.36,1),text-shadow .6s ease}
 .adc-header .adc-full-title,.adc-short-title{font-size:1.35rem;font-weight:700;line-height:1.15}
 .adc-full-title{flex:none;letter-spacing:-.01em;padding-right:32px;transition:opacity .4s}
 .adc-short-title{display:inline-flex;flex:none;align-items:center;gap:14px;letter-spacing:.04em;opacity:0;transition:opacity .5s}
@@ -13,7 +13,9 @@
 .adc-brand.is-compact:focus .adc-text-track{transform:translateX(0)}
 .adc-brand.is-compact:focus .adc-full-title{opacity:1}
 .adc-brand.is-compact:focus .adc-short-title{opacity:0}
+.adc-brand:focus-visible .adc-text-track{text-shadow:0 0 7px rgba(255,140,0,.5),0 0 15px rgba(217,130,43,.3)}
 @media(hover:hover){
+ body:not(.adcDesignActive) .adc-brand:hover .adc-text-track{text-shadow:0 0 7px rgba(255,140,0,.5),0 0 15px rgba(217,130,43,.3)}
  .adc-brand.is-compact:hover .adc-text-viewport{width:var(--adc-title-width)}
  .adc-brand.is-compact:hover .adc-text-track{transform:translateX(0)}
  .adc-brand.is-compact:hover .adc-full-title{opacity:1}

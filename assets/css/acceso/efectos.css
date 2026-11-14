@@ -1,0 +1,7 @@
+/* Experimento local log-in-2: conserva el título multilínea y su distribución. */
+.adc-interactive-card{transition:transform .3s ease,box-shadow .3s ease}
+body.adcDesignActive .adc-interactive-card{transition:none}
+@media(hover:hover) and (pointer:fine){
+ body:not(.adcDesignActive) .adc-interactive-card:hover{transform:translateY(-4px) scale(1.015);box-shadow:0 10px 25px rgba(255,140,0,.25)}
+}
+@media(prefers-reduced-motion:reduce){.adc-interactive-card{transition:none}body:not(.adcDesignActive) .adc-interactive-card:hover{transform:none}}

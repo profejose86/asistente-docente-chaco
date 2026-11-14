@@ -18,6 +18,7 @@
     "AGENTS.md",
     "assets/css/acceso/autenticacion.css",
     "assets/css/acceso/editor.css",
+    "assets/css/acceso/efectos.css",
     "assets/css/acceso/ingreso.css",
     "assets/css/acceso/marca.css",
     "assets/css/base.css",
@@ -69,6 +70,7 @@
     "assets/img/acceso/logo-adc.png",
     "assets/js/acceso/autenticacion.js",
     "assets/js/acceso/editor.js",
+    "assets/js/acceso/efectos.js",
     "assets/js/acceso/ingreso.js",
     "assets/js/acceso/marca.js",
     "assets/js/acceso/visibilidad-clave.js",
@@ -259,12 +261,14 @@
         "assets/js/editor/studio-guias.js",
         "assets/js/editor/studio.js",
         "assets/js/editor/comun.js",
-        "assets/js/acceso/editor.js"
+        "assets/js/acceso/editor.js",
+        "assets/js/acceso/efectos.js"
       ],
       "styles": [
         "assets/css/acceso/autenticacion.css",
         "assets/css/acceso/ingreso.css",
         "assets/css/acceso/marca.css",
+        "assets/css/acceso/efectos.css",
         "assets/css/editor/base.css",
         "assets/css/acceso/editor.css",
         "assets/css/editor/acceso-ajustes.css",
@@ -390,8 +394,8 @@
     },
     {
       "file": "ADC_Ingreso_Editable.html",
-      "bytes": 10877,
-      "lines": 90,
+      "bytes": 11061,
+      "lines": 92,
       "generated": false,
       "functions": [],
       "globals": [],
@@ -425,6 +429,15 @@
       "storageKeys": []
     },
     {
+      "file": "assets/css/acceso/efectos.css",
+      "bytes": 549,
+      "lines": 8,
+      "generated": false,
+      "functions": [],
+      "globals": [],
+      "storageKeys": []
+    },
+    {
       "file": "assets/css/acceso/ingreso.css",
       "bytes": 8348,
       "lines": 50,
@@ -435,8 +448,8 @@
     },
     {
       "file": "assets/css/acceso/marca.css",
-      "bytes": 1903,
-      "lines": 24,
+      "bytes": 2194,
+      "lines": 26,
       "generated": false,
       "functions": [],
       "globals": [],
@@ -840,6 +853,20 @@
         "adc-login-keep-notes",
         "adc-login-design-draft"
       ]
+    },
+    {
+      "file": "assets/js/acceso/efectos.js",
+      "bytes": 2069,
+      "lines": 33,
+      "generated": false,
+      "functions": [
+        "write",
+        "measure",
+        "finish",
+        "tick"
+      ],
+      "globals": [],
+      "storageKeys": []
     },
     {
       "file": "assets/js/acceso/ingreso.js",
@@ -2833,6 +2860,12 @@
     },
     {
       "from": "ADC_Ingreso_Editable.html",
+      "to": "assets/css/acceso/efectos.css",
+      "kind": "link",
+      "exists": true
+    },
+    {
+      "from": "ADC_Ingreso_Editable.html",
       "to": "assets/img/acceso/logo-adc.png",
       "kind": "img",
       "exists": true
@@ -2960,6 +2993,12 @@
     {
       "from": "ADC_Ingreso_Editable.html",
       "to": "assets/js/acceso/editor.js",
+      "kind": "script",
+      "exists": true
+    },
+    {
+      "from": "ADC_Ingreso_Editable.html",
+      "to": "assets/js/acceso/efectos.js",
       "kind": "script",
       "exists": true
     },
@@ -4881,9 +4920,9 @@
     ]
   },
   "summary": {
-    "files": 224,
-    "ownTextModules": 173,
-    "ownJavaScript": 109,
+    "files": 226,
+    "ownTextModules": 175,
+    "ownJavaScript": 110,
     "vendorFiles": 35,
     "missingLiteralReferences": 0
   }

@@ -28,12 +28,14 @@ Scripts en orden de carga:
 - `assets/js/editor/studio.js`
 - `assets/js/editor/comun.js`
 - `assets/js/acceso/editor.js`
+- `assets/js/acceso/efectos.js`
 
 Hojas de estilo en orden de carga:
 
 - `assets/css/acceso/autenticacion.css`
 - `assets/css/acceso/ingreso.css`
 - `assets/css/acceso/marca.css`
+- `assets/css/acceso/efectos.css`
 - `assets/css/editor/base.css`
 - `assets/css/acceso/editor.css`
 - `assets/css/editor/acceso-ajustes.css`
@@ -155,6 +157,7 @@ Hojas de estilo en orden de carga:
 | `assets/datos/formularios-pdf.js` | 58 | 0 |
 | `assets/js/acceso/autenticacion.js` | 56 | 3 |
 | `assets/js/acceso/editor.js` | 962 | 34 |
+| `assets/js/acceso/efectos.js` | 33 | 4 |
 | `assets/js/acceso/ingreso.js` | 59 | 2 |
 | `assets/js/acceso/marca.js` | 12 | 0 |
 | `assets/js/acceso/visibilidad-clave.js` | 25 | 1 |
