@@ -1,5 +1,17 @@
 # Prueba aislada de sincronización
 
+## Preparación online separada
+
+El código aprobado quedó guardado en el commit `5fdd103` de `pruebas/sincronizacion`. No se integró en `main` ni se cambió GitHub Pages.
+
+Se registró un Site independiente, aún **sin desplegar**: su identidad y dirección prevista están en `config/sincronizacion-staging.json`. Una dirección prevista no prueba que exista una publicación funcional. El Site comienza con acceso privado del propietario.
+
+`npm run staging:sync:provision` requiere un token administrativo vigente en `SUPABASE_ACCESS_TOKEN` dentro de `.env.local`. Crea o recupera por nombre un proyecto de prueba exclusivamente en una organización Free, rechaza las referencias de producción, aplica las dos migraciones solamente allí y comprueba RLS. Si el proyecto aún inicia, informa su estado y permite continuar sin duplicarlo. Guarda su estado, referencia y contraseña de base únicamente en `.env.sync-staging.local` (ignorado por Git); no modifica las variables de producción. No utiliza service_role.
+
+La confirmación por correo se deshabilita sólo en el nuevo staging para permitir cuentas ficticias. No se configura SMTP ni se envían datos personales reales. `npm run staging:sync:prepare` genera la copia de publicación en `.adc-tools/sync-staging-site/dist`, con configuración pública exclusiva de staging y un aviso visible. No ejecuta el build de producción ni cambia sus archivos generados. Luego falta desplegar esa copia mediante Sites y probar cuentas reales de Auth de staging, no los tokens simulados del sandbox.
+
+Al preparar esta etapa no había token administrativo guardado y el host de acceso al navegador estaba desconectado. Por eso no se creó todavía el proyecto Supabase remoto, no se desplegó el Site y no se ejecutaron pruebas online. La comprobación local del bloqueo de producción está en `tests/sync-staging.test.cjs`.
+
 Rama local: `pruebas/sincronizacion`. No se integra en `main` hasta la aprobación visual y funcional. Los cambios pendientes anteriores se conservaron sin commit.
 
 ## Iniciar

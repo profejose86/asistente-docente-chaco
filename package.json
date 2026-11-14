@@ -4,6 +4,8 @@
   "private": true,
   "description": "ADC: entorno de prueba para 15 a 50 testers",
   "scripts": {
+    "staging:sync:provision": "node tools/sync-staging.cjs --provision",
+    "staging:sync:prepare": "node tools/sync-staging.cjs",
     "dev:sync-sandbox": "node tools/sync-sandbox.cjs",
     "test:sync": "node --test --test-concurrency=1 tests/sincronizacion.test.cjs tests/sincronizacion-rls.test.cjs tests/sincronizacion-browser.test.cjs tests/sync-sandbox.test.cjs",
     "build": "node tools/build.cjs",

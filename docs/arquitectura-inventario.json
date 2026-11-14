@@ -190,6 +190,7 @@
     "assets/vendor/supabase/LICENSE",
     "assets/vendor/supabase/README.md",
     "config/publicacion.json",
+    "config/sincronizacion-staging.json",
     "docs/adc-studio.md",
     "docs/ajustes-visuales.md",
     "docs/arquitectura-auditoria.md",
@@ -264,6 +265,7 @@
     "tests/support/ajustes.cjs",
     "tests/support/demo-config.cjs",
     "tests/sync-sandbox.test.cjs",
+    "tests/sync-staging.test.cjs",
     "tests/traslado-pdf.test.cjs",
     "tools/ajustes-store.cjs",
     "tools/auditar-arquitectura.cjs",
@@ -278,6 +280,7 @@
     "tools/publicar.cjs",
     "tools/supabase-auth-settings.cjs",
     "tools/sync-sandbox.cjs",
+    "tools/sync-staging.cjs",
     "tools/verify-structure.cjs"
   ],
   "entries": [
@@ -2385,6 +2388,15 @@
       "storageKeys": []
     },
     {
+      "file": "config/sincronizacion-staging.json",
+      "bytes": 308,
+      "lines": 9,
+      "generated": false,
+      "functions": [],
+      "globals": [],
+      "storageKeys": []
+    },
+    {
       "file": "docs/adc-studio.md",
       "bytes": 10443,
       "lines": 91,
@@ -2485,8 +2497,8 @@
     },
     {
       "file": "docs/prueba-sincronizacion.md",
-      "bytes": 2861,
-      "lines": 26,
+      "bytes": 5201,
+      "lines": 40,
       "generated": false,
       "functions": [],
       "globals": [],
@@ -2620,8 +2632,8 @@
     },
     {
       "file": "package.json",
-      "bytes": 1648,
-      "lines": 32,
+      "bytes": 1782,
+      "lines": 34,
       "generated": false,
       "functions": [],
       "globals": [],
@@ -3117,8 +3129,21 @@
     },
     {
       "file": "tests/sync-sandbox.test.cjs",
-      "bytes": 1841,
-      "lines": 20,
+      "bytes": 4235,
+      "lines": 43,
+      "generated": false,
+      "functions": [
+        "open"
+      ],
+      "globals": [],
+      "storageKeys": [
+        "adc-supabase-auth"
+      ]
+    },
+    {
+      "file": "tests/sync-staging.test.cjs",
+      "bytes": 766,
+      "lines": 11,
       "generated": false,
       "functions": [],
       "globals": [],
@@ -3294,6 +3319,25 @@
         "adc_v08",
         "adc-auth-local-owner"
       ]
+    },
+    {
+      "file": "tools/sync-staging.cjs",
+      "bytes": 7284,
+      "lines": 76,
+      "generated": false,
+      "functions": [
+        "readState",
+        "saveState",
+        "assertIsolated",
+        "management",
+        "provision",
+        "prepare",
+        "check"
+      ],
+      "globals": [
+        "adcConfig"
+      ],
+      "storageKeys": []
     },
     {
       "file": "tools/verify-structure.cjs",
@@ -4681,6 +4725,12 @@
       "exists": true
     },
     {
+      "from": "tests/sync-staging.test.cjs",
+      "to": "tools/sync-staging.cjs",
+      "kind": "literal-module",
+      "exists": true
+    },
+    {
       "from": "tests/traslado-pdf.test.cjs",
       "to": "tests/support/demo-config.cjs",
       "kind": "literal-module",
@@ -4773,6 +4823,18 @@
     {
       "from": "tools/supabase-auth-settings.cjs",
       "to": "config/publicacion.json",
+      "kind": "literal-module",
+      "exists": true
+    },
+    {
+      "from": "tools/sync-staging.cjs",
+      "to": "tools/env.cjs",
+      "kind": "literal-module",
+      "exists": true
+    },
+    {
+      "from": "tools/sync-staging.cjs",
+      "to": "config/sincronizacion-staging.json",
       "kind": "literal-module",
       "exists": true
     }
@@ -5584,9 +5646,9 @@
     ]
   },
   "summary": {
-    "files": 267,
-    "ownTextModules": 207,
-    "ownJavaScript": 130,
+    "files": 270,
+    "ownTextModules": 210,
+    "ownJavaScript": 132,
     "vendorFiles": 35,
     "missingLiteralReferences": 0
   }

@@ -281,7 +281,8 @@ Hojas de estilo en orden de carga:
 | `tests/supabase-rls.test.cjs` | 46 | 0 |
 | `tests/support/ajustes.cjs` | 15 | 0 |
 | `tests/support/demo-config.cjs` | 10 | 1 |
-| `tests/sync-sandbox.test.cjs` | 20 | 0 |
+| `tests/sync-sandbox.test.cjs` | 43 | 1 |
+| `tests/sync-staging.test.cjs` | 11 | 0 |
 | `tests/traslado-pdf.test.cjs` | 50 | 0 |
 | `tools/ajustes-store.cjs` | 39 | 5 |
 | `tools/auditar-arquitectura.cjs` | 73 | 3 |
@@ -295,6 +296,7 @@ Hojas de estilo en orden de carga:
 | `tools/publicar.cjs` | 38 | 2 |
 | `tools/supabase-auth-settings.cjs` | 21 | 1 |
 | `tools/sync-sandbox.cjs` | 78 | 3 |
+| `tools/sync-staging.cjs` | 76 | 7 |
 | `tools/verify-structure.cjs` | 46 | 0 |
 
 ## Referencias literales ausentes

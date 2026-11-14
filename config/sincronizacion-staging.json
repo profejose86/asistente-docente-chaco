@@ -1,0 +1,8 @@
+{
+  "projectName": "ADC - Sync staging - 20261114",
+  "siteProjectId": "appgprj_6af8c58f2cc88191be791033ae368890",
+  "siteUrl": "https://adc-sync-staging-jose-202611.affectionatecarrot8.chatgpt.site/",
+  "environment": "sync-staging",
+  "region": "sa-east-1",
+  "localStateFile": ".env.sync-staging.local"
+}
