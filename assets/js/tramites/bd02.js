@@ -490,7 +490,7 @@
   }
   function save() {
     try {
-      localStorage.setItem(draftKey, JSON.stringify({
+      (globalThis.adcUserStorage||localStorage).setItem(draftKey, JSON.stringify({
         values,
         marked: [...marked],
         touched: [...touched],
@@ -820,7 +820,7 @@
     let rawCurrent;
     let rawPrevious;
     try {
-      rawCurrent = localStorage.getItem(draftKey);
+      rawCurrent = (globalThis.adcUserStorage||localStorage).getItem(draftKey);
       const draft = JSON.parse(rawCurrent || 'null');
       if (draft && typeof draft === 'object' && !Array.isArray(draft)) {
         values = draft.values || {};
@@ -837,7 +837,7 @@
         legacySnapshot = draft.legacySnapshot || null;
         legacyReviewed = draft.legacyReviewed !== false;
       } else {
-        rawPrevious = localStorage.getItem(oldDraftKey);
+        rawPrevious = (globalThis.adcUserStorage||localStorage).getItem(oldDraftKey);
         const old = JSON.parse(rawPrevious || 'null');
         if (old) migrate(old);
       }

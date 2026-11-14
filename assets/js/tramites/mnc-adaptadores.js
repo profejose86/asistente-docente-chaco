@@ -6,7 +6,7 @@
   function persist(){
     const values={},marked=[];
     for(const [key,control] of controls){values[key]=adcOLFields[key].value;if(control.marked)marked.push(key);}
-    try{localStorage.setItem('adc-ol01-mnc-'+draftKey,JSON.stringify({values,marked}));}catch{}
+    try{(globalThis.adcUserStorage||localStorage).setItem('adc-ol01-mnc-'+draftKey,JSON.stringify({values,marked}));}catch{}
   }
   for(const key of keys){
     const input=adcOLFields[key];
@@ -31,7 +31,7 @@
     draftKey=next;
     open(contextual);
     let draft;
-    try{draft=JSON.parse(localStorage.getItem('adc-ol01-mnc-'+draftKey)||'null');}catch{}
+    try{draft=JSON.parse((globalThis.adcUserStorage||localStorage).getItem('adc-ol01-mnc-'+draftKey)||'null');}catch{}
     for(const [key,control] of controls){
       if(draft?.marked?.includes(key)){
         adcOLFields[key].value='';control.set(true,false);

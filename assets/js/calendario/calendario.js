@@ -699,13 +699,13 @@ function adcCalendarOpen(){
 const adcCalPersonalKey='adc_calendar_2026_personal_v1';
 let adcCalPersonalData={notes:{},entries:{}};
 try{
- const saved=JSON.parse(localStorage.getItem(adcCalPersonalKey));
+ const saved=JSON.parse((globalThis.adcUserStorage||localStorage).getItem(adcCalPersonalKey));
  if(saved?.notes && saved?.entries)adcCalPersonalData=saved;
 }catch(error){}
 
 function adcCalSavePersonal(status){
  try{
-  localStorage.setItem(adcCalPersonalKey,JSON.stringify(adcCalPersonalData));
+  (globalThis.adcUserStorage||localStorage).setItem(adcCalPersonalKey,JSON.stringify(adcCalPersonalData));
   status.textContent='Guardado en este navegador.';
  }catch(error){status.textContent='No se pudo guardar en este navegador.';}
 }

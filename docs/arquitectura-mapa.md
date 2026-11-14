@@ -51,6 +51,9 @@ Scripts en orden de carga:
 - `assets/js/editor/modo-local.js`
 - `assets/datos/config-publica.js`
 - `assets/js/servicios/supabase-runtime.js`
+- `assets/js/servicios/almacenamiento-usuario.js`
+- `assets/js/servicios/sincronizacion-usuario.js`
+- `assets/js/interfaz/sincronizacion.js`
 - `assets/js/interfaz/sesion.js`
 - `assets/js/interfaz/inicio-local.js`
 - `assets/js/core/mnc.js`
@@ -120,6 +123,7 @@ Scripts en orden de carga:
 Hojas de estilo en orden de carga:
 
 - `assets/css/acceso/autenticacion.css`
+- `assets/css/interfaz/sincronizacion.css`
 - `assets/css/base.css`
 - `assets/css/tramites/dj01-advertencias.css`
 - `assets/css/tramites/dj01-distribucion.css`
@@ -160,7 +164,7 @@ Hojas de estilo en orden de carga:
 | --- | ---: | ---: |
 | `assets/datos/config-publica.js` | 3 | 0 |
 | `assets/datos/escuelas-chaco.js` | 2 | 0 |
-| `assets/datos/formularios-pdf.js` | 113 | 0 |
+| `assets/datos/formularios-pdf.js` | 235 | 0 |
 | `assets/js/acceso/autenticacion.js` | 56 | 3 |
 | `assets/js/acceso/editor.js` | 956 | 34 |
 | `assets/js/acceso/efectos.js` | 33 | 4 |
@@ -168,12 +172,12 @@ Hojas de estilo en orden de carga:
 | `assets/js/acceso/marca.js` | 12 | 0 |
 | `assets/js/acceso/visibilidad-clave.js` | 25 | 1 |
 | `assets/js/calendario/calendario.js` | 988 | 22 |
-| `assets/js/calendario/solicitudes.js` | 360 | 17 |
+| `assets/js/calendario/solicitudes.js` | 362 | 17 |
 | `assets/js/core/cursos.js` | 45 | 4 |
 | `assets/js/core/estado.js` | 4 | 0 |
 | `assets/js/core/inicializacion.js` | 18 | 0 |
 | `assets/js/core/mnc.js` | 72 | 7 |
-| `assets/js/core/validacion-guiada.js` | 139 | 11 |
+| `assets/js/core/validacion-guiada.js` | 180 | 14 |
 | `assets/js/documentos/acciones.js` | 16 | 3 |
 | `assets/js/documentos/pdf-campos.js` | 72 | 2 |
 | `assets/js/documentos/pdf-utilidades.js` | 28 | 6 |
@@ -196,22 +200,25 @@ Hojas de estilo en orden de carga:
 | `assets/js/editor/studio-texto.js` | 74 | 3 |
 | `assets/js/editor/studio.js` | 176 | 14 |
 | `assets/js/interfaz/espacio-trabajo.js` | 91 | 3 |
-| `assets/js/interfaz/inicio-local.js` | 10 | 0 |
+| `assets/js/interfaz/inicio-local.js` | 19 | 0 |
 | `assets/js/interfaz/navegacion.js` | 13 | 5 |
-| `assets/js/interfaz/sesion.js` | 32 | 2 |
+| `assets/js/interfaz/sesion.js` | 44 | 2 |
+| `assets/js/interfaz/sincronizacion.js` | 80 | 2 |
 | `assets/js/perfil/contactos-instituciones.js` | 100 | 5 |
 | `assets/js/perfil/datos-personales.js` | 96 | 12 |
 | `assets/js/perfil/geografia.js` | 152 | 4 |
 | `assets/js/perfil/instituciones.js` | 155 | 21 |
 | `assets/js/perfil/nombres.js` | 6 | 2 |
 | `assets/js/perfil/respaldos.js` | 36 | 8 |
+| `assets/js/servicios/almacenamiento-usuario.js` | 89 | 7 |
+| `assets/js/servicios/sincronizacion-usuario.js` | 99 | 4 |
 | `assets/js/servicios/supabase-runtime.js` | 30 | generado |
-| `assets/js/servicios/supabaseClient.js` | 69 | 3 |
+| `assets/js/servicios/supabaseClient.js` | 94 | 4 |
 | `assets/js/tema/controles.js` | 15 | 1 |
 | `assets/js/tema/inicial.js` | 1 | 0 |
 | `assets/js/tramites/ayuda.js` | 33 | 0 |
 | `assets/js/tramites/bd02.js` | 1139 | 37 |
-| `assets/js/tramites/buscador.js` | 110 | 7 |
+| `assets/js/tramites/buscador.js` | 111 | 7 |
 | `assets/js/tramites/busqueda-inteligente.js` | 56 | 3 |
 | `assets/js/tramites/catalogo-datos.js` | 14 | 0 |
 | `assets/js/tramites/dj01-conflictos.js` | 146 | 9 |
@@ -227,16 +234,18 @@ Hojas de estilo en orden de carga:
 | `assets/js/tramites/dl01-interfaz.js` | 115 | 2 |
 | `assets/js/tramites/dl01-pdf.js` | 211 | 11 |
 | `assets/js/tramites/dl01-reglas.js` | 108 | 14 |
-| `assets/js/tramites/formularios-oficiales-datos.js` | 1275 | 0 |
-| `assets/js/tramites/formularios-oficiales.js` | 1242 | 49 |
+| `assets/js/tramites/formularios-oficiales-datos.js` | 1290 | 0 |
+| `assets/js/tramites/formularios-oficiales.js` | 1264 | 49 |
 | `assets/js/tramites/mnc-adaptadores.js` | 49 | 1 |
-| `assets/js/tramites/ol01.js` | 441 | 31 |
+| `assets/js/tramites/ol01.js` | 588 | 41 |
 | `assets/js/tramites/sc01.js` | 745 | 26 |
 | `assets/js/tramites/solicitudes.js` | 120 | 7 |
 | `supabase/migrations/202611130001_adc_tester_profiles.sql` | 36 | 0 |
+| `supabase/migrations/202611140001_adc_user_records.sql` | 54 | 0 |
 | `tests/acceso-ajustes.test.cjs` | 33 | 0 |
 | `tests/ajustes-proyecto.test.cjs` | 71 | 0 |
-| `tests/arquitectura.test.cjs` | 20 | 0 |
+| `tests/arquitectura.test.cjs` | 25 | 0 |
+| `tests/cf01-pdf.test.cjs` | 52 | 0 |
 | `tests/cursos.test.cjs` | 32 | 0 |
 | `tests/dl01-interfaz.test.cjs` | 161 | 0 |
 | `tests/documento-fondo.test.cjs` | 34 | 4 |
@@ -245,28 +254,35 @@ Hojas de estilo en orden de carga:
 | `tests/editor-documentos.test.cjs` | 46 | 0 |
 | `tests/editor-elementos.test.cjs` | 77 | 0 |
 | `tests/editor-herramientas.test.cjs` | 48 | 3 |
-| `tests/formularios-oficiales.test.cjs` | 672 | 1 |
+| `tests/formularios-oficiales.test.cjs` | 673 | 1 |
 | `tests/geografia.test.cjs` | 60 | 0 |
 | `tests/ingreso.test.cjs` | 63 | 0 |
 | `tests/local-editor-bridge.test.cjs` | 40 | 0 |
 | `tests/local-editor-ui.test.cjs` | 45 | 0 |
 | `tests/mbit.test.cjs` | 145 | 0 |
-| `tests/ol01-interfaz.test.cjs` | 63 | 0 |
-| `tests/ol01-perfil.test.cjs` | 54 | 1 |
+| `tests/ol01-guia.test.cjs` | 156 | 1 |
+| `tests/ol01-interfaz.test.cjs` | 64 | 0 |
+| `tests/ol01-perfil.test.cjs` | 55 | 1 |
 | `tests/pdf-blank-line.test.cjs` | 23 | 0 |
 | `tests/pdf-campos.test.cjs` | 33 | 0 |
 | `tests/publicacion.test.cjs` | 29 | 0 |
+| `tests/reubicacion-pdf.test.cjs` | 40 | 0 |
+| `tests/sincronizacion-browser.test.cjs` | 78 | 2 |
+| `tests/sincronizacion-rls.test.cjs` | 33 | 0 |
+| `tests/sincronizacion.test.cjs` | 73 | 2 |
 | `tests/sr01-pdf.test.cjs` | 28 | 1 |
 | `tests/studio-alineacion.test.cjs` | 12 | 0 |
 | `tests/studio-contrato.test.cjs` | 26 | 0 |
 | `tests/studio-inplace.test.cjs` | 54 | 2 |
 | `tests/studio.test.cjs` | 59 | 1 |
-| `tests/supabase-auth.test.cjs` | 68 | 0 |
+| `tests/supabase-auth.test.cjs` | 70 | 0 |
 | `tests/supabase-config.test.cjs` | 13 | 0 |
 | `tests/supabase-management.test.cjs` | 21 | 0 |
 | `tests/supabase-rls.test.cjs` | 46 | 0 |
 | `tests/support/ajustes.cjs` | 15 | 0 |
 | `tests/support/demo-config.cjs` | 10 | 1 |
+| `tests/sync-sandbox.test.cjs` | 20 | 0 |
+| `tests/traslado-pdf.test.cjs` | 50 | 0 |
 | `tools/ajustes-store.cjs` | 39 | 5 |
 | `tools/auditar-arquitectura.cjs` | 73 | 3 |
 | `tools/build.cjs` | 12 | 1 |
@@ -278,6 +294,7 @@ Hojas de estilo en orden de carga:
 | `tools/local-editor-bridge.cjs` | 45 | 1 |
 | `tools/publicar.cjs` | 38 | 2 |
 | `tools/supabase-auth-settings.cjs` | 21 | 1 |
+| `tools/sync-sandbox.cjs` | 78 | 3 |
 | `tools/verify-structure.cjs` | 46 | 0 |
 
 ## Referencias literales ausentes

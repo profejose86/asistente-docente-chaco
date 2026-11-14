@@ -17,7 +17,7 @@ let adcDocsContext='',adcDocsView='',adcDocsEditing=-1;
 let adcOLUrl='',adcOLGeneration=0;
 const adcDocsKey='adc_documentos_tramite_v1';
 function adcDocsData(){
- try{return JSON.parse(localStorage.getItem(adcDocsKey)||'{}')||{}}catch{return {}}
+ try{return JSON.parse((globalThis.adcUserStorage||localStorage).getItem(adcDocsKey)||'{}')||{}}catch{return {}}
 }
 function adcDocsItems(){return adcDocsData()[adcDocsContext]??adcDocsDefaults[adcDocsContext]??[]}
 function adcDocsURL(value){
@@ -87,7 +87,7 @@ function adcDocsRender(){
 }
 function adcDocsSave(items){
  const data=adcDocsData();data[adcDocsContext]=items;
- try{localStorage.setItem(adcDocsKey,JSON.stringify(data))}
+ try{(globalThis.adcUserStorage||localStorage).setItem(adcDocsKey,JSON.stringify(data))}
  catch{$('adcDocsStatus').textContent='El navegador no pudo guardar el cambio.';return}
  adcDocsResetEditor();adcDocsRender();$('adcDocsStatus').textContent='Requisitos guardados.';
 }
@@ -342,7 +342,7 @@ function adcOLRefreshSchools(){
 }
 function adcOLSuggestSchool(){
  if(adcOLFields.school.value||!adcOLFields.catalogReason.value)return;
- let store;try{store=JSON.parse(localStorage.getItem('adc_dj02_v1')||'{}')}catch{return}
+ let store;try{store=JSON.parse((globalThis.adcUserStorage||localStorage).getItem('adc_dj02_v1')||'{}')}catch{return}
  const dni=adcPersonalDigits($('dni').value),reason=norm(dj02Motivo(adcOLFields.catalogReason.value));
  // Sólo solicitudes DL-01 del mismo DNI y motivo; no adivinar por la última escuela usada.
  const licenses=[...(store.adc58?.licenses||[]).filter(item=>item.source==='DL-01'&&item.status!=='deleted'&&adcPersonalDigits(item.dni)===dni),...(store.pending||[]).filter(item=>adcPersonalDigits(item.dni)===dni)];
@@ -356,10 +356,10 @@ function adcOLSaveDraft(){
  for(const key of ['teacherSex','sex'])values[key]=adcOLFields[key].value;
  const posts=[...$('adcOLPosts').querySelectorAll('input:checked')].map(input=>input.dataset.postKey);
  const draft={version:1,values,posts,profileAutomatic:adcOLProfileAutomatic,stage:adcOLFamilyStage.value,manualSign:adcOLManualSign,automaticSign:adcOLAutomaticSign,automaticPlace:adcOLAutomaticPlace};
- try{localStorage.setItem('adc-ol01-draft-'+adcOLDraftKey,JSON.stringify(draft))}catch{$('adcOLStatus').textContent='No se pudo guardar el borrador en este navegador. No cierres el formulario.'}
+ try{(globalThis.adcUserStorage||localStorage).setItem('adc-ol01-draft-'+adcOLDraftKey,JSON.stringify(draft))}catch{$('adcOLStatus').textContent='No se pudo guardar el borrador en este navegador. No cierres el formulario.'}
 }
 function adcOLRestoreDraft(){
- let draft;try{draft=JSON.parse(localStorage.getItem('adc-ol01-draft-'+adcOLDraftKey)||'null')}catch{}
+ let draft;try{draft=JSON.parse((globalThis.adcUserStorage||localStorage).getItem('adc-ol01-draft-'+adcOLDraftKey)||'null')}catch{}
  adcOLRestoreDraft.posts=null;
  if(!draft)return;
  adcOLRestoreDraft.posts=Array.isArray(draft.posts)?draft.posts:null;

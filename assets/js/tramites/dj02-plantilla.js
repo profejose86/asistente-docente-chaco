@@ -22,7 +22,7 @@ function dj02MissingNotice(){
  if(el)el.innerHTML=missing.length?'<strong>Faltan datos para completar el DJ-02:</strong> '+missing.map(k=>names[k]).join(' · ')+'. <button type="button" class="alt" onclick="document.querySelector(\'.dj02-edit\').open=true">Completar ahora</button>':'';
 }
 function dj02Open(){
- if(!dj02Loaded){dj02Loaded=true;try{const d=JSON.parse(localStorage.getItem('adc_dj02_v1')||'null');dj02Records=Array.isArray(d?.rows)?d.rows:[];if(d?.fields?.Presentada){$('dj02Presentada').add(new Option(d.fields.Presentada,d.fields.Presentada));dj02Set('Presentada',d.fields.Presentada)}}catch(e){dj02Records=[]}}
+ if(!dj02Loaded){dj02Loaded=true;try{const d=JSON.parse((globalThis.adcUserStorage||localStorage).getItem('adc_dj02_v1')||'null');dj02Records=Array.isArray(d?.rows)?d.rows:[];if(d?.fields?.Presentada){$('dj02Presentada').add(new Option(d.fields.Presentada,d.fields.Presentada));dj02Set('Presentada',d.fields.Presentada)}}catch(e){dj02Records=[]}}
  dj02SyncProfile();dj02Render();
 }
 function dj02Date(s){if(!s)return '';const m=String(s).match(/^(\d{4})-(\d{2})-(\d{2})$/);return m?m[3]+'/'+m[2]+'/'+m[1]:s}

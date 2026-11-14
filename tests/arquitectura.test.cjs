@@ -4,6 +4,11 @@ const root=path.resolve(__dirname,'..');
 test('Arquitectura: referencias presentes, dependencias comunes antes de consumidores y secretos excluidos',()=>{
  const result=audit();assert.deepEqual(result.missing,[]);
  for(const entry of result.entries){
+  if(entry.file==='index.html'){
+   const storage=entry.scripts.indexOf('assets/js/servicios/almacenamiento-usuario.js'),sync=entry.scripts.indexOf('assets/js/servicios/sincronizacion-usuario.js'),ui=entry.scripts.indexOf('assets/js/interfaz/sincronizacion.js');
+   assert.ok(storage>=0&&storage<sync&&sync<ui&&ui<entry.scripts.indexOf('assets/js/interfaz/sesion.js'));
+   assert.ok(storage<entry.scripts.indexOf('assets/js/core/estado.js'));
+  }
   const motor=entry.file==='index.html'?'assets/js/editor/editor.js':'assets/js/acceso/editor.js';
   assert.ok(entry.scripts.indexOf('assets/js/editor/comun.js')>=0);
   assert.ok(entry.scripts.indexOf('assets/js/editor/comun.js')<entry.scripts.indexOf(motor));

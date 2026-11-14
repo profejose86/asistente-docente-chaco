@@ -1,6 +1,27 @@
 // Configuración de documentos originales y coordenadas de sus controles.
 // Solo los formularios registrados aquí utilizan este modo; los demás conservan su implementación.
 window.adcPreparedPdfForms = Object.freeze({
+  reubicacion: Object.freeze({
+    pdf:'assets/formularios/Reubicacion.pdf',
+    pages:[{image:'assets/formularios/Reubicacion-pagina-1.png',width:1008,height:612}],
+    stage:'editable',
+    sha256:'622fa6e79d02ec217f65bf14bd7b9e8f918675e11ea41b2e7c17aae2e62657d1',
+    source:'assets/formularios/Reubicacion.pdf',sourceLabel:'Ver PDF original de Reubicación',
+    note:'PDF aportado por el usuario. Ocho filas en la planilla original; la firma corresponde al docente. Los datos de borradores anteriores se conservan.',
+    repeats:{destinos:{slots:8,label:'Organizar cargos (8 filas del PDF)',rowLabel:'Cargo'}},
+    fields:{
+      ...Object.fromEntries(Array.from({length:12},(_,index)=>{
+        const bounds=[200.57,232.49,267.65,302.93,338.11,373.27,408.55,443.71,478.42];
+        const columns=[['establecimiento',71.28,225.86,true],['categoria',226.34,293.42,false],['zona',293.9,339.41,false],['cargoAsignatura',339.89,481.73,true],['horas',482.21,542.35,false],['instrumento',542.83,652.99,true],['localidad',653.47,772.42,true],['region',772.9,914.14,true]];
+        return columns.map(([key,left,right,multiline],column)=>[
+          `destinos.${index}.${key}`,
+          index<8?{x:left+2,top:bounds[index]+3,width:right-left-4,height:bounds[index+1]-bounds[index]-6,fontSize:11,multiline}:
+            {x:74+(column%4)*220,top:650+(index-8)*180+Math.floor(column/4)*80,width:205,height:50,fontSize:11,multiline:true,overflow:true}
+        ]);
+      }).flat()),
+      firmaDocente:{x:618,top:511,width:255,height:20,fontSize:11}
+    }
+  }),
   'traslado-inicial': Object.freeze({
     sha256:'cff4245d9e29aa52141b70c95e0ee7a80e1fc42284afae99d9c7256a99afd5b4',
     pdf:'assets/formularios/Traslado-Transitorio.pdf',

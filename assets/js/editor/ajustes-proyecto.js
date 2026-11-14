@@ -86,9 +86,9 @@
       if(!loaded)throw Error('Esperá que termine de cargar el diseño del proyecto antes de guardar.');
       return {changes:collect(),page:projectPage||contract.empty().pages[scope]};
     }});
-    if(localStorage.getItem('adc-project-backup-'+scope)){
+    if((globalThis.adcUserStorage||localStorage).getItem('adc-project-backup-'+scope)){
       const restore=document.createElement('button');restore.type='button';restore.textContent='Recuperar borrador anterior';panel.append(restore);
-      restore.onclick=event=>{event.stopPropagation();const saved=localStorage.getItem('adc-project-backup-'+scope);if(saved){api.restoreDraft(saved);location.reload();}};
+      restore.onclick=event=>{event.stopPropagation();const saved=(globalThis.adcUserStorage||localStorage).getItem('adc-project-backup-'+scope);if(saved){api.restoreDraft(saved);location.reload();}};
     }
     fetch(source,{cache:'no-store'}).then(response=>{if(!response.ok)throw Error('HTTP '+response.status);return response.json();}).then(configuration=>{
       projectPage=contract.validate(configuration).pages[scope];loaded=true;
@@ -98,7 +98,7 @@
         const use=document.createElement('button');use.type='button';use.textContent='Usar ajustes del proyecto';panel.append(use);
         use.onclick=event=>{
           event.stopPropagation();
-          localStorage.setItem('adc-project-backup-'+scope,api.serialize());
+          (globalThis.adcUserStorage||localStorage).setItem('adc-project-backup-'+scope,api.serialize());
           api.clearDraft();location.reload();
         };
         say('Se conservó tu borrador local. Podés exportarlo o elegir los ajustes del proyecto.');return;

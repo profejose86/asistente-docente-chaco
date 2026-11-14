@@ -15,7 +15,7 @@ function choose(t){
  $('justifica').value=classify()==='inasistencia'?'si':'';
  }
  adcRequestFields();
- usage[t]=(usage[t]||0)+1;localStorage.setItem('adc_v07_usage',JSON.stringify(usage));$('elegido').innerHTML='<b>Seleccionado: '+esc(adcTramiteLabel(t))+'</b>'+(!adcDL01Ready.has(t)?adcPendingFormMarkup():'')+'<div id="adcDurationLegend" class="small" aria-live="polite"></div><div class="small">El encuadre se propone solo cuando existe una referencia registrada; los demás quedan pendientes de verificación.</div>';adcChoosePendingForm();renderFrecuentes();review()}
+ usage[t]=(usage[t]||0)+1;(globalThis.adcUserStorage||localStorage).setItem('adc_v07_usage',JSON.stringify(usage));$('elegido').innerHTML='<b>Seleccionado: '+esc(adcTramiteLabel(t))+'</b>'+(!adcDL01Ready.has(t)?adcPendingFormMarkup():'')+'<div id="adcDurationLegend" class="small" aria-live="polite"></div><div class="small">El encuadre se propone solo cuando existe una referencia registrada; los demás quedan pendientes de verificación.</div>';adcChoosePendingForm();renderFrecuentes();review()}
 
 let adcRequestStarted=false;
 function adcRequestFields(){

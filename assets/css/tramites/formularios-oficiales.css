@@ -126,3 +126,4 @@ html[data-theme=dark] #adcOfficialForm .adc-document-tools{background:#17263a}
 #adcOfficialForm .adc-document-exit-fullscreen{display:none}
 #adcOfficialForm .adc-document-viewport:fullscreen{height:100vh;max-height:none;min-height:0;width:100vw;overflow:auto;background:#dce3eb;padding:48px 12px 12px;border:0;border-radius:0}
 #adcOfficialForm .adc-document-viewport:fullscreen .adc-document-exit-fullscreen{display:block;position:fixed;top:8px;right:16px;z-index:10;margin:0}
+.adc-form-grid .adc-catalog-unavailable:disabled{opacity:1;cursor:not-allowed;border-color:#c87878;box-shadow:0 0 8px 3px #d64a4a30,0 0 20px 5px #d64a4a18}

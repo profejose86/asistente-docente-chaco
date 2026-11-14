@@ -64,7 +64,7 @@ function adcSetSharedField(id,value){const el=$(id);if(!el)return;
  if(id==='perfilAntiguedad'){adcAntiguedadModo='manual';el.value=String(value||'').trim();$('perfilAntiguedadVista').value=value;}
  else el.value=['dni','perfilRegistro','perfilClase'].includes(id)?adcPersonalFormat(value,id):value;
  if(id==='perfilLocalidad'&&typeof window.adcAplicarGeografiaPerfil==='function')window.adcAplicarGeografiaPerfil();
- adcRefreshPending();localStorage.setItem('adc_v08',JSON.stringify(data()));
+ adcRefreshPending();(globalThis.adcUserStorage||localStorage).setItem('adc_v08',JSON.stringify(data()));
  if(typeof djRender==='function')djRender();
 }
 function adcSharedEditorHTML(){const fields=[['nombre','Nombre y apellido'],['dni','DNI'],['sexo','Sexo'],['perfilClase','Clase'],['perfilDomicilio','Domicilio'],['perfilLocalidad','Localidad'],['perfilTitulo','Título que posee'],['perfilOtorgado','Otorgado por'],['perfilRegistro','N.º de registro'],['perfilAntiguedad','Antigüedad docente']];

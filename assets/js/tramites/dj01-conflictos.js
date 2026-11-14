@@ -5,7 +5,7 @@
  const palette=['#dc2626','#7c3aed','#0369a1','#b45309','#0f766e','#be185d'];
  const time=t=>/^\d{2}:\d{2}$/.test(t||'')?Number(t.slice(0,2))*60+Number(t.slice(3)):null;
  const rawKey='adc_v091618_ack';
- let acknowledgements={};try{acknowledgements=JSON.parse(localStorage.getItem(rawKey)||'{}')||{}}catch(e){}
+ let acknowledgements={};try{acknowledgements=JSON.parse((globalThis.adcUserStorage||localStorage).getItem(rawKey)||'{}')||{}}catch(e){}
  const escHTML=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
  const allEntries=()=>typeof djEntries==='function'?djEntries():[];
  const intervalSignature=(v)=>[Number(v.day),v.start||'',v.end||''].join(':');
@@ -46,7 +46,7 @@
   return result;
  }
  function active(){return conflicts().filter(c=>!acknowledgements[c.id])}
- function saveAcknowledgement(id){acknowledgements[id]=true;localStorage.setItem(rawKey,JSON.stringify(acknowledgements));paint()}
+ function saveAcknowledgement(id){acknowledgements[id]=true;(globalThis.adcUserStorage||localStorage).setItem(rawKey,JSON.stringify(acknowledgements));paint()}
  function mark(host){if(!host)return;let el=host.querySelector(':scope > .adc-conflict-badge');if(!el){el=document.createElement('span');el.className='adc-conflict-badge';el.textContent='❗';el.title='Hay advertencias de horarios pendientes';host.append(el)}}
  function clear(){document.querySelectorAll('.adc-conflict-row,.adc-preview-conflict,.adc-conflict-pair,.adc-conflict-cell').forEach(el=>{el.classList.remove('adc-conflict-row','adc-preview-conflict','adc-conflict-pair','adc-conflict-cell');el.style.removeProperty('--adc-pair-color');el.style.removeProperty('box-shadow')});document.querySelectorAll('.adc-conflict-badge,.adc-conflict-message,.adc-conflict-hint,.adc-conflict-actions,.adc-pair-tag').forEach(el=>el.remove())}
  function paint(){

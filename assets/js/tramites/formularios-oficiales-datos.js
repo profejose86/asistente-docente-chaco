@@ -250,6 +250,7 @@
     },
     {
       id:"interinos",
+      catalogState:"pending",
       code:"INTERINOS",
       title:"Inscripción de interinos y suplentes con expectativas",
       catalogTitle:"Inscripción de interinos y suplentes",
@@ -290,8 +291,10 @@
     {
       id:"reubicacion",
       code:"REUBICACION",
-      title:"Condición de reubicación",
-      catalogTitle:"Condición de reubicación",
+      title:"Establecimiento donde se desempeña en condiciones de Reubicación",
+      displayTitle:"Establecimiento donde se desempeña en condiciones de Reubicación",
+      catalogTitle:"Establecimiento donde se desempeña en condiciones de Reubicación",
+      catalogAliases:["Condición de reubicación"],
       sourceUrl:"https://docs.google.com/document/d/1uVSxe2JqkcTX-ONvNMVUQq--p5gbPpvd/edit?usp=drive_link&ouid=110226675107462379636&rtpof=true&sd=true",
       notices:["Completá los campos identificados como obligatorios. Las firmas y sellos se realizan en el documento impreso."],
       sections:[
@@ -302,15 +305,15 @@
         ]},
         {title:"Establecimientos y cargos",fields:[
           repeat("destinos","Cargos para reubicación",[
-            text("establecimiento","Establecimiento / instituto",{"required":true}),
+            text("establecimiento","Establecimiento / instituto"),
             text("categoria","Categoría"),
             text("zona","Zona"),
-            text("cargoAsignatura","Cargo / asignatura / unidad curricular",{"required":true}),
+            text("cargoAsignatura","Cargo / asignatura / unidad curricular"),
             text("horas","Horas cátedra"),
             text("instrumento","Instrumento legal"),
             text("localidad","Localidad"),
             text("region","Región")
-          ],{"minRows":1,"maxRows":12,"addLabel":"Agregar cargo"})
+          ],{"minRows":1,"initialRows":8,"maxRows":12,"addLabel":"Agregar cargo"})
         ]},
         {title:"Conformidad",fields:[
           text("firmaDocente","Firma del docente",{"signature":true,"mnc":false}),

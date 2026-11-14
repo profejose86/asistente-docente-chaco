@@ -105,7 +105,7 @@ function adc58Transition(store,id,action){
  if(intro)intro.textContent='Revisá cada licencia en su fila. La vista de impresión incluye las otorgadas.';
  function say(message){notice.textContent=message}
  function read(){
-  const raw=JSON.parse(localStorage.getItem(storageKey)||'{}');
+  const raw=JSON.parse((globalThis.adcUserStorage||localStorage).getItem(storageKey)||'{}');
   return adc58Read(raw,currentDni());
  }
  function write(change){
@@ -114,7 +114,7 @@ function adc58Transition(store,id,action){
   const dni=currentDni();
   next.fields={...next.fields,...Object.fromEntries(dj02Fields.map(key=>[key,dj02Val(key)]))};
   next.rows=adc58Project(next,dni);
-  localStorage.setItem(storageKey,JSON.stringify(next));
+  (globalThis.adcUserStorage||localStorage).setItem(storageKey,JSON.stringify(next));
   ledger=next;dj02Records=next.rows.map(row=>({...row}));dj02Loaded=true;
   return next;
  }

@@ -21,7 +21,8 @@ test('Los 26 esquemas conservan fuentes, claves únicas y requisitos esenciales'
     const keys = form.sections.flatMap(section => section.fields.map(field => field.key));
     assert.equal(new Set(keys).size,keys.length,form.id);
     const fields = form.sections.flatMap(section => section.fields.flatMap(field => field.type === 'repeat' ? field.fields : field));
-    assert.ok(fields.some(field => field.required),`${form.id} necesita datos esenciales`);
+    // La planilla de Reubicación permite dejar filas vacías; el original no marca campos obligatorios.
+    assert.ok(form.id==='reubicacion'||fields.some(field => field.required),`${form.id} necesita datos esenciales`);
     assert.ok(form.notices.length,form.id);
     for (const field of fields.filter(field => field.signature)) assert.equal(field.mnc,false);
   }
@@ -92,7 +93,7 @@ test('Chrome verifica formularios, borradores, MNC, filas, validación y PDF',{
       });
     }
     // DP-01 se revisa como PDF preparado, sin habilitar aún el esquema histórico.
-    for (const form of forms.filter(form => !['bd02','dp01','sr01','cf01','traslado-inicial'].includes(form.id))) await t.test(form.id,async() => {
+    for (const form of forms.filter(form => form.catalogState!=='pending'&&!['bd02','dp01','sr01','cf01','traslado-inicial','reubicacion'].includes(form.id))) await t.test(form.id,async() => {
       await open(form.id);
       assert.ok(await page.locator('.adc-document-page').count(),`${form.id} se muestra al abrir`);
       await page.locator('[data-adc-document-pending]').click();
@@ -496,7 +497,10 @@ test('Chrome verifica formularios, borradores, MNC, filas, validación y PDF',{
       await page.locator('#reviewFixture').evaluate(node=>node.remove());
       await page.setViewportSize({width:1440,height:1100});
     });
-    await open('interinos');
+    // La validación general se prueba en un formulario disponible; Interinos queda Próximamente.
+    // Correo es un campo histórico en N.º 1: se conserva un dato ficticio para comprobar su validación.
+    await page.evaluate(()=>{const key='adc-official-form-form-1-draft-v1',draft=JSON.parse(localStorage.getItem(key)||'{}');draft.values={...draft.values,correo:'prueba@example.org'};localStorage.setItem(key,JSON.stringify(draft))});
+    await open('form-1');
     await fillRequired();
     await page.locator('[data-adc-field="correo"]').fill('invalido');
     await page.locator('[data-adc-official-action="preview"]').first().click();

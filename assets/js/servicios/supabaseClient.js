@@ -37,6 +37,31 @@ async function profile(){
   const authenticated=await user();if(!authenticated)throw Error('Iniciá sesión para consultar tu cuenta.');
   return ensureTesterProfile(authenticated);
 }
+async function syncSession(owner){
+  const api=fail(),session=value(await api.auth.getSession()).session;
+  if(!session)throw Error('La sesión terminó.');
+  // Fijar el token de esta operación: un cambio de cuenta concurrente no debe
+  // enviar el documento anterior usando las credenciales de la cuenta nueva.
+  const authenticated=value(await api.auth.getUser(session.access_token)).user;
+  if(authenticated?.id!==owner)throw Error('La cuenta cambió.');
+  return {api,token:session.access_token};
+}
+const syncRecords={
+  async list(owner){
+    const {api,token}=await syncSession(owner),rows=[];let after='';
+    for(;;){
+      let query=api.from('adc_user_records').select('owner_id,record_key,schema_version,revision,payload,deleted,updated_at').eq('owner_id',owner).order('record_key').limit(200);
+      if(after)query=query.gt('record_key',after);
+      const page=value(await query.setHeader('Authorization','Bearer '+token));rows.push(...page);
+      if(page.length<200)return rows;after=page.at(-1).record_key;
+    }
+  },
+  async put(owner,key,raw,revision){
+    const {api,token}=await syncSession(owner);
+    const result=value(await api.rpc('adc_sync_put',{p_key:key,p_raw:raw,p_expected_revision:revision,p_schema_version:1}).setHeader('Authorization','Bearer '+token));
+    return Array.isArray(result)?result[0]:result;
+  }
+};
 let recovery=new URL(location.href).searchParams.get('flow')==='recovery'||location.hash.includes('type=recovery');
 if(client)client.auth.onAuthStateChange((event,session)=>{
   if(event==='PASSWORD_RECOVERY')recovery=true;
@@ -47,7 +72,7 @@ window.adcAuth={
   mode:realAuth?'supabase':'demo',configured:!!client,error:configurationError,
   ready:client?client.auth.getSession().then(result=>{value(result);return true;}):Promise.resolve(!realAuth),
   isRecovery:()=>recovery,
-  user,profile,
+  user,profile,syncRecords,
   async signIn(email,password){return value(await fail().auth.signInWithPassword({email,password}));},
   async signUp(email,password){return value(await fail().auth.signUp({email,password,options:{emailRedirectTo:callback()}}));},
   async signOut(){return value(await fail().auth.signOut({scope:'local'}));},

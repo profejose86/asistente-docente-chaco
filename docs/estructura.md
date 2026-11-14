@@ -1,5 +1,7 @@
 # Estructura y ejecución
 
+La sincronización docente está implementada localmente, con aislamiento por cuenta, consentimiento y versiones por documento. Su clasificación, primera importación, archivos y límites están en [sincronizacion-usuarios.md](sincronizacion-usuarios.md). **La migración `202611140001_adc_user_records.sql` no está aplicada al servidor remoto.** Las referencias históricas siguientes a datos exclusivamente locales describen la etapa previa; la subida de estos datos permanece desactivada hasta la autorización explícita del usuario en cada dispositivo.
+
 El mapa vigente está en [arquitectura-mapa.md](arquitectura-mapa.md); la [auditoría y reglas de modularización](arquitectura-auditoria.md) distingue lo refactorizado de la deuda pendiente. `AGENTS.md` registra cómo reutilizar estos módulos. Regenerar con `npm run architecture:audit` y verificar con `npm run architecture:check`.
 
 Los apartados históricos que mencionan acceso sin datos describen únicamente el modo demo. En el piloto configurado con Supabase no se omite el inicio de sesión ni se usa `adc-preview=1` como autenticación.

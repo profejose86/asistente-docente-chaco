@@ -38,6 +38,7 @@
     "assets/css/interfaz/mnc.css",
     "assets/css/interfaz/navegacion.css",
     "assets/css/interfaz/responsive.css",
+    "assets/css/interfaz/sincronizacion.css",
     "assets/css/interfaz/tema.css",
     "assets/css/interfaz/validacion-guiada.css",
     "assets/css/perfil/nombres.css",
@@ -62,12 +63,19 @@
     "assets/formularios/BD-02-pagina-1.png",
     "assets/formularios/BD-02-pagina-2.png",
     "assets/formularios/BD-02.pdf",
+    "assets/formularios/CF-01-pagina-1.png",
+    "assets/formularios/CF-01.pdf",
     "assets/formularios/DP-01-pagina-1.png",
     "assets/formularios/DP-01.pdf",
+    "assets/formularios/Reubicacion-pagina-1.png",
+    "assets/formularios/Reubicacion.pdf",
     "assets/formularios/SC-01-plantilla.png",
     "assets/formularios/SC-01.pdf",
     "assets/formularios/SR-01-pagina-1.png",
     "assets/formularios/SR-01.pdf",
+    "assets/formularios/Traslado-Transitorio-pagina-1.png",
+    "assets/formularios/Traslado-Transitorio-pagina-2.png",
+    "assets/formularios/Traslado-Transitorio.pdf",
     "assets/img/acceso/fondo-escolar-dark.png",
     "assets/img/acceso/fondo-escolar-light.png",
     "assets/img/acceso/logo-adc.png",
@@ -109,12 +117,15 @@
     "assets/js/interfaz/inicio-local.js",
     "assets/js/interfaz/navegacion.js",
     "assets/js/interfaz/sesion.js",
+    "assets/js/interfaz/sincronizacion.js",
     "assets/js/perfil/contactos-instituciones.js",
     "assets/js/perfil/datos-personales.js",
     "assets/js/perfil/geografia.js",
     "assets/js/perfil/instituciones.js",
     "assets/js/perfil/nombres.js",
     "assets/js/perfil/respaldos.js",
+    "assets/js/servicios/almacenamiento-usuario.js",
+    "assets/js/servicios/sincronizacion-usuario.js",
     "assets/js/servicios/supabase-runtime.js",
     "assets/js/servicios/supabaseClient.js",
     "assets/js/tema/controles.js",
@@ -184,31 +195,39 @@
     "docs/arquitectura-auditoria.md",
     "docs/arquitectura-inventario.json",
     "docs/arquitectura-mapa.md",
+    "docs/cf01-pdf-original.md",
     "docs/codigo-ajustes.md",
     "docs/documentos-fondo-relativo.md",
     "docs/editor-local.md",
     "docs/estructura.md",
     "docs/formularios-pdf-preparados.md",
     "docs/funciones-respaldo.md",
+    "docs/ol01-revision.md",
+    "docs/prueba-sincronizacion.md",
     "docs/publicacion-online.md",
     "docs/recuperacion-dl01.md",
     "docs/referencias/nomenclatura-licencias.json",
     "docs/referencias/nomenclatura-licencias.md",
     "docs/referencias/nomenclatura-texto.txt",
     "docs/referencias/Nomenclatura.pdf",
+    "docs/reubicacion-pdf-original.md",
     "docs/revision-ajustes-2026-11-14.md",
+    "docs/sincronizacion-usuarios.md",
     "docs/sr01-pdf-original.md",
     "docs/structure-manifest.json",
     "docs/supabase-staging.md",
+    "docs/traslado-transitorio-pdf.md",
     "docs/unificacion-main.md",
     "index.html",
     "package-lock.json",
     "package.json",
     "REVIEW_ADC_v60.md",
     "supabase/migrations/202611130001_adc_tester_profiles.sql",
+    "supabase/migrations/202611140001_adc_user_records.sql",
     "tests/acceso-ajustes.test.cjs",
     "tests/ajustes-proyecto.test.cjs",
     "tests/arquitectura.test.cjs",
+    "tests/cf01-pdf.test.cjs",
     "tests/cursos.test.cjs",
     "tests/dl01-interfaz.test.cjs",
     "tests/documento-fondo.test.cjs",
@@ -223,11 +242,16 @@
     "tests/local-editor-bridge.test.cjs",
     "tests/local-editor-ui.test.cjs",
     "tests/mbit.test.cjs",
+    "tests/ol01-guia.test.cjs",
     "tests/ol01-interfaz.test.cjs",
     "tests/ol01-perfil.test.cjs",
     "tests/pdf-blank-line.test.cjs",
     "tests/pdf-campos.test.cjs",
     "tests/publicacion.test.cjs",
+    "tests/reubicacion-pdf.test.cjs",
+    "tests/sincronizacion-browser.test.cjs",
+    "tests/sincronizacion-rls.test.cjs",
+    "tests/sincronizacion.test.cjs",
     "tests/sr01-pdf.test.cjs",
     "tests/studio-alineacion.test.cjs",
     "tests/studio-contrato.test.cjs",
@@ -239,6 +263,8 @@
     "tests/supabase-rls.test.cjs",
     "tests/support/ajustes.cjs",
     "tests/support/demo-config.cjs",
+    "tests/sync-sandbox.test.cjs",
+    "tests/traslado-pdf.test.cjs",
     "tools/ajustes-store.cjs",
     "tools/auditar-arquitectura.cjs",
     "tools/build.cjs",
@@ -251,6 +277,7 @@
     "tools/npm-local.cmd",
     "tools/publicar.cjs",
     "tools/supabase-auth-settings.cjs",
+    "tools/sync-sandbox.cjs",
     "tools/verify-structure.cjs"
   ],
   "entries": [
@@ -299,6 +326,9 @@
         "assets/js/editor/modo-local.js",
         "assets/datos/config-publica.js",
         "assets/js/servicios/supabase-runtime.js",
+        "assets/js/servicios/almacenamiento-usuario.js",
+        "assets/js/servicios/sincronizacion-usuario.js",
+        "assets/js/interfaz/sincronizacion.js",
         "assets/js/interfaz/sesion.js",
         "assets/js/interfaz/inicio-local.js",
         "assets/js/core/mnc.js",
@@ -367,6 +397,7 @@
       ],
       "styles": [
         "assets/css/acceso/autenticacion.css",
+        "assets/css/interfaz/sincronizacion.css",
         "assets/css/base.css",
         "assets/css/tramites/dj01-advertencias.css",
         "assets/css/tramites/dj01-distribucion.css",
@@ -424,8 +455,8 @@
     },
     {
       "file": "AGENTS.md",
-      "bytes": 4063,
-      "lines": 30,
+      "bytes": 6372,
+      "lines": 35,
       "generated": false,
       "functions": [],
       "globals": [],
@@ -621,6 +652,15 @@
       "storageKeys": []
     },
     {
+      "file": "assets/css/interfaz/sincronizacion.css",
+      "bytes": 1083,
+      "lines": 12,
+      "generated": false,
+      "functions": [],
+      "globals": [],
+      "storageKeys": []
+    },
+    {
       "file": "assets/css/interfaz/tema.css",
       "bytes": 106156,
       "lines": 27,
@@ -631,8 +671,8 @@
     },
     {
       "file": "assets/css/interfaz/validacion-guiada.css",
-      "bytes": 1049,
-      "lines": 10,
+      "bytes": 2092,
+      "lines": 18,
       "generated": false,
       "functions": [],
       "globals": [],
@@ -748,8 +788,8 @@
     },
     {
       "file": "assets/css/tramites/formularios-oficiales.css",
-      "bytes": 14828,
-      "lines": 123,
+      "bytes": 15708,
+      "lines": 130,
       "generated": false,
       "functions": [],
       "globals": [],
@@ -757,8 +797,8 @@
     },
     {
       "file": "assets/css/tramites/ol01.css",
-      "bytes": 924624,
-      "lines": 44,
+      "bytes": 924997,
+      "lines": 49,
       "generated": false,
       "functions": [],
       "globals": [],
@@ -806,8 +846,8 @@
     },
     {
       "file": "assets/datos/formularios-pdf.js",
-      "bytes": 8196,
-      "lines": 113,
+      "bytes": 19649,
+      "lines": 235,
       "generated": false,
       "functions": [],
       "globals": [
@@ -925,7 +965,7 @@
     },
     {
       "file": "assets/js/calendario/calendario.js",
-      "bytes": 28346,
+      "bytes": 28404,
       "lines": 988,
       "generated": false,
       "functions": [
@@ -957,8 +997,8 @@
     },
     {
       "file": "assets/js/calendario/solicitudes.js",
-      "bytes": 22217,
-      "lines": 360,
+      "bytes": 22447,
+      "lines": 362,
       "generated": false,
       "functions": [
         "plus",
@@ -981,6 +1021,7 @@
       ],
       "globals": [
         "adcOLCalendarClosed",
+        "adcOLCalendarCoverage",
         "adcRequestDaySummary",
         "adcDateSnapshot",
         "adcStoreIssuedDates"
@@ -1005,7 +1046,7 @@
     },
     {
       "file": "assets/js/core/estado.js",
-      "bytes": 559,
+      "bytes": 588,
       "lines": 4,
       "generated": false,
       "functions": [],
@@ -1016,7 +1057,7 @@
     },
     {
       "file": "assets/js/core/inicializacion.js",
-      "bytes": 823,
+      "bytes": 910,
       "lines": 18,
       "generated": false,
       "functions": [],
@@ -1048,8 +1089,8 @@
     },
     {
       "file": "assets/js/core/validacion-guiada.js",
-      "bytes": 7964,
-      "lines": 139,
+      "bytes": 11004,
+      "lines": 180,
       "generated": false,
       "functions": [
         "create",
@@ -1062,7 +1103,10 @@
         "completed",
         "showNext",
         "summary",
-        "controls"
+        "controls",
+        "createBlocking",
+        "clear",
+        "refresh"
       ],
       "globals": [
         "adcGuidedValidation"
@@ -1084,7 +1128,7 @@
     },
     {
       "file": "assets/js/documentos/pdf-campos.js",
-      "bytes": 5303,
+      "bytes": 5372,
       "lines": 72,
       "generated": false,
       "functions": [
@@ -1149,7 +1193,7 @@
     },
     {
       "file": "assets/js/editor/ajustes-proyecto.js",
-      "bytes": 8333,
+      "bytes": 8420,
       "lines": 134,
       "generated": false,
       "functions": [
@@ -1228,7 +1272,7 @@
     },
     {
       "file": "assets/js/editor/editor.js",
-      "bytes": 66886,
+      "bytes": 67176,
       "lines": 1047,
       "generated": false,
       "functions": [
@@ -1453,11 +1497,13 @@
     },
     {
       "file": "assets/js/interfaz/inicio-local.js",
-      "bytes": 463,
-      "lines": 10,
+      "bytes": 935,
+      "lines": 19,
       "generated": false,
       "functions": [],
-      "globals": [],
+      "globals": [
+        "adcUserStorage"
+      ],
       "storageKeys": []
     },
     {
@@ -1477,17 +1523,29 @@
     },
     {
       "file": "assets/js/interfaz/sesion.js",
-      "bytes": 3227,
-      "lines": 32,
+      "bytes": 3416,
+      "lines": 44,
       "generated": false,
       "functions": [
         "screen",
         "unlock"
       ],
       "globals": [],
-      "storageKeys": [
-        "adc-auth-local-owner"
-      ]
+      "storageKeys": []
+    },
+    {
+      "file": "assets/js/interfaz/sincronizacion.js",
+      "bytes": 7524,
+      "lines": 80,
+      "generated": false,
+      "functions": [
+        "button",
+        "render"
+      ],
+      "globals": [
+        "adcSyncUI"
+      ],
+      "storageKeys": []
     },
     {
       "file": "assets/js/perfil/contactos-instituciones.js",
@@ -1509,7 +1567,7 @@
     },
     {
       "file": "assets/js/perfil/datos-personales.js",
-      "bytes": 7452,
+      "bytes": 7481,
       "lines": 96,
       "generated": false,
       "functions": [
@@ -1584,7 +1642,7 @@
     },
     {
       "file": "assets/js/perfil/nombres.js",
-      "bytes": 1103,
+      "bytes": 1132,
       "lines": 6,
       "generated": false,
       "functions": [
@@ -1598,7 +1656,7 @@
     },
     {
       "file": "assets/js/perfil/respaldos.js",
-      "bytes": 5652,
+      "bytes": 5710,
       "lines": 36,
       "generated": false,
       "functions": [
@@ -1619,8 +1677,47 @@
       ]
     },
     {
+      "file": "assets/js/servicios/almacenamiento-usuario.js",
+      "bytes": 7334,
+      "lines": 89,
+      "generated": false,
+      "functions": [
+        "category",
+        "legacyOwner",
+        "legacyKeys",
+        "envelope",
+        "get",
+        "set",
+        "keys"
+      ],
+      "globals": [
+        "adcUserStorage"
+      ],
+      "storageKeys": [
+        "adc-supabase-auth",
+        "adc-account-context",
+        "adc-auth-local-owner"
+      ]
+    },
+    {
+      "file": "assets/js/servicios/sincronizacion-usuario.js",
+      "bytes": 7785,
+      "lines": 99,
+      "generated": false,
+      "functions": [
+        "create",
+        "compatible",
+        "active",
+        "run"
+      ],
+      "globals": [
+        "adcUserSync"
+      ],
+      "storageKeys": []
+    },
+    {
       "file": "assets/js/servicios/supabase-runtime.js",
-      "bytes": 227272,
+      "bytes": 228117,
       "lines": 30,
       "generated": true,
       "functions": [],
@@ -1629,13 +1726,14 @@
     },
     {
       "file": "assets/js/servicios/supabaseClient.js",
-      "bytes": 4218,
-      "lines": 69,
+      "bytes": 5602,
+      "lines": 94,
       "generated": false,
       "functions": [
         "user",
         "ensureTesterProfile",
-        "profile"
+        "profile",
+        "syncSession"
       ],
       "globals": [
         "adcAuth"
@@ -1677,7 +1775,7 @@
     },
     {
       "file": "assets/js/tramites/bd02.js",
-      "bytes": 49798,
+      "bytes": 49885,
       "lines": 1139,
       "generated": false,
       "functions": [
@@ -1726,8 +1824,8 @@
     },
     {
       "file": "assets/js/tramites/buscador.js",
-      "bytes": 8485,
-      "lines": 110,
+      "bytes": 8558,
+      "lines": 111,
       "generated": false,
       "functions": [
         "openDL01",
@@ -1771,7 +1869,7 @@
     },
     {
       "file": "assets/js/tramites/dj01-conflictos.js",
-      "bytes": 13964,
+      "bytes": 14022,
       "lines": 146,
       "generated": false,
       "functions": [
@@ -1790,7 +1888,7 @@
     },
     {
       "file": "assets/js/tramites/dj01-distribucion.js",
-      "bytes": 3869,
+      "bytes": 4043,
       "lines": 64,
       "generated": false,
       "functions": [
@@ -1848,7 +1946,7 @@
     },
     {
       "file": "assets/js/tramites/dj01.js",
-      "bytes": 448677,
+      "bytes": 448909,
       "lines": 396,
       "generated": false,
       "functions": [
@@ -1915,7 +2013,7 @@
     },
     {
       "file": "assets/js/tramites/dj02-base.js",
-      "bytes": 12244,
+      "bytes": 12360,
       "lines": 188,
       "generated": false,
       "functions": [
@@ -1966,7 +2064,7 @@
     },
     {
       "file": "assets/js/tramites/dj02-plantilla.js",
-      "bytes": 110411,
+      "bytes": 110440,
       "lines": 48,
       "generated": false,
       "functions": [
@@ -1985,7 +2083,7 @@
     },
     {
       "file": "assets/js/tramites/dj02-registro.js",
-      "bytes": 22739,
+      "bytes": 22797,
       "lines": 386,
       "generated": false,
       "functions": [
@@ -2036,7 +2134,7 @@
     },
     {
       "file": "assets/js/tramites/dl01-pdf.js",
-      "bytes": 16307,
+      "bytes": 16336,
       "lines": 211,
       "generated": false,
       "functions": [
@@ -2083,8 +2181,8 @@
     },
     {
       "file": "assets/js/tramites/formularios-oficiales-datos.js",
-      "bytes": 86572,
-      "lines": 1275,
+      "bytes": 88232,
+      "lines": 1290,
       "generated": false,
       "functions": [],
       "globals": [
@@ -2094,8 +2192,8 @@
     },
     {
       "file": "assets/js/tramites/formularios-oficiales.js",
-      "bytes": 67118,
-      "lines": 1242,
+      "bytes": 69618,
+      "lines": 1264,
       "generated": false,
       "functions": [
         "matches",
@@ -2153,7 +2251,7 @@
     },
     {
       "file": "assets/js/tramites/mnc-adaptadores.js",
-      "bytes": 2323,
+      "bytes": 2381,
       "lines": 49,
       "generated": false,
       "functions": [
@@ -2166,8 +2264,8 @@
     },
     {
       "file": "assets/js/tramites/ol01.js",
-      "bytes": 2051870,
-      "lines": 441,
+      "bytes": 2066947,
+      "lines": 588,
       "generated": false,
       "functions": [
         "adcDocsData",
@@ -2192,6 +2290,16 @@
         "adcOLBereavementEnd",
         "adcOLBereavement",
         "adcOLSyncRule",
+        "adcOLFamily",
+        "adcOLPresentation",
+        "adcOLNextDuty",
+        "adcOLRefreshSchools",
+        "adcOLSuggestSchool",
+        "adcOLSaveDraft",
+        "adcOLRestoreDraft",
+        "adcOLPending",
+        "add",
+        "adcOLGoProfile",
         "adcOLMode",
         "adcOLPaperVariant",
         "adcOLSyncTeacherProfile",
@@ -2203,11 +2311,14 @@
         "missing"
       ],
       "globals": [],
-      "storageKeys": []
+      "storageKeys": [
+        "adc_dj02_v1",
+        "adc-ol01-draft-"
+      ]
     },
     {
       "file": "assets/js/tramites/sc01.js",
-      "bytes": 39410,
+      "bytes": 39497,
       "lines": 745,
       "generated": false,
       "functions": [
@@ -2247,7 +2358,7 @@
     },
     {
       "file": "assets/js/tramites/solicitudes.js",
-      "bytes": 136229,
+      "bytes": 136258,
       "lines": 120,
       "generated": false,
       "functions": [
@@ -2293,8 +2404,17 @@
     },
     {
       "file": "docs/arquitectura-auditoria.md",
-      "bytes": 12656,
-      "lines": 107,
+      "bytes": 13152,
+      "lines": 108,
+      "generated": false,
+      "functions": [],
+      "globals": [],
+      "storageKeys": []
+    },
+    {
+      "file": "docs/cf01-pdf-original.md",
+      "bytes": 3736,
+      "lines": 32,
       "generated": false,
       "functions": [],
       "globals": [],
@@ -2329,8 +2449,8 @@
     },
     {
       "file": "docs/estructura.md",
-      "bytes": 33791,
-      "lines": 234,
+      "bytes": 34354,
+      "lines": 236,
       "generated": false,
       "functions": [],
       "globals": [],
@@ -2338,8 +2458,8 @@
     },
     {
       "file": "docs/formularios-pdf-preparados.md",
-      "bytes": 5086,
-      "lines": 55,
+      "bytes": 5538,
+      "lines": 57,
       "generated": false,
       "functions": [],
       "globals": [],
@@ -2349,6 +2469,24 @@
       "file": "docs/funciones-respaldo.md",
       "bytes": 7633,
       "lines": 451,
+      "generated": false,
+      "functions": [],
+      "globals": [],
+      "storageKeys": []
+    },
+    {
+      "file": "docs/ol01-revision.md",
+      "bytes": 5954,
+      "lines": 43,
+      "generated": false,
+      "functions": [],
+      "globals": [],
+      "storageKeys": []
+    },
+    {
+      "file": "docs/prueba-sincronizacion.md",
+      "bytes": 2861,
+      "lines": 26,
       "generated": false,
       "functions": [],
       "globals": [],
@@ -2391,9 +2529,27 @@
       "storageKeys": []
     },
     {
+      "file": "docs/reubicacion-pdf-original.md",
+      "bytes": 2819,
+      "lines": 28,
+      "generated": false,
+      "functions": [],
+      "globals": [],
+      "storageKeys": []
+    },
+    {
       "file": "docs/revision-ajustes-2026-11-14.md",
       "bytes": 4227,
       "lines": 41,
+      "generated": false,
+      "functions": [],
+      "globals": [],
+      "storageKeys": []
+    },
+    {
+      "file": "docs/sincronizacion-usuarios.md",
+      "bytes": 11604,
+      "lines": 78,
       "generated": false,
       "functions": [],
       "globals": [],
@@ -2427,6 +2583,15 @@
       "storageKeys": []
     },
     {
+      "file": "docs/traslado-transitorio-pdf.md",
+      "bytes": 3437,
+      "lines": 30,
+      "generated": false,
+      "functions": [],
+      "globals": [],
+      "storageKeys": []
+    },
+    {
       "file": "docs/unificacion-main.md",
       "bytes": 1930,
       "lines": 26,
@@ -2437,8 +2602,8 @@
     },
     {
       "file": "index.html",
-      "bytes": 44963,
-      "lines": 157,
+      "bytes": 45250,
+      "lines": 161,
       "generated": false,
       "functions": [],
       "globals": [],
@@ -2455,8 +2620,8 @@
     },
     {
       "file": "package.json",
-      "bytes": 1408,
-      "lines": 30,
+      "bytes": 1648,
+      "lines": 32,
       "generated": false,
       "functions": [],
       "globals": [],
@@ -2475,6 +2640,15 @@
       "file": "supabase/migrations/202611130001_adc_tester_profiles.sql",
       "bytes": 2049,
       "lines": 36,
+      "generated": false,
+      "functions": [],
+      "globals": [],
+      "storageKeys": []
+    },
+    {
+      "file": "supabase/migrations/202611140001_adc_user_records.sql",
+      "bytes": 3847,
+      "lines": 54,
       "generated": false,
       "functions": [],
       "globals": [],
@@ -2505,12 +2679,23 @@
     },
     {
       "file": "tests/arquitectura.test.cjs",
-      "bytes": 1612,
-      "lines": 20,
+      "bytes": 2064,
+      "lines": 25,
       "generated": false,
       "functions": [],
       "globals": [],
       "storageKeys": []
+    },
+    {
+      "file": "tests/cf01-pdf.test.cjs",
+      "bytes": 6794,
+      "lines": 52,
+      "generated": false,
+      "functions": [],
+      "globals": [],
+      "storageKeys": [
+        "adc-official-form-cf01-draft-v1"
+      ]
     },
     {
       "file": "tests/cursos.test.cjs",
@@ -2609,8 +2794,8 @@
     },
     {
       "file": "tests/formularios-oficiales.test.cjs",
-      "bytes": 52283,
-      "lines": 672,
+      "bytes": 52815,
+      "lines": 673,
       "generated": false,
       "functions": [
         "fillRequired"
@@ -2688,9 +2873,25 @@
       ]
     },
     {
+      "file": "tests/ol01-guia.test.cjs",
+      "bytes": 13151,
+      "lines": 156,
+      "generated": false,
+      "functions": [
+        "adcOLDraw"
+      ],
+      "globals": [
+        "olPrintCalls"
+      ],
+      "storageKeys": [
+        "adc_dj02_v1",
+        "adc-ol01-draft-standalone"
+      ]
+    },
+    {
       "file": "tests/ol01-interfaz.test.cjs",
-      "bytes": 4362,
-      "lines": 63,
+      "bytes": 4791,
+      "lines": 64,
       "generated": false,
       "functions": [],
       "globals": [],
@@ -2698,8 +2899,8 @@
     },
     {
       "file": "tests/ol01-perfil.test.cjs",
-      "bytes": 2427,
-      "lines": 54,
+      "bytes": 2539,
+      "lines": 55,
       "generated": false,
       "functions": [
         "adcOLSyncTeacherProfile"
@@ -2733,6 +2934,62 @@
       "functions": [],
       "globals": [],
       "storageKeys": []
+    },
+    {
+      "file": "tests/reubicacion-pdf.test.cjs",
+      "bytes": 6653,
+      "lines": 40,
+      "generated": false,
+      "functions": [],
+      "globals": [],
+      "storageKeys": [
+        "adc-official-form-reubicacion-draft-v1"
+      ]
+    },
+    {
+      "file": "tests/sincronizacion-browser.test.cjs",
+      "bytes": 10024,
+      "lines": 78,
+      "generated": false,
+      "functions": [
+        "pageFor",
+        "authorize"
+      ],
+      "globals": [
+        "adcConfig"
+      ],
+      "storageKeys": [
+        "fixture-seeded",
+        "adc-supabase-auth",
+        "adc_v08",
+        "adc-sc01-borrador-v1",
+        "fixture-guard-leak"
+      ]
+    },
+    {
+      "file": "tests/sincronizacion-rls.test.cjs",
+      "bytes": 4199,
+      "lines": 33,
+      "generated": false,
+      "functions": [],
+      "globals": [],
+      "storageKeys": []
+    },
+    {
+      "file": "tests/sincronizacion.test.cjs",
+      "bytes": 9871,
+      "lines": 73,
+      "generated": false,
+      "functions": [
+        "device",
+        "server"
+      ],
+      "globals": [],
+      "storageKeys": [
+        "adc_v08",
+        "adc-sc01-borrador-v1",
+        "adc.calendar.v1"
+      ]
     },
     {
       "file": "tests/sr01-pdf.test.cjs",
@@ -2796,16 +3053,16 @@
     },
     {
       "file": "tests/supabase-auth.test.cjs",
-      "bytes": 7614,
-      "lines": 68,
+      "bytes": 7825,
+      "lines": 70,
       "generated": false,
       "functions": [],
       "globals": [
         "adcConfig"
       ],
       "storageKeys": [
-        "adc-auth-local-owner",
         "adc-supabase-auth",
+        "adc-auth-local-owner",
         "adc_v08"
       ]
     },
@@ -2856,6 +3113,24 @@
       "globals": [
         "adcConfig"
       ],
+      "storageKeys": []
+    },
+    {
+      "file": "tests/sync-sandbox.test.cjs",
+      "bytes": 1841,
+      "lines": 20,
+      "generated": false,
+      "functions": [],
+      "globals": [],
+      "storageKeys": []
+    },
+    {
+      "file": "tests/traslado-pdf.test.cjs",
+      "bytes": 6318,
+      "lines": 50,
+      "generated": false,
+      "functions": [],
+      "globals": [],
       "storageKeys": []
     },
     {
@@ -2999,6 +3274,26 @@
       ],
       "globals": [],
       "storageKeys": []
+    },
+    {
+      "file": "tools/sync-sandbox.cjs",
+      "bytes": 8742,
+      "lines": 78,
+      "generated": false,
+      "functions": [
+        "session",
+        "createSandbox",
+        "queryAs"
+      ],
+      "globals": [
+        "adcConfig"
+      ],
+      "storageKeys": [
+        "adc-supabase-auth",
+        "sandbox-seeded",
+        "adc_v08",
+        "adc-auth-local-owner"
+      ]
     },
     {
       "file": "tools/verify-structure.cjs",
@@ -3243,6 +3538,30 @@
       "from": "index.html",
       "to": "assets/js/servicios/supabase-runtime.js",
       "kind": "script",
+      "exists": true
+    },
+    {
+      "from": "index.html",
+      "to": "assets/js/servicios/almacenamiento-usuario.js",
+      "kind": "script",
+      "exists": true
+    },
+    {
+      "from": "index.html",
+      "to": "assets/js/servicios/sincronizacion-usuario.js",
+      "kind": "script",
+      "exists": true
+    },
+    {
+      "from": "index.html",
+      "to": "assets/js/interfaz/sincronizacion.js",
+      "kind": "script",
+      "exists": true
+    },
+    {
+      "from": "index.html",
+      "to": "assets/css/interfaz/sincronizacion.css",
+      "kind": "link",
       "exists": true
     },
     {
@@ -3906,6 +4225,18 @@
       "exists": true
     },
     {
+      "from": "tests/cf01-pdf.test.cjs",
+      "to": "tests/support/demo-config.cjs",
+      "kind": "literal-module",
+      "exists": true
+    },
+    {
+      "from": "tests/cf01-pdf.test.cjs",
+      "to": "assets/js/editor/ajustes-proyecto-datos.js",
+      "kind": "literal-module",
+      "exists": true
+    },
+    {
       "from": "tests/dl01-interfaz.test.cjs",
       "to": "tests/support/demo-config.cjs",
       "kind": "literal-module",
@@ -4194,6 +4525,12 @@
       "exists": true
     },
     {
+      "from": "tests/ol01-guia.test.cjs",
+      "to": "tests/support/demo-config.cjs",
+      "kind": "literal-module",
+      "exists": true
+    },
+    {
       "from": "tests/ol01-interfaz.test.cjs",
       "to": "tests/support/demo-config.cjs",
       "kind": "literal-module",
@@ -4208,6 +4545,24 @@
     {
       "from": "tests/publicacion.test.cjs",
       "to": "tools/publicar.cjs",
+      "kind": "literal-module",
+      "exists": true
+    },
+    {
+      "from": "tests/reubicacion-pdf.test.cjs",
+      "to": "tests/support/demo-config.cjs",
+      "kind": "literal-module",
+      "exists": true
+    },
+    {
+      "from": "tests/reubicacion-pdf.test.cjs",
+      "to": "assets/js/editor/ajustes-proyecto-datos.js",
+      "kind": "literal-module",
+      "exists": true
+    },
+    {
+      "from": "tests/sincronizacion-browser.test.cjs",
+      "to": "tests/support/demo-config.cjs",
       "kind": "literal-module",
       "exists": true
     },
@@ -4316,6 +4671,24 @@
     {
       "from": "tests/supabase-rls.test.cjs",
       "to": "tools/configurar-supabase.cjs",
+      "kind": "literal-module",
+      "exists": true
+    },
+    {
+      "from": "tests/sync-sandbox.test.cjs",
+      "to": "tools/sync-sandbox.cjs",
+      "kind": "literal-module",
+      "exists": true
+    },
+    {
+      "from": "tests/traslado-pdf.test.cjs",
+      "to": "tests/support/demo-config.cjs",
+      "kind": "literal-module",
+      "exists": true
+    },
+    {
+      "from": "tests/traslado-pdf.test.cjs",
+      "to": "assets/js/editor/ajustes-proyecto-datos.js",
       "kind": "literal-module",
       "exists": true
     },
@@ -5211,9 +5584,9 @@
     ]
   },
   "summary": {
-    "files": 240,
-    "ownTextModules": 187,
-    "ownJavaScript": 118,
+    "files": 267,
+    "ownTextModules": 207,
+    "ownJavaScript": 130,
     "vendorFiles": 35,
     "missingLiteralReferences": 0
   }

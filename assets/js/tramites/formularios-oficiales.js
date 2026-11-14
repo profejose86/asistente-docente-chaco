@@ -121,7 +121,7 @@
   function save() {
     if (!activeForm || preparedReadOnly()) return;
     try {
-      localStorage.setItem(storageKey(activeForm),JSON.stringify({
+      (globalThis.adcUserStorage||localStorage).setItem(storageKey(activeForm),JSON.stringify({
         schemaVersion:2,values,marked:[...marked],profileOrigin:[...profileOrigin],touched:[...touched],rowCounts,draftWarnings,profileAcknowledged
       }));
     } catch (error) {
@@ -715,7 +715,7 @@
     profileAcknowledged = {};
     let draftVersion = 0;
     try {
-      const draft = JSON.parse(localStorage.getItem(storageKey(form)) || 'null');
+      const draft = JSON.parse((globalThis.adcUserStorage||localStorage).getItem(storageKey(form)) || 'null');
       if (draft && typeof draft === 'object' && !Array.isArray(draft)) {
         values = draft.values && typeof draft.values === 'object' ? draft.values : {};
         marked = new Set(Array.isArray(draft.marked) ? draft.marked : []);
@@ -1205,19 +1205,22 @@
   function replaceCatalogCards() {
     for (const card of document.querySelectorAll('.adc-form-grid .adc-catalog-pending')) {
       const cardTitle = card.querySelector('strong')?.textContent || '';
-      const form = forms.find(item => normalized(item.catalogTitle) === normalized(cardTitle));
+      const form = forms.find(item => [item.catalogTitle,...(item.catalogAliases||[])].some(name=>normalized(name) === normalized(cardTitle)));
       if (!form) continue;
       const button = document.createElement('button');
       button.type = 'button';
       button.className = 'adc-catalog-active';
       button.dataset.adcOfficialForm = form.id;
       button.innerHTML = card.innerHTML;
+      if(button.querySelector('strong'))button.querySelector('strong').textContent=form.catalogTitle;
+      const pending=form.catalogState==='pending';
+      if(pending){button.disabled=true;button.classList.add('adc-catalog-unavailable');button.title='Próximamente: el formulario todavía no está disponible.';}
       const smalls = [...button.querySelectorAll('small')];
       const progress = smalls.find(item => normalized(item.textContent) === 'proximamente');
-      if (progress) progress.textContent = 'Completar y descargar';
+      if (progress) progress.textContent = pending?'Próximamente':'Ingresar y Editar';
       else {
         const action = document.createElement('small');
-        action.textContent = 'Completar y descargar';
+        action.textContent = pending?'Próximamente':'Ingresar y Editar';
         button.append(action);
       }
       card.replaceWith(button);
@@ -1254,7 +1257,7 @@
     const trigger = event.target.closest('[data-adc-official-form]');
     const form = trigger && formById.get(trigger.dataset.adcOfficialForm);
     if (form?.id === 'bd02' && window.adcBD02Open) window.adcBD02Open();
-    else if (form) loadForm(form,trigger);
+    else if (form && form.catalogState!=='pending') loadForm(form,trigger);
   });
   replaceCatalogCards();
 })();

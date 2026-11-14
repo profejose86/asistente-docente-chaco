@@ -9,13 +9,13 @@
  const sideKey='adc_dj_side_width_19g',zoomKey='adc_dj_zoom_mode_19g';
  const isNarrow=()=>window.matchMedia('(max-width:700px)').matches;
  const clamp=(n,min,max)=>Math.min(max,Math.max(min,n));
- let width=Number(localStorage.getItem(sideKey))||355;
- let zoomPref=localStorage.getItem(zoomKey)||'auto';
+ let width=Number((globalThis.adcUserStorage||localStorage).getItem(sideKey))||355;
+ let zoomPref=(globalThis.adcUserStorage||localStorage).getItem(zoomKey)||'auto';
  function setWidth(n,save){
    const available=Math.max(245,layout.getBoundingClientRect().width-235);
    width=clamp(n,245,available);
    layout.style.setProperty('--adc-dj-side-width',width+'px');
-   if(save)try{localStorage.setItem(sideKey,String(Math.round(width)))}catch(e){}
+   if(save)try{(globalThis.adcUserStorage||localStorage).setItem(sideKey,String(Math.round(width)))}catch(e){}
    applyZoom();
  }
  function applyZoom(){
@@ -54,9 +54,9 @@
  function stop(e){if(!active||e.pointerId!==active.id)return;active=null;grip.classList.remove('adc-dragging');setWidth(width,true)}
  grip.addEventListener('pointerup',stop);grip.addEventListener('pointercancel',stop);
  grip.addEventListener('keydown',e=>{if(e.key==='ArrowLeft'||e.key==='ArrowRight'){e.preventDefault();setWidth(width+(e.key==='ArrowRight'?30:-30),true)}else if(e.key==='Home'){e.preventDefault();setWidth(245,true)}});
- slider.addEventListener('input',()=>{zoomPref=String(slider.value);try{localStorage.setItem(zoomKey,zoomPref)}catch(e){}applyZoom()});
- fitBtn.addEventListener('click',()=>{zoomPref='auto';try{localStorage.setItem(zoomKey,zoomPref)}catch(e){}applyZoom()});
- resetBtn.addEventListener('click',()=>{setWidth(355,true);zoomPref='auto';try{localStorage.setItem(zoomKey,zoomPref)}catch(e){}applyZoom()});
+ slider.addEventListener('input',()=>{zoomPref=String(slider.value);try{(globalThis.adcUserStorage||localStorage).setItem(zoomKey,zoomPref)}catch(e){}applyZoom()});
+ fitBtn.addEventListener('click',()=>{zoomPref='auto';try{(globalThis.adcUserStorage||localStorage).setItem(zoomKey,zoomPref)}catch(e){}applyZoom()});
+ resetBtn.addEventListener('click',()=>{setWidth(355,true);zoomPref='auto';try{(globalThis.adcUserStorage||localStorage).setItem(zoomKey,zoomPref)}catch(e){}applyZoom()});
  window.addEventListener('resize',()=>{if(!isNarrow())setWidth(width,false);else applyZoom()});
  if(typeof ResizeObserver!=='undefined')new ResizeObserver(()=>applyZoom()).observe(preview);
  setWidth(width,false);applyZoom();

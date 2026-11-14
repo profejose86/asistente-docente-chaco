@@ -1,8 +1,8 @@
 
 (()=>{
 const ids=['desde','hasta','presentacion'], source='https://www.argentina.gob.ar/normativa/nacional/ley-27399-281835/texto';
-const read=(key,fallback)=>{try{return JSON.parse(localStorage.getItem(key))??fallback}catch{return fallback}};
-const write=(key,value)=>localStorage.setItem(key,JSON.stringify(value));
+const read=(key,fallback)=>{try{return JSON.parse((globalThis.adcUserStorage||localStorage).getItem(key))??fallback}catch{return fallback}};
+const write=(key,value)=>(globalThis.adcUserStorage||localStorage).setItem(key,JSON.stringify(value));
 const key='adc.calendar.v1';
 let openMonth=null, adjustedUntil=null;
 let catalog=read(key,{version:0,events:[]}), automatic={}, pickEnd=false, verified=false, marked=false, verifyContext="";

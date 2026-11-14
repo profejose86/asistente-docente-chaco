@@ -38,7 +38,7 @@
   extraProfile.className = 'adc-profile-address';
   extraProfile.innerHTML = '<legend>Datos de domicilio para formularios</legend><div class="fields"></div>';
   let savedProfile = {};
-  try { savedProfile = JSON.parse(localStorage.getItem('adc_v08') || '{}').perfilDJ || {}; } catch {}
+  try { savedProfile = JSON.parse((globalThis.adcUserStorage||localStorage).getItem('adc_v08') || '{}').perfilDJ || {}; } catch {}
   for (const field of fields.filter(field => ['numeroCalle','unidad','manzana','barrio','codigoPostal','departamento','telefonoFijo'].includes(field.key))) {
     const label = document.createElement('label');
     const input = document.createElement('input');
@@ -525,7 +525,7 @@
     showContactOrigin();
   }
   function save() {
-    try { localStorage.setItem(storageKey,JSON.stringify(read())); }
+    try { (globalThis.adcUserStorage||localStorage).setItem(storageKey,JSON.stringify(read())); }
     catch { status.textContent = 'No se pudo guardar el borrador. Descargá el PDF para conservarlo.'; }
   }
   function splitAddress(values) {
@@ -724,7 +724,7 @@
       const now = new Date();
       sheet.elements.fecha.value = `${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}-${String(now.getDate()).padStart(2,'0')}`;
       let draft;
-      try { draft = JSON.parse(localStorage.getItem(storageKey) || 'null'); } catch {}
+      try { draft = JSON.parse((globalThis.adcUserStorage||localStorage).getItem(storageKey) || 'null'); } catch {}
       if (draft && typeof draft === 'object' && !Array.isArray(draft)) write(draft);
       initialized = true;
     }

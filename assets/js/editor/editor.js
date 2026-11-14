@@ -310,7 +310,7 @@
  let settingsDrag=null;
  let settingsMoved=false;
  try{
-   const saved=JSON.parse(localStorage.getItem(settingsPositionKey)||'null');
+   const saved=JSON.parse((globalThis.adcUserStorage||localStorage).getItem(settingsPositionKey)||'null');
    if(Number.isFinite(saved?.x)&&Number.isFinite(saved?.y))settingsPosition=saved;
  }catch{}
  function positionSettings(){
@@ -355,7 +355,7 @@
    gear.classList.remove('adc-gear-dragging');
    if(settingsMoved){
      settingsPosition={x:gear.offsetLeft,y:gear.offsetTop};
-     try{localStorage.setItem(settingsPositionKey,JSON.stringify(settingsPosition))}catch{}
+     try{(globalThis.adcUserStorage||localStorage).setItem(settingsPositionKey,JSON.stringify(settingsPosition))}catch{}
    }
  }
  for(const name of ['pointerup','pointercancel','lostpointercapture'])gear.addEventListener(name,finishSettingsDrag);
@@ -364,7 +364,7 @@
  resetSettingsPosition.textContent='Volver a la esquina';
  resetSettingsPosition.onclick=()=>{
    settingsPosition={x:settingsMargin,y:settingsMargin};
-   try{localStorage.removeItem(settingsPositionKey)}catch{}
+   try{(globalThis.adcUserStorage||localStorage).removeItem(settingsPositionKey)}catch{}
    positionSettings();
  };
  panel.append(resetSettingsPosition);
@@ -470,7 +470,7 @@
      return;
    }
    if (act === 'save') {
-     try { localStorage.setItem('adc-design-draft-v60',serialize());dirty=false;say('Borrador guardado en este navegador.'); }
+     try { (globalThis.adcUserStorage||localStorage).setItem('adc-design-draft-v60',serialize());dirty=false;say('Borrador guardado en este navegador.'); }
      catch { say('No se pudo guardar. Usá Exportar JSON.'); }
      return;
    }
@@ -1024,7 +1024,7 @@
  const initialLayout = [{"kind":"style","target":"base-423","x":0,"y":0,"width":919,"height":217.390625},{"kind":"style","target":"base-434","x":0,"y":0,"width":919,"height":1698.34375},{"kind":"style","target":"base-423","x":8.5,"y":0},{"kind":"style","target":"base-434","x":8.5,"y":0},{"kind":"style","target":"base-509","x":0,"y":0,"width":1247,"height":4665.96875},{"kind":"style","target":"base-509","x":0,"y":0,"width":1286,"height":4665.96875},{"kind":"style","target":"base-5","x":-24,"y":0,"width":926,"height":109.375},{"kind":"style","target":"base-5","x":0,"y":0,"width":1051,"height":109.375},{"kind":"style","target":"base-5","x":0,"y":0,"width":951,"height":109.375},{"kind":"style","target":"base-9","x":-24,"y":0},{"kind":"style","target":"base-509","x":-36,"y":-2},{"kind":"style","target":"base-293","x":-24,"y":0,"width":926,"height":47},{"kind":"style","target":"base-293","x":0,"y":0,"width":883,"height":47},{"kind":"style","target":"base-329","x":-24,"y":0},{"kind":"style","target":"base-329","x":0,"y":0,"width":951,"height":686.1875},{"kind":"style","target":"base-366","x":0,"y":0,"width":927,"height":999.5},{"kind":"style","target":"base-390","x":0,"y":0,"width":927,"height":199.5},{"kind":"style","target":"base-366","x":-24,"y":0,"width":951,"height":999.5},{"kind":"style","target":"base-390","x":-24,"y":0,"width":951,"height":199.5},{"kind":"style","target":"base-5","x":0,"y":0,"width":951,"height":147.375},{"kind":"style","target":"base-423","x":0,"y":0,"width":919,"height":235.390625},{"kind":"style","target":"base-434","x":0,"y":0,"width":919,"height":1130.34375},{"kind":"style","target":"base-434","x":0,"y":0,"width":919,"height":897.34375},{"kind":"style","target":"base-400","x":0,"y":0,"width":426,"height":426.734375},{"kind":"style","target":"base-400","x":-17,"y":0,"width":443,"height":426.734375},{"kind":"style","target":"base-400","x":0,"y":0,"width":430,"height":426.734375},{"kind":"style","target":"base-509","x":-2,"y":2},{"kind":"style","target":"base-509","x":0,"y":0},{"kind":"style","target":"base-572","x":-31,"y":0,"width":1424,"height":301.5},{"kind":"style","target":"base-586","x":-31,"y":0,"width":1331,"height":1010.53125},{"kind":"style","target":"base-572","x":0,"y":0,"width":1331,"height":301.5},{"kind":"style","target":"base-5","x":-19,"y":0,"width":970,"height":147.375},{"kind":"style","target":"base-5","x":0,"y":0,"width":992,"height":147.375},{"kind":"style","target":"base-5","x":0,"y":0,"width":999,"height":147.375},{"kind":"style","target":"base-9","x":-19,"y":10},{"kind":"style","target":"base-293","x":-19,"y":0,"width":902,"height":47},{"kind":"style","target":"base-521","x":0,"y":0,"width":1142,"height":654.71875},{"kind":"style","target":"base-521","x":0,"y":0,"width":1122,"height":654.71875},{"kind":"style","target":"base-521","x":0,"y":0,"width":1143,"height":654.71875},{"kind":"style","target":"base-509","x":0,"y":0,"width":1337,"height":4665.96875},{"kind":"style","target":"base-509","x":0,"y":0,"width":1364,"height":4665.96875}];
  function restoreLayout(){
  try {
-   const draft = JSON.parse(localStorage.getItem('adc-design-draft-v60') || localStorage.getItem('adc-design-draft-v59') || localStorage.getItem('adc-design-draft-v58') || 'null');
+   const draft = JSON.parse((globalThis.adcUserStorage||localStorage).getItem('adc-design-draft-v60') || (globalThis.adcUserStorage||localStorage).getItem('adc-design-draft-v59') || (globalThis.adcUserStorage||localStorage).getItem('adc-design-draft-v58') || 'null');
    load(draft?.schema===storageKey?draft.operations:initialLayout);
    dirty=false;say('Distribución cargada.');
  } catch { say('No se pudo recuperar el borrador.'); }
@@ -1036,9 +1036,9 @@
    history:()=>({operations:operations.slice(),redo:redo.slice()}),
    append:op=>{const reverse=apply(op);if(!reverse)return false;operations.push(op);reversals.push(reverse);window.dispatchEvent(new CustomEvent('adc:studio-change'));return true;},
    refresh:op=>{const index=operations.indexOf(op);if(index<0)return false;const reverse=apply(op);if(!reverse)return false;reversals[index]=reverse;return true;},
-   hasDraft:()=>["adc-design-draft-v60", "adc-design-draft-v59", "adc-design-draft-v58"].some(key=>localStorage.getItem(key)),
-   clearDraft:()=>["adc-design-draft-v60", "adc-design-draft-v59", "adc-design-draft-v58"].forEach(key=>localStorage.removeItem(key)),
-   restoreDraft:value=>localStorage.setItem('adc-design-draft-v60',value)
+   hasDraft:()=>["adc-design-draft-v60", "adc-design-draft-v59", "adc-design-draft-v58"].some(key=>(globalThis.adcUserStorage||localStorage).getItem(key)),
+   clearDraft:()=>["adc-design-draft-v60", "adc-design-draft-v59", "adc-design-draft-v58"].forEach(key=>(globalThis.adcUserStorage||localStorage).removeItem(key)),
+   restoreDraft:value=>(globalThis.adcUserStorage||localStorage).setItem('adc-design-draft-v60',value)
  });
  }
  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',restoreLayout,{once:true});

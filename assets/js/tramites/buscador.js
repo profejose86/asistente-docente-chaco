@@ -29,6 +29,7 @@
       const custom=registered.get(card.dataset.mbitRegistry);
       if(custom){card.hidden=!['available','published','ready'].includes(custom.status);if(!card.hidden){decorate(card,custom);result.push({...custom,card});}continue;}
       const source=forms.find(form=>form.id===card.dataset.adcOfficialForm);
+      if(source?.catalogState==='pending'){card.hidden=false;continue;}
       const code=source?.code||card.querySelector('small')?.textContent||'';
       if(codeKey(code)==='dl:1')card.onclick=openDL01;
       const id=source?.id||codeKey(code).replace(/:(\d+)$/,(_,number)=>number.padStart(2,'0'))||card.id;

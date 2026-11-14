@@ -5,7 +5,7 @@ let dj02Records=[];let dj02Loaded=false;
 function dj02Val(k){return document.getElementById('dj02'+k)?.value||''}
 function dj02Set(k,v){const e=document.getElementById('dj02'+k);if(e)e.value=v||''}
 function dj02FromProfile(){const name=document.getElementById('nombre')?.value||'';const parts=name.split(',');dj02Set('Apellido',parts.length>1?parts[0].trim():'');dj02Set('Nombre',parts.length>1?parts.slice(1).join(',').trim():name.trim());for(const [a,b] of Object.entries({Dni:'dni',Sexo:'sexo',Domicilio:'perfilDomicilio',Localidad:'perfilLocalidad',Titulo:'perfilTitulo',Otorgado:'perfilOtorgado',Registro:'perfilRegistro',Clase:'perfilClase',Antiguedad:'perfilAntiguedadVista'}))dj02Set(a,document.getElementById(b)?.value||'');dj02Render()}
-function dj02Open(){if(!dj02Loaded){dj02Loaded=true;try{const d=JSON.parse(localStorage.getItem('adc_dj02_v1')||'null');if(d){dj02Fields.forEach(k=>dj02Set(k,d.fields?.[k]));dj02Records=Array.isArray(d.rows)?d.rows:[];}else dj02FromProfile()}catch(e){dj02FromProfile()}}dj02Render()}
+function dj02Open(){if(!dj02Loaded){dj02Loaded=true;try{const d=JSON.parse((globalThis.adcUserStorage||localStorage).getItem('adc_dj02_v1')||'null');if(d){dj02Fields.forEach(k=>dj02Set(k,d.fields?.[k]));dj02Records=Array.isArray(d.rows)?d.rows:[];}else dj02FromProfile()}catch(e){dj02FromProfile()}}dj02Render()}
 function dj02Add(){const unidad=$('dj02HistoryFilter').value;dj02Records.push({articulo:'',inciso:'',motivo:'',desde:'',hasta:'',disposicion:'',unidad});dj02Render()}
 function dj02Change(i,k,v){const row=dj02Records[i];
  if(!row)return;
@@ -135,7 +135,7 @@ function dj02Render(){
  dj02Preview();
 }
 function dj02Stored(){
- try{return JSON.parse(localStorage.getItem('adc_dj02_v1')||'null')||{}}
+ try{return JSON.parse((globalThis.adcUserStorage||localStorage).getItem('adc_dj02_v1')||'null')||{}}
  catch(e){return {}}
 }
 function dj02SameRecord(row,record){
@@ -174,7 +174,7 @@ function dj02ConfirmDL01(button,draft){
  try{
   const stored=dj02Stored();
   const pending=(stored.pending||[]).filter(item=>item.id!==draft.id);
-  localStorage.setItem('adc_dj02_v1',JSON.stringify({...stored,fields,rows,pending}));
+  (globalThis.adcUserStorage||localStorage).setItem('adc_dj02_v1',JSON.stringify({...stored,fields,rows,pending}));
  }catch(e){return alert('No se pudo guardar el antecedente en este navegador.')}
  dj02Records=rows;
  dj02Render();
@@ -182,6 +182,6 @@ function dj02ConfirmDL01(button,draft){
  button.textContent='Licencia otorgada · guardada en DJ-02';
 }
 function dj02Preview(){const el=document.getElementById('dj02Preview');if(!el)return;const safe=v=>esc(v||'');const names=dj02Fields.map(k=>'<strong>'+({Dni:'DNI',Titulo:'Título',Otorgado:'Otorgado por',Registro:'N.º de registro',Antiguedad:'Antigüedad',Presentada:'Presentada ante'}[k]||k)+':</strong> '+safe(dj02Val(k))).join(' &nbsp; | &nbsp; ');el.innerHTML='<div style="text-align:center"><strong>PROVINCIA DEL CHACO — FORMULARIO DJ-02</strong><h3>DECLARACIÓN JURADA DE LICENCIAS</h3><p>DECLARO BAJO JURAMENTO QUE LOS DATOS CONSIGNADOS SEGUIDAMENTE SON CIERTOS</p></div><p style="line-height:2">'+names+'</p><table><thead><tr><th>Artículo</th><th>Descripción</th><th>Motivos de la licencia</th><th>Desde</th><th>Hasta</th><th>Resolución / Disposición N.º</th><th>Unidad educativa</th></tr></thead><tbody>'+dj02Records.map(r=>'<tr>'+['articulo','inciso','motivo','desde','hasta','disposicion','unidad'].map(k=>'<td>'+safe(r[k])+'</td>').join('')+'</tr>').join('')+'</tbody></table><p style="margin-top:45px;text-align:center">____________________________<br>FIRMA DEL DOCENTE</p>'}
-function dj02Save(){const fields=Object.fromEntries(dj02Fields.map(k=>[k,dj02Val(k)]));try{localStorage.setItem('adc_dj02_v1',JSON.stringify({...dj02Stored(),fields,rows:dj02Records}));alert('DJ-02 guardado en este navegador.')}catch(e){alert('No se pudo guardar el DJ-02. Exportá tus datos por otro medio.')}}
+function dj02Save(){const fields=Object.fromEntries(dj02Fields.map(k=>[k,dj02Val(k)]));try{(globalThis.adcUserStorage||localStorage).setItem('adc_dj02_v1',JSON.stringify({...dj02Stored(),fields,rows:dj02Records}));alert('DJ-02 guardado en este navegador.')}catch(e){alert('No se pudo guardar el DJ-02. Exportá tus datos por otro medio.')}}
 function dj02Print(){dj02Preview();if(!adcCheckDJ02Print())return;document.body.classList.add('dj02-print-mode');window.print();setTimeout(()=>document.body.classList.remove('dj02-print-mode'),1200)}
 window.addEventListener('afterprint',()=>document.body.classList.remove('dj02-print-mode'));

@@ -32,6 +32,7 @@ test('SDK oficial en Chrome: registro, login real, guard, perfil mínimo, recupe
     if(method==='PATCH')profile={...profile,...body};
     return json(req.headers().accept?.includes('vnd.pgrst.object')?profile:profile?[profile]:[]);
    }
+   if(url.pathname==='/rest/v1/adc_user_records')return json([]);
    return json({message:'Unexpected request'},500);
   });
   await page.goto(base+'index.html?adc-preview=1');await page.waitForURL(base+'ADC_Ingreso_Editable.html');
@@ -48,9 +49,9 @@ test('SDK oficial en Chrome: registro, login real, guard, perfil mínimo, recupe
   const claim=page.getByRole('button',{name:'Usar mis datos de este navegador'});await page.waitForFunction(()=>document.querySelector('#adcSessionBar')||document.querySelector('#adcAuthGate button'));
   if(await claim.isVisible())await claim.click();await page.waitForSelector('#adcSessionBar');
   assert.deepEqual(Object.keys(profile).sort(),['created_at','display_name','id','updated_at']);
-  assert.equal(await page.evaluate(()=>localStorage.getItem('adc-auth-local-owner')),id);
+  assert.equal(await page.evaluate(()=>adcUserStorage.scope()),id);
   await page.evaluate(()=>adcAuth.saveTesterName('Tester de ADC'));assert.equal(profile.display_name,'Tester de ADC');
-  await page.locator('#adcSessionBar button').click();await page.waitForURL(base+'ADC_Ingreso_Editable.html');
+  await page.locator('#adcSessionBar').getByRole('button',{name:'Cerrar sesión',exact:true}).click();await page.waitForURL(base+'ADC_Ingreso_Editable.html');
   // La URL recovery conserva el flujo en lugar de enviar al usuario a index.
   await page.evaluate(({session})=>localStorage.setItem('adc-supabase-auth',JSON.stringify(session)),{session:session()});
   await page.goto(base+'ADC_Ingreso_Editable.html?flow=recovery');await page.waitForSelector('#adcRecoveryForm');
@@ -58,10 +59,11 @@ test('SDK oficial en Chrome: registro, login real, guard, perfil mínimo, recupe
   assert.ok(requests.some(req=>req.path.endsWith('/user')&&req.method==='PUT'));
   // No mostrar datos si el navegador pertenece a otra cuenta; conservarlos.
   await page.evaluate(({session})=>{localStorage.setItem('adc-supabase-auth',JSON.stringify(session));localStorage.setItem('adc-auth-local-owner','otra-cuenta');localStorage.setItem('adc_v08','{"privado":"conservar"}');},{session:session()});
-  await page.goto(base+'index.html?adc-preview=1');await page.waitForSelector('#adcAuthGate');
-  assert.match(await page.locator('#adcAuthGate').textContent(),/otra cuenta/);
+  await page.goto(base+'index.html?adc-preview=1');await page.waitForSelector('#adcSessionBar');
+  assert.match(await page.locator('#adcSyncPanel').textContent(),/otra cuenta/);
   assert.equal(await page.evaluate(()=>localStorage.getItem('adc_v08')),'{"privado":"conservar"}');
-  assert.ok(await page.locator('html').evaluate(node=>node.classList.contains('adc-auth-pending')));
+  assert.equal(await page.locator('html').evaluate(node=>node.classList.contains('adc-auth-pending')),false);
+  assert.notEqual(await page.evaluate(()=>adcUserStorage.getItem('adc_v08')),'{"privado":"conservar"}');
   assert.deepEqual(errors,[]);
  }finally{await browser.close();await new Promise(resolve=>server.close(resolve));}
 });

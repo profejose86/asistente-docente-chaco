@@ -190,7 +190,7 @@ async function generatePDF(){
     const stored=dj02Stored();
     const pending=stored.pending||[];
     if(!pending.some(item=>item.id===draft.id)&&!unique.every(record=>(stored.rows||[]).some(row=>dj02SameRecord(row,record)))){
-     localStorage.setItem('adc_dj02_v1',JSON.stringify({...stored,pending:[...pending,draft]}));
+     (globalThis.adcUserStorage||localStorage).setItem('adc_dj02_v1',JSON.stringify({...stored,pending:[...pending,draft]}));
     }
    }catch(e){
     const warning=document.createElement('p');
