@@ -1,6 +1,114 @@
 // Configuración de documentos originales y coordenadas de sus controles.
 // Solo los formularios registrados aquí utilizan este modo; los demás conservan su implementación.
 window.adcPreparedPdfForms = Object.freeze({
+  bd07: Object.freeze({
+    pdf:'assets/formularios/BD-07.pdf',
+    pages:[{image:'assets/formularios/BD-07-pagina-1.png',width:595.32,height:842.04}],
+    source:'assets/formularios/BD-07.pdf',sourceLabel:'Ver PDF original de BD-07',
+    stage:'editable',sha256:'9a96b9b098f20d7a2cfe90a0260d9d1248e2d511789db98c703b1dea2b17571e',
+    institutionField:'nombreEscuela',draftDates:['fecha'],
+    note:'PDF original aportado por el usuario, conservado sin cambios. Sólo para trámite jubilatorio. La firma se realiza sobre el impreso; la opción Sí/No debe ser elegida expresamente por el agente.',
+    fields:{
+      lugar:{x:320,top:112,width:129,height:12,fontSize:11},
+      fecha:{x:454,top:112,width:94,height:12,fontSize:11,dateFormat:'dmy'},
+      actuacion:{x:378,top:134,width:170,height:12,fontSize:11},
+      apellido:{x:281,top:180,width:248,height:11,fontSize:11},
+      nombres:{x:127,top:206,width:212,height:10,fontSize:11},
+      dni:{x:413,top:206,width:79,height:10,fontSize:10},
+      numeroEscuela:{x:197,top:232,width:46,height:10,fontSize:10},
+      nivel:{x:293,top:232,width:245,height:10,fontSize:10,institution:'level'},
+      nombreEscuela:{x:253,top:258,width:263,height:11,fontSize:10,institution:'name'},
+      continuarSeguro:{x:400,top:337,width:61,height:10,options:[{value:'Sí',x:401,top:338},{value:'No',x:450,top:338}]},
+      aclaracionFirma:{x:375,top:399,width:172,height:12,fontSize:11}
+    }
+  }),
+  'form-6': Object.freeze({
+    pdf:'assets/formularios/Formulario-6.pdf',
+    pages:[{image:'assets/formularios/Formulario-6-pagina-1.png',width:1008.12,height:612.12}],
+    source:'assets/formularios/Formulario-6.pdf',sourceLabel:'Ver PDF original del Formulario N°6',
+    stage:'editable',fullScreen:true,sha256:'483f5689e65091dbeafd96570047369e110b10f4ad33e692f5594a2bc7679252',
+    note:'PDF original horizontal con siete filas. Las firmas y sellos se realizan sobre el impreso. Los datos anteriores que no tienen casillero equivalente se conservan para revisión; no se combinan automáticamente entre familiares.',
+    repeats:{familiares:{slots:7,label:'Organizar familiares (7 filas del PDF)',rowLabel:'Familiar'}},
+    draftDates:['fecha','fechaHecho','fechaRecepcion','fechaCarga','fechaEnvioRemuneraciones','vigenciaCertificada',...Array.from({length:10},(_,i)=>[`familiares.${i}.fechaNacimiento`,`familiares.${i}.fechaHecho`]).flat()],
+    fields:{
+      apellido:{x:85,top:128,width:175,height:11,fontSize:10},
+      nombres:{x:263,top:128,width:183,height:11,fontSize:10},
+      tipoDocumentoAgente:{x:485,top:128,width:92,height:11,fontSize:10},
+      dni:{x:634,top:128,width:180,height:11,fontSize:10},
+      sexoAgente:{x:821,top:128,width:101,height:11,fontSize:10},
+      ...Object.fromEntries(Array.from({length:10},(_,i)=>{
+        const top=205+i*14.7;
+        const columns={
+          parentesco:{x:44,width:44,fontSize:9},tipoDocumento:{x:93,width:32,fontSize:9},dni:{x:130,width:96,fontSize:10},sexo:{x:231,width:26,fontSize:9},
+          apellidoNombres:{x:263,width:220,fontSize:10},
+          fechaNacimiento:{x:489,width:85,fontSize:8.5,dateParts:[{x:489,width:22},{x:516,width:22},{x:543,width:30}]},
+          correspondeAsignaciones:{x:579,width:66,fontSize:9},nivelEscolar:{x:651,width:31,fontSize:9},curso:{x:687,width:40,fontSize:9},
+          incapacidad:{x:732,width:57,fontSize:9},dobleAsignacion:{x:795,width:57,fontSize:9},ayudaEscolar:{x:858,width:39,fontSize:9},hecho:{x:903,width:69,fontSize:8}
+        };
+        const boxes=Object.entries(columns).map(([key,setting],column)=>[
+          `familiares.${i}.${key}`,i<7?{...setting,top,height:11}:{x:44+(column%7)*133,top:650+(i-7)*120+Math.floor(column/7)*55,width:125,height:26,fontSize:10,overflow:true,overflowMessage:'el dato supera las siete filas del original; reorganizá los familiares antes de exportar.'}
+        ]);
+        const legacy=['accion','asignacionSolicitada','hechoGenerador','fechaHecho','documentacion'].map((key,column)=>[
+          `familiares.${i}.${key}`,{x:44+column*188,top:1100+i*75,width:178,height:32,fontSize:10,overflow:true,overflowMessage:'dato anterior por familiar sin casillero equivalente. Revisá su correspondencia con la declaración común antes de exportar.'}
+        ]);
+        return [...boxes,...legacy];
+      }).flat()),
+      accion:{x:147,top:321,width:130,height:9,options:[{value:'Alta',x:148,top:321},{value:'Modificación',x:228,top:321},{value:'Baja',x:266,top:321}]},
+      hechoGenerador:{x:126,top:331,width:530,height:12,fontSize:10},
+      fechaHecho:{x:774,top:331,width:190,height:12,fontSize:10,dateParts:[{x:774,width:32},{x:815,width:55},{x:879,width:82}]},
+      asignacionSolicitada:{x:276,top:344,width:688,height:12,fontSize:10},
+      documentacion:{x:210,top:356,width:754,height:12,fontSize:10,multiline:true},
+      lugarPresentacion:{x:110,top:420,width:195,height:12,fontSize:10},
+      fecha:{x:320,top:420,width:116,height:12,fontSize:10,dateParts:[{x:320,width:35},{x:362,width:30},{x:400,width:35}]},
+      agenteCertificado:{x:542,top:429,width:290,height:12,fontSize:9},
+      accionCertificada:{x:562,top:455,width:132,height:9,options:[{value:'Alta',x:562,top:455},{value:'Modificación',x:644,top:455},{value:'Baja',x:684,top:455}]},
+      vigenciaCertificada:{x:875,top:452,width:86,height:12,fontSize:9,dateParts:[{x:875,width:18},{x:901,width:20},{x:929,width:30}]},
+      datosCertificados:{x:621,top:465,width:342,height:12,fontSize:9,multiline:true},
+      lugarRecepcion:{x:821,top:508,width:69,height:12,fontSize:9},
+      fechaRecepcion:{x:893,top:508,width:70,height:12,fontSize:9,dateFormat:'dmy'},
+      jurisdiccion:{x:539,top:543,width:81,height:10,fontSize:8},escalafon:{x:627,top:543,width:80,height:10,fontSize:8},itemNivel:{x:713,top:543,width:78,height:10,fontSize:8},modalidadAdministrativa:{x:798,top:543,width:80,height:10,fontSize:8},oficinaAdministrativa:{x:885,top:543,width:78,height:10,fontSize:8},
+      operadorCarga:{x:44,top:541,width:61,height:10,fontSize:8},
+      fechaCarga:{x:111,top:541,width:113,height:10,fontSize:8,dateParts:[{x:111,width:30},{x:147,width:30},{x:183,width:40}]},
+      recibioRemuneraciones:{x:273,top:541,width:66,height:10,fontSize:8},
+      fechaEnvioRemuneraciones:{x:345,top:541,width:111,height:10,fontSize:8,dateParts:[{x:345,width:30},{x:381,width:28},{x:415,width:38}]}
+    }
+  }),
+  'form-3': Object.freeze({
+    pdf:'assets/formularios/Formulario-3.pdf',
+    pages:[{image:'assets/formularios/Formulario-3-pagina-1.png',width:612.12,height:1008.12}],
+    source:'assets/formularios/Formulario-3.pdf',sourceLabel:'Ver PDF original del Formulario N°3',
+    stage:'editable',sha256:'5b9c3cb637fbee4fc4ca2f9b81ef20f85ee7f50fced19eb4bb67ab403a43d1d6',
+    note:'PDF original aportado por el usuario, conservado sin modificaciones. Las firmas y sellos se realizan sobre el impreso; el sector administrativo corresponde a las oficinas intervinientes.',
+    draftDates:['fecha','fechaRecepcion','fechaCarga','fechaEnvioDgp','fechaEnvioRemuneraciones'],
+    fields:{
+      apellido:{x:40,top:184,width:245,height:14,fontSize:11},
+      nombres:{x:292,top:184,width:278,height:14,fontSize:11},
+      tipoDocumentoActual:{x:72,top:231,width:165,height:14,fontSize:10},
+      dni:{x:293,top:231,width:151,height:14,fontSize:11},
+      sexoActual:{x:451,top:231,width:119,height:14,fontSize:11},
+      apellidoNuevo:{x:40,top:292.5,width:245,height:14,fontSize:11},
+      nombresNuevos:{x:292,top:292.5,width:278,height:14,fontSize:11},
+      tipoDocumentoNuevo:{x:72,top:339.5,width:165,height:14,fontSize:10},
+      numeroDocumentoNuevo:{x:293,top:339.5,width:151,height:14,fontSize:11},
+      sexoNuevo:{x:451,top:339.5,width:119,height:14,fontSize:11},
+      documentacion:{x:224,top:365,width:348,height:18,fontSize:10,multiline:true},
+      cambioSolicitado:{x:355,top:390,width:217,height:18,fontSize:10,multiline:true},
+      lugarPresentacion:{x:204,top:459,width:238,height:16,fontSize:11},
+      fecha:{x:447,top:459,width:124,height:16,fontSize:11,dateFormat:'dmy'},
+      agenteAdministrativo:{x:373,top:563,width:206,height:15,fontSize:10},
+      lugarRecepcion:{x:191,top:603,width:109,height:16,fontSize:10},
+      fechaRecepcion:{x:303,top:603,width:101,height:16,fontSize:10,dateFormat:'dmy'},
+      jurisdiccion:{x:40,top:669,width:134,height:13,fontSize:10},
+      escalafon:{x:180,top:669,width:85,height:13,fontSize:10},
+      itemNivel:{x:270,top:669,width:85,height:13,fontSize:10},
+      modalidadAdministrativa:{x:360,top:669,width:85,height:13,fontSize:10},
+      oficinaAdministrativa:{x:450,top:669,width:129,height:13,fontSize:10},
+      operadorCarga:{x:40,top:751,width:91,height:13,fontSize:10},
+      fechaCarga:{x:137,top:751,width:127,height:13,fontSize:10,dateParts:[{x:137,width:38},{x:181,width:40},{x:226,width:38}]},
+      fechaEnvioDgp:{x:304,top:751,width:123,height:13,fontSize:10,dateParts:[{x:304,width:33},{x:342,width:40},{x:387,width:40}]},
+      fechaEnvioRemuneraciones:{x:461,top:751,width:118,height:13,fontSize:10,dateParts:[{x:461,width:37},{x:504,width:40},{x:549,width:30}]}
+    }
+  }),
   reubicacion: Object.freeze({
     pdf:'assets/formularios/Reubicacion.pdf',
     pages:[{image:'assets/formularios/Reubicacion-pagina-1.png',width:1008,height:612}],

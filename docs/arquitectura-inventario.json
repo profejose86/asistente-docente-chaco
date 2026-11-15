@@ -63,10 +63,16 @@
     "assets/formularios/BD-02-pagina-1.png",
     "assets/formularios/BD-02-pagina-2.png",
     "assets/formularios/BD-02.pdf",
+    "assets/formularios/BD-07-pagina-1.png",
+    "assets/formularios/BD-07.pdf",
     "assets/formularios/CF-01-pagina-1.png",
     "assets/formularios/CF-01.pdf",
     "assets/formularios/DP-01-pagina-1.png",
     "assets/formularios/DP-01.pdf",
+    "assets/formularios/Formulario-3-pagina-1.png",
+    "assets/formularios/Formulario-3.pdf",
+    "assets/formularios/Formulario-6-pagina-1.png",
+    "assets/formularios/Formulario-6.pdf",
     "assets/formularios/Reubicacion-pagina-1.png",
     "assets/formularios/Reubicacion.pdf",
     "assets/formularios/SC-01-plantilla.png",
@@ -197,12 +203,15 @@
     "docs/arquitectura-auditoria.md",
     "docs/arquitectura-inventario.json",
     "docs/arquitectura-mapa.md",
+    "docs/bd07-pdf-original.md",
     "docs/cf01-pdf-original.md",
     "docs/cierre-publicacion-sincronizacion.md",
     "docs/codigo-ajustes.md",
     "docs/documentos-fondo-relativo.md",
     "docs/editor-local.md",
     "docs/estructura.md",
+    "docs/formulario-3-pdf-original.md",
+    "docs/formulario-6-pdf-original.md",
     "docs/formularios-pdf-preparados.md",
     "docs/funciones-respaldo.md",
     "docs/google-y-recuperacion-staging.md",
@@ -234,6 +243,7 @@
     "tests/acceso-ajustes.test.cjs",
     "tests/ajustes-proyecto.test.cjs",
     "tests/arquitectura.test.cjs",
+    "tests/bd07-pdf.test.cjs",
     "tests/cf01-pdf.test.cjs",
     "tests/contact-icon-web.test.cjs",
     "tests/contact-icon.test.cjs",
@@ -248,6 +258,8 @@
     "tests/fecha-manual.test.cjs",
     "tests/fixtures/contact-icon-web.css",
     "tests/fixtures/contact-icon.html",
+    "tests/form3-pdf.test.cjs",
+    "tests/form6-pdf.test.cjs",
     "tests/formularios-oficiales.test.cjs",
     "tests/geografia.test.cjs",
     "tests/ingreso.test.cjs",
@@ -806,8 +818,8 @@
     },
     {
       "file": "assets/css/tramites/formularios-oficiales.css",
-      "bytes": 15708,
-      "lines": 130,
+      "bytes": 15985,
+      "lines": 133,
       "generated": false,
       "functions": [],
       "globals": [],
@@ -864,8 +876,8 @@
     },
     {
       "file": "assets/datos/formularios-pdf.js",
-      "bytes": 19649,
-      "lines": 235,
+      "bytes": 28883,
+      "lines": 343,
       "generated": false,
       "functions": [],
       "globals": [
@@ -1865,8 +1877,8 @@
     },
     {
       "file": "assets/js/tramites/buscador.js",
-      "bytes": 8558,
-      "lines": 111,
+      "bytes": 8652,
+      "lines": 112,
       "generated": false,
       "functions": [
         "openDL01",
@@ -2224,8 +2236,8 @@
     },
     {
       "file": "assets/js/tramites/formularios-oficiales-datos.js",
-      "bytes": 88232,
-      "lines": 1290,
+      "bytes": 90036,
+      "lines": 1308,
       "generated": false,
       "functions": [],
       "globals": [
@@ -2456,8 +2468,17 @@
     },
     {
       "file": "docs/arquitectura-auditoria.md",
-      "bytes": 13339,
+      "bytes": 13380,
       "lines": 110,
+      "generated": false,
+      "functions": [],
+      "globals": [],
+      "storageKeys": []
+    },
+    {
+      "file": "docs/bd07-pdf-original.md",
+      "bytes": 3537,
+      "lines": 28,
       "generated": false,
       "functions": [],
       "globals": [],
@@ -2510,7 +2531,7 @@
     },
     {
       "file": "docs/estructura.md",
-      "bytes": 34842,
+      "bytes": 34883,
       "lines": 238,
       "generated": false,
       "functions": [],
@@ -2518,9 +2539,27 @@
       "storageKeys": []
     },
     {
+      "file": "docs/formulario-3-pdf-original.md",
+      "bytes": 3937,
+      "lines": 30,
+      "generated": false,
+      "functions": [],
+      "globals": [],
+      "storageKeys": []
+    },
+    {
+      "file": "docs/formulario-6-pdf-original.md",
+      "bytes": 4002,
+      "lines": 30,
+      "generated": false,
+      "functions": [],
+      "globals": [],
+      "storageKeys": []
+    },
+    {
       "file": "docs/formularios-pdf-preparados.md",
-      "bytes": 5538,
-      "lines": 57,
+      "bytes": 6621,
+      "lines": 63,
       "generated": false,
       "functions": [],
       "globals": [],
@@ -2690,7 +2729,7 @@
     },
     {
       "file": "index.html",
-      "bytes": 45306,
+      "bytes": 45383,
       "lines": 161,
       "generated": false,
       "functions": [],
@@ -2782,6 +2821,20 @@
       "functions": [],
       "globals": [],
       "storageKeys": []
+    },
+    {
+      "file": "tests/bd07-pdf.test.cjs",
+      "bytes": 7922,
+      "lines": 49,
+      "generated": false,
+      "functions": [],
+      "globals": [
+        "bd07Lines"
+      ],
+      "storageKeys": [
+        "adc_v08",
+        "adc-official-form-bd07-draft-v1"
+      ]
     },
     {
       "file": "tests/cf01-pdf.test.cjs",
@@ -2942,8 +2995,34 @@
       "storageKeys": []
     },
     {
+      "file": "tests/form3-pdf.test.cjs",
+      "bytes": 7903,
+      "lines": 54,
+      "generated": false,
+      "functions": [],
+      "globals": [
+        "form3Lines"
+      ],
+      "storageKeys": [
+        "adc-official-form-form-3-draft-v1"
+      ]
+    },
+    {
+      "file": "tests/form6-pdf.test.cjs",
+      "bytes": 9352,
+      "lines": 54,
+      "generated": false,
+      "functions": [],
+      "globals": [
+        "form6Lines"
+      ],
+      "storageKeys": [
+        "adc-official-form-form-6-draft-v1"
+      ]
+    },
+    {
       "file": "tests/formularios-oficiales.test.cjs",
-      "bytes": 52815,
+      "bytes": 52862,
       "lines": 673,
       "generated": false,
       "functions": [
@@ -3739,6 +3818,60 @@
       "from": "assets/css/acceso/ingreso.css",
       "to": "assets/img/acceso/fondo-escolar-dark.png",
       "kind": "css-url",
+      "exists": true
+    },
+    {
+      "from": "assets/datos/formularios-pdf.js",
+      "to": "assets/formularios/BD-07.pdf",
+      "kind": "web-asset",
+      "exists": true
+    },
+    {
+      "from": "assets/datos/formularios-pdf.js",
+      "to": "assets/formularios/BD-07-pagina-1.png",
+      "kind": "web-asset",
+      "exists": true
+    },
+    {
+      "from": "assets/datos/formularios-pdf.js",
+      "to": "assets/formularios/BD-07.pdf",
+      "kind": "web-asset",
+      "exists": true
+    },
+    {
+      "from": "assets/datos/formularios-pdf.js",
+      "to": "assets/formularios/Formulario-6.pdf",
+      "kind": "web-asset",
+      "exists": true
+    },
+    {
+      "from": "assets/datos/formularios-pdf.js",
+      "to": "assets/formularios/Formulario-6-pagina-1.png",
+      "kind": "web-asset",
+      "exists": true
+    },
+    {
+      "from": "assets/datos/formularios-pdf.js",
+      "to": "assets/formularios/Formulario-6.pdf",
+      "kind": "web-asset",
+      "exists": true
+    },
+    {
+      "from": "assets/datos/formularios-pdf.js",
+      "to": "assets/formularios/Formulario-3.pdf",
+      "kind": "web-asset",
+      "exists": true
+    },
+    {
+      "from": "assets/datos/formularios-pdf.js",
+      "to": "assets/formularios/Formulario-3-pagina-1.png",
+      "kind": "web-asset",
+      "exists": true
+    },
+    {
+      "from": "assets/datos/formularios-pdf.js",
+      "to": "assets/formularios/Formulario-3.pdf",
+      "kind": "web-asset",
       "exists": true
     },
     {
@@ -4570,6 +4703,18 @@
       "exists": true
     },
     {
+      "from": "tests/bd07-pdf.test.cjs",
+      "to": "tests/support/demo-config.cjs",
+      "kind": "literal-module",
+      "exists": true
+    },
+    {
+      "from": "tests/bd07-pdf.test.cjs",
+      "to": "assets/js/editor/ajustes-proyecto-datos.js",
+      "kind": "literal-module",
+      "exists": true
+    },
+    {
       "from": "tests/cf01-pdf.test.cjs",
       "to": "tests/support/demo-config.cjs",
       "kind": "literal-module",
@@ -4800,6 +4945,30 @@
     {
       "from": "tests/fecha-manual.test.cjs",
       "to": "tests/support/demo-config.cjs",
+      "kind": "literal-module",
+      "exists": true
+    },
+    {
+      "from": "tests/form3-pdf.test.cjs",
+      "to": "tests/support/demo-config.cjs",
+      "kind": "literal-module",
+      "exists": true
+    },
+    {
+      "from": "tests/form3-pdf.test.cjs",
+      "to": "assets/js/editor/ajustes-proyecto-datos.js",
+      "kind": "literal-module",
+      "exists": true
+    },
+    {
+      "from": "tests/form6-pdf.test.cjs",
+      "to": "tests/support/demo-config.cjs",
+      "kind": "literal-module",
+      "exists": true
+    },
+    {
+      "from": "tests/form6-pdf.test.cjs",
+      "to": "assets/js/editor/ajustes-proyecto-datos.js",
       "kind": "literal-module",
       "exists": true
     },
@@ -5993,9 +6162,9 @@
     ]
   },
   "summary": {
-    "files": 284,
-    "ownTextModules": 224,
-    "ownJavaScript": 139,
+    "files": 296,
+    "ownTextModules": 230,
+    "ownJavaScript": 142,
     "vendorFiles": 35,
     "missingLiteralReferences": 0,
     "duplicateLoads": 0,

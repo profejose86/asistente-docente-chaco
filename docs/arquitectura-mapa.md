@@ -165,7 +165,7 @@ Hojas de estilo en orden de carga:
 | --- | ---: | ---: |
 | `assets/datos/config-publica.js` | 3 | 0 |
 | `assets/datos/escuelas-chaco.js` | 2 | 0 |
-| `assets/datos/formularios-pdf.js` | 235 | 0 |
+| `assets/datos/formularios-pdf.js` | 343 | 0 |
 | `assets/js/acceso/autenticacion.js` | 66 | 4 |
 | `assets/js/acceso/editor.js` | 956 | 34 |
 | `assets/js/acceso/efectos.js` | 33 | 4 |
@@ -220,7 +220,7 @@ Hojas de estilo en orden de carga:
 | `assets/js/tema/inicial.js` | 1 | 0 |
 | `assets/js/tramites/ayuda.js` | 33 | 0 |
 | `assets/js/tramites/bd02.js` | 1139 | 37 |
-| `assets/js/tramites/buscador.js` | 111 | 7 |
+| `assets/js/tramites/buscador.js` | 112 | 7 |
 | `assets/js/tramites/busqueda-inteligente.js` | 56 | 3 |
 | `assets/js/tramites/catalogo-datos.js` | 14 | 0 |
 | `assets/js/tramites/dj01-conflictos.js` | 146 | 9 |
@@ -236,7 +236,7 @@ Hojas de estilo en orden de carga:
 | `assets/js/tramites/dl01-interfaz.js` | 115 | 2 |
 | `assets/js/tramites/dl01-pdf.js` | 211 | 11 |
 | `assets/js/tramites/dl01-reglas.js` | 108 | 14 |
-| `assets/js/tramites/formularios-oficiales-datos.js` | 1290 | 0 |
+| `assets/js/tramites/formularios-oficiales-datos.js` | 1308 | 0 |
 | `assets/js/tramites/formularios-oficiales.js` | 1264 | 49 |
 | `assets/js/tramites/mnc-adaptadores.js` | 49 | 1 |
 | `assets/js/tramites/ol01.js` | 588 | 41 |
@@ -248,6 +248,7 @@ Hojas de estilo en orden de carga:
 | `tests/acceso-ajustes.test.cjs` | 33 | 0 |
 | `tests/ajustes-proyecto.test.cjs` | 71 | 0 |
 | `tests/arquitectura.test.cjs` | 44 | 0 |
+| `tests/bd07-pdf.test.cjs` | 49 | 0 |
 | `tests/cf01-pdf.test.cjs` | 52 | 0 |
 | `tests/contact-icon-web.test.cjs` | 107 | 0 |
 | `tests/contact-icon.test.cjs` | 38 | 0 |
@@ -260,6 +261,8 @@ Hojas de estilo en orden de carga:
 | `tests/editor-elementos.test.cjs` | 77 | 0 |
 | `tests/editor-herramientas.test.cjs` | 48 | 3 |
 | `tests/fecha-manual.test.cjs` | 76 | 0 |
+| `tests/form3-pdf.test.cjs` | 54 | 0 |
+| `tests/form6-pdf.test.cjs` | 54 | 0 |
 | `tests/formularios-oficiales.test.cjs` | 673 | 1 |
 | `tests/geografia.test.cjs` | 60 | 0 |
 | `tests/ingreso.test.cjs` | 63 | 0 |

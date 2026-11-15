@@ -1,4 +1,7 @@
 #adcOfficialForm .adc-official-section{margin:1rem 0;padding:1rem;background:#fbfcfe}
+#adcOfficialForm[data-adc-form-id="form-3"] [data-adc-official-title]{white-space:pre-line}
+#adcOfficialForm[data-adc-form-id="form-6"] [data-adc-official-title]{white-space:pre-line}
+#adcOfficialForm[data-adc-form-id="bd07"] [data-adc-official-title]{white-space:pre-line}
 #adcOfficialForm .adc-official-section h3{margin:.1rem 0 .85rem;color:#183857}
 #adcOfficialForm .adc-official-field{min-width:0}
 #adcOfficialForm [hidden]{display:none!important}

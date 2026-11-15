@@ -15,12 +15,13 @@
   }
   function decorate(button,record) {
     button.classList.add('adc-mbit-card');
-    if(button.dataset.mbitDecorated===record.title+'|'+record.code+'|'+record.actionLabel)return;
+    const displayCode=record.displayCode||record.code;
+    if(button.dataset.mbitDecorated===record.title+'|'+displayCode+'|'+record.actionLabel)return;
     const title=document.createElement('strong'),code=document.createElement('small'),action=document.createElement('small');
-    title.textContent=record.title;code.textContent=record.code;code.className='adc-mbit-code';
+    title.textContent=record.title;code.textContent=displayCode;code.className='adc-mbit-code';
     action.textContent=record.actionLabel;action.className='adc-mbit-action';
-    button.replaceChildren(title,code,action);button.dataset.mbitDecorated=record.title+'|'+record.code+'|'+record.actionLabel;
-    button.setAttribute('aria-label',[record.title,record.code,record.actionLabel].filter(Boolean).join(' — '));
+    button.replaceChildren(title,code,action);button.dataset.mbitDecorated=record.title+'|'+displayCode+'|'+record.actionLabel;
+    button.setAttribute('aria-label',[record.title,displayCode,record.actionLabel].filter(Boolean).join(' — '));
   }
   function records() {
     const forms=window.adcOfficialFormsData||[];
@@ -34,7 +35,7 @@
       if(codeKey(code)==='dl:1')card.onclick=openDL01;
       const id=source?.id||codeKey(code).replace(/:(\d+)$/,(_,number)=>number.padStart(2,'0'))||card.id;
       const extra=metadata[id]||{};
-      const record={id,code,title:source?.catalogTitle||card.querySelector('strong')?.textContent||'',officialName:source?.title||extra.officialName||'',category:source?.searchCategory||card.closest('details').querySelector('summary').textContent.trim(),keywords:[...(source?.keywords||[]),...(extra.keywords||[])],status:source?.status||'available',actionLabel:codeKey(code)==='dl:1'?'Elegir motivo':card.querySelector('small:last-child')?.textContent||'Abrir formulario',card};
+      const record={id,code,displayCode:source?.catalogCode||code,title:source?.catalogTitle||card.querySelector('strong')?.textContent||'',officialName:source?.title||extra.officialName||'',category:source?.searchCategory||card.closest('details').querySelector('summary').textContent.trim(),keywords:[...(source?.keywords||[]),...(extra.keywords||[])],status:source?.status||'available',actionLabel:codeKey(code)==='dl:1'?'Elegir motivo':card.querySelector('small:last-child')?.textContent||'Abrir formulario',card};
       if(!['available','published','ready'].includes(record.status)){card.hidden=true;continue;}
       card.hidden=false;decorate(card,record);result.push(record);
     }
