@@ -18,7 +18,7 @@ La aplicación es una web estática modular con scripts clásicos y estado compa
 | Navegación y búsqueda | `interfaz/navegacion.js`, `tramites/catalogo-datos.js`, `busqueda-inteligente.js`, `buscador.js`, `ayuda.js` | Secciones, catálogo, códigos parciales MBIT y accesos a un mismo formulario. |
 | Calendario | `calendario/*.js`, `css/calendario/` | Agenda y solicitudes; consume el estado del proyecto. |
 | Formularios especializados | `tramites/dj01*.js`, `dj02*.js`, `ol01.js`, `sc01.js`, `dl01-*.js`, `bd02.js` | Reglas, perfil, borrador y documento específicos. DJ-01, DJ-02, OL-01, SC-01 y DL-01 continúan protegidos. |
-| Motor genérico de documentos | `tramites/formularios-oficiales*.js`, `datos/formularios-pdf.js` | Esquemas del catálogo y lienzo compartido. DP-01 usa el modo sobre PDF original registrado; no se supone que todos los catálogos tengan ya esa calidad. |
+| Motor genérico de documentos | `tramites/formularios-oficiales*.js`, `datos/formularios-pdf.js` | Esquemas del catálogo y lienzo compartido. DP-01, CF-01, SR-01, Reubicación y Traslado transitorio usan el modo sobre PDF original registrado; no se supone que todos los catálogos tengan ya esa calidad. |
 | PDF y presentación | `documentos/*.js`, `assets/formularios/`, `vendor/pdf-lib/`, `interfaz/espacio-trabajo.js` | Plantillas, utilidades, colocación de campos y ajustes de vista. `pdf-campos.js` conserva el PDF original y ajusta el texto hasta el mínimo acordado. |
 | Editor visual | `editor/comun.js`, `editor/*.js`, `acceso/editor.js`, `css/editor/` | Utilidades comunes, dos motores con variantes, imágenes/PDF, capas y guardado visual. |
 | Servicio remoto | `servicios/supabaseClient.js` → `supabase-runtime.js` | Único cliente oficial, autenticación, perfil mínimo y API de registros privados con JWT fijado por operación. RLS y CAS residen en `supabase/migrations/`; la migración de datos docentes se aplica sólo con autorización independiente. |
@@ -105,3 +105,5 @@ Verificación realizada: **71 pruebas aprobadas, cero fallos**, ejecutando `npm 
 El inventario no detectó referencias literales ausentes. Esto no sustituye las pruebas de rutas calculadas, cubiertas parcialmente por las pruebas funcionales. No se probó una publicación nueva en GitHub Pages ni una cuenta real remota en esta tarea: la web online no se actualizó.
 
 No se borraron archivos por aparentar falta de uso: el análisis literal no prueba que un módulo dinámico esté muerto. No se cambiaron datos remotos, políticas RLS ni proveedores de correo. No se hizo commit ni push. Los cambios locales anteriores, incluidos el puente y la documentación de Ajustes, permanecen conservados.
+
+Revisión actualizada de rutas, recursos y prioridades: [revisión estructural del 14/11/2026](revision-estructural-2026-11-14.md).

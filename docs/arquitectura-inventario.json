@@ -1,5 +1,5 @@
 {
-  "schema": "adc-architecture-v1",
+  "schema": "adc-architecture-v2",
   "exclusions": [
     ".git",
     ".adc-tools",
@@ -216,6 +216,7 @@
     "docs/referencias/Nomenclatura.pdf",
     "docs/reubicacion-pdf-original.md",
     "docs/revision-ajustes-2026-11-14.md",
+    "docs/revision-estructural-2026-11-14.md",
     "docs/sincronizacion-usuarios.md",
     "docs/sr01-pdf-original.md",
     "docs/structure-manifest.json",
@@ -241,6 +242,7 @@
     "tests/editor-documentos.test.cjs",
     "tests/editor-elementos.test.cjs",
     "tests/editor-herramientas.test.cjs",
+    "tests/fecha-manual.test.cjs",
     "tests/formularios-oficiales.test.cjs",
     "tests/geografia.test.cjs",
     "tests/ingreso.test.cjs",
@@ -474,8 +476,8 @@
     },
     {
       "file": "assets/css/acceso/autenticacion.css",
-      "bytes": 3044,
-      "lines": 25,
+      "bytes": 3821,
+      "lines": 29,
       "generated": false,
       "functions": [],
       "globals": [],
@@ -663,7 +665,7 @@
     },
     {
       "file": "assets/css/interfaz/sincronizacion.css",
-      "bytes": 1083,
+      "bytes": 1094,
       "lines": 12,
       "generated": false,
       "functions": [],
@@ -867,10 +869,11 @@
     },
     {
       "file": "assets/js/acceso/autenticacion.js",
-      "bytes": 5450,
-      "lines": 56,
+      "bytes": 6216,
+      "lines": 66,
       "generated": false,
       "functions": [
+        "showUnavailable",
         "friendly",
         "action",
         "resume"
@@ -975,7 +978,7 @@
     },
     {
       "file": "assets/js/calendario/calendario.js",
-      "bytes": 28404,
+      "bytes": 29391,
       "lines": 988,
       "generated": false,
       "functions": [
@@ -1056,7 +1059,7 @@
     },
     {
       "file": "assets/js/core/estado.js",
-      "bytes": 588,
+      "bytes": 591,
       "lines": 4,
       "generated": false,
       "functions": [],
@@ -1067,7 +1070,7 @@
     },
     {
       "file": "assets/js/core/inicializacion.js",
-      "bytes": 910,
+      "bytes": 927,
       "lines": 18,
       "generated": false,
       "functions": [],
@@ -1533,7 +1536,7 @@
     },
     {
       "file": "assets/js/interfaz/sesion.js",
-      "bytes": 3416,
+      "bytes": 3459,
       "lines": 44,
       "generated": false,
       "functions": [
@@ -1545,7 +1548,7 @@
     },
     {
       "file": "assets/js/interfaz/sincronizacion.js",
-      "bytes": 7620,
+      "bytes": 7702,
       "lines": 83,
       "generated": false,
       "functions": [
@@ -1559,7 +1562,7 @@
     },
     {
       "file": "assets/js/perfil/autoguardado.js",
-      "bytes": 1979,
+      "bytes": 2011,
       "lines": 33,
       "generated": false,
       "functions": [
@@ -1593,7 +1596,7 @@
     },
     {
       "file": "assets/js/perfil/datos-personales.js",
-      "bytes": 7481,
+      "bytes": 7576,
       "lines": 96,
       "generated": false,
       "functions": [
@@ -1668,7 +1671,7 @@
     },
     {
       "file": "assets/js/perfil/nombres.js",
-      "bytes": 1132,
+      "bytes": 1137,
       "lines": 6,
       "generated": false,
       "functions": [
@@ -1704,7 +1707,7 @@
     },
     {
       "file": "assets/js/servicios/almacenamiento-usuario.js",
-      "bytes": 7334,
+      "bytes": 7422,
       "lines": 89,
       "generated": false,
       "functions": [
@@ -1727,7 +1730,7 @@
     },
     {
       "file": "assets/js/servicios/sincronizacion-usuario.js",
-      "bytes": 7919,
+      "bytes": 8018,
       "lines": 100,
       "generated": false,
       "functions": [
@@ -1743,7 +1746,7 @@
     },
     {
       "file": "assets/js/servicios/supabase-runtime.js",
-      "bytes": 228117,
+      "bytes": 228146,
       "lines": 30,
       "generated": true,
       "functions": [],
@@ -1801,7 +1804,7 @@
     },
     {
       "file": "assets/js/tramites/bd02.js",
-      "bytes": 49885,
+      "bytes": 51023,
       "lines": 1139,
       "generated": false,
       "functions": [
@@ -1895,7 +1898,7 @@
     },
     {
       "file": "assets/js/tramites/dj01-conflictos.js",
-      "bytes": 14022,
+      "bytes": 14167,
       "lines": 146,
       "generated": false,
       "functions": [
@@ -1914,7 +1917,7 @@
     },
     {
       "file": "assets/js/tramites/dj01-distribucion.js",
-      "bytes": 4043,
+      "bytes": 4106,
       "lines": 64,
       "generated": false,
       "functions": [
@@ -1972,8 +1975,8 @@
     },
     {
       "file": "assets/js/tramites/dj01.js",
-      "bytes": 448909,
-      "lines": 396,
+      "bytes": 450685,
+      "lines": 417,
       "generated": false,
       "functions": [
         "djUid",
@@ -1995,6 +1998,8 @@
         "djSnapshotRows",
         "djSelected",
         "djSelect",
+        "djFormatPeriodValue",
+        "djNormalizePeriodDate",
         "djSetPeriod",
         "djNewPeriod",
         "djSetInterval",
@@ -2039,7 +2044,7 @@
     },
     {
       "file": "assets/js/tramites/dj02-base.js",
-      "bytes": 12360,
+      "bytes": 12547,
       "lines": 188,
       "generated": false,
       "functions": [
@@ -2090,7 +2095,7 @@
     },
     {
       "file": "assets/js/tramites/dj02-plantilla.js",
-      "bytes": 110440,
+      "bytes": 110487,
       "lines": 48,
       "generated": false,
       "functions": [
@@ -2109,7 +2114,7 @@
     },
     {
       "file": "assets/js/tramites/dj02-registro.js",
-      "bytes": 22797,
+      "bytes": 23182,
       "lines": 386,
       "generated": false,
       "functions": [
@@ -2160,7 +2165,7 @@
     },
     {
       "file": "assets/js/tramites/dl01-pdf.js",
-      "bytes": 16336,
+      "bytes": 16546,
       "lines": 211,
       "generated": false,
       "functions": [
@@ -2277,7 +2282,7 @@
     },
     {
       "file": "assets/js/tramites/mnc-adaptadores.js",
-      "bytes": 2381,
+      "bytes": 2429,
       "lines": 49,
       "generated": false,
       "functions": [
@@ -2384,7 +2389,7 @@
     },
     {
       "file": "assets/js/tramites/solicitudes.js",
-      "bytes": 136258,
+      "bytes": 136377,
       "lines": 120,
       "generated": false,
       "functions": [
@@ -2412,7 +2417,7 @@
     },
     {
       "file": "config/sincronizacion-staging.json",
-      "bytes": 308,
+      "bytes": 316,
       "lines": 9,
       "generated": false,
       "functions": [],
@@ -2439,8 +2444,8 @@
     },
     {
       "file": "docs/arquitectura-auditoria.md",
-      "bytes": 13152,
-      "lines": 108,
+      "bytes": 13339,
+      "lines": 110,
       "generated": false,
       "functions": [],
       "globals": [],
@@ -2457,7 +2462,7 @@
     },
     {
       "file": "docs/cierre-publicacion-sincronizacion.md",
-      "bytes": 3295,
+      "bytes": 3326,
       "lines": 32,
       "generated": false,
       "functions": [],
@@ -2493,8 +2498,8 @@
     },
     {
       "file": "docs/estructura.md",
-      "bytes": 34655,
-      "lines": 236,
+      "bytes": 34842,
+      "lines": 238,
       "generated": false,
       "functions": [],
       "globals": [],
@@ -2520,7 +2525,7 @@
     },
     {
       "file": "docs/google-y-recuperacion-staging.md",
-      "bytes": 4850,
+      "bytes": 4908,
       "lines": 59,
       "generated": false,
       "functions": [],
@@ -2538,7 +2543,7 @@
     },
     {
       "file": "docs/prueba-sincronizacion.md",
-      "bytes": 7807,
+      "bytes": 7854,
       "lines": 48,
       "generated": false,
       "functions": [],
@@ -2583,7 +2588,7 @@
     },
     {
       "file": "docs/reubicacion-pdf-original.md",
-      "bytes": 2819,
+      "bytes": 2846,
       "lines": 28,
       "generated": false,
       "functions": [],
@@ -2600,8 +2605,17 @@
       "storageKeys": []
     },
     {
+      "file": "docs/revision-estructural-2026-11-14.md",
+      "bytes": 6557,
+      "lines": 42,
+      "generated": false,
+      "functions": [],
+      "globals": [],
+      "storageKeys": []
+    },
+    {
       "file": "docs/sincronizacion-usuarios.md",
-      "bytes": 12361,
+      "bytes": 12440,
       "lines": 80,
       "generated": false,
       "functions": [],
@@ -2700,7 +2714,7 @@
     },
     {
       "file": "supabase/migrations/202611140001_adc_user_records.sql",
-      "bytes": 3847,
+      "bytes": 3900,
       "lines": 54,
       "generated": false,
       "functions": [],
@@ -2709,7 +2723,7 @@
     },
     {
       "file": "supabase/migrations/202611140002_adc_sync_conflict_http.sql",
-      "bytes": 1239,
+      "bytes": 1260,
       "lines": 22,
       "generated": false,
       "functions": [],
@@ -2741,8 +2755,8 @@
     },
     {
       "file": "tests/arquitectura.test.cjs",
-      "bytes": 2064,
-      "lines": 25,
+      "bytes": 3811,
+      "lines": 44,
       "generated": false,
       "functions": [],
       "globals": [],
@@ -2852,6 +2866,15 @@
       "globals": [
         "__editorAuditCreate"
       ],
+      "storageKeys": []
+    },
+    {
+      "file": "tests/fecha-manual.test.cjs",
+      "bytes": 4370,
+      "lines": 76,
+      "generated": false,
+      "functions": [],
+      "globals": [],
       "storageKeys": []
     },
     {
@@ -2999,7 +3022,7 @@
     },
     {
       "file": "tests/reubicacion-pdf.test.cjs",
-      "bytes": 6653,
+      "bytes": 6692,
       "lines": 40,
       "generated": false,
       "functions": [],
@@ -3010,7 +3033,7 @@
     },
     {
       "file": "tests/sincronizacion-browser.test.cjs",
-      "bytes": 10024,
+      "bytes": 10101,
       "lines": 78,
       "generated": false,
       "functions": [
@@ -3030,7 +3053,7 @@
     },
     {
       "file": "tests/sincronizacion-rls.test.cjs",
-      "bytes": 4480,
+      "bytes": 4514,
       "lines": 35,
       "generated": false,
       "functions": [],
@@ -3039,7 +3062,7 @@
     },
     {
       "file": "tests/sincronizacion.test.cjs",
-      "bytes": 9871,
+      "bytes": 9943,
       "lines": 73,
       "generated": false,
       "functions": [
@@ -3115,8 +3138,8 @@
     },
     {
       "file": "tests/supabase-auth.test.cjs",
-      "bytes": 8150,
-      "lines": 73,
+      "bytes": 9727,
+      "lines": 91,
       "generated": false,
       "functions": [],
       "globals": [
@@ -3179,7 +3202,7 @@
     },
     {
       "file": "tests/sync-sandbox.test.cjs",
-      "bytes": 5274,
+      "bytes": 5326,
       "lines": 53,
       "generated": false,
       "functions": [
@@ -3193,7 +3216,7 @@
     },
     {
       "file": "tests/sync-staging.test.cjs",
-      "bytes": 1959,
+      "bytes": 1980,
       "lines": 22,
       "generated": false,
       "functions": [],
@@ -3226,12 +3249,13 @@
     },
     {
       "file": "tools/auditar-arquitectura.cjs",
-      "bytes": 6063,
-      "lines": 73,
+      "bytes": 9082,
+      "lines": 108,
       "generated": false,
       "functions": [
         "audit",
         "walk",
+        "reference",
         "markdown"
       ],
       "globals": [],
@@ -3353,7 +3377,7 @@
     },
     {
       "file": "tools/sync-sandbox.cjs",
-      "bytes": 8879,
+      "bytes": 8957,
       "lines": 79,
       "generated": false,
       "functions": [
@@ -3373,7 +3397,7 @@
     },
     {
       "file": "tools/sync-staging-browser.cjs",
-      "bytes": 4119,
+      "bytes": 4154,
       "lines": 36,
       "generated": false,
       "functions": [
@@ -3387,7 +3411,7 @@
     },
     {
       "file": "tools/sync-staging-verify.cjs",
-      "bytes": 4755,
+      "bytes": 4805,
       "lines": 51,
       "generated": false,
       "functions": [
@@ -3399,7 +3423,7 @@
     },
     {
       "file": "tools/sync-staging.cjs",
-      "bytes": 8878,
+      "bytes": 8968,
       "lines": 91,
       "generated": false,
       "functions": [
@@ -3627,6 +3651,96 @@
       "exists": true
     },
     {
+      "from": "assets/css/acceso/ingreso.css",
+      "to": "assets/img/acceso/fondo-escolar-light.png",
+      "kind": "css-url",
+      "exists": true
+    },
+    {
+      "from": "assets/css/acceso/ingreso.css",
+      "to": "assets/img/acceso/fondo-escolar-dark.png",
+      "kind": "css-url",
+      "exists": true
+    },
+    {
+      "from": "assets/datos/formularios-pdf.js",
+      "to": "assets/formularios/Reubicacion.pdf",
+      "kind": "web-asset",
+      "exists": true
+    },
+    {
+      "from": "assets/datos/formularios-pdf.js",
+      "to": "assets/formularios/Reubicacion-pagina-1.png",
+      "kind": "web-asset",
+      "exists": true
+    },
+    {
+      "from": "assets/datos/formularios-pdf.js",
+      "to": "assets/formularios/Reubicacion.pdf",
+      "kind": "web-asset",
+      "exists": true
+    },
+    {
+      "from": "assets/datos/formularios-pdf.js",
+      "to": "assets/formularios/Traslado-Transitorio.pdf",
+      "kind": "web-asset",
+      "exists": true
+    },
+    {
+      "from": "assets/datos/formularios-pdf.js",
+      "to": "assets/formularios/Traslado-Transitorio.pdf",
+      "kind": "web-asset",
+      "exists": true
+    },
+    {
+      "from": "assets/datos/formularios-pdf.js",
+      "to": "assets/formularios/CF-01.pdf",
+      "kind": "web-asset",
+      "exists": true
+    },
+    {
+      "from": "assets/datos/formularios-pdf.js",
+      "to": "assets/formularios/CF-01-pagina-1.png",
+      "kind": "web-asset",
+      "exists": true
+    },
+    {
+      "from": "assets/datos/formularios-pdf.js",
+      "to": "assets/formularios/CF-01.pdf",
+      "kind": "web-asset",
+      "exists": true
+    },
+    {
+      "from": "assets/datos/formularios-pdf.js",
+      "to": "assets/formularios/SR-01.pdf",
+      "kind": "web-asset",
+      "exists": true
+    },
+    {
+      "from": "assets/datos/formularios-pdf.js",
+      "to": "assets/formularios/SR-01-pagina-1.png",
+      "kind": "web-asset",
+      "exists": true
+    },
+    {
+      "from": "assets/datos/formularios-pdf.js",
+      "to": "assets/formularios/SR-01.pdf",
+      "kind": "web-asset",
+      "exists": true
+    },
+    {
+      "from": "assets/datos/formularios-pdf.js",
+      "to": "assets/formularios/DP-01.pdf",
+      "kind": "web-asset",
+      "exists": true
+    },
+    {
+      "from": "assets/datos/formularios-pdf.js",
+      "to": "assets/formularios/DP-01-pagina-1.png",
+      "kind": "web-asset",
+      "exists": true
+    },
+    {
       "from": "assets/js/editor/ajustes-proyecto.js",
       "to": "assets/datos/ajustes-pagina.json",
       "kind": "literal-module",
@@ -3636,6 +3750,30 @@
       "from": "assets/js/editor/elementos.js",
       "to": "assets/vendor/pdfjs/pdf.min.mjs",
       "kind": "literal-module",
+      "exists": true
+    },
+    {
+      "from": "assets/js/tramites/bd02.js",
+      "to": "assets/formularios/BD-02.pdf",
+      "kind": "web-asset",
+      "exists": true
+    },
+    {
+      "from": "assets/js/tramites/bd02.js",
+      "to": "assets/formularios/BD-02.pdf",
+      "kind": "web-asset",
+      "exists": true
+    },
+    {
+      "from": "assets/js/tramites/sc01.js",
+      "to": "assets/formularios/SC-01-plantilla.png",
+      "kind": "web-asset",
+      "exists": true
+    },
+    {
+      "from": "assets/js/tramites/sc01.js",
+      "to": "assets/formularios/SC-01.pdf",
+      "kind": "web-asset",
       "exists": true
     },
     {
@@ -4575,6 +4713,12 @@
       "exists": true
     },
     {
+      "from": "tests/fecha-manual.test.cjs",
+      "to": "tests/support/demo-config.cjs",
+      "kind": "literal-module",
+      "exists": true
+    },
+    {
       "from": "tests/formularios-oficiales.test.cjs",
       "to": "tests/support/demo-config.cjs",
       "kind": "literal-module",
@@ -4948,6 +5092,10 @@
     }
   ],
   "missing": [],
+  "duplicateLoads": [],
+  "prefixUnsafe": [],
+  "caseCollisions": [],
+  "identicalAssets": [],
   "duplicateWindows": {
     "method": "Ocho líneas consecutivas normalizadas; candidatos, no equivalencia semántica ni porcentaje de cobertura.",
     "candidates": [
@@ -5754,10 +5902,14 @@
     ]
   },
   "summary": {
-    "files": 276,
-    "ownTextModules": 216,
-    "ownJavaScript": 135,
+    "files": 278,
+    "ownTextModules": 218,
+    "ownJavaScript": 136,
     "vendorFiles": 35,
-    "missingLiteralReferences": 0
+    "missingLiteralReferences": 0,
+    "duplicateLoads": 0,
+    "prefixUnsafe": 0,
+    "caseCollisions": 0,
+    "identicalAssetGroups": 0
   }
 }

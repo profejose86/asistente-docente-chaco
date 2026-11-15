@@ -10,7 +10,7 @@ La publicación unificada utiliza `config/publicacion.json`, `tools/publicar.cjs
 
 La autenticación de staging se organiza en `assets/js/servicios/supabaseClient.js`, `assets/js/acceso/autenticacion.js` y `assets/js/interfaz/sesion.js`. El cliente oficial se instala con npm y se compila localmente para mantener la web estática. `.env.local` está excluido de Git; sólo `assets/datos/config-publica.js` puede llegar al navegador. La migración inicial con RLS vive en `supabase/migrations/`. Ver [configuración, modos, pruebas y pendientes remotos](supabase-staging.md). Los párrafos siguientes sobre acceso sin datos describen exclusivamente el modo de demostración: en modo Supabase, `adc-preview=1` no salta la autenticación.
 
-El modelo de documentos preparados utiliza el registro `assets/datos/formularios-pdf.js`, el motor `assets/js/documentos/pdf-campos.js` y el lienzo común de `assets/js/tramites/formularios-oficiales.js`. Solo DP-01 está habilitado en este modo editable sobre PDF original. Su alcance y pasos pendientes se documentan en [formularios-pdf-preparados.md](formularios-pdf-preparados.md). DJ-01, DJ-02, OL-01, SC-01 y DL-01 permanecen protegidos y no se modifican para incorporar nuevos documentos.
+El modelo de documentos preparados utiliza el registro `assets/datos/formularios-pdf.js`, el motor `assets/js/documentos/pdf-campos.js` y el lienzo común de `assets/js/tramites/formularios-oficiales.js`. El registro vigente habilita DP-01, CF-01, SR-01, Reubicación y Traslado transitorio en el modo editable sobre PDF original. Su alcance y estado local se documentan en [formularios-pdf-preparados.md](formularios-pdf-preparados.md). DJ-01, DJ-02, OL-01, SC-01 y DL-01 permanecen protegidos y no se modifican para incorporar nuevos documentos.
 
 La entrada de la aplicación es `index.html`. Los estilos están en `assets/css/` y los scripts en `assets/js/`, agrupados por área.
 
@@ -233,3 +233,5 @@ La muestra `output/pdf/BD-02-ejemplo.pdf` contiene datos ficticios para revisar 
 ADC Studio permite edición visual local y online por sesión; sólo el guardado directo es exclusivo de localhost. **Commit to local** conecta `assets/js/editor/puente-local.js` con `tools/local-editor-bridge.cjs` y guarda directamente en el registro versionable. Inicio: `npm run dev:editor`. Ver [editor local, respaldo y límites](editor-local.md) y [ADC Studio](adc-studio.md).
 
 La tuerquita puede exportar ajustes para incorporarlos a `assets/datos/ajustes-pagina.json`. El puente compartido vive en `assets/js/editor/ajustes-proyecto*.js`; `tools/importar-ajustes.cjs` valida e incorpora el archivo sin ejecutar Git. Ver [flujo, conservación y límites](ajustes-visuales.md).
+
+Revisión actualizada de rutas, recursos y prioridades: [revisión estructural del 14/11/2026](revision-estructural-2026-11-14.md).

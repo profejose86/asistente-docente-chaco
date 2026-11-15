@@ -166,7 +166,7 @@ Hojas de estilo en orden de carga:
 | `assets/datos/config-publica.js` | 3 | 0 |
 | `assets/datos/escuelas-chaco.js` | 2 | 0 |
 | `assets/datos/formularios-pdf.js` | 235 | 0 |
-| `assets/js/acceso/autenticacion.js` | 56 | 3 |
+| `assets/js/acceso/autenticacion.js` | 66 | 4 |
 | `assets/js/acceso/editor.js` | 956 | 34 |
 | `assets/js/acceso/efectos.js` | 33 | 4 |
 | `assets/js/acceso/ingreso.js` | 59 | 2 |
@@ -228,7 +228,7 @@ Hojas de estilo en orden de carga:
 | `assets/js/tramites/dj01-guia.js` | 122 | 6 |
 | `assets/js/tramites/dj01-traslados.js` | 71 | 6 |
 | `assets/js/tramites/dj01-zoom.js` | 31 | 3 |
-| `assets/js/tramites/dj01.js` | 396 | 53 |
+| `assets/js/tramites/dj01.js` | 417 | 55 |
 | `assets/js/tramites/dj02-base.js` | 188 | 24 |
 | `assets/js/tramites/dj02-formulario.js` | 52 | 3 |
 | `assets/js/tramites/dj02-plantilla.js` | 48 | 7 |
@@ -247,7 +247,7 @@ Hojas de estilo en orden de carga:
 | `supabase/migrations/202611140002_adc_sync_conflict_http.sql` | 22 | 0 |
 | `tests/acceso-ajustes.test.cjs` | 33 | 0 |
 | `tests/ajustes-proyecto.test.cjs` | 71 | 0 |
-| `tests/arquitectura.test.cjs` | 25 | 0 |
+| `tests/arquitectura.test.cjs` | 44 | 0 |
 | `tests/cf01-pdf.test.cjs` | 52 | 0 |
 | `tests/cursos.test.cjs` | 32 | 0 |
 | `tests/dl01-interfaz.test.cjs` | 161 | 0 |
@@ -257,6 +257,7 @@ Hojas de estilo en orden de carga:
 | `tests/editor-documentos.test.cjs` | 46 | 0 |
 | `tests/editor-elementos.test.cjs` | 77 | 0 |
 | `tests/editor-herramientas.test.cjs` | 48 | 3 |
+| `tests/fecha-manual.test.cjs` | 76 | 0 |
 | `tests/formularios-oficiales.test.cjs` | 673 | 1 |
 | `tests/geografia.test.cjs` | 60 | 0 |
 | `tests/ingreso.test.cjs` | 63 | 0 |
@@ -278,7 +279,7 @@ Hojas de estilo en orden de carga:
 | `tests/studio-contrato.test.cjs` | 26 | 0 |
 | `tests/studio-inplace.test.cjs` | 54 | 2 |
 | `tests/studio.test.cjs` | 59 | 1 |
-| `tests/supabase-auth.test.cjs` | 73 | 0 |
+| `tests/supabase-auth.test.cjs` | 91 | 0 |
 | `tests/supabase-config.test.cjs` | 13 | 0 |
 | `tests/supabase-management.test.cjs` | 21 | 0 |
 | `tests/supabase-rls.test.cjs` | 46 | 0 |
@@ -288,7 +289,7 @@ Hojas de estilo en orden de carga:
 | `tests/sync-staging.test.cjs` | 22 | 0 |
 | `tests/traslado-pdf.test.cjs` | 50 | 0 |
 | `tools/ajustes-store.cjs` | 39 | 5 |
-| `tools/auditar-arquitectura.cjs` | 73 | 3 |
+| `tools/auditar-arquitectura.cjs` | 108 | 4 |
 | `tools/build.cjs` | 12 | 1 |
 | `tools/configurar-supabase.cjs` | 78 | 5 |
 | `tools/dev-server.cjs` | 28 | 1 |
@@ -311,3 +312,14 @@ Ninguna en el alcance del análisis.
 ## Límites
 
 El grafo estático no resuelve destinos calculados, `onclick` heredados ni todos los accesos por variables. Las rutas funcionales se documentan en la auditoría; los archivos sin referencias literales no se borran automáticamente. `docs/structure-manifest.json` es una referencia histórica y no define por sí solo la arquitectura vigente.
+
+## Integridad de rutas y recursos
+
+| Control | Hallazgos |
+| --- | ---: |
+| Cargas repetidas de scripts/links por entrada | 0 |
+| Rutas desde la raíz incompatibles con un prefijo Pages | 0 |
+| Archivos cuya ruta sólo difiere en mayúsculas | 0 |
+| Grupos de recursos propios idénticos (SHA-256) | 0 |
+
+Se revisan atributos HTML con comillas simples/dobles, enlaces de navegación y recursos CSS (`url`/`@import`). Se excluyen comentarios y destinos externos, embebidos o fragmentos. Los recursos idénticos son candidatos de revisión, nunca una autorización de borrado. Las coincidencias de ocho líneas siguen limitadas a los primeros 80 candidatos y no representan todas las duplicaciones.
