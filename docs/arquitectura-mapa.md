@@ -207,7 +207,7 @@ Hojas de estilo en orden de carga:
 | `assets/js/interfaz/sincronizacion.js` | 83 | 2 |
 | `assets/js/perfil/autoguardado.js` | 33 | 2 |
 | `assets/js/perfil/contactos-instituciones.js` | 100 | 5 |
-| `assets/js/perfil/datos-personales.js` | 96 | 12 |
+| `assets/js/perfil/datos-personales.js` | 137 | 17 |
 | `assets/js/perfil/geografia.js` | 152 | 4 |
 | `assets/js/perfil/instituciones.js` | 155 | 21 |
 | `assets/js/perfil/nombres.js` | 6 | 2 |
@@ -249,6 +249,8 @@ Hojas de estilo en orden de carga:
 | `tests/ajustes-proyecto.test.cjs` | 71 | 0 |
 | `tests/arquitectura.test.cjs` | 44 | 0 |
 | `tests/cf01-pdf.test.cjs` | 52 | 0 |
+| `tests/contact-icon-web.test.cjs` | 107 | 0 |
+| `tests/contact-icon.test.cjs` | 38 | 0 |
 | `tests/cursos.test.cjs` | 32 | 0 |
 | `tests/dl01-interfaz.test.cjs` | 161 | 0 |
 | `tests/documento-fondo.test.cjs` | 34 | 4 |
@@ -292,6 +294,7 @@ Hojas de estilo en orden de carga:
 | `tools/auditar-arquitectura.cjs` | 108 | 4 |
 | `tools/build.cjs` | 12 | 1 |
 | `tools/configurar-supabase.cjs` | 78 | 5 |
+| `tools/contact-icon-preview.cjs` | 108 | 2 |
 | `tools/dev-server.cjs` | 28 | 1 |
 | `tools/env.cjs` | 31 | 2 |
 | `tools/extract-nomenclatura.py` | 108 | 0 |

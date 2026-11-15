@@ -207,6 +207,7 @@
     "docs/funciones-respaldo.md",
     "docs/google-y-recuperacion-staging.md",
     "docs/ol01-revision.md",
+    "docs/prueba-contact-icon.md",
     "docs/prueba-sincronizacion.md",
     "docs/publicacion-online.md",
     "docs/recuperacion-dl01.md",
@@ -234,6 +235,8 @@
     "tests/ajustes-proyecto.test.cjs",
     "tests/arquitectura.test.cjs",
     "tests/cf01-pdf.test.cjs",
+    "tests/contact-icon-web.test.cjs",
+    "tests/contact-icon.test.cjs",
     "tests/cursos.test.cjs",
     "tests/dl01-interfaz.test.cjs",
     "tests/documento-fondo.test.cjs",
@@ -243,6 +246,8 @@
     "tests/editor-elementos.test.cjs",
     "tests/editor-herramientas.test.cjs",
     "tests/fecha-manual.test.cjs",
+    "tests/fixtures/contact-icon-web.css",
+    "tests/fixtures/contact-icon.html",
     "tests/formularios-oficiales.test.cjs",
     "tests/geografia.test.cjs",
     "tests/ingreso.test.cjs",
@@ -277,6 +282,7 @@
     "tools/auditar-arquitectura.cjs",
     "tools/build.cjs",
     "tools/configurar-supabase.cjs",
+    "tools/contact-icon-preview.cjs",
     "tools/dev-server.cjs",
     "tools/env.cjs",
     "tools/extract-nomenclatura.py",
@@ -1596,10 +1602,15 @@
     },
     {
       "file": "assets/js/perfil/datos-personales.js",
-      "bytes": 7576,
-      "lines": 96,
+      "bytes": 10802,
+      "lines": 137,
       "generated": false,
       "functions": [
+        "adcBirthDate",
+        "adcSyncBirthDate",
+        "adcPersonalExtras",
+        "adcRestorePersonalExtras",
+        "adcPrefillAccountEmail",
         "adcAntiguedadManual",
         "adcActualizarAntiguedad",
         "adcSetAntiguedadAuto",
@@ -1614,6 +1625,7 @@
         "adcDeclarationBannerHTML"
       ],
       "globals": [
+        "adcPreviewRefreshProfile",
         "adcAplicarGeografiaPerfil"
       ],
       "storageKeys": [
@@ -1685,7 +1697,7 @@
     },
     {
       "file": "assets/js/perfil/respaldos.js",
-      "bytes": 5710,
+      "bytes": 5920,
       "lines": 36,
       "generated": false,
       "functions": [
@@ -2542,6 +2554,15 @@
       "storageKeys": []
     },
     {
+      "file": "docs/prueba-contact-icon.md",
+      "bytes": 11011,
+      "lines": 72,
+      "generated": false,
+      "functions": [],
+      "globals": [],
+      "storageKeys": []
+    },
+    {
       "file": "docs/prueba-sincronizacion.md",
       "bytes": 7854,
       "lines": 48,
@@ -2615,8 +2636,8 @@
     },
     {
       "file": "docs/sincronizacion-usuarios.md",
-      "bytes": 12440,
-      "lines": 80,
+      "bytes": 13053,
+      "lines": 82,
       "generated": false,
       "functions": [],
       "globals": [],
@@ -2774,6 +2795,31 @@
       ]
     },
     {
+      "file": "tests/contact-icon-web.test.cjs",
+      "bytes": 12310,
+      "lines": 107,
+      "generated": false,
+      "functions": [],
+      "globals": [
+        "adcAuth",
+        "logoutCalls"
+      ],
+      "storageKeys": [
+        "adc_theme",
+        "adc_v08",
+        "test-logout-calls"
+      ]
+    },
+    {
+      "file": "tests/contact-icon.test.cjs",
+      "bytes": 2534,
+      "lines": 38,
+      "generated": false,
+      "functions": [],
+      "globals": [],
+      "storageKeys": []
+    },
+    {
       "file": "tests/cursos.test.cjs",
       "bytes": 1940,
       "lines": 32,
@@ -2872,6 +2918,24 @@
       "file": "tests/fecha-manual.test.cjs",
       "bytes": 4370,
       "lines": 76,
+      "generated": false,
+      "functions": [],
+      "globals": [],
+      "storageKeys": []
+    },
+    {
+      "file": "tests/fixtures/contact-icon-web.css",
+      "bytes": 5947,
+      "lines": 64,
+      "generated": false,
+      "functions": [],
+      "globals": [],
+      "storageKeys": []
+    },
+    {
+      "file": "tests/fixtures/contact-icon.html",
+      "bytes": 1805,
+      "lines": 61,
       "generated": false,
       "functions": [],
       "globals": [],
@@ -3287,6 +3351,21 @@
         "configure"
       ],
       "globals": [],
+      "storageKeys": []
+    },
+    {
+      "file": "tools/contact-icon-preview.cjs",
+      "bytes": 12297,
+      "lines": 108,
+      "generated": false,
+      "functions": [
+        "setTheme",
+        "createServer"
+      ],
+      "globals": [
+        "adcPreviewRefreshProfile",
+        "tab"
+      ],
       "storageKeys": []
     },
     {
@@ -4503,6 +4582,12 @@
       "exists": true
     },
     {
+      "from": "tests/contact-icon-web.test.cjs",
+      "to": "tools/contact-icon-preview.cjs",
+      "kind": "literal-module",
+      "exists": true
+    },
+    {
       "from": "tests/dl01-interfaz.test.cjs",
       "to": "tests/support/demo-config.cjs",
       "kind": "literal-module",
@@ -5003,6 +5088,12 @@
     {
       "from": "tools/configurar-supabase.cjs",
       "to": "tools/supabase-auth-settings.cjs",
+      "kind": "literal-module",
+      "exists": true
+    },
+    {
+      "from": "tools/contact-icon-preview.cjs",
+      "to": "tests/support/demo-config.cjs",
       "kind": "literal-module",
       "exists": true
     },
@@ -5902,9 +5993,9 @@
     ]
   },
   "summary": {
-    "files": 278,
-    "ownTextModules": 218,
-    "ownJavaScript": 136,
+    "files": 284,
+    "ownTextModules": 224,
+    "ownJavaScript": 139,
     "vendorFiles": 35,
     "missingLiteralReferences": 0,
     "duplicateLoads": 0,

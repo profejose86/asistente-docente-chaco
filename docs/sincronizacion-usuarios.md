@@ -27,6 +27,8 @@ Se revisaron las llamadas de almacenamiento en perfil, inicialización, calendar
 
 Claves desconocidas quedan fuera de la sincronización hasta clasificarlas. El calendario de otro año deberá incorporarse explícitamente si aparece una clave nueva. El permiso cubre las categorías indicadas, incluidos formularios futuros compatibles con el patrón de borrador, no preferencias ni claves de autenticación.
 
+En la rama local `Contact-Icon`, el perfil incorpora `perfilDJ.nacimiento` (fecha civil ISO cuando es válida; conserva la entrada incompleta como borrador) y `perfilDJ.celular` (contacto personal). Pertenecen al agregado personal existente `adc_v08`: no son preferencias, tokens ni claves de almacenamiento nuevas. Conservan el aislamiento, consentimiento y CAS del perfil. `perfilDJ.clase` continúa como adaptador del año para formularios históricos, sin editor independiente en la vista actualizada. `telefonoFijo` no se migra a celular ni se borra. No se aplicaron cambios remotos para esta extensión.
+
 ## Almacenamiento local y cuentas
 
 `almacenamiento-usuario.js` es una fachada explícita usada por los módulos de datos. **No modifica `Storage.prototype` ni reemplaza globalmente `localStorage`.** En modo demo conserva el contrato anterior. En modo Supabase guarda cada registro en `adc-user-v1:<uid>:record:<clave>` con valor original, revisión local, revisión remota base y marca pendiente, en una sola escritura local.

@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="es">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ADC · Prueba aislada de cuenta</title>
+<style>
+/* Contenedor de prueba: ubica el componente a la derecha, sin estilos de ADC. */
+body { margin:24px; }
+main { display:flex; justify-content:flex-end; align-items:flex-start; min-height:240px; }
+/* CSS principal suministrado */
+.adc-account { position:relative; }
+.adc-avatar {
+ display:grid;
+ place-items:center;
+ width:33px;height:33px;
+ border-radius:50%;
+ background:#1b7b97;
+ color:white;font-weight:700;
+}
+#adcProfileMenu {
+ position:absolute;
+ top:calc(100% + 8px);
+ right:0;
+ width:258px;
+ background:#192e4b;
+ border:1px solid #42638d;
+ border-radius:12px;
+ box-shadow:0 16px 30px #0008;
+}
+</style>
+<main>
+<!-- Componente visual ADC -->
+<div class="adc-account">
+ <button id="adcProfileBtn"
+         aria-expanded="false"
+         aria-controls="adcProfileMenu">
+   <span class="adc-avatar">J</span>
+   <span aria-hidden="true">⌄</span>
+ </button>
+ <div id="adcProfileMenu" hidden>
+   <strong>Mi cuenta docente</strong>
+   <small>docente@ejemplo.com</small>
+   <button id="adcSyncBtn">Mis datos / sincronización</button>
+   <button id="adcLogoutBtn">Cerrar sesión</button>
+ </div>
+</div>
+</main>
+<script>
+/* JavaScript de comportamiento suministrado */
+const trigger = document.querySelector('#adcProfileBtn');
+const panel = document.querySelector('#adcProfileMenu');
+trigger.addEventListener('click', () => {
+ panel.hidden = !panel.hidden;
+ trigger.setAttribute('aria-expanded', String(!panel.hidden));
+});
+// El cierre de sesión real debe llamar a
+// supabase.auth.signOut() e informar errores.
+// Este ejemplo es solamente visual.
+</script>
+</html>
