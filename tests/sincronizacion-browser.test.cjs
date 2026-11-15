@@ -46,6 +46,14 @@ test('Sync en Chrome y SDK: consentimiento, dos dispositivos, conflicto, red y c
   await p1.getByRole('button',{name:'Abrir los datos importados / recargar',exact:true}).click();await p1.waitForSelector('#adcSessionBar');
   const originalWrites=writes.length,p2=await pageFor(a);assert.equal(await p2.evaluate(()=>adcUserStorage.getItem('adc_v08')),raw);assert.equal(writes.length,originalWrites);assert.equal(await p2.locator('#perfilApellidos').inputValue(),'Gomez');
   await authorize(p2);await p2.waitForFunction(()=>adcSyncUI.engine.state().status==='saved');
+  await p1.locator('#perfilNacimiento').fill('25/08/1986');
+  await p1.locator('#perfilCelular').fill('3624539175');
+  await p1.waitForFunction(()=>adcSyncUI.engine.state().status==='saved');
+  await p2.evaluate(()=>adcSyncUI.engine.run());
+  await p2.reload();await p2.waitForSelector('#adcSessionBar');
+  assert.equal(await p2.locator('#perfilNacimiento').inputValue(),'25/08/1986');
+  assert.equal(await p2.locator('#perfilCelular').inputValue(),'3624539175');
+  assert.equal(await p2.evaluate(()=>djPerfilPage2().clase),'1986');
   // El borrador de incapacidad viaja por el mismo repositorio de cuenta.
   await p1.evaluate(()=>tab('tramites'));
   await p1.locator('.adc-form-catalog [data-adc-official-form=incapacidad]').click();

@@ -43,6 +43,7 @@
     "assets/css/interfaz/sincronizacion.css",
     "assets/css/interfaz/tema.css",
     "assets/css/interfaz/validacion-guiada.css",
+    "assets/css/perfil/datos-personales.css",
     "assets/css/perfil/nombres.css",
     "assets/css/perfil/revision.css",
     "assets/css/tramites/bd02.css",
@@ -136,6 +137,7 @@
     "assets/js/perfil/geografia.js",
     "assets/js/perfil/instituciones.js",
     "assets/js/perfil/nombres.js",
+    "assets/js/perfil/presentacion.js",
     "assets/js/perfil/respaldos.js",
     "assets/js/servicios/almacenamiento-usuario.js",
     "assets/js/servicios/sincronizacion-usuario.js",
@@ -281,6 +283,7 @@
     "tests/ol01-perfil.test.cjs",
     "tests/pdf-blank-line.test.cjs",
     "tests/pdf-campos.test.cjs",
+    "tests/perfil-normal.test.cjs",
     "tests/publicacion.test.cjs",
     "tests/reubicacion-pdf.test.cjs",
     "tests/sincronizacion-browser.test.cjs",
@@ -438,7 +441,8 @@
         "assets/js/tramites/busqueda-inteligente.js",
         "assets/js/tramites/buscador.js",
         "assets/js/tramites/dl01-interfaz.js",
-        "assets/js/perfil/autoguardado.js"
+        "assets/js/perfil/autoguardado.js",
+        "assets/js/perfil/presentacion.js"
       ],
       "styles": [
         "assets/css/acceso/autenticacion.css",
@@ -477,7 +481,8 @@
         "assets/css/tramites/sc01.css",
         "assets/css/tramites/formularios-oficiales.css",
         "assets/css/tramites/bd02.css",
-        "assets/css/tramites/dl01.css"
+        "assets/css/tramites/dl01.css",
+        "assets/css/perfil/datos-personales.css"
       ]
     }
   ],
@@ -744,6 +749,15 @@
       "storageKeys": []
     },
     {
+      "file": "assets/css/perfil/datos-personales.css",
+      "bytes": 4051,
+      "lines": 37,
+      "generated": false,
+      "functions": [],
+      "globals": [],
+      "storageKeys": []
+    },
+    {
       "file": "assets/css/perfil/nombres.css",
       "bytes": 948,
       "lines": 11,
@@ -853,8 +867,8 @@
     },
     {
       "file": "assets/css/tramites/formularios-oficiales.css",
-      "bytes": 19086,
-      "lines": 159,
+      "bytes": 22872,
+      "lines": 192,
       "generated": false,
       "functions": [],
       "globals": [],
@@ -911,8 +925,8 @@
     },
     {
       "file": "assets/datos/formularios-pdf.js",
-      "bytes": 31224,
-      "lines": 375,
+      "bytes": 31574,
+      "lines": 376,
       "generated": false,
       "functions": [],
       "globals": [
@@ -1191,12 +1205,13 @@
     },
     {
       "file": "assets/js/documentos/pdf-campos.js",
-      "bytes": 5725,
-      "lines": 79,
+      "bytes": 7362,
+      "lines": 109,
       "generated": false,
       "functions": [
         "layout",
-        "draw"
+        "draw",
+        "wrapText"
       ],
       "globals": [
         "adcPdfOverlay"
@@ -1681,7 +1696,7 @@
     },
     {
       "file": "assets/js/perfil/datos-personales.js",
-      "bytes": 10802,
+      "bytes": 10863,
       "lines": 137,
       "generated": false,
       "functions": [
@@ -1773,6 +1788,17 @@
       "storageKeys": [
         "adc_v08"
       ]
+    },
+    {
+      "file": "assets/js/perfil/presentacion.js",
+      "bytes": 6243,
+      "lines": 53,
+      "generated": false,
+      "functions": [],
+      "globals": [
+        "adcPreviewRefreshProfile"
+      ],
+      "storageKeys": []
     },
     {
       "file": "assets/js/perfil/respaldos.js",
@@ -2315,8 +2341,8 @@
     },
     {
       "file": "assets/js/tramites/formularios-oficiales.js",
-      "bytes": 70339,
-      "lines": 1278,
+      "bytes": 75362,
+      "lines": 1351,
       "generated": false,
       "functions": [
         "matches",
@@ -2326,6 +2352,9 @@
         "profileValue",
         "presented",
         "storageKey",
+        "draftStatus",
+        "configureDraftActions",
+        "clearIncapacityDraft",
         "save",
         "baseFieldPath",
         "rowCount",
@@ -2599,8 +2628,8 @@
     },
     {
       "file": "docs/estructura.md",
-      "bytes": 35246,
-      "lines": 240,
+      "bytes": 35690,
+      "lines": 242,
       "generated": false,
       "functions": [],
       "globals": [],
@@ -2653,7 +2682,7 @@
     },
     {
       "file": "docs/incapacidad-pdf-piloto.md",
-      "bytes": 6505,
+      "bytes": 6594,
       "lines": 49,
       "generated": false,
       "functions": [],
@@ -2671,8 +2700,8 @@
     },
     {
       "file": "docs/prueba-contact-icon.md",
-      "bytes": 13149,
-      "lines": 84,
+      "bytes": 15073,
+      "lines": 96,
       "generated": false,
       "functions": [],
       "globals": [],
@@ -2806,7 +2835,7 @@
     },
     {
       "file": "index.html",
-      "bytes": 46160,
+      "bytes": 46285,
       "lines": 164,
       "generated": false,
       "functions": [],
@@ -3078,8 +3107,8 @@
     },
     {
       "file": "tests/fixtures/contact-icon-web.css",
-      "bytes": 5947,
-      "lines": 64,
+      "bytes": 1894,
+      "lines": 27,
       "generated": false,
       "functions": [],
       "globals": [],
@@ -3162,8 +3191,8 @@
     },
     {
       "file": "tests/incapacidad-pdf.test.cjs",
-      "bytes": 13996,
-      "lines": 192,
+      "bytes": 27837,
+      "lines": 373,
       "generated": false,
       "functions": [],
       "globals": [
@@ -3171,10 +3200,15 @@
         "savedIncapacityOpen",
         "open",
         "incapacityPrintRequested",
-        "adcPreparedPdfForms"
+        "adcPreparedPdfForms",
+        "originalIncapacityStore",
+        "adcUserStorage",
+        "incapacitySavingShown"
       ],
       "storageKeys": [
-        "adc-official-form-incapacidad-draft-v1"
+        "adc-official-form-incapacidad-draft-v1",
+        "adc_v08",
+        "adc-official-form-form-3-draft-v1"
       ]
     },
     {
@@ -3272,6 +3306,17 @@
       "storageKeys": []
     },
     {
+      "file": "tests/perfil-normal.test.cjs",
+      "bytes": 6394,
+      "lines": 70,
+      "generated": false,
+      "functions": [],
+      "globals": [
+        "adcAuth"
+      ],
+      "storageKeys": []
+    },
+    {
       "file": "tests/publicacion.test.cjs",
       "bytes": 2484,
       "lines": 29,
@@ -3293,8 +3338,8 @@
     },
     {
       "file": "tests/sincronizacion-browser.test.cjs",
-      "bytes": 10150,
-      "lines": 79,
+      "bytes": 11570,
+      "lines": 98,
       "generated": false,
       "functions": [
         "pageFor",
@@ -3551,14 +3596,13 @@
     },
     {
       "file": "tools/contact-icon-preview.cjs",
-      "bytes": 11868,
-      "lines": 106,
+      "bytes": 6080,
+      "lines": 61,
       "generated": false,
       "functions": [
         "createServer"
       ],
       "globals": [
-        "adcPreviewRefreshProfile",
         "tab"
       ],
       "storageKeys": []
@@ -4808,6 +4852,18 @@
       "exists": true
     },
     {
+      "from": "index.html",
+      "to": "assets/css/perfil/datos-personales.css",
+      "kind": "link",
+      "exists": true
+    },
+    {
+      "from": "index.html",
+      "to": "assets/js/perfil/presentacion.js",
+      "kind": "script",
+      "exists": true
+    },
+    {
       "from": "tests/acceso-ajustes.test.cjs",
       "to": "tests/support/demo-config.cjs",
       "kind": "literal-module",
@@ -5259,6 +5315,12 @@
     },
     {
       "from": "tests/ol01-interfaz.test.cjs",
+      "to": "tests/support/demo-config.cjs",
+      "kind": "literal-module",
+      "exists": true
+    },
+    {
+      "from": "tests/perfil-normal.test.cjs",
       "to": "tests/support/demo-config.cjs",
       "kind": "literal-module",
       "exists": true
@@ -11753,9 +11815,9 @@
     ]
   },
   "summary": {
-    "files": 306,
-    "ownTextModules": 238,
-    "ownJavaScript": 147,
+    "files": 309,
+    "ownTextModules": 241,
+    "ownJavaScript": 149,
     "vendorFiles": 35,
     "missingLiteralReferences": 0,
     "duplicateLoads": 0,

@@ -6,6 +6,8 @@ El mapa vigente está en [arquitectura-mapa.md](arquitectura-mapa.md); la [audit
 
 La cuenta superior utiliza `interfaz/cuenta.js`, que presenta las acciones de sesión y sincronización existentes. Login y aplicación comparten `tema/inicial.js`, `tema/controles.js` y `interfaz/selector-tema.css`, con la preferencia histórica del login. Ver [integración del avatar y temas](prueba-contact-icon.md).
 
+La distribución normal de Datos personales reutiliza `perfil/presentacion.js` y `css/perfil/datos-personales.css`. Los campos se organizan después del registro del editor y conservan sus IDs, claves y adaptadores de formularios. La fecha completa aporta el año a los documentos históricos y el celular permanece separado del teléfono fijo anterior. Los detalles y pruebas están en [la integración del perfil](prueba-contact-icon.md).
+
 Los apartados históricos que mencionan acceso sin datos describen únicamente el modo demo. En el piloto configurado con Supabase no se omite el inicio de sesión ni se usa `adc-preview=1` como autenticación.
 
 La publicación unificada utiliza `config/publicacion.json`, `tools/publicar.cjs` y `.github/workflows/pages.yml`. El artefacto `dist/` contiene sólo los recursos web y requiere Supabase real. Publica desde `main`, con `ADC_PAGES_BRANCH=main`, tras incorporar los cambios aprobados de `log-in` y `log-in-2`. Ver [publicación, configuración del piloto y recuperación](publicacion-online.md).

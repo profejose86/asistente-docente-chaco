@@ -8,11 +8,23 @@ Login y aplicación cargan los mismos `tema/inicial.js`, `tema/controles.js` y `
 
 En la aplicación, el contenido aprobado del selector se conserva en un `template` y se presenta en `DOMContentLoaded`, después del registro del editor. El marcado inicial histórico se mantiene para conservar los índices `base-*` de todos los controles posteriores. La cuenta también se monta después de ese registro.
 
-`tests/cuenta-online.test.cjs` prueba la entrada normal con prefijo `/adc/`, ambos temas, teclado, apertura/cierre, transparencia, ausencia de solapamientos, persistencia entre login y aplicación, preferencia histórica y anchos de 280 a 1920 px. Las pruebas de sesión y sincronización recorren las acciones desde el nuevo menú usando el SDK con servicios aislados. La reorganización de Datos personales descrita a continuación continúa en la prueba visual y se mantiene fuera de esta integración de controles.
+`tests/cuenta-online.test.cjs` prueba la entrada normal con prefijo `/adc/`, ambos temas, teclado, apertura/cierre, transparencia, ausencia de solapamientos, persistencia entre login y aplicación, preferencia histórica y anchos de 280 a 1920 px. Las pruebas de sesión y sincronización recorren las acciones desde el nuevo menú usando el SDK con servicios aislados.
 
 La suite completa de esta integración terminó con 117 pruebas aprobadas, cero fallos y cero omisiones. Incluye los editores históricos y las verificaciones de documentos, sesión y sincronización. También se regeneró el inventario y pasó `architecture:check`.
 
-## Estado de la prueba aislada — aclaraciones del 15/11/2026
+## Integración de Datos personales en la página normal
+
+`assets/js/perfil/presentacion.js` y `assets/css/perfil/datos-personales.css` presentan la distribución aprobada en `index.html`. Se ejecuta después del registro histórico del editor, moviendo los controles existentes y conservando sus IDs y listeners. La prueba de Contact-Icon reutiliza estos archivos y conserva únicamente su bloqueo de navegación aislado. La página normal mantiene la navegación y las revisiones guiadas existentes de cada formulario.
+
+Nacimiento completo y celular se guardan en `adc_v08.perfilDJ`, con las funciones existentes de `datos-personales.js` y `respaldos.js`. Los años anteriores sin día/mes permanecen conservados y se informa que falta completar la fecha. El año entregado a declaraciones se normaliza a cuatro dígitos, sin separador de miles. El título visible de hasta dos líneas conserva su valor completo y el control histórico `perfilTitulo`. El teléfono fijo anterior permanece separado del celular y se conserva para sus consumidores existentes.
+
+Se mantienen las etiquetas y separaciones aprobadas, el título de 12 cm en escritorio, asteriscos junto a las leyendas y el bloque de domicilio reorganizado. La precarga de correo verificado completa sólo un campo vacío y dispara el guardado delegado existente. No introduce almacenamiento ni clientes adicionales.
+
+`tests/perfil-normal.test.cjs` comprueba la entrada normal, filas alineadas, ambos temas y anchos de 320 a 1440 px, fechas válidas e inválidas, respaldo, recarga, título completo, celular, fijo histórico, IDs únicos, perfil anterior con sólo año y precarga SC-01. La prueba de sincronización también verifica nacimiento y celular entre dos contextos aislados de la misma cuenta.
+
+La suite completa de la integración del perfil terminó con 118 pruebas aprobadas, cero fallos y cero omisiones. Incluye los editores históricos, documentos PDF y las comprobaciones de sesión, aislamiento y sincronización con servicios simulados o bases locales de prueba.
+
+## Registro histórico de la prueba aislada — aclaraciones del 15/11/2026
 
 El perfil y la vista aislada se versionan en `Contact-Icon`. `Forms-testing` utiliza esa base y añade los formularios preparados. Subir estas ramas no integra ni publica cambios en `main`. La vista se abre con `node tools/contact-icon-preview.cjs` en `http://127.0.0.1:8891/index.html?adc-preview=1`.
 

@@ -1,0 +1,36 @@
+/* Perfil: leyendas y controles con filas de altura estable, sin mover datos. */
+#profile .adc-preview-personal .fields { align-items:start; }
+#profile .adc-preview-personal label { position:relative;display:flex;flex-direction:column;align-items:stretch;gap:6px;min-width:0; }
+#profile .adc-preview-personal label > [data-adc-pending] { position:absolute;top:0;right:0; }
+#profile .adc-preview-personal label:has(#antiguedadAlerta) > [data-adc-pending] { display:none!important; }
+#profile .adc-preview-personal .adc-preview-caption { display:block;min-height:38px;line-height:19px; }
+#profile .adc-preview-personal label > input:not([type=hidden]),
+#profile .adc-preview-personal label > select { box-sizing:border-box;width:100%;height:42px;min-height:42px;margin:0; }
+#profile .adc-preview-personal .adc-preview-caption:has(#antiguedadAlerta) [data-adc-pending] { display:none; }
+#profile .adc-preview-personal label > small { margin:0; }
+
+#profile .adc-preview-personal .adc-preview-personal-grid { display:grid;grid-template-columns:repeat(2,minmax(0,1fr));grid-template-areas:"names names" "birth sex" "email phone" "title title" "issuer ." "seniority start";gap:10px 12px; }
+#profile .adc-preview-personal .adc-name-line { grid-area:names;gap:10px; }
+#profile .adc-preview-personal .adc-preview-caption { min-height:22px;line-height:19px; }
+#profile .adc-preview-personal label { gap:4px; }
+#profile .adc-preview-personal .adc-preview-title-row { grid-area:title;display:grid;grid-template-columns:minmax(0,12cm) minmax(0,1fr);gap:12px;align-items:start; }
+#profile .adc-preview-personal #perfilTituloEdicion { box-sizing:border-box;width:100%;min-height:42px;max-height:64px;margin:0;padding:10px;border:1px solid #b9c6d7;border-radius:8px;background:white;color:inherit;resize:none;font:inherit;line-height:20px;white-space:pre-wrap;overflow-wrap:anywhere; }
+html[data-theme=dark] #profile .adc-preview-personal #perfilTituloEdicion { background:#101d30;border-color:#667b97; }
+#profile .adc-preview-personal #antiguedadAlerta { display:none!important; }
+#profile .adc-preview-personal .adc-preview-caption .adc-field-warning,#profile .adc-preview-personal .adc-preview-caption .adc-pendiente { position:static;float:none;margin-left:4px;font-size:inherit;line-height:inherit;vertical-align:baseline; }
+#profile .adc-preview-personal label[data-preview-required] .adc-preview-caption .adc-field-warning { display:inline!important; }
+#profile .adc-preview-personal label[data-preview-required]:has(#antiguedadAlerta) .adc-preview-caption [data-adc-pending] { display:inline!important; }
+#profile .adc-preview-personal .adc-preview-old-phone { margin:8px 0; }
+#profile .adc-preview-personal .adc-profile-address { margin:16px 0 10px;padding:10px 12px;min-width:0; }
+#profile .adc-preview-personal .adc-profile-address .fields { display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:8px 12px; }
+#profile .adc-preview-personal [data-adc-address-field] { grid-column:span 6; }
+#profile .adc-preview-personal [data-adc-address-field=perfilUnidad],#profile .adc-preview-personal [data-adc-address-field=perfilManzana] { grid-column:span 3; }
+#profile .adc-preview-personal [data-adc-address-field=perfilLocalidad],#profile .adc-preview-personal [data-adc-address-field=perfilDepartamento] { grid-column:span 5; }
+#profile .adc-preview-personal [data-adc-address-field=perfilCodigoPostal] { grid-column:span 2; }
+#profile .adc-preview-personal #adcProfilePendingNote { margin:8px 0; }
+@media(max-width:740px) {
+ #profile .adc-preview-personal .adc-preview-personal-grid { grid-template-columns:minmax(0,1fr);grid-template-areas:"names" "birth" "sex" "email" "phone" "title" "issuer" "seniority" "start"; }
+ #profile .adc-preview-personal .adc-preview-title-row { grid-template-columns:minmax(0,1fr); }
+ #profile .adc-preview-personal .adc-profile-address .fields { grid-template-columns:minmax(0,1fr); }
+ #profile .adc-preview-personal .adc-profile-address [data-adc-address-field] { grid-column:1; }
+}

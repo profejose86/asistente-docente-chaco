@@ -35,7 +35,7 @@ function adcRestorePersonalExtras(profile={}){
 async function adcPrefillAccountEmail(){
  const auth=window.adcAuth,store=window.adcUserStorage,input=$('correo');if(!auth?.configured||!input||input.value.trim())return;
  const owner=store?.scope?.(),before=input.value;
- try{await auth.ready;const user=await auth.user();if(!user?.email||input.value!==before||owner!==store?.scope?.()||(store?.scope?.()&&store.scope()!==user.id))return;input.value=user.email;}catch{}
+ try{await auth.ready;const user=await auth.user();if(!user?.email||input.value!==before||owner!==store?.scope?.()||(store?.scope?.()&&store.scope()!==user.id))return;input.value=user.email;input.dispatchEvent(new Event('input',{bubbles:true}));}catch{}
 }
 function adcAntiguedadManual(valor){
  const v=String(valor||'').trim(),hidden=$('perfilAntiguedad');
@@ -83,7 +83,7 @@ function adcPersonalFormat(value,id){
  const raw=String(value??'').trim();
  const digits=adcPersonalDigits(raw);
  if(!/^[\d.]+$/.test(raw)||!digits)return raw;
- if(id==='perfilClase'&&digits.length!==4)return raw;
+ if(id==='perfilClase')return digits.length===4?digits:raw;
  return digits.replace(/\B(?=(\d{3})+(?!\d))/g,'.');
 }
 function adcPersonalValid(value,min,max=min){
