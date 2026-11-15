@@ -46,6 +46,17 @@ test('Sync en Chrome y SDK: consentimiento, dos dispositivos, conflicto, red y c
   await p1.getByRole('button',{name:'Abrir los datos importados / recargar',exact:true}).click();await p1.waitForSelector('#adcSessionBar');
   const originalWrites=writes.length,p2=await pageFor(a);assert.equal(await p2.evaluate(()=>adcUserStorage.getItem('adc_v08')),raw);assert.equal(writes.length,originalWrites);assert.equal(await p2.locator('#perfilApellidos').inputValue(),'Gomez');
   await authorize(p2);await p2.waitForFunction(()=>adcSyncUI.engine.state().status==='saved');
+  // El borrador de incapacidad viaja por el mismo repositorio de cuenta.
+  await p1.evaluate(()=>tab('tramites'));
+  await p1.locator('.adc-form-catalog [data-adc-official-form=incapacidad]').click();
+  await p1.locator('[data-adc-field=ministerio]').fill('Ministerio recuperado en otro dispositivo');
+  await p1.waitForFunction(()=>adcSyncUI.engine.state().status==='saved');
+  assert.match(rows.get(a+'/adc-official-form-incapacidad-draft-v1').payload.raw,/Ministerio recuperado en otro dispositivo/);
+  await p2.evaluate(()=>adcSyncUI.engine.run());
+  await p2.reload();await p2.waitForSelector('#adcSessionBar');
+  await p2.evaluate(()=>tab('tramites'));
+  await p2.locator('.adc-form-catalog [data-adc-official-form=incapacidad]').click();
+  assert.equal(await p2.locator('[data-adc-field=ministerio]').inputValue(),'Ministerio recuperado en otro dispositivo');
   await p1.evaluate(()=>adcSyncUI.engine.disable());await p2.evaluate(()=>adcSyncUI.engine.disable());
   await p1.evaluate(()=>{const d=JSON.parse(adcUserStorage.getItem('adc_v08'));d.apellidos='Equipo Uno';d.nombre='Equipo Uno, Jose';adcUserStorage.setItem('adc_v08',JSON.stringify(d))});
   await p2.evaluate(()=>{const d=JSON.parse(adcUserStorage.getItem('adc_v08'));d.apellidos='Equipo Dos';d.nombre='Equipo Dos, Jose';adcUserStorage.setItem('adc_v08',JSON.stringify(d))});

@@ -84,6 +84,7 @@
   const preparedReadOnly = () => Boolean(preparedDocument() && !preparedDocument().fields);
   const viewport = section.querySelector('.adc-document-viewport');
   const documentSize = section.querySelector('.adc-document-size');
+  let draftToolbars=null,clearDialog=null,draftReturnFocus=null;
   const smartViewer=window.adcPdfViewer.create({
     viewport,size:documentSize,getScale:()=>zoom,
     setScale(value){zoom=value;fitWidth=false;fitPage=false;updateZoom();},
@@ -124,14 +125,57 @@
   function storageKey(form) {
     return `adc-official-form-${form.id}-draft-v1`;
   }
+  function draftStatus(state,message){
+    if(activeForm?.id!=='incapacidad'||!draftToolbars)return;
+    for(const toolbar of draftToolbars){
+      const output=toolbar.querySelector('[data-adc-draft-status]');
+      output.dataset.saveState=state;output.textContent=message;
+    }
+  }
+  function configureDraftActions(){
+    const enabled=activeForm?.id==='incapacidad';
+    if(enabled&&!draftToolbars){
+      const saveIcon='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 3h13l4 4v14H3V3h1Zm3 0v7h10V3M7 21v-7h10v7M14 4v4"/></svg>';
+      const clearIcon='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m16 3 3 3-8 8-3-3 8-8ZM8 11l5 5-5 6-6-6 6-5ZM4 16l4 4m-1-7 4 4"/></svg>';
+      draftToolbars=[...section.querySelectorAll('.adc-official-actions')].map(actions=>{
+        const toolbar=document.createElement('div');toolbar.className='adc-incapacidad-draft-tools';
+        toolbar.setAttribute('role','group');toolbar.setAttribute('aria-label','Guardar o limpiar el borrador de Incapacidad');
+        toolbar.innerHTML=`<button type="button" class="alt" data-adc-draft-action="save">${saveIcon}Guardar cambios</button><button type="button" class="alt" data-adc-draft-action="clear">${clearIcon}Limpiar formulario</button><span data-adc-draft-status role="status" aria-live="polite"></span>`;
+        actions.after(toolbar);return toolbar;
+      });
+      clearDialog=document.createElement('dialog');clearDialog.className='adc-incapacidad-confirm';
+      clearDialog.setAttribute('aria-labelledby','adcIncapacidadClearQuestion');
+      clearDialog.innerHTML='<p id="adcIncapacidadClearQuestion">¿Querés limpiar los datos de este formulario? Esta acción eliminará los datos ingresados y las marcas No corresponde</p><div class="toolbar"><button type="button" class="alt" data-adc-draft-action="cancel" autofocus>Cancelar</button><button type="button" data-adc-draft-action="confirm-clear">Sí, limpiar formulario</button></div>';
+      clearDialog.addEventListener('close',()=>draftReturnFocus?.focus({preventScroll:true}));
+      section.append(clearDialog);
+    }
+    draftToolbars?.forEach(toolbar=>toolbar.hidden=!enabled);
+    if(!enabled&&clearDialog?.open)clearDialog.close();
+  }
+  function clearIncapacityDraft(){
+    const previous={values,marked,profileOrigin,touched,rowCounts,draftWarnings,profileAcknowledged};
+    loadDraft(activeForm,{fresh:true});
+    if(!save()){
+      ({values,marked,profileOrigin,touched,rowCounts,draftWarnings,profileAcknowledged}=previous);
+      draftStatus('error','No se pudo limpiar el formulario. El borrador anterior se conserva.');
+      return;
+    }
+    section.querySelectorAll('[data-adc-draft-notice]').forEach(notice=>notice.remove());
+    guidedReview.cancel();invalidatePreview();renderFields();
+  }
   function save() {
     if (!activeForm || preparedReadOnly()) return;
+    draftStatus('saving','Guardando…');
     try {
       (globalThis.adcUserStorage||localStorage).setItem(storageKey(activeForm),JSON.stringify({
         schemaVersion:2,values,marked:[...marked],profileOrigin:[...profileOrigin],touched:[...touched],rowCounts,draftWarnings,profileAcknowledged
       }));
+      draftStatus('saved','Borrador guardado en este dispositivo');
+      return true;
     } catch (error) {
       status.textContent = `No se pudo guardar el borrador en este dispositivo. ${error.message}`;
+      draftStatus('error','No se pudo guardar el borrador en este dispositivo. Revisá el almacenamiento y volvé a intentar.');
+      return false;
     }
   }
   function baseFieldPath(repeatKey,index,fieldKey) {
@@ -503,6 +547,7 @@
     if (!activeForm) return;
     if (layoutFrame !== null) { cancelAnimationFrame(layoutFrame); layoutFrame=null; }
     const prepared = preparedDocument();
+    const documentFont=prepared?.typography?`${prepared.typography.family}, Arial, sans-serif`:'Arial';
     if (preparedReadOnly()) {
       documentLayout = {width: prepared.pages[0].width, height: prepared.pages[0].height};
       let top = 0;
@@ -525,7 +570,7 @@
     }
     documentLayout = prepared?.fields ? window.adcPdfOverlay.layout({template:prepared,fields:formFields(),values,marked,presented,font:{widthOfTextAtSize(text,size){
       if(layoutFonts)return layoutFonts.regular.widthOfTextAtSize(text,size);
-      const context=document.createElement('canvas').getContext('2d');context.font=`${size}px Arial`;return context.measureText(text).width;
+      const context=document.createElement('canvas').getContext('2d');context.font=`${size}px ${documentFont}`;return context.measureText(text).width;
     }}}) : createLayout();
     sheet.querySelectorAll('.adc-prepared-background').forEach(image=>image.remove());
     if(prepared?.fields){
@@ -560,7 +605,7 @@
       for (const command of commands) {
         if (command.kind === 'text') {
           if (command.optionText) continue;
-          context.font = `${command.font.name === 'bold' ? 'bold' : 'normal'} ${command.size}px Arial`;
+          context.font = `${command.font.name === 'bold' ? 'bold' : 'normal'} ${command.size}px ${documentFont}`;
           context.fillStyle = color(command.color);
           context.fillText(command.text,command.x,documentLayout.height-command.y);
         }
@@ -619,6 +664,11 @@
           const selection = [input.selectionStart,input.selectionEnd];
           input.replaceWith(replacement);input=replacement;
           if (focused) {input.focus({preventScroll:true});input.setSelectionRange(...selection);}
+        }
+        if(prepared?.typography){
+          input.style.fontFamily=`${prepared.typography.family}, Arial, sans-serif`;
+          input.style.fontWeight='400';
+          input.style.textAlign=box.textAlign||'left';
         }
         const origin = wrapper.querySelector('.adc-document-origin');
         if (origin) {
@@ -713,7 +763,7 @@
     }
     renderProfileConflicts();
   }
-  function loadDraft(form) {
+  function loadDraft(form,{fresh=false}={}) {
     values = {};
     marked = new Set();
     profileOrigin = new Set();
@@ -723,7 +773,7 @@
     profileAcknowledged = {};
     let draftVersion = 0;
     try {
-      const draft = JSON.parse((globalThis.adcUserStorage||localStorage).getItem(storageKey(form)) || 'null');
+      const draft = fresh?null:JSON.parse((globalThis.adcUserStorage||localStorage).getItem(storageKey(form)) || 'null');
       if (draft && typeof draft === 'object' && !Array.isArray(draft)) {
         values = draft.values && typeof draft.values === 'object' ? draft.values : {};
         marked = new Set(Array.isArray(draft.marked) ? draft.marked : []);
@@ -1155,6 +1205,7 @@
     section.dataset.adcFormId = form.id;
     invalidatePreview();
     activeForm = form;
+    configureDraftActions();
     const prepared = preparedDocument();
     fullScreenButton.hidden=!prepared?.fullScreen;
     fitPage=false;
@@ -1169,6 +1220,7 @@
     notices.replaceChildren();
     for (const message of draftWarnings) {
       const paragraph = document.createElement('p');
+      if(form.id==='incapacidad')paragraph.dataset.adcDraftNotice='';
       paragraph.textContent = message; notices.append(paragraph);
     }
     for (const source of form.extraSources || []) {
@@ -1191,6 +1243,7 @@
       for(const group of form.sections)for(const field of group.fields){
         if(field.legacyOnly&&!prepared.fields?.[field.key]&&!isEmptyValue(values[field.key])){
           const legacy=document.createElement('p');legacy.className='warning';
+          if(form.id==='incapacidad')legacy.dataset.adcDraftNotice='';
           legacy.textContent=`Dato del borrador anterior conservado para revisar: ${field.label}: ${values[field.key]}. No se ubica ni se exporta automáticamente porque reúne datos de varios casilleros.`;notices.append(legacy);
         }
       }
@@ -1245,6 +1298,14 @@
   });
   sheet.addEventListener('submit',event => event.preventDefault());
   section.addEventListener('click',event => {
+    const draftButton=event.target.closest('[data-adc-draft-action]');
+    if(draftButton&&activeForm?.id==='incapacidad'){
+      const action=draftButton.dataset.adcDraftAction;
+      if(action==='save')persistCurrentValues();
+      if(action==='clear'){draftReturnFocus=draftButton;clearDialog.showModal();}
+      if(action==='cancel')clearDialog.close();
+      if(action==='confirm-clear'){clearIncapacityDraft();clearDialog.close();}
+    }
     const button = event.target.closest('[data-adc-official-action]');
     if (button) runAction(button.dataset.adcOfficialAction);
     const mnc = event.target.closest('[data-adc-mnc]');

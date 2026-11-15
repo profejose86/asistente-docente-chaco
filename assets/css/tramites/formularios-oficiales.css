@@ -156,3 +156,27 @@ html[data-theme=dark] #adcOfficialForm .adc-document-tools{background:#17263a}
  #adcOfficialForm .adc-pdf-scroll{width:28px;bottom:170px;height:calc(100% - 184px)}
 }
 @media(prefers-reduced-motion:reduce){#adcOfficialForm .adc-pdf-navigation,#adcOfficialForm .adc-pdf-scroll{transition:none}}
+
+/* INCAPACIDAD conserva la barra nativa del documento y evita el rango redundante. */
+#adcOfficialForm[data-adc-form-id=incapacidad] .adc-pdf-scroll{display:none}
+
+#adcOfficialForm[data-adc-form-id=incapacidad] .adc-official-actions{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0 6px}
+#adcOfficialForm[data-adc-form-id=incapacidad] .adc-official-actions button{flex:1 1 160px;margin:0;min-width:0;white-space:normal}
+#adcOfficialForm .adc-incapacidad-draft-tools{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:6px 0 12px}
+#adcOfficialForm .adc-incapacidad-draft-tools button{display:inline-flex;align-items:center;justify-content:center;gap:8px;margin:0;min-height:38px;padding:7px 12px;border:1px solid #97a9bf;border-radius:8px;background:transparent;color:inherit}
+#adcOfficialForm .adc-incapacidad-draft-tools [data-adc-draft-action=save]{border-color:#409c73}
+#adcOfficialForm .adc-incapacidad-draft-tools svg{width:20px;height:20px;flex:none;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+#adcOfficialForm [data-adc-draft-status]{margin-left:auto;font-size:13px;overflow-wrap:anywhere}
+#adcOfficialForm [data-adc-draft-status][data-save-state=saved]::before{content:'✓';margin-right:6px;color:#26936b;font-weight:700}
+#adcOfficialForm [data-adc-draft-status][data-save-state=error]{color:#b24432}
+html[data-theme=dark] #adcOfficialForm [data-adc-draft-status][data-save-state=error]{color:#ffb5a8}
+#adcOfficialForm .adc-incapacidad-confirm{box-sizing:border-box;width:min(460px,calc(100vw - 24px));padding:20px;border:1px solid #97a9bf;border-radius:10px;background:white;color:#152844}
+#adcOfficialForm .adc-incapacidad-confirm::backdrop{background:#07172b99}
+#adcOfficialForm .adc-incapacidad-confirm p{margin:0 0 16px}
+#adcOfficialForm .adc-incapacidad-confirm .toolbar{display:flex;flex-wrap:wrap;gap:8px;margin:0}
+#adcOfficialForm .adc-incapacidad-confirm button{margin:0;white-space:normal}
+html[data-theme=dark] #adcOfficialForm .adc-incapacidad-confirm{background:#192e4b;color:#edf3fc}
+@media(max-width:650px){
+ #adcOfficialForm .adc-incapacidad-draft-tools button{flex:1 1 140px}
+ #adcOfficialForm [data-adc-draft-status]{flex:1 1 100%;margin-left:0}
+}

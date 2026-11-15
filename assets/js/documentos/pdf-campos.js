@@ -5,16 +5,34 @@
     const width=template.pages[0].width,height=template.pages[0].height;
     const result={width,height,pages:template.pages.map(()=>[]),fields:[],actions:[],errors:[]};
     const black={type:'RGB',red:0,green:0,blue:0};
+    const minimum=template.typography?.minFontSize||7;
     function draw(value,box,x,top,maxWidth,size) {
       let fitted=size;
-      while(fitted>7&&font.widthOfTextAtSize(value,fitted)>maxWidth-4)fitted=Math.max(7,fitted-.25);
-      if(font.widthOfTextAtSize(value,fitted)>maxWidth-4){result.errors.push(`${box.field.label}: el texto no entra a 7 puntos. Conservá el dato y revisá cómo presentarlo.`);return;}
-      result.pages[box.page].push({kind:'text',text:value,x:x+2,y:height-top-fitted*.82,size:fitted,font:{name:'regular'},color:black,fieldValue:box.field.path});
+      while(fitted>minimum&&font.widthOfTextAtSize(value,fitted)>maxWidth-4)fitted=Math.max(minimum,fitted-.25);
+      const textWidth=font.widthOfTextAtSize(value,fitted);
+      if(textWidth>maxWidth-4){result.errors.push(`${box.field.label}: el texto no entra a ${minimum} puntos. Conservá el dato y revisá cómo presentarlo.`);return;}
+      let textX=x+2;
+      if(box.textAlign==='center')textX=x+(maxWidth-textWidth)/2;
+      if(box.textAlign==='right')textX=x+maxWidth-2-textWidth;
+      result.pages[box.page].push({kind:'text',text:value,x:textX,y:height-top-fitted*.82,size:fitted,font:{name:'regular'},color:black,fieldValue:box.field.path});
       box.size=Math.min(box.size,fitted);
+    }
+    function wrapText(value,width,size){
+      const lines=[];
+      for(const paragraph of value.split(/\r?\n/)){
+        let line='';
+        for(const word of paragraph.split(/\s+/).filter(Boolean)){
+          const next=line?line+' '+word:word;
+          if(line&&font.widthOfTextAtSize(next,size)>width){lines.push(line);line=word;}
+          else line=next;
+        }
+        lines.push(line);
+      }
+      return lines;
     }
     for(const field of fields){
       const setting=template.fields[field.path];if(!setting)continue;
-      const box={...setting,field,page:setting.page||0,y:height-setting.top-setting.height,size:setting.fontSize||12,lines:['']};
+      const box={...setting,field,page:setting.page||0,y:height-setting.top-setting.height,size:template.typography?.fontSize||setting.fontSize||12,lines:['']};
       result.fields.push(box);
       const commands=result.pages[box.page];
       if(setting.overflow){
@@ -25,6 +43,7 @@
       if(setting.replacePrintedYear){
         const patch=setting.replacePrintedYear;
         commands.push({kind:'rectangle',x:patch.x,y:height-patch.top-patch.height,width:patch.width,height:patch.height,color:{type:'RGB',red:1,green:1,blue:1}});
+        if(patch.text)commands.push({kind:'text',text:patch.text,x:patch.x,y:height-patch.top-patch.fontSize*.82,size:patch.fontSize,font:{name:'regular'},color:black});
       }
       if(setting.options){
         const selected=values[field.path];
@@ -55,6 +74,17 @@
       }else if(setting.digits){
         if(value.length>setting.digits)result.errors.push(`${field.label}: admite ${setting.digits} casilleros. El dato completo se conserva en el borrador.`);
         else [...value].forEach((character,index)=>draw(character,box,box.x+index*box.width/setting.digits,setting.top,box.width/setting.digits,box.size));
+      }else if(template.typography&&(setting.multiline||field.type==='textarea')){
+        let lines,fits;
+        while(true){
+          lines=wrapText(value,box.width-4,box.size);
+          fits=lines.length*(box.size+2)<=box.height&&lines.every(line=>font.widthOfTextAtSize(line,box.size)<=box.width-4);
+          if(fits||box.size<=minimum)break;
+          box.size=Math.max(minimum,box.size-.25);
+        }
+        box.lines=lines;
+        if(!fits)result.errors.push(`${field.label}: el texto no entra a ${minimum} puntos. El borrador conserva el contenido completo.`);
+        else lines.forEach((line,index)=>draw(line,box,box.x,setting.top+index*(box.size+2),box.width,box.size));
       }else if(setting.multiline||field.type==='textarea'){
         let lines=[''];
         for(const word of value.split(/\s+/)){
@@ -64,10 +94,10 @@
         const maxLines=Math.floor(box.height/(box.size+2));
         if(lines.length>maxLines){
           let size=box.size;
-          while(size>7){size=Math.max(7,size-.25);lines=[''];for(const word of value.split(/\s+/)){const index=lines.length-1,next=[lines[index],word].filter(Boolean).join(' ');if(font.widthOfTextAtSize(next,size)>box.width-4&&lines[index])lines.push(word);else lines[index]=next;}if(lines.length*(size+2)<=box.height)break;}
+          while(size>minimum){size=Math.max(minimum,size-.25);lines=[''];for(const word of value.split(/\s+/)){const index=lines.length-1,next=[lines[index],word].filter(Boolean).join(' ');if(font.widthOfTextAtSize(next,size)>box.width-4&&lines[index])lines.push(word);else lines[index]=next;}if(lines.length*(size+2)<=box.height)break;}
           box.size=size;
         }
-        if(lines.length*(box.size+2)>box.height)result.errors.push(`${field.label}: el texto no entra a 7 puntos. El borrador conserva el contenido completo.`);
+        if(lines.length*(box.size+2)>box.height)result.errors.push(`${field.label}: el texto no entra a ${minimum} puntos. El borrador conserva el contenido completo.`);
         else lines.forEach((line,index)=>draw(line,box,box.x,setting.top+index*(box.size+2),box.width,box.size));
         box.lines=lines;
       }else draw(value,box,box.x,setting.top,box.width,box.size);

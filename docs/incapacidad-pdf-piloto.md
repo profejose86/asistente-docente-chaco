@@ -8,7 +8,7 @@ La ficha `incapacidad` muestra el título «Formulario de Solicitud de Beneficio
 
 Los controles cubren identidad, nacimiento, organismo y servicio, ocupación, función, capitales, domicilio, lugares y fechas de solicitud y certificación. Apellido, nombres, DNI y domicilio reutilizan la precarga de perfil existente. Los importes se ingresan expresamente. Las firmas, sellos e impresión digital se realizan sobre el impreso. Los valores históricos de esos campos y de las manifestaciones libres se conservan en el borrador y se muestran como complementos para revisión.
 
-El original tiene `19` preimpreso en el año de nacimiento. La opción `printedCentury` completa los dos dígitos restantes para 1900–1999. Una fecha de otro siglo se conserva en el borrador, genera un error de disposición y bloquea la salida. Requiere acordar una corrección del original antes de admitir esa fecha. No se inventa el día ni el mes a partir de un año aislado.
+Por autorización posterior del usuario, el `19` preimpreso del nacimiento se oculta mediante la superposición `replacePrintedYear` y se reemplaza visualmente por puntos. El año completo se presenta centrado en su casillero, tanto en pantalla como en la vista preliminar y el PDF. Se verificaron 1986 y 2001. El archivo PDF base conserva su hash original y las cajas mantienen sus coordenadas y dimensiones. No se inventa el día ni el mes a partir de un año aislado.
 
 ## Inspección de visores existentes
 
