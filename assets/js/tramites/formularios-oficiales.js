@@ -134,6 +134,18 @@
   }
   function configureDraftActions(){
     const enabled=activeForm?.id==='incapacidad';
+    if(enabled){
+      const primaryIcons={
+        preview:'<path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/>',
+        download:'<path d="M12 3v12m-5-5 5 5 5-5M4 16v5h16v-5"/>',
+        print:'<path d="M6 8V3h12v5M6 17H3V8h18v9h-3M6 14h12v7H6Z"/><path d="M17 11h1"/>'
+      };
+      for(const button of section.querySelectorAll('[data-adc-official-action]')){
+        if(button.querySelector('[data-adc-action-icon]'))continue;
+        const action=button.dataset.adcOfficialAction;
+        button.insertAdjacentHTML('afterbegin',`<svg class="adc-incapacidad-action-icon" data-adc-action-icon="${action}" viewBox="0 0 24 24" aria-hidden="true" focusable="false">${primaryIcons[action]}</svg>`);
+      }
+    }else section.querySelectorAll('[data-adc-action-icon]').forEach(icon=>icon.remove());
     if(enabled&&!draftToolbars){
       const saveIcon='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 3h13l4 4v14H3V3h1Zm3 0v7h10V3M7 21v-7h10v7M14 4v4"/></svg>';
       const clearIcon='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m16 3 3 3-8 8-3-3 8-8ZM8 11l5 5-5 6-6-6 6-5ZM4 16l4 4m-1-7 4 4"/></svg>';
@@ -1205,7 +1217,6 @@
     section.dataset.adcFormId = form.id;
     invalidatePreview();
     activeForm = form;
-    configureDraftActions();
     const prepared = preparedDocument();
     fullScreenButton.hidden=!prepared?.fullScreen;
     fitPage=false;
@@ -1234,6 +1245,7 @@
     section.querySelectorAll('[data-adc-official-action="download"]').forEach(button => {
       button.textContent = preparedReadOnly() ? 'Descargar PDF' : 'Descargar PDF Completado';
     });
+    configureDraftActions();
     if (prepared) {
       description.textContent = prepared.fields?'PDF original con campos editables. Verificá los datos del Perfil Docente y completá lo que corresponda.':'Prueba de la pantalla común: PDF preparado en su diseño original. Los campos editables, la precarga y las preguntas se configurarán después de aprobar esta base.';
       if(prepared.fields)description.textContent='Verificá los datos precargados del Perfil Docente y completá el documento original. Los cambios y las marcas MNC se guardan en este dispositivo.';

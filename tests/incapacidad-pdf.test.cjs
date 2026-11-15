@@ -56,6 +56,16 @@ test('Incapacidad: original editable, visor piloto, borrador y PDF independiente
     assert.equal(await field('nombres').inputValue(),'Juan Pablo');
     assert.equal(await field('firmaAsegurado').count(),0);
     assert.equal(await page.locator('[data-adc-official-action=preview]').count(),2);
+    for(const action of ['preview','download','print']){
+      const buttons=page.locator(`[data-adc-official-action="${action}"]`);
+      assert.equal(await buttons.count(),2);
+      for(const button of await buttons.all()){
+        const icon=button.locator('svg');
+        assert.equal(await icon.count(),1);assert.equal(await icon.isVisible(),true);
+        assert.equal(await icon.getAttribute('data-adc-action-icon'),action);
+        assert.equal(await icon.getAttribute('aria-hidden'),'true');
+      }
+    }
     const alignments={apellido:'center',nombres:'center',dni:'center',fechaNacimiento:'center',ministerio:'left',reparticion:'left',dependencia:'left',lugarServicios:'left',provincia:'left',ocupacion:'left',funcion:'center',domicilio:'left',seguroObligatorio:'center',seguroColectivo:'center',seguroAdicional:'center',total:'center',lugar:'center',fecha:'center',fechaCese:'center',lugarCertificacion:'right',fechaCertificacion:'left'};
     for(const [key,alignment] of Object.entries(alignments)){
       assert.equal(await field(key).evaluate(node=>getComputedStyle(node).textAlign),alignment,key);
@@ -330,12 +340,31 @@ test('Incapacidad: original editable, visor piloto, borrador y PDF independiente
         const previous=await toolbar.evaluate(node=>node.previousElementSibling.classList.contains('adc-official-actions'));
         assert.equal(previous,true);
       }
+      for(const theme of ['light','dark']){
+        await page.locator('html').evaluate((node,value)=>node.dataset.theme=value,theme);
+        const heights=[];
+        for(const row of await page.locator('.adc-official-actions').all()){
+          const boxes=await row.locator('button').evaluateAll(buttons=>buttons.map(button=>{
+            const rect=button.getBoundingClientRect(),icon=button.querySelector('svg').getBoundingClientRect();
+            return {height:rect.height,iconCentered:Math.abs(rect.y+rect.height/2-icon.y-icon.height/2)<1};
+          }));
+          assert.ok(boxes.every(box=>box.iconCentered));
+          heights.push(boxes.map(box=>box.height));
+        }
+        assert.deepEqual(heights[0],heights[1]);
+        if(width===1440)assert.ok(heights[0].every(height=>height===heights[0][0]));
+        for(const action of ['save','clear']){
+          for(const button of await page.locator(`[data-adc-draft-action="${action}"]`).all())assert.equal(await button.locator('svg').isVisible(),true);
+        }
+        assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false);
+      }
     }
     await page.setViewportSize({width:1200,height:1000});
     await page.locator('html').evaluate(node=>node.dataset.theme='dark');
     await page.locator('#adcOfficialForm').screenshot({path:path.join(output,'guardar-limpiar-oscuro.png')});
     assert.equal(draftDownloads,0);
     await open('form-3');
+    assert.equal(await page.locator('[data-adc-action-icon]').count(),0);
     assert.equal(await saveButtons.first().isVisible(),false);assert.equal(await clearButtons.first().isVisible(),false);
     assert.equal(crypto.createHash('sha256').update(fs.readFileSync(path.join(root,'assets/formularios/Incapacidad.pdf'))).digest('hex'),'485c8224765c7a5e8b5edadb458618307cb329a98691fce543d6a7742cbc2ce0');
     assert.deepEqual(errors,[]);

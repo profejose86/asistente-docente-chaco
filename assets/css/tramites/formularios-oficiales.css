@@ -162,12 +162,19 @@ html[data-theme=dark] #adcOfficialForm .adc-document-tools{background:#17263a}
 
 #adcOfficialForm[data-adc-form-id=incapacidad] .adc-official-actions{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0 6px}
 #adcOfficialForm[data-adc-form-id=incapacidad] .adc-official-actions button{flex:1 1 160px;margin:0;min-width:0;white-space:normal}
+#adcOfficialForm[data-adc-form-id=incapacidad] .adc-official-actions button{display:flex;align-items:center;justify-content:center;gap:10px;min-height:56px;padding:12px 16px;border-radius:10px;font-size:15px;font-weight:600;line-height:1.3}
+#adcOfficialForm[data-adc-form-id=incapacidad] .adc-incapacidad-action-icon{display:block;width:24px;height:24px;flex:none;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
 #adcOfficialForm .adc-incapacidad-draft-tools{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:6px 0 12px}
 #adcOfficialForm .adc-incapacidad-draft-tools button{display:inline-flex;align-items:center;justify-content:center;gap:8px;margin:0;min-height:38px;padding:7px 12px;border:1px solid #97a9bf;border-radius:8px;background:transparent;color:inherit}
 #adcOfficialForm .adc-incapacidad-draft-tools [data-adc-draft-action=save]{border-color:#409c73}
 #adcOfficialForm .adc-incapacidad-draft-tools svg{width:20px;height:20px;flex:none;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+#adcOfficialForm[data-adc-form-id=incapacidad] .adc-incapacidad-draft-tools button{width:180px;max-width:100%;min-height:40px;font-size:14px;font-weight:500;line-height:1.3}
 #adcOfficialForm [data-adc-draft-status]{margin-left:auto;font-size:13px;overflow-wrap:anywhere}
 #adcOfficialForm [data-adc-draft-status][data-save-state=saved]::before{content:'✓';margin-right:6px;color:#26936b;font-weight:700}
+#adcOfficialForm[data-adc-form-id=incapacidad] [data-adc-draft-status]::before{display:inline-grid;place-items:center;width:18px;height:18px;margin-right:6px;border-radius:50%;font-size:12px;font-weight:700;vertical-align:middle}
+#adcOfficialForm[data-adc-form-id=incapacidad] [data-adc-draft-status][data-save-state=saved]::before{background:#278261;color:white}
+#adcOfficialForm[data-adc-form-id=incapacidad] [data-adc-draft-status][data-save-state=saving]::before{content:'…';background:#8799ae24;color:inherit}
+#adcOfficialForm[data-adc-form-id=incapacidad] [data-adc-draft-status][data-save-state=error]::before{content:'!';border:1px solid currentColor}
 #adcOfficialForm [data-adc-draft-status][data-save-state=error]{color:#b24432}
 html[data-theme=dark] #adcOfficialForm [data-adc-draft-status][data-save-state=error]{color:#ffb5a8}
 #adcOfficialForm .adc-incapacidad-confirm{box-sizing:border-box;width:min(460px,calc(100vw - 24px));padding:20px;border:1px solid #97a9bf;border-radius:10px;background:white;color:#152844}
@@ -177,6 +184,8 @@ html[data-theme=dark] #adcOfficialForm [data-adc-draft-status][data-save-state=e
 #adcOfficialForm .adc-incapacidad-confirm button{margin:0;white-space:normal}
 html[data-theme=dark] #adcOfficialForm .adc-incapacidad-confirm{background:#192e4b;color:#edf3fc}
 @media(max-width:650px){
+ #adcOfficialForm[data-adc-form-id=incapacidad] .adc-official-actions button{min-height:52px;padding:10px 12px;font-size:14px}
+ #adcOfficialForm[data-adc-form-id=incapacidad] .adc-incapacidad-action-icon{width:22px;height:22px}
  #adcOfficialForm .adc-incapacidad-draft-tools button{flex:1 1 140px}
  #adcOfficialForm [data-adc-draft-status]{flex:1 1 100%;margin-left:0}
 }
