@@ -33,6 +33,7 @@ test('Sync en Chrome y SDK: consentimiento, dos dispositivos, conflicto, red y c
   await page.goto(`http://127.0.0.1:${server.address().port}/index.html`);await page.waitForSelector('#adcSessionBar');return page;
  }
  async function authorize(page){
+  await page.locator('#adcProfileBtn').click();
   await page.locator('#adcSessionBar').getByRole('button',{name:'Mis datos / sincronización',exact:true}).click();
   if(!await page.locator('#adcSyncConsent').isVisible())await page.locator('#adcSyncPanel summary').click();
   await page.locator('#adcSyncConsent').check();await page.getByRole('button',{name:'Autorizar e importar los datos compatibles',exact:true}).click();

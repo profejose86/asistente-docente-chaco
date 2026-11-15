@@ -1,0 +1,26 @@
+/* Distribución aprobada del avatar y del selector compartido con ingreso. */
+body > #adcSessionBar.adc-account{position:fixed;top:31px;right:32px;bottom:auto;z-index:10000;display:block;max-width:none;margin:0;padding:0;border:0;background:transparent;box-shadow:none}
+#adcProfileBtn{display:flex;flex-direction:column;align-items:center;gap:3px;min-width:44px;min-height:52px;margin:0;padding:4px 5px;background:transparent!important;border:0!important;box-shadow:none!important;color:#243b58}
+#adcProfileBtn .adc-avatar{display:grid;place-items:center;width:55px;height:49px;border-radius:50%;background:#1b7b97;color:white;font-size:40px;font-weight:700;line-height:1;flex:none}
+html[data-theme=dark] #adcProfileBtn{color:#edf3fc}
+#adcProfileBtn:focus-visible{outline:3px solid #e89a4a;outline-offset:3px}
+#adcProfileMenu{position:absolute;top:calc(100% + 8px);right:0;width:min(258px,calc(100vw - 32px));max-height:calc(100dvh - 116px);box-sizing:border-box;overflow:auto;padding:14px;border:1px solid #42638d;border-radius:12px;background:#192e4b;color:#edf3fc;box-shadow:0 16px 30px #0008}
+#adcProfileMenu[hidden]{display:none}
+#adcSyncPanel{z-index:10001}
+#adcProfileMenu :is(strong,small,span){display:block;white-space:normal;overflow-wrap:anywhere}
+#adcProfileMenu button{display:block;width:100%;box-sizing:border-box;margin:8px 0 0;text-align:left;white-space:normal}
+html[data-theme=light] #adcProfileMenu{background:#f1f5fb;color:#243b58;border-color:#69819d}
+html[data-theme] body > #adcThemeSwitch{position:absolute;top:24px;right:max(98px,calc((100vw - 950px)/2 + 40px));margin:0;z-index:1000}
+body > .wrap{padding-top:108px!important}
+@media(min-width:1100px){body > .wrap{padding-top:24px!important}}
+@media(min-width:1900px){
+ html[data-theme] body > #adcThemeSwitch{left:37.41cm;top:.64cm;right:auto}
+ body > #adcSessionBar.adc-account{left:calc(47.94cm - 5px);top:calc(.64cm - 4px);right:auto}
+}
+@media(max-width:600px){
+ html[data-theme] body > #adcThemeSwitch{top:12px;right:98px}
+ body > #adcSessionBar.adc-account{top:6px;right:12px}
+ #adcProfileBtn{min-height:46px;padding:2px 5px;gap:1px}
+ body > .wrap{padding-top:100px!important}
+}
+@media print{body > #adcSessionBar,body > #adcThemeSwitch{display:none!important}}

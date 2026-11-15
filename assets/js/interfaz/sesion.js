@@ -31,6 +31,7 @@
    const label=document.createElement('span');label.textContent='Cuenta: '+(user.email||'autenticada');
    const button=document.createElement('button');button.type='button';button.textContent='Cerrar sesión';button.onclick=exit;bar.append(label,button);document.body.append(bar);
    window.adcSyncUI.mount(bar);
+   window.adcAccount.mount(bar,user);
   }
  }
  (async()=>{try{if(!auth?.configured)throw Error('Supabase sin configurar');await auth.ready;const user=await auth.user();if(!user){store.lock();login();return;}await unlock(user)}catch{await failed()}})();

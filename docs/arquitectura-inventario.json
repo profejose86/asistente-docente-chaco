@@ -32,12 +32,14 @@
     "assets/css/editor/base.css",
     "assets/css/editor/editor.css",
     "assets/css/editor/studio.css",
+    "assets/css/interfaz/cuenta.css",
     "assets/css/interfaz/dialogos.css",
     "assets/css/interfaz/espacio-trabajo.css",
     "assets/css/interfaz/fondo.css",
     "assets/css/interfaz/mnc.css",
     "assets/css/interfaz/navegacion.css",
     "assets/css/interfaz/responsive.css",
+    "assets/css/interfaz/selector-tema.css",
     "assets/css/interfaz/sincronizacion.css",
     "assets/css/interfaz/tema.css",
     "assets/css/interfaz/validacion-guiada.css",
@@ -119,6 +121,7 @@
     "assets/js/editor/studio-politicas.js",
     "assets/js/editor/studio-texto.js",
     "assets/js/editor/studio.js",
+    "assets/js/interfaz/cuenta.js",
     "assets/js/interfaz/espacio-trabajo.js",
     "assets/js/interfaz/inicio-local.js",
     "assets/js/interfaz/navegacion.js",
@@ -247,6 +250,7 @@
     "tests/cf01-pdf.test.cjs",
     "tests/contact-icon-web.test.cjs",
     "tests/contact-icon.test.cjs",
+    "tests/cuenta-online.test.cjs",
     "tests/cursos.test.cjs",
     "tests/dev-server.test.cjs",
     "tests/dl01-interfaz.test.cjs",
@@ -317,6 +321,8 @@
         "assets/js/editor/modo-local.js",
         "assets/datos/config-publica.js",
         "assets/js/servicios/supabase-runtime.js",
+        "assets/js/tema/inicial.js",
+        "assets/js/tema/controles.js",
         "assets/js/acceso/ingreso.js",
         "assets/js/acceso/autenticacion.js",
         "assets/js/acceso/visibilidad-clave.js",
@@ -344,6 +350,7 @@
         "assets/css/acceso/ingreso.css",
         "assets/css/acceso/marca.css",
         "assets/css/acceso/efectos.css",
+        "assets/css/interfaz/selector-tema.css",
         "assets/css/editor/base.css",
         "assets/css/acceso/editor.css",
         "assets/css/editor/acceso-ajustes.css",
@@ -359,6 +366,7 @@
         "assets/js/servicios/almacenamiento-usuario.js",
         "assets/js/servicios/sincronizacion-usuario.js",
         "assets/js/interfaz/sincronizacion.js",
+        "assets/js/interfaz/cuenta.js",
         "assets/js/interfaz/sesion.js",
         "assets/js/interfaz/inicio-local.js",
         "assets/js/core/mnc.js",
@@ -429,6 +437,8 @@
       "styles": [
         "assets/css/acceso/autenticacion.css",
         "assets/css/interfaz/sincronizacion.css",
+        "assets/css/interfaz/selector-tema.css",
+        "assets/css/interfaz/cuenta.css",
         "assets/css/base.css",
         "assets/css/tramites/dj01-advertencias.css",
         "assets/css/tramites/dj01-distribucion.css",
@@ -477,8 +487,8 @@
     },
     {
       "file": "ADC_Ingreso_Editable.html",
-      "bytes": 11707,
-      "lines": 97,
+      "bytes": 11881,
+      "lines": 100,
       "generated": false,
       "functions": [],
       "globals": [],
@@ -522,8 +532,8 @@
     },
     {
       "file": "assets/css/acceso/ingreso.css",
-      "bytes": 8348,
-      "lines": 50,
+      "bytes": 7330,
+      "lines": 42,
       "generated": false,
       "functions": [],
       "globals": [],
@@ -629,6 +639,15 @@
       "storageKeys": []
     },
     {
+      "file": "assets/css/interfaz/cuenta.css",
+      "bytes": 2247,
+      "lines": 27,
+      "generated": false,
+      "functions": [],
+      "globals": [],
+      "storageKeys": []
+    },
+    {
       "file": "assets/css/interfaz/dialogos.css",
       "bytes": 282,
       "lines": 5,
@@ -683,6 +702,15 @@
       "storageKeys": []
     },
     {
+      "file": "assets/css/interfaz/selector-tema.css",
+      "bytes": 1018,
+      "lines": 9,
+      "generated": false,
+      "functions": [],
+      "globals": [],
+      "storageKeys": []
+    },
+    {
       "file": "assets/css/interfaz/sincronizacion.css",
       "bytes": 1094,
       "lines": 12,
@@ -693,8 +721,8 @@
     },
     {
       "file": "assets/css/interfaz/tema.css",
-      "bytes": 106156,
-      "lines": 27,
+      "bytes": 105361,
+      "lines": 20,
       "generated": false,
       "functions": [],
       "globals": [],
@@ -963,17 +991,14 @@
     },
     {
       "file": "assets/js/acceso/ingreso.js",
-      "bytes": 2833,
-      "lines": 59,
+      "bytes": 2377,
+      "lines": 48,
       "generated": false,
       "functions": [
-        "setTheme",
         "showSignup"
       ],
       "globals": [],
-      "storageKeys": [
-        "adc-login-theme"
-      ]
+      "storageKeys": []
     },
     {
       "file": "assets/js/acceso/marca.js",
@@ -1515,6 +1540,19 @@
       ]
     },
     {
+      "file": "assets/js/interfaz/cuenta.js",
+      "bytes": 2753,
+      "lines": 37,
+      "generated": false,
+      "functions": [
+        "mount"
+      ],
+      "globals": [
+        "adcAccount"
+      ],
+      "storageKeys": []
+    },
+    {
       "file": "assets/js/interfaz/espacio-trabajo.js",
       "bytes": 4794,
       "lines": 91,
@@ -1555,8 +1593,8 @@
     },
     {
       "file": "assets/js/interfaz/sesion.js",
-      "bytes": 3459,
-      "lines": 44,
+      "bytes": 3498,
+      "lines": 45,
       "generated": false,
       "functions": [
         "screen",
@@ -1796,25 +1834,26 @@
     },
     {
       "file": "assets/js/tema/controles.js",
-      "bytes": 426,
-      "lines": 15,
+      "bytes": 778,
+      "lines": 20,
       "generated": false,
       "functions": [
         "apply"
       ],
       "globals": [],
       "storageKeys": [
-        "adc_theme"
+        "adc-login-theme"
       ]
     },
     {
       "file": "assets/js/tema/inicial.js",
-      "bytes": 108,
-      "lines": 1,
+      "bytes": 174,
+      "lines": 5,
       "generated": false,
       "functions": [],
       "globals": [],
       "storageKeys": [
+        "adc-login-theme",
         "adc_theme"
       ]
     },
@@ -2532,8 +2571,8 @@
     },
     {
       "file": "docs/estructura.md",
-      "bytes": 34883,
-      "lines": 238,
+      "bytes": 35207,
+      "lines": 240,
       "generated": false,
       "functions": [],
       "globals": [],
@@ -2595,8 +2634,8 @@
     },
     {
       "file": "docs/prueba-contact-icon.md",
-      "bytes": 11011,
-      "lines": 72,
+      "bytes": 13149,
+      "lines": 84,
       "generated": false,
       "functions": [],
       "globals": [],
@@ -2730,8 +2769,8 @@
     },
     {
       "file": "index.html",
-      "bytes": 45383,
-      "lines": 161,
+      "bytes": 46077,
+      "lines": 164,
       "generated": false,
       "functions": [],
       "globals": [],
@@ -2872,6 +2911,18 @@
       "functions": [],
       "globals": [],
       "storageKeys": []
+    },
+    {
+      "file": "tests/cuenta-online.test.cjs",
+      "bytes": 4139,
+      "lines": 65,
+      "generated": false,
+      "functions": [],
+      "globals": [],
+      "storageKeys": [
+        "adc-login-theme",
+        "adc_theme"
+      ]
     },
     {
       "file": "tests/cursos.test.cjs",
@@ -3188,8 +3239,8 @@
     },
     {
       "file": "tests/sincronizacion-browser.test.cjs",
-      "bytes": 10101,
-      "lines": 78,
+      "bytes": 10150,
+      "lines": 79,
       "generated": false,
       "functions": [
         "pageFor",
@@ -3293,8 +3344,8 @@
     },
     {
       "file": "tests/supabase-auth.test.cjs",
-      "bytes": 9727,
-      "lines": 91,
+      "bytes": 9776,
+      "lines": 92,
       "generated": false,
       "functions": [],
       "globals": [
@@ -3446,11 +3497,10 @@
     },
     {
       "file": "tools/contact-icon-preview.cjs",
-      "bytes": 12297,
-      "lines": 108,
+      "bytes": 11868,
+      "lines": 106,
       "generated": false,
       "functions": [
-        "setTheme",
         "createServer"
       ],
       "globals": [
@@ -3667,8 +3717,26 @@
     },
     {
       "from": "ADC_Ingreso_Editable.html",
+      "to": "assets/css/interfaz/selector-tema.css",
+      "kind": "link",
+      "exists": true
+    },
+    {
+      "from": "ADC_Ingreso_Editable.html",
+      "to": "assets/js/tema/inicial.js",
+      "kind": "script",
+      "exists": true
+    },
+    {
+      "from": "ADC_Ingreso_Editable.html",
       "to": "assets/img/acceso/logo-adc.png",
       "kind": "img",
+      "exists": true
+    },
+    {
+      "from": "ADC_Ingreso_Editable.html",
+      "to": "assets/js/tema/controles.js",
+      "kind": "script",
       "exists": true
     },
     {
@@ -4047,6 +4115,24 @@
       "from": "index.html",
       "to": "assets/css/interfaz/sincronizacion.css",
       "kind": "link",
+      "exists": true
+    },
+    {
+      "from": "index.html",
+      "to": "assets/css/interfaz/selector-tema.css",
+      "kind": "link",
+      "exists": true
+    },
+    {
+      "from": "index.html",
+      "to": "assets/css/interfaz/cuenta.css",
+      "kind": "link",
+      "exists": true
+    },
+    {
+      "from": "index.html",
+      "to": "assets/js/interfaz/cuenta.js",
+      "kind": "script",
       "exists": true
     },
     {
@@ -4742,6 +4828,12 @@
     {
       "from": "tests/contact-icon-web.test.cjs",
       "to": "tools/contact-icon-preview.cjs",
+      "kind": "literal-module",
+      "exists": true
+    },
+    {
+      "from": "tests/cuenta-online.test.cjs",
+      "to": "tests/support/demo-config.cjs",
       "kind": "literal-module",
       "exists": true
     },
@@ -11571,9 +11663,9 @@
     ]
   },
   "summary": {
-    "files": 297,
-    "ownTextModules": 231,
-    "ownJavaScript": 143,
+    "files": 301,
+    "ownTextModules": 235,
+    "ownJavaScript": 145,
     "vendorFiles": 35,
     "missingLiteralReferences": 0,
     "duplicateLoads": 0,

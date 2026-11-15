@@ -56,6 +56,7 @@ test('SDK oficial en Chrome: registro, login real, guard, perfil mínimo, recupe
   assert.deepEqual(Object.keys(profile).sort(),['created_at','display_name','id','updated_at']);
   assert.equal(await page.evaluate(()=>adcUserStorage.scope()),id);
   await page.evaluate(()=>adcAuth.saveTesterName('Tester de ADC'));assert.equal(profile.display_name,'Tester de ADC');
+  await page.locator('#adcProfileBtn').click();
   await page.locator('#adcSessionBar').getByRole('button',{name:'Cerrar sesión',exact:true}).click();await page.waitForURL(base+'ADC_Ingreso_Editable.html');
   // La URL recovery conserva el flujo en lugar de enviar al usuario a index.
   await page.evaluate(({session})=>localStorage.setItem('adc-supabase-auth',JSON.stringify(session)),{session:session()});

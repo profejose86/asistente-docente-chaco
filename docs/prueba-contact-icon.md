@@ -1,6 +1,18 @@
 # Prueba aislada del componente de cuenta
 
-## Estado vigente — aclaraciones del 15/11/2026
+## Integración en la entrada normal — 15/11/2026
+
+El avatar y el selector de tema aprobados se integraron en la página normal. `interfaz/cuenta.js` presenta las acciones existentes de `interfaz/sesion.js` y `adcSyncUI` dentro del menú. Usa la inicial de la cuenta verificada, texto seguro y los identificadores `adcProfileBtn`, `adcProfileMenu`, `adcLogoutBtn` y `adcSyncBtn`. La demo identifica expresamente su condición. La apariencia responsive conserva el círculo de 55 × 49 px, letra de 40 px, fondo exterior transparente y flecha inferior.
+
+Login y aplicación cargan los mismos `tema/inicial.js`, `tema/controles.js` y `interfaz/selector-tema.css`. El marcado del selector coincide en ambas entradas. Se reutiliza la clave existente `adc-login-theme`; si aún no existe, se lee la preferencia histórica `adc_theme`. Esta última permanece conservada y no recibe nuevas escrituras. El controlador de tema duplicado del login y los estilos antiguos del selector principal se retiraron.
+
+En la aplicación, el contenido aprobado del selector se conserva en un `template` y se presenta en `DOMContentLoaded`, después del registro del editor. El marcado inicial histórico se mantiene para conservar los índices `base-*` de todos los controles posteriores. La cuenta también se monta después de ese registro.
+
+`tests/cuenta-online.test.cjs` prueba la entrada normal con prefijo `/adc/`, ambos temas, teclado, apertura/cierre, transparencia, ausencia de solapamientos, persistencia entre login y aplicación, preferencia histórica y anchos de 280 a 1920 px. Las pruebas de sesión y sincronización recorren las acciones desde el nuevo menú usando el SDK con servicios aislados. La reorganización de Datos personales descrita a continuación continúa en la prueba visual y se mantiene fuera de esta integración de controles.
+
+La suite completa de esta integración terminó con 117 pruebas aprobadas, cero fallos y cero omisiones. Incluye los editores históricos y las verificaciones de documentos, sesión y sincronización. También se regeneró el inventario y pasó `architecture:check`.
+
+## Estado de la prueba aislada — aclaraciones del 15/11/2026
 
 El perfil y la vista aislada se versionan en `Contact-Icon`. `Forms-testing` utiliza esa base y añade los formularios preparados. Subir estas ramas no integra ni publica cambios en `main`. La vista se abre con `node tools/contact-icon-preview.cjs` en `http://127.0.0.1:8891/index.html?adc-preview=1`.
 

@@ -7,10 +7,8 @@ const css=fixture.split('/* CSS principal suministrado */')[1].split('</style>')
 const behavior=fixture.match(/<script>([\s\S]*?)<\/script>/)[1];
 const login=fs.readFileSync(path.join(root,'ADC_Ingreso_Editable.html'),'utf8');
 const themeMarkup=login.match(/<button[^>]*id="adcThemeSwitch"[\s\S]*?<\/button>/)[0];
-const loginCss=fs.readFileSync(path.join(root,'assets/css/acceso/ingreso.css'),'utf8');
-const themeCss=loginCss.slice(loginCss.indexOf('#adcThemeSwitch{'),loginCss.indexOf('@media(max-width:460px)')).replaceAll('#adcThemeSwitch','html[data-theme] body > #adcThemeSwitch');
-const loginBehavior=fs.readFileSync(path.join(root,'assets/js/acceso/ingreso.js'),'utf8');
-const themeBehavior=`(()=>{const theme=document.getElementById('adcThemeSwitch'),root=document.documentElement;${loginBehavior.slice(loginBehavior.indexOf(' function setTheme('),loginBehavior.indexOf(" document.getElementById('adcGoogle')"))}})();`;
+const themeCss=fs.readFileSync(path.join(root,'assets/css/interfaz/selector-tema.css'),'utf8');
+const themeBehavior=fs.readFileSync(path.join(root,'assets/js/tema/controles.js'),'utf8');
 const previewCss=fs.readFileSync(path.join(root,'tests/fixtures/contact-icon-web.css'),'utf8');
 const injection=`document.addEventListener('DOMContentLoaded',()=>{
  const style=document.createElement('style');style.textContent=${JSON.stringify(css+'\n'+themeCss+'\n'+previewCss)};document.head.append(style);

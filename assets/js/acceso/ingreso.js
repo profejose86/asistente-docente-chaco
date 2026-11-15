@@ -1,7 +1,5 @@
 
 {
- const theme=document.getElementById('adcThemeSwitch');
- const root=document.documentElement;
  const status=document.getElementById('adcLoginStatus');
  // Modo de demostración explícito para revisar el ingreso también online.
  const localPreview=window.adcConfig?.authMode!=='supabase';
@@ -10,15 +8,6 @@
   for(const input of document.querySelectorAll('#adcLoginForm input'))input.required=false;
   status.textContent='Modo de demostración, sin autenticación real. Podés ingresar sin completar datos.';
  }
- function setTheme(dark){
-  root.dataset.theme=dark?'dark':'light';
-  theme.setAttribute('aria-checked',String(dark));
- }
- try{setTheme(localStorage.getItem('adc-login-theme')==='dark')}catch{}
- theme.addEventListener('click',()=>{
-  setTheme(root.dataset.theme!=='dark');
-  try{localStorage.setItem('adc-login-theme',root.dataset.theme)}catch{}
- });
  document.getElementById('adcGoogle').addEventListener('click',()=>{status.textContent='El acceso con Google todavía está sin conectar en esta prueba.'});
  document.getElementById('adcLoginForm').addEventListener('submit',event=>{
   event.preventDefault();
