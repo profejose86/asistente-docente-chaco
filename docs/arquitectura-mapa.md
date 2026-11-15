@@ -118,6 +118,7 @@ Scripts en orden de carga:
 - `assets/js/tramites/formularios-oficiales-datos.js`
 - `assets/datos/formularios-pdf.js`
 - `assets/js/documentos/pdf-campos.js`
+- `assets/js/documentos/visor-pdf.js`
 - `assets/js/tramites/formularios-oficiales.js`
 - `assets/js/tramites/bd02.js`
 - `assets/js/tramites/busqueda-inteligente.js`
@@ -171,7 +172,7 @@ Hojas de estilo en orden de carga:
 | --- | ---: | ---: | --- |
 | `assets/datos/config-publica.js` | 3 | 0 | `adcConfig` |
 | `assets/datos/escuelas-chaco.js` | 2 | 0 | `adcEscuelasChaco` |
-| `assets/datos/formularios-pdf.js` | 343 | 0 | `adcPreparedPdfForms` |
+| `assets/datos/formularios-pdf.js` | 375 | 0 | `adcPreparedPdfForms` |
 | `assets/js/acceso/autenticacion.js` | 66 | 4 |  |
 | `assets/js/acceso/editor.js` | 956 | 34 |  |
 | `assets/js/acceso/efectos.js` | 33 | 4 |  |
@@ -186,9 +187,10 @@ Hojas de estilo en orden de carga:
 | `assets/js/core/mnc.js` | 72 | 7 | `adcMnc` |
 | `assets/js/core/validacion-guiada.js` | 180 | 14 | `adcGuidedValidation` |
 | `assets/js/documentos/acciones.js` | 16 | 3 |  |
-| `assets/js/documentos/pdf-campos.js` | 72 | 2 | `adcPdfOverlay` |
+| `assets/js/documentos/pdf-campos.js` | 79 | 2 | `adcPdfOverlay` |
 | `assets/js/documentos/pdf-utilidades.js` | 28 | 6 |  |
 | `assets/js/documentos/plantillas-dl01.js` | 3 | 0 |  |
+| `assets/js/documentos/visor-pdf.js` | 169 | 10 | `adcPdfViewer` |
 | `assets/js/editor/acceso-ajustes.js` | 41 | 3 |  |
 | `assets/js/editor/ajustes-proyecto-datos.js` | 68 | 3 |  |
 | `assets/js/editor/ajustes-proyecto.js` | 134 | 4 | `adcProjectLayout` |
@@ -243,8 +245,8 @@ Hojas de estilo en orden de carga:
 | `assets/js/tramites/dl01-interfaz.js` | 115 | 2 | `adcDL01Open` |
 | `assets/js/tramites/dl01-pdf.js` | 211 | 11 |  |
 | `assets/js/tramites/dl01-reglas.js` | 108 | 14 |  |
-| `assets/js/tramites/formularios-oficiales-datos.js` | 1308 | 0 | `adcOfficialFormsData` |
-| `assets/js/tramites/formularios-oficiales.js` | 1264 | 49 |  |
+| `assets/js/tramites/formularios-oficiales-datos.js` | 1310 | 0 | `adcOfficialFormsData` |
+| `assets/js/tramites/formularios-oficiales.js` | 1278 | 49 |  |
 | `assets/js/tramites/mnc-adaptadores.js` | 49 | 1 |  |
 | `assets/js/tramites/ol01.js` | 588 | 41 |  |
 | `assets/js/tramites/sc01.js` | 745 | 26 | `adcSC01Open` |
@@ -274,6 +276,7 @@ Hojas de estilo en orden de carga:
 | `tests/form6-pdf.test.cjs` | 54 | 0 | `form6Lines` |
 | `tests/formularios-oficiales.test.cjs` | 673 | 1 | `testPdfLines`, `testPdfBoxes`, `testPrintCalls`, `print`, `fixtureSaves`, `fixtureReview`, `startReview`, `fixtureResult`, `testDpLines`, `testDpOriginalOpen`, `testDpPrintCount`, `open` |
 | `tests/geografia.test.cjs` | 60 | 0 |  |
+| `tests/incapacidad-pdf.test.cjs` | 192 | 0 | `incapacityDraws`, `savedIncapacityOpen`, `open`, `incapacityPrintRequested`, `adcPreparedPdfForms` |
 | `tests/ingreso.test.cjs` | 63 | 0 |  |
 | `tests/local-editor-bridge.test.cjs` | 40 | 0 |  |
 | `tests/local-editor-ui.test.cjs` | 45 | 0 |  |
@@ -282,7 +285,7 @@ Hojas de estilo en orden de carga:
 | `tests/ol01-interfaz.test.cjs` | 64 | 0 |  |
 | `tests/ol01-perfil.test.cjs` | 55 | 1 |  |
 | `tests/pdf-blank-line.test.cjs` | 23 | 0 |  |
-| `tests/pdf-campos.test.cjs` | 33 | 0 |  |
+| `tests/pdf-campos.test.cjs` | 38 | 0 |  |
 | `tests/publicacion.test.cjs` | 29 | 0 |  |
 | `tests/reubicacion-pdf.test.cjs` | 40 | 0 |  |
 | `tests/sincronizacion-browser.test.cjs` | 79 | 2 | `adcConfig` |
@@ -380,6 +383,8 @@ Hojas de estilo en orden de carga:
 | `assets/formularios/Formulario-3.pdf` | `assets/datos/formularios-pdf.js` |
 | `assets/formularios/Formulario-6-pagina-1.png` | `assets/datos/formularios-pdf.js` |
 | `assets/formularios/Formulario-6.pdf` | `assets/datos/formularios-pdf.js` |
+| `assets/formularios/Incapacidad-pagina-1.png` | `assets/datos/formularios-pdf.js` |
+| `assets/formularios/Incapacidad.pdf` | `assets/datos/formularios-pdf.js` |
 | `assets/formularios/Reubicacion-pagina-1.png` | `assets/datos/formularios-pdf.js` |
 | `assets/formularios/Reubicacion.pdf` | `assets/datos/formularios-pdf.js` |
 | `assets/formularios/SC-01-plantilla.png` | `assets/js/tramites/sc01.js` |
@@ -407,8 +412,9 @@ Hojas de estilo en orden de carga:
 | `assets/js/documentos/pdf-campos.js` | `index.html` |
 | `assets/js/documentos/pdf-utilidades.js` | `index.html` |
 | `assets/js/documentos/plantillas-dl01.js` | `index.html` |
+| `assets/js/documentos/visor-pdf.js` | `index.html` |
 | `assets/js/editor/acceso-ajustes.js` | `ADC_Ingreso_Editable.html`, `index.html` |
-| `assets/js/editor/ajustes-proyecto-datos.js` | `ADC_Ingreso_Editable.html`, `index.html`, `tests/ajustes-proyecto.test.cjs`, `tests/bd07-pdf.test.cjs`, `tests/cf01-pdf.test.cjs`, `tests/documento-fondo.test.cjs`, `tests/editor-elementos.test.cjs`, `tests/editor-herramientas.test.cjs`, `tests/form3-pdf.test.cjs`, `tests/form6-pdf.test.cjs`, `tests/local-editor-bridge.test.cjs`, `tests/local-editor-ui.test.cjs`, `tests/reubicacion-pdf.test.cjs`, `tests/sr01-pdf.test.cjs`, `tests/studio-contrato.test.cjs`, `tests/studio-inplace.test.cjs`, `tests/studio.test.cjs`, `tests/traslado-pdf.test.cjs`, `tools/ajustes-store.cjs`, `tools/importar-ajustes.cjs` |
+| `assets/js/editor/ajustes-proyecto-datos.js` | `ADC_Ingreso_Editable.html`, `index.html`, `tests/ajustes-proyecto.test.cjs`, `tests/bd07-pdf.test.cjs`, `tests/cf01-pdf.test.cjs`, `tests/documento-fondo.test.cjs`, `tests/editor-elementos.test.cjs`, `tests/editor-herramientas.test.cjs`, `tests/form3-pdf.test.cjs`, `tests/form6-pdf.test.cjs`, `tests/incapacidad-pdf.test.cjs`, `tests/local-editor-bridge.test.cjs`, `tests/local-editor-ui.test.cjs`, `tests/reubicacion-pdf.test.cjs`, `tests/sr01-pdf.test.cjs`, `tests/studio-contrato.test.cjs`, `tests/studio-inplace.test.cjs`, `tests/studio.test.cjs`, `tests/traslado-pdf.test.cjs`, `tools/ajustes-store.cjs`, `tools/importar-ajustes.cjs` |
 | `assets/js/editor/ajustes-proyecto.js` | `ADC_Ingreso_Editable.html`, `index.html` |
 | `assets/js/editor/comun.js` | `ADC_Ingreso_Editable.html`, `index.html` |
 | `assets/js/editor/documento-fondo.js` | `ADC_Ingreso_Editable.html`, `index.html` |
@@ -470,7 +476,7 @@ Hojas de estilo en orden de carga:
 | `config/publicacion.json` | `tools/publicar.cjs`, `tools/supabase-auth-settings.cjs` |
 | `config/sincronizacion-staging.json` | `tools/sync-staging.cjs` |
 | `tests/support/ajustes.cjs` | `tests/ajustes-proyecto.test.cjs`, `tests/documento-fondo.test.cjs`, `tests/editor-botones.test.cjs`, `tests/editor-documentos.test.cjs`, `tests/editor-elementos.test.cjs`, `tests/editor-herramientas.test.cjs`, `tests/local-editor-ui.test.cjs`, `tests/studio-inplace.test.cjs`, `tests/studio.test.cjs` |
-| `tests/support/demo-config.cjs` | `tests/acceso-ajustes.test.cjs`, `tests/ajustes-proyecto.test.cjs`, `tests/bd07-pdf.test.cjs`, `tests/cf01-pdf.test.cjs`, `tests/cuenta-online.test.cjs`, `tests/dl01-interfaz.test.cjs`, `tests/documento-fondo.test.cjs`, `tests/editor-botones.test.cjs`, `tests/editor-documentos.test.cjs`, `tests/editor-elementos.test.cjs`, `tests/editor-herramientas.test.cjs`, `tests/fecha-manual.test.cjs`, `tests/form3-pdf.test.cjs`, `tests/form6-pdf.test.cjs`, `tests/formularios-oficiales.test.cjs`, `tests/ingreso.test.cjs`, `tests/local-editor-ui.test.cjs`, `tests/mbit.test.cjs`, `tests/ol01-guia.test.cjs`, `tests/ol01-interfaz.test.cjs`, `tests/reubicacion-pdf.test.cjs`, `tests/sincronizacion-browser.test.cjs`, `tests/sr01-pdf.test.cjs`, `tests/studio-inplace.test.cjs`, `tests/studio.test.cjs`, `tests/supabase-auth.test.cjs`, `tests/traslado-pdf.test.cjs`, `tools/contact-icon-preview.cjs` |
+| `tests/support/demo-config.cjs` | `tests/acceso-ajustes.test.cjs`, `tests/ajustes-proyecto.test.cjs`, `tests/bd07-pdf.test.cjs`, `tests/cf01-pdf.test.cjs`, `tests/cuenta-online.test.cjs`, `tests/dl01-interfaz.test.cjs`, `tests/documento-fondo.test.cjs`, `tests/editor-botones.test.cjs`, `tests/editor-documentos.test.cjs`, `tests/editor-elementos.test.cjs`, `tests/editor-herramientas.test.cjs`, `tests/fecha-manual.test.cjs`, `tests/form3-pdf.test.cjs`, `tests/form6-pdf.test.cjs`, `tests/formularios-oficiales.test.cjs`, `tests/incapacidad-pdf.test.cjs`, `tests/ingreso.test.cjs`, `tests/local-editor-ui.test.cjs`, `tests/mbit.test.cjs`, `tests/ol01-guia.test.cjs`, `tests/ol01-interfaz.test.cjs`, `tests/reubicacion-pdf.test.cjs`, `tests/sincronizacion-browser.test.cjs`, `tests/sr01-pdf.test.cjs`, `tests/studio-inplace.test.cjs`, `tests/studio.test.cjs`, `tests/supabase-auth.test.cjs`, `tests/traslado-pdf.test.cjs`, `tools/contact-icon-preview.cjs` |
 | `tools/ajustes-store.cjs` | `tests/studio-contrato.test.cjs`, `tools/importar-ajustes.cjs`, `tools/local-editor-bridge.cjs` |
 | `tools/auditar-arquitectura.cjs` | `tests/arquitectura.test.cjs` |
 | `tools/build.cjs` | `tools/configurar-supabase.cjs`, `tools/dev-server.cjs`, `tools/publicar.cjs` |

@@ -1,6 +1,8 @@
 # Formularios preparados sobre PDF original
 
-El registro actual habilita ocho documentos editables sobre sus PDF originales: DP-01, CF-01, SR-01, Reubicación, Traslado transitorio, Formulario N°3, Formulario N°6 y BD-07. El motor y la geometría son compartidos; las reglas y los campos dependen de cada formulario.
+El registro actual habilita nueve documentos editables sobre sus PDF originales: DP-01, CF-01, SR-01, Reubicación, Traslado transitorio, Formulario N°3, Formulario N°6, BD-07 y Solicitud de Beneficio de Incapacidad. El motor y la geometría son compartidos; las reglas y los campos dependen de cada formulario.
+
+La [Solicitud de Beneficio de Incapacidad](incapacidad-pdf-piloto.md) incorpora el visor piloto, habilitado sólo para esa ficha.
 
 El [Formulario N°3 de modificación de datos de identificación](formulario-3-pdf-original.md) también utiliza el PDF original aportado, con cajas alineadas y conservación de borradores anteriores.
 

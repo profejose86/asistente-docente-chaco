@@ -29,4 +29,9 @@ test('PDF original: año impreso protegido y casilleros de códigos completos',(
   assert.equal(approved.pages[0].at(-1).text,'2026');
   assert.equal(make('12345',{digits:5}).pages[0].length,5);
   assert.ok(make('123456',{digits:5}).errors.length);
+  const century={dateParts:[{x:100,width:20},{x:125,width:20},{x:150,width:40}],printedCentury:'19'};
+  const birth=make('1986-10-25',century);
+  assert.equal(birth.errors.length,0);
+  assert.equal(birth.pages[0].at(-1).text,'86');
+  assert.ok(make('2001-10-25',century).errors.length);
 });

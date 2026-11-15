@@ -130,3 +130,29 @@ html[data-theme=dark] #adcOfficialForm .adc-document-tools{background:#17263a}
 #adcOfficialForm .adc-document-viewport:fullscreen{height:100vh;max-height:none;min-height:0;width:100vw;overflow:auto;background:#dce3eb;padding:48px 12px 12px;border:0;border-radius:0}
 #adcOfficialForm .adc-document-viewport:fullscreen .adc-document-exit-fullscreen{display:block;position:fixed;top:8px;right:16px;z-index:10;margin:0}
 .adc-form-grid .adc-catalog-unavailable:disabled{opacity:1;cursor:not-allowed;border-color:#c87878;box-shadow:0 0 8px 3px #d64a4a30,0 0 20px 5px #d64a4a18}
+
+/* Piloto del visor: el espacio reservado evita cubrir campos con las barras. */
+#adcOfficialForm .adc-pdf-viewer{display:contents}
+#adcOfficialForm .adc-pdf-viewer-active{display:block;position:relative;box-sizing:border-box;height:min(78vh,950px);min-height:320px;padding:8px 46px 112px 8px;border:1px solid #b8c6d6;border-radius:8px;background:var(--card,#eef2f7)}
+#adcOfficialForm[data-adc-smart-viewer=true] .adc-document-viewport{height:100%;min-height:0;max-height:none;overscroll-behavior:auto;cursor:grab}
+#adcOfficialForm[data-adc-smart-viewer=true] .adc-document-tools :is([data-adc-zoom],[data-adc-zoom-value]){display:none}
+#adcOfficialForm .adc-pdf-navigation{position:absolute;left:8px;right:8px;bottom:8px;display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:6px;padding:8px;box-sizing:border-box;border:1px solid #b8c6d6;border-radius:8px;background:var(--card,#fff);color:var(--text,#152844);z-index:25}
+#adcOfficialForm .adc-pdf-navigation button{margin:0;min-height:44px;padding:6px 10px;font-size:13px}
+#adcOfficialForm .adc-pdf-navigation input{width:120px;min-width:50px;margin:0;cursor:pointer}
+#adcOfficialForm .adc-pdf-navigation output{min-width:48px;text-align:center;font-variant-numeric:tabular-nums;font-size:13px}
+#adcOfficialForm .adc-pdf-scroll{position:absolute;right:6px;top:14px;bottom:122px;height:calc(100% - 136px);width:32px;min-height:0;padding:0;margin:0;writing-mode:vertical-lr;direction:ltr;cursor:ns-resize;accent-color:#2453a3;z-index:25}
+#adcOfficialForm .adc-pdf-navigation,#adcOfficialForm .adc-pdf-scroll{opacity:0;pointer-events:none;transition:opacity .2s}
+#adcOfficialForm .adc-pdf-controls-visible :is(.adc-pdf-navigation,.adc-pdf-scroll),#adcOfficialForm .adc-pdf-navigation:focus-within,#adcOfficialForm .adc-pdf-scroll:focus{opacity:1;pointer-events:auto}
+#adcOfficialForm .adc-pdf-grabbing .adc-document-viewport{cursor:grabbing;user-select:none}
+#adcOfficialForm .adc-pdf-viewer-active :is(input,textarea,select){cursor:auto}
+#adcOfficialForm .adc-pdf-viewer-active:fullscreen,#adcOfficialForm .adc-pdf-expanded{display:block;position:fixed;inset:0;width:100vw;height:100dvh;max-height:none;z-index:11000;border-radius:0}
+#adcOfficialForm .adc-pdf-navigation[hidden],#adcOfficialForm .adc-pdf-scroll[hidden]{display:none}
+@media(max-width:650px){
+ #adcOfficialForm .adc-pdf-viewer-active{height:78dvh;min-height:300px;padding-right:40px;padding-bottom:160px}
+ #adcOfficialForm .adc-pdf-navigation{gap:4px;padding:5px;display:grid;grid-template-columns:44px minmax(50px,1fr) 48px 44px}
+ #adcOfficialForm .adc-pdf-navigation input{width:100%}
+ #adcOfficialForm .adc-pdf-navigation [data-viewer-action=page],#adcOfficialForm .adc-pdf-navigation [data-viewer-action=width]{grid-column:span 2}
+ #adcOfficialForm .adc-pdf-navigation [data-viewer-action=fullscreen]{grid-column:span 4}
+ #adcOfficialForm .adc-pdf-scroll{width:28px;bottom:170px;height:calc(100% - 184px)}
+}
+@media(prefers-reduced-motion:reduce){#adcOfficialForm .adc-pdf-navigation,#adcOfficialForm .adc-pdf-scroll{transition:none}}

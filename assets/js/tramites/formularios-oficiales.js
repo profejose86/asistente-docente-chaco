@@ -63,6 +63,7 @@
   let profileAcknowledged = {};
   let zoom = 1;
   let fitWidth = true;
+  let fitPage = false;
   let documentLayout = null;
   let layoutFonts = null;
   let fontsPromise = null;
@@ -83,6 +84,11 @@
   const preparedReadOnly = () => Boolean(preparedDocument() && !preparedDocument().fields);
   const viewport = section.querySelector('.adc-document-viewport');
   const documentSize = section.querySelector('.adc-document-size');
+  const smartViewer=window.adcPdfViewer.create({
+    viewport,size:documentSize,getScale:()=>zoom,
+    setScale(value){zoom=value;fitWidth=false;fitPage=false;updateZoom();},
+    fit(mode){fitPage=mode==='page';fitWidth=!fitPage;updateZoom();}
+  });
 
   function matches(condition) {
     if (!condition) return true;
@@ -470,11 +476,13 @@
   function updateZoom() {
     if (!documentLayout || !viewport.clientWidth) return;
     if (fitWidth) zoom = Math.min(preparedDocument()?.fullScreen?2:1,(viewport.clientWidth-24)/(documentLayout.width*pointToPixel));
+    if (fitPage) zoom = Math.min((viewport.clientWidth-24)/(documentLayout.width*pointToPixel),(viewport.clientHeight-24)/sheet.offsetHeight);
     zoom = Math.max(.25,Math.min(2,zoom));
     sheet.style.transform = `scale(${zoom})`;
     documentSize.style.width = `${documentLayout.width*pointToPixel*zoom}px`;
     documentSize.style.height = `${sheet.offsetHeight*zoom}px`;
     section.querySelector('[data-adc-zoom-value]').textContent = `${Math.round(zoom*100)}%`;
+    smartViewer.sync();
   }
   function place(element,box,height=box.height) {
     const top = (documentLayout.height-box.y-height+box.page*(documentLayout.height+paperGap))*pointToPixel;
@@ -1149,6 +1157,11 @@
     activeForm = form;
     const prepared = preparedDocument();
     fullScreenButton.hidden=!prepared?.fullScreen;
+    fitPage=false;
+    if(prepared?.smartViewer)fitWidth=true;
+    section.dataset.adcSmartViewer=String(Boolean(prepared?.smartViewer));
+    smartViewer.setEnabled(prepared?.smartViewer);
+    if(prepared?.smartViewer)fullScreenButton.hidden=true;
     section.dataset.adcDocumentMode = preparedReadOnly() ? 'original' : prepared?.fields ? 'overlay' : 'editable';
     returnFocus = trigger;
     loadDraft(form);
@@ -1242,6 +1255,7 @@
   section.querySelector('[data-adc-document-pending]').addEventListener('click',async() => {if(await guidedReview.review({guided:true}))runAction('preview',true);});
   section.querySelectorAll('[data-adc-zoom]').forEach(button => button.addEventListener('click',() => {
     const action = button.dataset.adcZoom;
+    fitPage=false;
     fitWidth = action === 'fit';
     if (!fitWidth) zoom += action === 'in' ? .15 : -.15;
     updateZoom();

@@ -42,7 +42,14 @@
       let value=String(presented(field,values[field.path])||'');if(!value)continue;
       if(setting.dateFormat==='dmy')value=value.replace(/^(\d{4})-(\d{2})-(\d{2})$/,'$3/$2/$1');
       if(setting.dateParts){
-        const [year,month,day]=value.split('-');
+        let [year,month,day]=value.split('-');
+        if(setting.printedCentury){
+          if(year?.startsWith(setting.printedCentury))year=year.slice(-2);
+          else{
+            result.errors.push(`${field.label}: el original tiene el siglo ${setting.printedCentury} impreso. Necesitamos aprobar su corrección antes de exportar esta fecha.`);
+            year='';
+          }
+        }
         if(setting.printedYear&&!setting.replacePrintedYear&&Number(year)!==setting.printedYear){result.errors.push(`${field.label}: el original tiene ${setting.printedYear} impreso. Necesitamos aprobar su corrección antes de exportar esta fecha.`);}
         [day,month,year].forEach((part,index)=>{if(index===2&&setting.printedYear&&!setting.replacePrintedYear)return;const segment=setting.dateParts[index];draw(part||'',box,segment.x,setting.top,segment.width,box.size);});
       }else if(setting.digits){
