@@ -567,8 +567,10 @@
     {
       id:"incapacidad",
       code:"INCAPACIDAD",
-      title:"Beneficio por incapacidad total y permanente",
-      catalogTitle:"Beneficio por incapacidad",
+      title:"Formulario de Solicitud de Beneficio de Incapacidad",
+      displayTitle:"Formulario de Solicitud de Beneficio de Incapacidad",
+      catalogTitle:"Formulario de Solicitud de Beneficio de Incapacidad",
+      catalogAliases:["Beneficio por incapacidad"],
       sourceUrl:"https://dirdocumentacion.educacion.chaco.gob.ar/wp-content/uploads/2023/03/33-SOLICITUD-del-Beneficio-de-Incapacidad-Total-y-Permanente.docx",
       sensitive:true,
       notices:["Solicitud del beneficio de incapacidad total y permanente conforme al Seguro de Vida Obligatorio, Decreto-Ley 26/1, por impedimento para ejercer otra ocupación remunerada.","Si la persona no sabe firmar o se encuentra impedida, estampará su impresión digital.","Certificación oficial: la repartición certifica la exactitud de los datos, que el recurrente agotó la licencia con goce íntegro o parcial de haberes por salud según la reglamentación y que integra el personal asegurado."],
@@ -584,8 +586,8 @@
           text("lugarServicios","Lugar donde presta servicios"),
           text("provincia","Provincia"),
           text("ocupacion","Ocupación"),
-          text("funcion","Función que desempeñaba"),
-          text("domicilio","Domicilio",{"profileId":"perfilDomicilio"})
+          area("funcion","Función que desempeñaba"),
+          area("domicilio","Domicilio",{"profileId":"perfilDomicilio"})
         ]},
         {title:"Capital asegurado",fields:[
           text("seguroObligatorio","Seguro obligatorio ($)",{"inputmode":"decimal"}),
@@ -597,13 +599,13 @@
           area("solicitud","Solicitud / manifestación",{"wide":true,"legacyOnly":true,"required":false,"mnc":false}),
           text("lugar","Lugar"),
           date("fecha","Fecha"),
-          text("firmaAsegurado","Firma / impresión digital de la persona asegurada",{"signature":true,"mnc":false}),
+          text("firmaAsegurado","Firma / impresión digital de la persona asegurada",{"signature":true,"mnc":false,"legacyOnly":true}),
           date("fechaCese","Fecha de cese"),
           area("certificacion","Certificación oficial de la repartición",{"wide":true,"legacyOnly":true,"required":false,"mnc":false}),
-          text("firmaJefatura","Firma y sello de la jefatura",{"signature":true,"mnc":false}),
+          text("firmaJefatura","Firma y sello de la jefatura",{"signature":true,"mnc":false,"legacyOnly":true}),
           text("lugarCertificacion","Lugar de certificación"),
           date("fechaCertificacion","Fecha de certificación"),
-          text("selloReparticion","Sello de la repartición",{"signature":true,"mnc":false})
+          text("selloReparticion","Sello de la repartición",{"signature":true,"mnc":false,"legacyOnly":true})
         ]},
       ]
     },

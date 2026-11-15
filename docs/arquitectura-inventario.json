@@ -73,6 +73,8 @@
     "assets/formularios/Formulario-3.pdf",
     "assets/formularios/Formulario-6-pagina-1.png",
     "assets/formularios/Formulario-6.pdf",
+    "assets/formularios/Incapacidad-pagina-1.png",
+    "assets/formularios/Incapacidad.pdf",
     "assets/formularios/Reubicacion-pagina-1.png",
     "assets/formularios/Reubicacion.pdf",
     "assets/formularios/SC-01-plantilla.png",
@@ -102,6 +104,7 @@
     "assets/js/documentos/pdf-campos.js",
     "assets/js/documentos/pdf-utilidades.js",
     "assets/js/documentos/plantillas-dl01.js",
+    "assets/js/documentos/visor-pdf.js",
     "assets/js/editor/acceso-ajustes.js",
     "assets/js/editor/ajustes-proyecto-datos.js",
     "assets/js/editor/ajustes-proyecto.js",
@@ -215,6 +218,7 @@
     "docs/formularios-pdf-preparados.md",
     "docs/funciones-respaldo.md",
     "docs/google-y-recuperacion-staging.md",
+    "docs/incapacidad-pdf-piloto.md",
     "docs/ol01-revision.md",
     "docs/prueba-contact-icon.md",
     "docs/prueba-sincronizacion.md",
@@ -263,6 +267,7 @@
     "tests/form6-pdf.test.cjs",
     "tests/formularios-oficiales.test.cjs",
     "tests/geografia.test.cjs",
+    "tests/incapacidad-pdf.test.cjs",
     "tests/ingreso.test.cjs",
     "tests/local-editor-bridge.test.cjs",
     "tests/local-editor-ui.test.cjs",
@@ -419,6 +424,7 @@
         "assets/js/tramites/formularios-oficiales-datos.js",
         "assets/datos/formularios-pdf.js",
         "assets/js/documentos/pdf-campos.js",
+        "assets/js/documentos/visor-pdf.js",
         "assets/js/tramites/formularios-oficiales.js",
         "assets/js/tramites/bd02.js",
         "assets/js/tramites/busqueda-inteligente.js",
@@ -819,8 +825,8 @@
     },
     {
       "file": "assets/css/tramites/formularios-oficiales.css",
-      "bytes": 15985,
-      "lines": 133,
+      "bytes": 19086,
+      "lines": 159,
       "generated": false,
       "functions": [],
       "globals": [],
@@ -877,8 +883,8 @@
     },
     {
       "file": "assets/datos/formularios-pdf.js",
-      "bytes": 28883,
-      "lines": 343,
+      "bytes": 31224,
+      "lines": 375,
       "generated": false,
       "functions": [],
       "globals": [
@@ -1160,8 +1166,8 @@
     },
     {
       "file": "assets/js/documentos/pdf-campos.js",
-      "bytes": 5372,
-      "lines": 72,
+      "bytes": 5725,
+      "lines": 79,
       "generated": false,
       "functions": [
         "layout",
@@ -1195,6 +1201,28 @@
       "generated": false,
       "functions": [],
       "globals": [],
+      "storageKeys": []
+    },
+    {
+      "file": "assets/js/documentos/visor-pdf.js",
+      "bytes": 9264,
+      "lines": 169,
+      "generated": false,
+      "functions": [
+        "create",
+        "schedule",
+        "reveal",
+        "sync",
+        "scaleAt",
+        "leaveExpanded",
+        "fullscreen",
+        "endDrag",
+        "touchGeometry",
+        "setEnabled"
+      ],
+      "globals": [
+        "adcPdfViewer"
+      ],
       "storageKeys": []
     },
     {
@@ -2237,8 +2265,8 @@
     },
     {
       "file": "assets/js/tramites/formularios-oficiales-datos.js",
-      "bytes": 90036,
-      "lines": 1308,
+      "bytes": 90251,
+      "lines": 1310,
       "generated": false,
       "functions": [],
       "globals": [
@@ -2248,8 +2276,8 @@
     },
     {
       "file": "assets/js/tramites/formularios-oficiales.js",
-      "bytes": 69618,
-      "lines": 1264,
+      "bytes": 70339,
+      "lines": 1278,
       "generated": false,
       "functions": [
         "matches",
@@ -2469,7 +2497,7 @@
     },
     {
       "file": "docs/arquitectura-auditoria.md",
-      "bytes": 15666,
+      "bytes": 15705,
       "lines": 122,
       "generated": false,
       "functions": [],
@@ -2532,7 +2560,7 @@
     },
     {
       "file": "docs/estructura.md",
-      "bytes": 34883,
+      "bytes": 34922,
       "lines": 238,
       "generated": false,
       "functions": [],
@@ -2559,8 +2587,8 @@
     },
     {
       "file": "docs/formularios-pdf-preparados.md",
-      "bytes": 6621,
-      "lines": 63,
+      "bytes": 6794,
+      "lines": 65,
       "generated": false,
       "functions": [],
       "globals": [],
@@ -2579,6 +2607,15 @@
       "file": "docs/google-y-recuperacion-staging.md",
       "bytes": 4908,
       "lines": 59,
+      "generated": false,
+      "functions": [],
+      "globals": [],
+      "storageKeys": []
+    },
+    {
+      "file": "docs/incapacidad-pdf-piloto.md",
+      "bytes": 6140,
+      "lines": 47,
       "generated": false,
       "functions": [],
       "globals": [],
@@ -2730,7 +2767,7 @@
     },
     {
       "file": "index.html",
-      "bytes": 45383,
+      "bytes": 45466,
       "lines": 161,
       "generated": false,
       "functions": [],
@@ -3034,7 +3071,7 @@
     },
     {
       "file": "tests/formularios-oficiales.test.cjs",
-      "bytes": 52862,
+      "bytes": 52876,
       "lines": 673,
       "generated": false,
       "functions": [
@@ -3071,6 +3108,23 @@
       "functions": [],
       "globals": [],
       "storageKeys": []
+    },
+    {
+      "file": "tests/incapacidad-pdf.test.cjs",
+      "bytes": 13641,
+      "lines": 191,
+      "generated": false,
+      "functions": [],
+      "globals": [
+        "incapacityDraws",
+        "savedIncapacityOpen",
+        "open",
+        "incapacityPrintRequested",
+        "adcPreparedPdfForms"
+      ],
+      "storageKeys": [
+        "adc-official-form-incapacidad-draft-v1"
+      ]
     },
     {
       "file": "tests/ingreso.test.cjs",
@@ -3159,8 +3213,8 @@
     },
     {
       "file": "tests/pdf-campos.test.cjs",
-      "bytes": 2340,
-      "lines": 33,
+      "bytes": 2632,
+      "lines": 38,
       "generated": false,
       "functions": [],
       "globals": [],
@@ -3831,6 +3885,24 @@
       "from": "assets/css/acceso/ingreso.css",
       "to": "assets/img/acceso/fondo-escolar-dark.png",
       "kind": "css-url",
+      "exists": true
+    },
+    {
+      "from": "assets/datos/formularios-pdf.js",
+      "to": "assets/formularios/Incapacidad.pdf",
+      "kind": "web-asset",
+      "exists": true
+    },
+    {
+      "from": "assets/datos/formularios-pdf.js",
+      "to": "assets/formularios/Incapacidad-pagina-1.png",
+      "kind": "web-asset",
+      "exists": true
+    },
+    {
+      "from": "assets/datos/formularios-pdf.js",
+      "to": "assets/formularios/Incapacidad.pdf",
+      "kind": "web-asset",
       "exists": true
     },
     {
@@ -4597,6 +4669,12 @@
     },
     {
       "from": "index.html",
+      "to": "assets/js/documentos/visor-pdf.js",
+      "kind": "script",
+      "exists": true
+    },
+    {
+      "from": "index.html",
       "to": "assets/js/tramites/formularios-oficiales.js",
       "kind": "script",
       "exists": true
@@ -4994,6 +5072,18 @@
     {
       "from": "tests/formularios-oficiales.test.cjs",
       "to": "tests/support/demo-config.cjs",
+      "kind": "literal-module",
+      "exists": true
+    },
+    {
+      "from": "tests/incapacidad-pdf.test.cjs",
+      "to": "tests/support/demo-config.cjs",
+      "kind": "literal-module",
+      "exists": true
+    },
+    {
+      "from": "tests/incapacidad-pdf.test.cjs",
+      "to": "assets/js/editor/ajustes-proyecto-datos.js",
       "kind": "literal-module",
       "exists": true
     },
@@ -11571,9 +11661,9 @@
     ]
   },
   "summary": {
-    "files": 297,
-    "ownTextModules": 231,
-    "ownJavaScript": 143,
+    "files": 302,
+    "ownTextModules": 234,
+    "ownJavaScript": 145,
     "vendorFiles": 35,
     "missingLiteralReferences": 0,
     "duplicateLoads": 0,
