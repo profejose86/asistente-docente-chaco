@@ -1,5 +1,5 @@
 const {test}=require('node:test'),assert=require('node:assert/strict'),fs=require('node:fs'),path=require('node:path');
-const {audit}=require('../tools/auditar-arquitectura.cjs');
+const {audit,markdown}=require('../tools/auditar-arquitectura.cjs');
 const root=path.resolve(__dirname,'..');
 test('Arquitectura: referencias presentes, dependencias comunes antes de consumidores y secretos excluidos',()=>{
  const result=audit();assert.deepEqual(result.missing,[]);
@@ -34,10 +34,16 @@ test('Auditoría: CSS, comillas, cargas equivalentes y prefijo Pages con recurso
   fs.writeFileSync(path.join(fixture,'assets/base.css'),`/* url(no-comentario.png) */ a{background:url('imagen%20uno.png')} b{background:url(data:image/png;base64,AAAA)} @import "faltante.css";`);
   fs.writeFileSync(path.join(fixture,'assets/imagen uno.png'),'imagen');
   fs.writeFileSync(path.join(fixture,'assets/copia.png'),'imagen');
+  const duplicated=Array.from({length:100},(_,index)=>`const fixtureIdentifier${index} = ${index};`).join('\n');
+  fs.writeFileSync(path.join(fixture,'assets/one.js'),duplicated);
+  fs.writeFileSync(path.join(fixture,'assets/two.js'),duplicated);
   const result=audit(fixture);
   assert.deepEqual(result.missing.map(ref=>ref.to).sort(),['assets/falta.pdf','assets/faltante.css','assets/no.png']);
   assert.deepEqual(result.duplicateLoads,[{from:'index.html',to:'assets/app.js',kind:'script'}]);
   assert.deepEqual(result.prefixUnsafe,[{from:'index.html',value:'/ADC_Ingreso_Editable.html',kind:'a'}]);
   assert.ok(result.identicalAssets.some(group=>group.includes('assets/imagen uno.png')&&group.includes('assets/copia.png')));
+  assert.equal(result.duplicateWindows.candidates.length,93);
+  assert.match(markdown(result),/API global publicada/);
+  assert.match(markdown(result),/\| `assets\/app.js` \| `index.html` \|/);
  }finally{fs.rmSync(fixture,{recursive:true,force:true});}
 });

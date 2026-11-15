@@ -62,7 +62,7 @@ function audit(root=defaultRoot){
   });
  }
  const duplicates=[...chunks.values()].filter(items=>new Set(items.map(item=>item.file)).size>1)
-  .filter(items=>items.every(item=>!item.file.startsWith('tests/'))).slice(0,80);
+  .filter(items=>items.every(item=>!item.file.startsWith('tests/')));
  const entries=['ADC_Ingreso_Editable.html','index.html'].map(file=>({file,scripts:references.filter(ref=>ref.from===file&&ref.kind==='script').map(ref=>ref.to),styles:references.filter(ref=>ref.from===file&&ref.kind==='link').map(ref=>ref.to)}));
  const missing=references.filter(ref=>!ref.exists);
  const duplicateLoads=[];
@@ -83,15 +83,22 @@ function audit(root=defaultRoot){
 function markdown(data){
  const lines=['# Mapa de archivos y dependencias de ADC','','Generado con `npm run architecture:audit`. Complementa la auditoría razonada en [arquitectura-auditoria.md](arquitectura-auditoria.md). El inventario JSON contiene nombres de archivos, módulos, funciones, claves de almacenamiento y referencias; no contiene datos de usuarios ni credenciales.','','## Entradas web',''];
  for(const entry of data.entries){lines.push('### '+entry.file,'','Scripts en orden de carga:','',...entry.scripts.map(file=>'- `'+file+'`'),'','Hojas de estilo en orden de carga:','',...entry.styles.map(file=>'- `'+file+'`'),'');}
- lines.push('## Módulos de código propio','','| Archivo | Líneas | Funciones con nombre |','| --- | ---: | ---: |');
- for(const module of data.modules.filter(m=>/\.(js|cjs|py|sql)$/.test(m.file)))lines.push('| `'+module.file+'` | '+module.lines+' | '+(module.generated?'generado':module.functions.length)+' |');
+ lines.push('## Módulos de código propio','','| Archivo | Líneas | Funciones con nombre | API global publicada |','| --- | ---: | ---: | --- |');
+ for(const module of data.modules.filter(m=>/\.(js|cjs|py|sql)$/.test(m.file)))lines.push('| `'+module.file+'` | '+module.lines+' | '+(module.generated?'generado':module.functions.length)+' | '+module.globals.map(name=>'`'+name+'`').join(', ')+' |');
+ lines.push('','## Consumidores de recursos y módulos','','| Destino | Referenciado desde |','| --- | --- |');
+ const consumers=new Map();
+ for(const ref of data.references){
+  if(!consumers.has(ref.to))consumers.set(ref.to,new Set());
+  consumers.get(ref.to).add(ref.from);
+ }
+ for(const [target,sources] of [...consumers].sort(([a],[b])=>a.localeCompare(b)))lines.push('| `'+target+'` | '+[...sources].map(source=>'`'+source+'`').join(', ')+' |');
  lines.push('','## Referencias literales ausentes','',...(data.missing.length?data.missing.map(ref=>'- `'+ref.from+'` → `'+ref.to+'`'):['Ninguna en el alcance del análisis.']),'','## Límites','','El grafo estático no resuelve destinos calculados, `onclick` heredados ni todos los accesos por variables. Las rutas funcionales se documentan en la auditoría; los archivos sin referencias literales no se borran automáticamente. `docs/structure-manifest.json` es una referencia histórica y no define por sí solo la arquitectura vigente.','');
  lines.push('## Integridad de rutas y recursos','','| Control | Hallazgos |','| --- | ---: |',
   '| Cargas repetidas de scripts/links por entrada | '+data.duplicateLoads.length+' |',
   '| Rutas desde la raíz incompatibles con un prefijo Pages | '+data.prefixUnsafe.length+' |',
   '| Archivos cuya ruta sólo difiere en mayúsculas | '+data.caseCollisions.length+' |',
   '| Grupos de recursos propios idénticos (SHA-256) | '+data.identicalAssets.length+' |','',
-  'Se revisan atributos HTML con comillas simples/dobles, enlaces de navegación y recursos CSS (`url`/`@import`). Se excluyen comentarios y destinos externos, embebidos o fragmentos. Los recursos idénticos son candidatos de revisión, nunca una autorización de borrado. Las coincidencias de ocho líneas siguen limitadas a los primeros 80 candidatos y no representan todas las duplicaciones.','');
+  'Se revisan atributos HTML con comillas simples/dobles, enlaces de navegación y recursos CSS (`url`/`@import`). Se excluyen comentarios y destinos externos, embebidos o fragmentos. Los recursos idénticos son candidatos de revisión, nunca una autorización de borrado. El inventario incluye todas las coincidencias de ocho líneas detectadas por este método; no demuestra equivalencia de comportamiento.','');
  return lines.join('\n');
 }
 if(require.main===module){
