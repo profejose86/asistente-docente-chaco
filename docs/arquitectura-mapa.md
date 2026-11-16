@@ -245,8 +245,8 @@ Hojas de estilo en orden de carga:
 | `assets/js/tramites/dj02-formulario.js` | 52 | 3 | `dj02Preview` |
 | `assets/js/tramites/dj02-plantilla.js` | 48 | 7 |  |
 | `assets/js/tramites/dj02-registro.js` | 386 | 27 |  |
-| `assets/js/tramites/dl01-interfaz.js` | 115 | 2 | `adcDL01Open` |
-| `assets/js/tramites/dl01-pdf.js` | 211 | 11 |  |
+| `assets/js/tramites/dl01-interfaz.js` | 189 | 2 | `adcDL01ShowPreview`, `adcDL01Open` |
+| `assets/js/tramites/dl01-pdf.js` | 224 | 11 |  |
 | `assets/js/tramites/dl01-reglas.js` | 108 | 14 |  |
 | `assets/js/tramites/formularios-oficiales-datos.js` | 1312 | 0 | `adcOfficialFormsData` |
 | `assets/js/tramites/formularios-oficiales.js` | 1351 | 52 |  |
@@ -268,7 +268,7 @@ Hojas de estilo en orden de carga:
 | `tests/cursos.test.cjs` | 32 | 0 |  |
 | `tests/descuento-seguro-pdf.test.cjs` | 85 | 0 | `testLines`, `testTexts`, `open`, `testPrint` |
 | `tests/dev-server.test.cjs` | 40 | 0 | `demo` |
-| `tests/dl01-interfaz.test.cjs` | 161 | 0 | `testOriginalReview` |
+| `tests/dl01-interfaz.test.cjs` | 188 | 0 | `open`, `dlPrintCalls`, `testOriginalReview` |
 | `tests/documento-fondo.test.cjs` | 34 | 4 | `originalCard`, `originalSCInput`, `originalSCListener` |
 | `tests/editor-botones.test.cjs` | 51 | 0 | `mouseActions` |
 | `tests/editor-comun.test.cjs` | 21 | 0 | `evil` |
@@ -481,7 +481,7 @@ Hojas de estilo en orden de carga:
 | `assets/js/tramites/sc01.js` | `index.html` |
 | `assets/js/tramites/solicitudes.js` | `index.html` |
 | `assets/vendor/pdf-lib/pdf-lib.min.js` | `index.html` |
-| `assets/vendor/pdfjs/pdf.min.mjs` | `assets/js/editor/elementos.js` |
+| `assets/vendor/pdfjs/pdf.min.mjs` | `assets/js/editor/elementos.js`, `assets/js/tramites/dl01-interfaz.js` |
 | `config/publicacion.json` | `tools/publicar.cjs`, `tools/supabase-auth-settings.cjs` |
 | `config/sincronizacion-staging.json` | `tools/sync-staging.cjs` |
 | `tests/support/ajustes.cjs` | `tests/ajustes-proyecto.test.cjs`, `tests/documento-fondo.test.cjs`, `tests/editor-botones.test.cjs`, `tests/editor-documentos.test.cjs`, `tests/editor-elementos.test.cjs`, `tests/editor-herramientas.test.cjs`, `tests/local-editor-ui.test.cjs`, `tests/studio-inplace.test.cjs`, `tests/studio.test.cjs` |
