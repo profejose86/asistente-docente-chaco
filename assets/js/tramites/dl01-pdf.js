@@ -177,6 +177,18 @@ async function generatePDF(){
   const url=URL.createObjectURL(new Blob([pdf],{type:'application/pdf'}));
   request.url=url;
   $('pdfResult').innerHTML=`<div class="status" style="margin-top:12px"><b>PDF generado: ${pagesGenerated} página(s).</b><br><a id="downloadPDF" download="DL01_borrador_docente_v097.pdf" href="${url}">Descargar formulario DL-01 completado</a><p class="small">Calibración v0.9.7 sobre plantilla original. Revisar códigos y datos antes de presentar.</p></div>${warnings.map(w=>'<div class="warning">'+esc(w)+'</div>').join('')}<iframe id="preview" title="Vista previa DL-01"></iframe>`;
+  const preview = $('pdfResult').querySelector('#preview');
+  const printButton = document.createElement('button');
+  printButton.type = 'button';printButton.id = 'adcDL01Print';
+  printButton.textContent = 'Imprimir DL-01';printButton.disabled = true;
+  const open = document.createElement('a');
+  open.href = url;open.target = '_blank';open.rel = 'noopener';
+  open.textContent = 'Abrir PDF en otra pestaña';
+  const previewStatus = document.createElement('p');
+  previewStatus.id = 'adcDL01PreviewStatus';previewStatus.setAttribute('role','status');
+  const outputActions = document.createElement('div');outputActions.className = 'toolbar';
+  outputActions.append(printButton,open);
+  $('downloadPDF').after(outputActions,previewStatus);
   if(calendarSnapshot)window.adcStoreIssuedDates?.(calendarSnapshot);
   if(historyReason==='Inasistencias (justificada)'){
    const note=document.createElement('p');
@@ -203,7 +215,8 @@ async function generatePDF(){
    link.onclick=()=>tab('dj02');
    $('downloadPDF').after(note,link);
   }
-  $('preview').src=url;
+  preview.src = url;
+  await window.adcDL01ShowPreview(preview,pdf,request,printButton,previewStatus);
  }catch(e){console.error(e);alert('No se pudo generar el PDF: '+e.message)}
 }
 

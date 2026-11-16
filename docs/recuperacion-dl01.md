@@ -40,3 +40,11 @@ El resumen no crea horarios ni datos personales. Si el perfil se guardó en GitH
 La biblioteca `pdf-lib` 1.17.1 ahora está incluida con su licencia en `assets/vendor/pdf-lib/`. No se requiere un CDN para generar el documento. La vista previa usa un visor ancho y al terminar la generación recibe el foco y se desplaza a pantalla. Durante el proceso se indica el estado y se evitan pulsaciones duplicadas. Los errores no controlados por la función original se presentan en pantalla y rehabilitan el botón.
 
 La prueba de DL-01 recorre los cuatro accesos reales, genera el PDF desde el botón visible con las conexiones externas bloqueadas, comprueba que la vista previa sea visible y permite descargar el resultado. También comprueba la selección automática de la plantilla de dos páginas con tres cursos afectados. No se han cambiado las coordenadas ni los PDF base. La impresión física continúa pendiente de verificación del usuario.
+
+## Vista previa e impresión de DL-01
+
+La vista previa se dibuja con la biblioteca PDF.js incluida en ADC, dentro de un documento HTML del mismo origen. El botón «Imprimir DL-01» se habilita después de renderizar todas las páginas y verifica que la ventana del documento siga disponible antes de solicitar impresión. Los fallos se muestran junto a las acciones, con un enlace para abrir el PDF en otra pestaña. La carga tiene un tiempo máximo y las solicitudes reemplazadas dejan de actualizar el visor.
+
+La vista y la impresión directa usan páginas rasterizadas a 144 ppp, con tamaño físico tomado del PDF y saltos de página explícitos. Se dibujan los contornos de las fuentes para evitar sustituciones que producían casilleros vacíos en los textos del original. La descarga conserva el PDF generado con su contenido vectorial. La impresión física requiere revisión del usuario.
+
+La regresión comprueba una y dos páginas renderizadas, el tamaño físico de impresión, ventanas emergentes bloqueadas, error de la API de impresión y `contentWindow` nula. También conserva la prueba de descarga del PDF original generado. Las pruebas relacionadas de DL-01, OL-01 y formularios oficiales pasaron 27/27; la prueba específica de DL-01 volvió a pasar después del ajuste de fuentes y del caso de ventana nula.

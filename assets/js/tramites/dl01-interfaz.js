@@ -1,5 +1,78 @@
 // Conecta DL-01 con los datos existentes, sin copiar ni modificar el perfil.
 (() => {
+  const pdfModuleURL = new URL('../../vendor/pdfjs/pdf.min.mjs',document.currentScript.src);
+  window.adcDL01ShowPreview = async function(frame,bytes,request,printButton,status) {
+    const current = () => frame.isConnected && adcPDFRequest === request;
+    printButton.disabled = true;
+    frame.dataset.adcPreviewState = 'loading';
+    status.textContent = 'Preparando las páginas para vista previa e impresión…';
+    let pdf;
+    let loadTimer;
+    try {
+      const loaded = new Promise((resolve,reject) => {
+        frame.addEventListener('load',() => {clearTimeout(loadTimer);resolve();},{once:true});
+        loadTimer = setTimeout(() => reject(new Error('La vista previa no terminó de cargar.')),10000);
+      });
+      frame.srcdoc = '<!doctype html><html lang="es"><head><meta charset="utf-8"><title>DL-01 para imprimir</title><style>body{margin:0;padding:12px;background:#e8edf3}canvas{display:block;max-width:100%;height:auto;margin:0 auto 12px;background:white}@media print{html,body{margin:0;padding:0;background:white}canvas{max-width:none;width:var(--paper-width);height:var(--paper-height);margin:0;break-after:page}canvas:last-child{break-after:auto}}</style></head><body></body></html>';
+      await loaded;
+      if (!current()) return false;
+      const pdfjs = await import(pdfModuleURL.href);
+      pdfjs.GlobalWorkerOptions.workerSrc = new URL('pdf.worker.min.mjs',pdfModuleURL).href;
+      pdf = await pdfjs.getDocument({
+        data:Uint8Array.from(bytes),isEvalSupported:false,disableFontFace:true,
+        standardFontDataUrl:new URL('standard_fonts/',pdfModuleURL).href,
+        wasmUrl:new URL('wasm/',pdfModuleURL).href
+      }).promise;
+      for (let number=1;number<=pdf.numPages;number++) {
+        if (!current()) return false;
+        const page = await pdf.getPage(number);
+        const paper = page.getViewport({scale:1});
+        const viewport = page.getViewport({scale:2});
+        const canvas = frame.contentDocument.createElement('canvas');
+        canvas.width = Math.ceil(viewport.width);
+        canvas.height = Math.ceil(viewport.height);
+        canvas.style.width = paper.width+'pt';
+        canvas.style.setProperty('--paper-width',paper.width+'pt');
+        canvas.style.setProperty('--paper-height',paper.height+'pt');
+        canvas.setAttribute('role','img');
+        canvas.setAttribute('aria-label','Página '+number+' de '+pdf.numPages+' del DL-01');
+        if (number===1) {
+          const style = frame.contentDocument.createElement('style');
+          style.textContent = '@page{size:'+paper.width+'pt '+paper.height+'pt;margin:0}';
+          frame.contentDocument.head.append(style);
+        }
+        frame.contentDocument.body.append(canvas);
+        await page.render({canvasContext:canvas.getContext('2d'),viewport}).promise;
+      }
+      if (!current()) return false;
+      frame.dataset.adcPreviewState = 'ready';
+      printButton.disabled = false;
+      printButton.onclick = () => {
+        if (!current() || !frame.contentWindow) {
+          status.textContent = 'Volvé a generar el DL-01 antes de imprimir.';
+          return;
+        }
+        try {
+          frame.contentWindow.focus();
+          frame.contentWindow.print();
+          status.textContent = 'Impresión solicitada. Revisá el diálogo del navegador.';
+        } catch (error) {
+          status.textContent = 'No se pudo iniciar la impresión. Usá Abrir PDF en otra pestaña. '+error.message;
+        }
+      };
+      status.textContent = 'Vista previa lista. Podés imprimir con el botón Imprimir DL-01.';
+      return true;
+    } catch (error) {
+      if (current()) {
+        frame.dataset.adcPreviewState = 'error';
+        status.textContent = 'El PDF está generado, pero no se pudo mostrar la vista previa. Usá Abrir PDF en otra pestaña o descargalo. '+error.message;
+      }
+      return false;
+    } finally {
+      clearTimeout(loadTimer);
+      if (pdf) await pdf.destroy();
+    }
+  };
   const root = document.getElementById('license');
   const schoolSelect = document.getElementById('escuelaSelect');
   const calendar = document.getElementById('adcSharedCalendar');
@@ -40,8 +113,9 @@
     try {
       await originalGenerate(...args);
       const preview = adcPDFRequest !== previousRequest && adcPDFRequest?.url
-        ? document.querySelector('#pdfResult iframe[src]') : null;
-      generationStatus.textContent = preview ? 'DL-01 listo. Verificá la plantilla y sus datos antes de descargar o imprimir.' : 'No se generó un PDF nuevo. Revisá los avisos o los datos pendientes e intentá nuevamente.';
+        ? document.querySelector('#pdfResult iframe[data-adc-preview-state="ready"]') : null;
+      const generated = adcPDFRequest !== previousRequest && adcPDFRequest?.url;
+      generationStatus.textContent = preview ? 'DL-01 listo. Verificá la plantilla y sus datos antes de descargar o imprimir.' : generated ? 'El PDF está generado. La vista previa no está disponible; podés abrirlo en otra pestaña o descargarlo.' : 'No se generó un PDF nuevo. Revisá los avisos o los datos pendientes e intentá nuevamente.';
       if (preview) {
         document.getElementById('pdfResult').tabIndex = -1;
         document.getElementById('pdfResult').focus({preventScroll:true});

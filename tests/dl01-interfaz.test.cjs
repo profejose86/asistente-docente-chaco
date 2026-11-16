@@ -15,7 +15,7 @@ test('DL-01: perfil, instituciones, cursos, calendario, cálculos y responsive',
     if (!file.startsWith(root+path.sep)) return response.writeHead(403).end();
     fs.readFile(file,(error,bytes) => {
       if (error) return response.writeHead(404).end();
-      response.setHeader('Content-Type',({'.js':'application/javascript','.css':'text/css','.html':'text/html','.png':'image/png','.pdf':'application/pdf'})[path.extname(file)] || 'application/octet-stream');
+      response.setHeader('Content-Type',({'.js':'application/javascript','.mjs':'application/javascript','.wasm':'application/wasm','.css':'text/css','.html':'text/html','.png':'image/png','.pdf':'application/pdf'})[path.extname(file)] || 'application/octet-stream');
       response.end(bytes);
     });
   });
@@ -123,11 +123,29 @@ test('DL-01: perfil, instituciones, cursos, calendario, cálculos y responsive',
       assert.ok(Math.abs(preview.size.height-1008)<1);
       assert.ok(preview.bytes>10000);
       assert.ok(preview.top<1000 && preview.height>=360,'vista previa visible y amplia');
+      assert.equal(await page.locator('#preview').evaluate(frame=>frame.contentDocument.querySelectorAll('canvas').length),1);
+      assert.equal(await page.locator('#adcDL01Print').isEnabled(),true);
     }
+    const output = fs.mkdtempSync(path.join(os.tmpdir(),'adc-dl01-preview-'));
+    await page.evaluate(()=>{
+      window.open=()=>null;
+      window.dlPrintCalls=0;
+      document.querySelector('#pdfResult iframe').contentWindow.print=()=>{window.dlPrintCalls++;};
+    });
+    await page.locator('#adcDL01Print').click();
+    assert.equal(await page.evaluate(()=>window.dlPrintCalls),1);
+    assert.match(await page.locator('#adcDL01PreviewStatus').textContent(),/Impresión solicitada/);
+    await page.mouse.move(0,0);
+    await page.locator('#pdfResult').screenshot({path:path.join(output,'DL-01-vista-previa.png')});
+    await page.locator('#preview').evaluate(frame=>frame.contentWindow.print=()=>{throw Error('Impresión bloqueada de prueba')});
+    await page.locator('#adcDL01Print').click();
+    assert.match(await page.locator('#adcDL01PreviewStatus').textContent(),/Abrir PDF en otra pestaña/);
+    await page.locator('#preview').evaluate(frame=>Object.defineProperty(frame,'contentWindow',{value:null,configurable:true}));
+    await page.locator('#adcDL01Print').click();
+    assert.match(await page.locator('#adcDL01PreviewStatus').textContent(),/Volvé a generar/);
     const downloadEvent = page.waitForEvent('download');
     await page.locator('#downloadPDF').click();
     const download = await downloadEvent;
-    const output = fs.mkdtempSync(path.join(os.tmpdir(),'adc-dl01-preview-'));
     await download.saveAs(path.join(output,'DL-01-completado.pdf'));
     console.log(`DL-01 de prueba para revisión visual: ${output}`);
     // Un error previo al dibujo también devuelve un aviso y rehabilita el botón.
@@ -149,6 +167,15 @@ test('DL-01: perfil, instituciones, cursos, calendario, cálculos y responsive',
       return frame&&frame.src!==old&&!document.getElementById('adcConfiguredDL01').disabled;
     },oldPreview);
     assert.equal(await page.locator('#pdfResult iframe').evaluate(async frame=>(await PDFLib.PDFDocument.load(await(await fetch(frame.src)).arrayBuffer())).getPageCount()),2);
+    assert.equal(await page.locator('#preview').evaluate(frame=>frame.contentDocument.querySelectorAll('canvas').length),2);
+    await page.emulateMedia({media:'print'});
+    const printed = await page.locator('#preview').evaluate(frame=>[...frame.contentDocument.querySelectorAll('canvas')].map(canvas=>({
+      width:parseFloat(frame.contentWindow.getComputedStyle(canvas).width),
+      height:parseFloat(frame.contentWindow.getComputedStyle(canvas).height)
+    })));
+    const paper = await page.locator('#preview').evaluate(async frame=>(await PDFLib.PDFDocument.load(await(await fetch(frame.src)).arrayBuffer())).getPage(0).getSize());
+    for(const pageSize of printed){assert.ok(Math.abs(pageSize.width-paper.width*96/72)<1);assert.ok(Math.abs(pageSize.height-paper.height*96/72)<1);}
+    await page.emulateMedia({media:'screen'});
     const twoPagesDownload=page.waitForEvent('download');
     await page.locator('#downloadPDF').click();
     await(await twoPagesDownload).saveAs(path.join(output,'DL-01-dos-paginas.pdf'));
