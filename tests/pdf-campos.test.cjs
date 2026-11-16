@@ -6,6 +6,18 @@ const make=(value,setting={},marked=false)=>context.window.adcPdfOverlay.layout(
   fields:[{key:'dato',path:'dato',label:'Dato',type:'text'}],values:{dato:value},marked:new Set(marked?['dato']:[]),presented:(_,value)=>value,
   font:{widthOfTextAtSize:(text,size)=>text.length*size*.5}
 });
+
+test('PDF original: seguros múltiples tachan sólo la opción excluida',()=>{
+  const setting={multiple:true,strikeUnselected:true,options:[
+    {value:'Familiar',x:100,top:200,strike:{x:50,top:205,width:140}},
+    {value:'Colectivo',x:100,top:220,strike:{x:50,top:225,width:160}}
+  ]};
+  assert.equal(make([],setting).pages[0].length,0);
+  const one=make(['Familiar'],setting).pages[0];assert.equal(one.length,3);
+  assert.equal(one.at(-1).end.x-one.at(-1).start.x,160);
+  assert.equal(make(['Familiar','Colectivo'],setting).pages[0].length,4);
+  assert.equal(make('Familiar',{...setting,multiple:false}).pages[0].length,2);
+});
 test('PDF original: MNC centrada al 70% y grosor exacto de 0,5 mm',()=>{
   const result=make('',{},true),line=result.pages[0][0];
   assert.equal(line.start.x,115);assert.equal(line.end.x,185);assert.equal(line.start.y,line.end.y);

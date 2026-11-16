@@ -70,6 +70,8 @@
     "assets/formularios/BD-07.pdf",
     "assets/formularios/CF-01-pagina-1.png",
     "assets/formularios/CF-01.pdf",
+    "assets/formularios/Descuento-por-Seguro-pagina-1.png",
+    "assets/formularios/Descuento-por-Seguro.pdf",
     "assets/formularios/DP-01-pagina-1.png",
     "assets/formularios/DP-01.pdf",
     "assets/formularios/Formulario-3-pagina-1.png",
@@ -215,6 +217,7 @@
     "docs/cf01-pdf-original.md",
     "docs/cierre-publicacion-sincronizacion.md",
     "docs/codigo-ajustes.md",
+    "docs/descuento-seguro-pdf-original.md",
     "docs/documentos-fondo-relativo.md",
     "docs/editor-local.md",
     "docs/estructura.md",
@@ -258,6 +261,7 @@
     "tests/contact-icon.test.cjs",
     "tests/cuenta-online.test.cjs",
     "tests/cursos.test.cjs",
+    "tests/descuento-seguro-pdf.test.cjs",
     "tests/dev-server.test.cjs",
     "tests/dl01-interfaz.test.cjs",
     "tests/documento-fondo.test.cjs",
@@ -867,8 +871,8 @@
     },
     {
       "file": "assets/css/tramites/formularios-oficiales.css",
-      "bytes": 22872,
-      "lines": 192,
+      "bytes": 23156,
+      "lines": 194,
       "generated": false,
       "functions": [],
       "globals": [],
@@ -903,7 +907,7 @@
     },
     {
       "file": "assets/datos/config-publica.js",
-      "bytes": 356,
+      "bytes": 358,
       "lines": 3,
       "generated": false,
       "functions": [],
@@ -925,8 +929,8 @@
     },
     {
       "file": "assets/datos/formularios-pdf.js",
-      "bytes": 31574,
-      "lines": 376,
+      "bytes": 33127,
+      "lines": 398,
       "generated": false,
       "functions": [],
       "globals": [
@@ -1205,8 +1209,8 @@
     },
     {
       "file": "assets/js/documentos/pdf-campos.js",
-      "bytes": 7362,
-      "lines": 109,
+      "bytes": 7827,
+      "lines": 117,
       "generated": false,
       "functions": [
         "layout",
@@ -2330,8 +2334,8 @@
     },
     {
       "file": "assets/js/tramites/formularios-oficiales-datos.js",
-      "bytes": 90251,
-      "lines": 1310,
+      "bytes": 90400,
+      "lines": 1312,
       "generated": false,
       "functions": [],
       "globals": [
@@ -2341,7 +2345,7 @@
     },
     {
       "file": "assets/js/tramites/formularios-oficiales.js",
-      "bytes": 75362,
+      "bytes": 75419,
       "lines": 1351,
       "generated": false,
       "functions": [
@@ -2565,7 +2569,7 @@
     },
     {
       "file": "docs/arquitectura-auditoria.md",
-      "bytes": 15705,
+      "bytes": 15727,
       "lines": 122,
       "generated": false,
       "functions": [],
@@ -2609,6 +2613,15 @@
       "storageKeys": []
     },
     {
+      "file": "docs/descuento-seguro-pdf-original.md",
+      "bytes": 1656,
+      "lines": 10,
+      "generated": false,
+      "functions": [],
+      "globals": [],
+      "storageKeys": []
+    },
+    {
       "file": "docs/documentos-fondo-relativo.md",
       "bytes": 5012,
       "lines": 41,
@@ -2628,7 +2641,7 @@
     },
     {
       "file": "docs/estructura.md",
-      "bytes": 35690,
+      "bytes": 35712,
       "lines": 242,
       "generated": false,
       "functions": [],
@@ -2655,7 +2668,7 @@
     },
     {
       "file": "docs/formularios-pdf-preparados.md",
-      "bytes": 6794,
+      "bytes": 6815,
       "lines": 65,
       "generated": false,
       "functions": [],
@@ -2835,7 +2848,7 @@
     },
     {
       "file": "index.html",
-      "bytes": 46285,
+      "bytes": 46298,
       "lines": 164,
       "generated": false,
       "functions": [],
@@ -3000,6 +3013,22 @@
       "storageKeys": []
     },
     {
+      "file": "tests/descuento-seguro-pdf.test.cjs",
+      "bytes": 13113,
+      "lines": 85,
+      "generated": false,
+      "functions": [],
+      "globals": [
+        "testLines",
+        "testTexts",
+        "open",
+        "testPrint"
+      ],
+      "storageKeys": [
+        "adc_v08"
+      ]
+    },
+    {
       "file": "tests/dev-server.test.cjs",
       "bytes": 2095,
       "lines": 40,
@@ -3151,7 +3180,7 @@
     },
     {
       "file": "tests/formularios-oficiales.test.cjs",
-      "bytes": 52876,
+      "bytes": 52895,
       "lines": 673,
       "generated": false,
       "functions": [
@@ -3298,8 +3327,8 @@
     },
     {
       "file": "tests/pdf-campos.test.cjs",
-      "bytes": 2632,
-      "lines": 38,
+      "bytes": 3276,
+      "lines": 50,
       "generated": false,
       "functions": [],
       "globals": [],
@@ -3997,6 +4026,24 @@
       "from": "assets/css/acceso/ingreso.css",
       "to": "assets/img/acceso/fondo-escolar-dark.png",
       "kind": "css-url",
+      "exists": true
+    },
+    {
+      "from": "assets/datos/formularios-pdf.js",
+      "to": "assets/formularios/Descuento-por-Seguro.pdf",
+      "kind": "web-asset",
+      "exists": true
+    },
+    {
+      "from": "assets/datos/formularios-pdf.js",
+      "to": "assets/formularios/Descuento-por-Seguro-pagina-1.png",
+      "kind": "web-asset",
+      "exists": true
+    },
+    {
+      "from": "assets/datos/formularios-pdf.js",
+      "to": "assets/formularios/Descuento-por-Seguro.pdf",
+      "kind": "web-asset",
       "exists": true
     },
     {
@@ -4968,6 +5015,18 @@
     {
       "from": "tests/cuenta-online.test.cjs",
       "to": "tests/support/demo-config.cjs",
+      "kind": "literal-module",
+      "exists": true
+    },
+    {
+      "from": "tests/descuento-seguro-pdf.test.cjs",
+      "to": "tests/support/demo-config.cjs",
+      "kind": "literal-module",
+      "exists": true
+    },
+    {
+      "from": "tests/descuento-seguro-pdf.test.cjs",
+      "to": "assets/js/editor/ajustes-proyecto-datos.js",
       "kind": "literal-module",
       "exists": true
     },
@@ -11815,9 +11874,9 @@
     ]
   },
   "summary": {
-    "files": 309,
-    "ownTextModules": 241,
-    "ownJavaScript": 149,
+    "files": 313,
+    "ownTextModules": 243,
+    "ownJavaScript": 150,
     "vendorFiles": 35,
     "missingLiteralReferences": 0,
     "duplicateLoads": 0,

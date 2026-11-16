@@ -93,7 +93,7 @@ test('Chrome verifica formularios, borradores, MNC, filas, validación y PDF',{
       });
     }
     // Los PDF originales tienen dimensiones y casilleros propios, cubiertos por sus pruebas específicas.
-    for (const form of forms.filter(form => form.catalogState!=='pending'&&!['incapacidad','bd07','form-3','form-6','bd02','dp01','sr01','cf01','traslado-inicial','reubicacion'].includes(form.id))) await t.test(form.id,async() => {
+    for (const form of forms.filter(form => form.catalogState!=='pending'&&!['seguro-descuento','incapacidad','bd07','form-3','form-6','bd02','dp01','sr01','cf01','traslado-inicial','reubicacion'].includes(form.id))) await t.test(form.id,async() => {
       await open(form.id);
       assert.ok(await page.locator('.adc-document-page').count(),`${form.id} se muestra al abrir`);
       await page.locator('[data-adc-document-pending]').click();

@@ -1,6 +1,28 @@
 // Configuración de documentos originales y coordenadas de sus controles.
 // Solo los formularios registrados aquí utilizan este modo; los demás conservan su implementación.
 window.adcPreparedPdfForms = Object.freeze({
+  'seguro-descuento': Object.freeze({
+    pdf:'assets/formularios/Descuento-por-Seguro.pdf',
+    pages:[{image:'assets/formularios/Descuento-por-Seguro-pagina-1.png',width:612,height:1008}],
+    source:'assets/formularios/Descuento-por-Seguro.pdf',sourceLabel:'Ver PDF original de la solicitud de Descuento por Seguro',
+    stage:'editable',smartViewer:true,fullScreen:true,sha256:'57acd40a1bc5002656f0d31216dc37efcd602a0f408e74017085d806962be4c5',
+    draftDates:['fecha','fechaFirma'],
+    note:'Marcá o desmarcá cada casilla para elegir el seguro familiar, el colectivo o ambos. Podés seleccionar tu escuela del perfil o escribirla manualmente. La firma y el sello del director se realizan sobre el impreso.',
+    fields:{
+      fecha:{x:403,top:128,width:122,height:13,fontSize:11,dateFormat:'dmy'},
+      destinatario:{x:85,top:196,width:155,height:13,fontSize:11},
+      seguros:{x:394,top:254,width:38,height:34,multiple:true,options:[
+        {value:'Seguro de vida familiar',x:396,top:256,width:18,height:10},
+        {value:'Seguro de vida colectivo',x:408,top:275,width:18,height:10}
+      ]},
+      apellido:{x:204,top:349,width:156,height:13,fontSize:11},
+      nombres:{x:366,top:349,width:159,height:13,fontSize:11},
+      dni:{x:129,top:368,width:396,height:13,fontSize:11},
+      escuela:{x:173,top:387,width:352,height:13,fontSize:11,schoolSuggestions:true},
+      lugar:{x:53,top:767,width:70,height:13,fontSize:10},
+      fechaFirma:{x:127,top:767,width:63,height:13,fontSize:9,dateFormat:'dmy'}
+    }
+  }),
   incapacidad: Object.freeze({
     pdf:'assets/formularios/Incapacidad.pdf',
     pages:[{image:'assets/formularios/Incapacidad-pagina-1.png',width:612.12,height:1008.12}],

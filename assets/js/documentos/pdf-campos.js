@@ -47,7 +47,15 @@
       }
       if(setting.options){
         const selected=values[field.path];
-        for(const option of setting.options)if(option.value===selected){
+        for(const option of setting.options){
+          const chosen=setting.multiple?Array.isArray(selected)&&selected.includes(option.value):option.value===selected;
+          if(!chosen){
+            if(setting.multiple&&setting.strikeUnselected&&Array.isArray(selected)&&selected.length&&option.strike){
+              const line=option.strike,y=height-line.top;
+              commands.push({kind:'line',start:{x:line.x,y},end:{x:line.x+line.width,y},thickness:.8,color:black});
+            }
+            continue;
+          }
           if(option.marker==='underline'){const y=height-option.top-(option.height||12);commands.push({kind:'line',start:{x:option.x,y},end:{x:option.x+(option.width||10),y},thickness:.8,color:black});continue;}
           const x=option.x+1,y=height-option.top-8;
           commands.push({kind:'line',start:{x,y},end:{x:x+7,y:y+7},thickness:1,color:black},{kind:'line',start:{x,y:y+7},end:{x:x+7,y},thickness:1,color:black});

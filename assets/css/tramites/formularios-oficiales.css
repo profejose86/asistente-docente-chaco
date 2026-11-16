@@ -96,6 +96,7 @@ html[data-theme=dark] .adc-form-grid .adc-catalog-active small{color:#c0cde0}
 #adcOfficialForm .adc-document-field .adc-official-options input{appearance:none;position:absolute;left:0;top:0;width:12px;height:12px;min-width:0;margin:0;padding:0;border:0;border-radius:0;background:transparent;cursor:pointer}
 #adcOfficialForm .adc-document-field .adc-official-options input:checked{background:linear-gradient(45deg,transparent 44%,#111 44%,#111 56%,transparent 56%),linear-gradient(-45deg,transparent 44%,#111 44%,#111 56%,transparent 56%)}
 #adcOfficialForm .adc-document-field .adc-official-options input:focus-visible{outline:2px solid #2563eb;outline-offset:2px}
+#adcOfficialForm[data-adc-form-id="seguro-descuento"] .adc-official-options input[data-adc-field="seguros"]{width:100%;height:100%;border:1px solid #6687b5;background-color:#eff6ff;border-radius:2px}
 #adcOfficialForm .adc-official-row-actions,#adcOfficialForm [data-adc-repeat-add]{position:absolute;display:flex;gap:5px;padding:0;margin:0;align-items:center;background:transparent}
 #adcOfficialForm .adc-official-row-actions button,#adcOfficialForm [data-adc-repeat-add]{min-height:0;max-height:26px;width:auto;padding:3px 8px;margin:0;font:11px Arial;color:#29466c;background:#f4f7fb;border:1px solid #c0cede}
 #adcOfficialForm .adc-document-continuation{position:absolute;margin:0;padding:0;border:0;border-radius:0;background:transparent;box-shadow:none;cursor:text}
@@ -159,6 +160,7 @@ html[data-theme=dark] #adcOfficialForm .adc-document-tools{background:#17263a}
 
 /* INCAPACIDAD conserva la barra nativa del documento y evita el rango redundante. */
 #adcOfficialForm[data-adc-form-id=incapacidad] .adc-pdf-scroll{display:none}
+#adcOfficialForm[data-adc-form-id=seguro-descuento] .adc-pdf-scroll{display:none}
 
 #adcOfficialForm[data-adc-form-id=incapacidad] .adc-official-actions{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0 6px}
 #adcOfficialForm[data-adc-form-id=incapacidad] .adc-official-actions button{flex:1 1 160px;margin:0;min-width:0;white-space:normal}

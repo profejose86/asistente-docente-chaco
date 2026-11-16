@@ -326,7 +326,7 @@
       calendar.addEventListener('click',()=>{if(input.disabled||input.readOnly)return;if(input.showPicker)input.showPicker();else input.focus();});
       control.append(calendar);
     }
-    if (preparedDocument()?.fields?.[path]?.institution === 'name') {
+    if (preparedDocument()?.fields?.[path]?.institution === 'name' || preparedDocument()?.fields?.[path]?.schoolSuggestions) {
       const list=document.createElement('datalist');list.id=`${id}-schools`;input.setAttribute('list',list.id);
       for(const school of inst.filter(item=>item.name?.trim()))list.append(new Option(school.name,school.name));
       control.append(list);

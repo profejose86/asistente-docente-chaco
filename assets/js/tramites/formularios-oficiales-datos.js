@@ -612,8 +612,9 @@
     {
       id:"seguro-descuento",
       code:"SEGURO",
-      title:"Descuento por seguro",
-      catalogTitle:"Descuento por seguro",
+      title:"Solicitud de Descuento por Seguro",
+      displayTitle:"Solicitud de Descuento por Seguro",
+      catalogTitle:"Solicitud de Descuento por Seguro",
       sourceUrl:"https://dirdocumentacion.educacion.chaco.gob.ar/wp-content/uploads/2023/03/34-SOLICITUD-Descuento-por-Seguro.docx",
       sensitive:true,
       notices:["Solicitud a la Dirección de Administración para que se practiquen los descuentos por el seguro de vida familiar y/o colectivo seleccionado. Firma y sello del director."],
@@ -628,7 +629,8 @@
           text("dni","DNI",{"required":true,"profileId":"dni","inputmode":"numeric","document":true}),
           text("escuela","Número de escuela"),
           text("firma","Firma del solicitante",{"signature":true,"mnc":false,"legacyOnly":true,"required":false}),
-          text("firmaDirector","Firma y sello del director",{"signature":true,"mnc":false})
+          date("fechaFirma","Fecha de firma"),
+          text("firmaDirector","Firma y sello del director",{"signature":true,"mnc":false,"legacyOnly":true})
         ]},
       ]
     },
