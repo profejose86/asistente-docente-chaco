@@ -196,6 +196,8 @@
   });
   const section = document.createElement('section');
   section.id = 'adcBD02';
+  section.dataset.adcSmartViewer = 'true';
+  section.dataset.adcCommonActions = 'true';
   section.className = 'hide';
   section.innerHTML = `
     <button type="button" class="alt" data-bd02-back>← Volver a Mis trámites</button>
@@ -208,7 +210,7 @@
       <button type="button" data-bd02-action="download">Descargar PDF Completado</button>
       <button type="button" data-bd02-action="print">Imprimir</button>
     </div>
-    <p class="small">El borrador se guarda en este dispositivo. Usá X en los campos opcionales vacíos para marcar No corresponde. Las firmas y sellos se realizan sobre el impreso.</p>
+    <p class="small">El borrador se guarda en este dispositivo. Usá X en los campos habilitados para marcar No corresponde. Si tienen texto, se pide confirmación y podés recuperarlo al quitar la marca. Las firmas y sellos se realizan sobre el impreso.</p>
     <div data-bd02-review role="status"></div>
     <div data-bd02-conflicts aria-live="polite"></div>
     <p data-bd02-status role="status" aria-live="polite"></p>
@@ -242,6 +244,7 @@
   const pages = [];
   let values = {};
   let marked = new Set();
+  let mncPrevious = {};
   let touched = new Set();
   let origin = new Set();
   let acknowledged = {};
@@ -257,10 +260,72 @@
   let revision = 0;
   let zoom = 1;
   let fit = true;
+  let fitPage = false;
   let pdfBytes;
   let fontPromise;
   let measuringFonts = {};
   let previewUrl;
+  let reviewPanel = null;
+  let draftReturnFocus;
+  let pendingMncKey;
+  const actionIcons = {
+    preview: '<path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/>',
+    download: '<path d="M12 3v12m-5-5 5 5 5-5M4 16v5h16v-5"/>',
+    print: '<path d="M6 8V3h12v5M6 17H3V8h18v9h-3M6 14h12v7H6Z"/><path d="M17 11h1"/>',
+    save: '<path d="M4 3h13l4 4v14H3V3h1Zm3 0v7h10V3M7 21v-7h10v7M14 4v4"/>',
+    clear: '<path d="m16 3 3 3-8 8-3-3 8-8ZM8 11l5 5-5 6-6-6 6-5ZM4 16l4 4m-1-7 4 4"/>'
+  };
+  function actionIcon(action) {
+    return `<svg class="adc-incapacidad-action-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">${actionIcons[action]}</svg>`;
+  }
+  function configureActions() {
+    section.append(clearDialog, mncDialog);
+    for (const actions of section.querySelectorAll('.adc-bd02-actions')) {
+      actions.classList.add('adc-official-actions');
+      for (const button of actions.querySelectorAll('[data-bd02-action]')) button.insertAdjacentHTML('afterbegin', actionIcon(button.dataset.bd02Action));
+      const tools = document.createElement('div');
+      tools.className = 'adc-incapacidad-draft-tools';
+      tools.setAttribute('role', 'group');
+      tools.setAttribute('aria-label', 'Guardar o limpiar el borrador de BD-02');
+      tools.innerHTML = `<button type="button" class="alt" data-bd02-draft-action="save">${actionIcon('save')}Guardar cambios</button><button type="button" class="alt" data-bd02-draft-action="clear">${actionIcon('clear')}Limpiar formulario</button><span data-adc-draft-status role="status" aria-live="polite"></span>`;
+      actions.after(tools);
+    }
+  }
+  const clearDialog = document.createElement('dialog');
+  clearDialog.className = 'adc-incapacidad-confirm';
+  clearDialog.setAttribute('aria-labelledby', 'adcBD02ClearQuestion');
+  clearDialog.innerHTML = '<p id="adcBD02ClearQuestion">¿Querés limpiar el formulario BD-02? Se eliminarán sus datos ingresados y marcas No corresponde.</p><div class="toolbar"><button type="button" class="alt" data-bd02-draft-action="cancel" autofocus>Cancelar</button><button type="button" data-bd02-draft-action="confirm-clear">Sí, limpiar formulario</button></div>';
+  clearDialog.addEventListener('close', () => draftReturnFocus?.focus({preventScroll:true}));
+  const mncDialog = document.createElement('dialog');
+  mncDialog.className = 'adc-incapacidad-confirm';
+  mncDialog.setAttribute('aria-labelledby', 'adcBD02MncQuestion');
+  mncDialog.innerHTML = '<p id="adcBD02MncQuestion"></p><div class="toolbar"><button type="button" class="alt" data-bd02-mnc-cancel autofocus>Cancelar</button><button type="button" data-bd02-mnc-confirm>Sí, marcar No corresponde</button></div>';
+  mncDialog.addEventListener('close', () => {
+    mnc.get(pendingMncKey)?.button.focus({preventScroll:true});
+    pendingMncKey = undefined;
+  });
+  let smartViewer;
+  function initializeViewer() {
+    smartViewer = window.adcPdfViewer.create({
+      viewport,
+      size,
+      getScale: () => zoom,
+      doubleActivateFullscreen: () => !String(getSelection()).trim(),
+      toggleFullscreenOnDoubleActivate: () => true,
+      exitFullscreenOnBack: () => true,
+      setScale(value) {
+        zoom = value;
+        fit = false;
+        fitPage = false;
+        updateZoom();
+      },
+      fit(mode) {
+        fitPage = mode === 'page';
+        fit = !fitPage;
+        updateZoom();
+      }
+    });
+  }
 
   const measure = document.createElement('canvas').getContext('2d');
   const availableKeys = new Set([...fields, ...choices].map(field => field.key));
@@ -338,6 +403,27 @@
       mnc.set(field.key, controller);
       controller.button.dataset.bd02Mnc = field.key;
       controller.line.dataset.bd02MncLine = field.key;
+      const refreshMnc = controller.refresh;
+      controller.refresh = () => {
+        refreshMnc();
+        controller.button.hidden = input.disabled || required(field);
+        controller.button.dataset.bd02Filled = String(Boolean(input.value.trim()));
+      };
+      controller.button.addEventListener('click', event => {
+        if (marked.has(field.key) && Object.hasOwn(mncPrevious, field.key)) {
+          event.stopImmediatePropagation();
+          if (!controller.set(false, false)) return;
+          marked.delete(field.key);
+          input.value = mncPrevious[field.key];
+          delete mncPrevious[field.key];
+          changed();
+        } else if (input.value.trim()) {
+          event.stopImmediatePropagation();
+          pendingMncKey = field.key;
+          mncDialog.querySelector('p').textContent = `¿Querés marcar «${field.label}» como No corresponde? El texto se conservará para recuperarlo al quitar la marca.`;
+          mncDialog.showModal();
+        }
+      }, true);
     }
   }
   for (const choice of choices) {
@@ -406,12 +492,13 @@
   function stashEntries() {
     selectedEntries.forEach((id, row) => {
       const prefix = `cargos.${row}.`;
-      const snapshot = {values: {}, marked: [], touched: [], origin: [], acknowledged: {}};
+      const snapshot = {values: {}, marked: [], touched: [], origin: [], acknowledged: {}, mncPrevious: {}};
       for (const field of [...fields, ...choices].filter(field => field.row === row)) {
         const key = field.key.slice(prefix.length);
         snapshot.values[key] = values[field.key] || '';
         for (const [name, set] of [['marked', marked], ['touched', touched], ['origin', origin]]) if (set.has(field.key)) snapshot[name].push(key);
         if (field.key in acknowledged) snapshot.acknowledged[key] = acknowledged[field.key];
+        if (Object.hasOwn(mncPrevious, field.key)) snapshot.mncPrevious[key] = mncPrevious[field.key];
       }
       entryDrafts[`${selectedSchoolName}\n${id}`] = snapshot;
     });
@@ -426,6 +513,8 @@
         if (snapshot?.[name].includes(suffix)) set.add(field.key);
       }
       delete acknowledged[field.key];
+      delete mncPrevious[field.key];
+      if (snapshot?.mncPrevious && Object.hasOwn(snapshot.mncPrevious, suffix)) mncPrevious[field.key] = snapshot.mncPrevious[suffix];
       if (snapshot && suffix in snapshot.acknowledged) acknowledged[field.key] = snapshot.acknowledged[suffix];
     }
   }
@@ -488,30 +577,68 @@
     }
     for (const [key, items] of radios) values[key] = items.find(input => input.checked)?.value || '';
   }
-  function save() {
-    try {
-      (globalThis.adcUserStorage||localStorage).setItem(draftKey, JSON.stringify({
-        values,
-        marked: [...marked],
-        touched: [...touched],
-        origin: [...origin],
-        acknowledged,
-        selectedSchool,
-        selectedSchoolName: institution()?.name || selectedSchoolName,
-        selectedEntries,
-        entryDrafts,
-        selectionInitialized,
-        warnings,
-        legacySnapshot,
-        legacyReviewed
-      }));
-    } catch (error) {
-      status.textContent = `No se pudo guardar el borrador. ${error.message}`;
+  function draftData() {
+    return {values, marked:[...marked], mncPrevious, touched:[...touched], origin:[...origin], acknowledged,
+      selectedSchool, selectedSchoolName:institution()?.name || selectedSchoolName,
+      selectedEntries, entryDrafts, selectionInitialized, warnings, legacySnapshot, legacyReviewed};
+  }
+  function restoreDraft(draft) {
+    values = draft.values || {};
+    marked = new Set(draft.marked || []);
+    mncPrevious = Object.fromEntries(Object.entries(draft.mncPrevious || {}).filter(([key, value]) => mnc.has(key) && marked.has(key) && typeof value === 'string'));
+    touched = new Set(draft.touched || []);
+    origin = new Set(draft.origin || []);
+    acknowledged = draft.acknowledged || {};
+    selectedSchool = String(draft.selectedSchool || '');
+    selectedSchoolName = String(draft.selectedSchoolName || '');
+    selectedEntries = draft.selectedEntries || [];
+    entryDrafts = draft.entryDrafts || {};
+    selectionInitialized = draft.selectionInitialized === true;
+    warnings = draft.warnings || [];
+    legacySnapshot = draft.legacySnapshot || null;
+    legacyReviewed = draft.legacyReviewed !== false;
+  }
+  function draftStatus(state, message) {
+    for (const output of section.querySelectorAll('[data-adc-draft-status]')) {
+      output.dataset.saveState = state;
+      output.textContent = message;
     }
   }
+  function save() {
+    draftStatus('saving', 'Guardando…');
+    try {
+      (globalThis.adcUserStorage||localStorage).setItem(draftKey, JSON.stringify(draftData()));
+      draftStatus('saved', 'Guardado en este dispositivo');
+      return true;
+    } catch (error) {
+      status.textContent = `No se pudo guardar el borrador. ${error.message}`;
+      draftStatus('error', 'Error al guardar. Tus cambios siguen en pantalla.');
+      return false;
+    }
+  }
+  function clearDraft() {
+    readControls();
+    const previous = draftData();
+    restoreDraft({selectionInitialized:true});
+    for (const field of [...fields, ...choices].filter(field => field.profile)) {
+      values[field.key] = profileValue(field);
+      if (values[field.key]) origin.add(field.key);
+    }
+    if (!save()) {
+      restoreDraft(previous);
+      status.textContent = 'No se pudo limpiar BD-02. Se conserva el borrador anterior.';
+      return;
+    }
+    guidedReview.cancel();
+    invalidate();
+    updateSchoolOptions();
+    write();
+    refresh();
+    conflicts();
+    status.textContent = 'Formulario BD-02 limpiado. Datos disponibles del perfil precargados.';
+  }
   function invalidate() {
-
-
+    status.textContent = '';
     revision++;
     if (previewUrl) URL.revokeObjectURL(previewUrl);
     previewUrl = null;
@@ -695,6 +822,7 @@
       });
       review.append(backup);
     }
+    refreshReview();
   }
   function conflicts() {
     const container = section.querySelector('[data-bd02-conflicts]');
@@ -707,6 +835,7 @@
       if (!touched.has(field.key) && !marked.has(field.key) || next === String(values[field.key] || '') || acknowledged[field.key] === next) continue;
       const notice = document.createElement('div');
       notice.className = 'adc-bd02-conflict';
+      notice.dataset.severity = 'warning';
       const text = document.createElement('p');
       text.textContent = `${field.label}: el perfil contiene «${next || 'sin dato'}». El borrador conserva ${marked.has(field.key) ? 'la marca No corresponde' : 'tu corrección'}.`;
       notice.append(text);
@@ -733,7 +862,21 @@
         notice.append(button);
       }
       container.append(notice);
+      const go = document.createElement('button');
+      go.type = 'button';
+      go.className = 'alt';
+      go.textContent = 'Ir al campo';
+      go.addEventListener('click', () => {
+        const target = controls.get(field.key) || radios.get(field.key)?.[0];
+        if (!target) return;
+        section.querySelector('.adc-interinos-review-body > button').click();
+        target.scrollIntoView({block:'center', inline:'nearest'});
+        target.focus({preventScroll:true});
+        highlightReviewField(target);
+      });
+      notice.append(go);
     }
+    refreshReview();
   }
   function write() {
     for (const [key, input] of controls) {
@@ -823,19 +966,7 @@
       rawCurrent = (globalThis.adcUserStorage||localStorage).getItem(draftKey);
       const draft = JSON.parse(rawCurrent || 'null');
       if (draft && typeof draft === 'object' && !Array.isArray(draft)) {
-        values = draft.values || {};
-        marked = new Set(draft.marked || []);
-        touched = new Set(draft.touched || []);
-        origin = new Set(draft.origin || []);
-        acknowledged = draft.acknowledged || {};
-        selectedSchool = String(draft.selectedSchool || '');
-        selectedSchoolName = String(draft.selectedSchoolName || '');
-        selectedEntries = draft.selectedEntries || [];
-        entryDrafts = draft.entryDrafts || {};
-        selectionInitialized = draft.selectionInitialized === true;
-        warnings = draft.warnings || [];
-        legacySnapshot = draft.legacySnapshot || null;
-        legacyReviewed = draft.legacyReviewed !== false;
+        restoreDraft(draft);
       } else {
         rawPrevious = (globalThis.adcUserStorage||localStorage).getItem(oldDraftKey);
         const old = JSON.parse(rawPrevious || 'null');
@@ -870,11 +1001,13 @@
   function updateZoom() {
     if (!viewport.clientWidth) return;
     if (fit) zoom = Math.min(1, (viewport.clientWidth - 24) / (width * 96 / 72));
+    if (fitPage) zoom = Math.min((viewport.clientWidth - 24) / (width * 96 / 72), (viewport.clientHeight - 24) / (height * 96 / 72));
     zoom = Math.max(.25, Math.min(2, zoom));
     form.style.transform = `scale(${zoom})`;
     size.style.width = `${width * 96 / 72 * zoom}px`;
     size.style.height = `${(height * 2 + 18) * 96 / 72 * zoom}px`;
     section.querySelector('[data-bd02-zoom-value]').textContent = `${Math.round(zoom * 100)}%`;
+    smartViewer?.sync();
   }
   async function font() {
     if (!fontPromise) fontPromise = (async () => {
@@ -897,6 +1030,74 @@
     }
     return [...groups.values()];
   }});
+  function reviewIssues() {
+    const groups = new Map();
+    for (const issue of issues()) {
+      const field = fields.find(item => item.key === issue.key);
+      const group = field?.date;
+      const key = group || issue.key;
+      const input = controls.get(issue.key) || radios.get(issue.key)?.[0];
+      if (!groups.has(key)) groups.set(key, {
+        key,
+        title: group ? dates.find(item => item.key === group).label : field?.label || choices.find(item => item.key === key)?.label || 'Selección del trámite',
+        message: issue.message,
+        blocking: !issue.missing,
+        controls: []
+      });
+      const item = groups.get(key);
+      item.blocking ||= !issue.missing;
+      if (input) item.controls.push(input);
+      if (issue.key === 'establecimiento') item.controls.unshift(school);
+    }
+    for (const [key, previous] of Object.entries(mncPrevious)) {
+      const input = controls.get(key);
+      if (!marked.has(key) || !previous || input.disabled) continue;
+      groups.set(`mnc-restore-${key}`, {
+        key:`mnc-restore-${key}`,
+        title:`Texto recuperable — ${fields.find(field => field.key === key).label}`,
+        message:'Podés recuperar el texto anterior quitando la marca No corresponde.',
+        severity:'suggestion',
+        blocking:false,
+        controls:[mnc.get(key).button]
+      });
+    }
+    return [...groups.values()];
+  }
+  function refreshReview() {
+    if (!reviewPanel) return;
+    reviewPanel.refresh();
+    for (const issue of reviewIssues().filter(item => item.severity === 'suggestion')) {
+      const card = section.querySelector(`[data-review-key="${CSS.escape(issue.key)}"]`);
+      if (!card) continue;
+      card.dataset.severity = 'suggestion';
+      card.querySelector('p').textContent = `Sugerencia. ${issue.message}`;
+    }
+  }
+  function highlightReviewField(input) {
+    section.querySelectorAll('.adc-bd02-review-focus').forEach(node => node.classList.remove('adc-bd02-review-focus'));
+    input.classList.add('adc-bd02-review-focus');
+    input.classList.remove('adc-pending-pulse');
+    void input.offsetWidth;
+    input.classList.add('adc-pending-pulse');
+    setTimeout(() => input.classList.remove('adc-pending-pulse'), 2000);
+  }
+  function initializeReview() {
+    reviewPanel = window.adcInterinosReview.create({
+      root:section,
+      viewer:viewport.closest('.adc-pdf-viewer'),
+      conflicts:section.querySelector('[data-bd02-conflicts]'),
+      collect:reviewIssues,
+      save:changed
+    });
+    reviewPanel.setEnabled(true);
+    const reviewBody = section.querySelector('.adc-interinos-review-body');
+    reviewBody.id = 'adcBD02ReviewBody';
+    const reviewToggle = section.querySelector('.adc-interinos-review-toggle');
+    reviewToggle.setAttribute('aria-controls', reviewBody.id);
+    section.querySelector('.adc-interinos-review').addEventListener('click', event => {
+      if (event.target.closest('button')?.textContent === 'Ir al campo' && form.contains(document.activeElement)) highlightReviewField(document.activeElement);
+    });
+  }
   function validate(allowMissing = false) {
     readControls();
     refresh();
@@ -914,6 +1115,7 @@
     return false;
   }
   async function completedPdf() {
+    if (!reviewPanel.canGenerate()) throw Error('Revisá los errores bloqueantes de BD-02 antes de generar el PDF.');
     if (!pdfBytes) {
       const response = await fetch('assets/formularios/BD-02.pdf');
       if (!response.ok) throw Error('No se pudo cargar el PDF adjunto.');
@@ -983,7 +1185,24 @@
       return;
     }
     try {await font();} catch(error) {status.textContent=error.message;return;}
-    if (!validate(true) || (!reviewed&&!await guidedReview.review({action})) || !validate(true)) return;
+    const canGenerate = reviewPanel.check();
+    refreshReview();
+    if (!canGenerate) {
+      status.textContent = issues().find(issue => !issue.missing)?.message || 'Revisá los errores bloqueantes de BD-02.';
+      return;
+    }
+    if (!validate(true)) return;
+    if (!reviewed) {
+      section.dataset.bd02GuidedReview = 'true';
+      let accepted;
+      try {
+        accepted = await guidedReview.review({action});
+      } finally {
+        delete section.dataset.bd02GuidedReview;
+      }
+      if (!accepted) return;
+    }
+    if (!validate(true)) return;
     const currentRevision = revision;
     const buttons = [...section.querySelectorAll('[data-bd02-action]')];
     buttons.forEach(button => button.disabled = true);
@@ -1055,6 +1274,7 @@
   form.addEventListener('input', event => {
     const key = event.target.dataset.bd02Field || event.target.dataset.bd02Choice;
     if (!key) return;
+    event.target.classList.remove('adc-bd02-review-focus', 'adc-pending-pulse');
     touched.add(key);
     origin.delete(key);
     const field = [...fields, ...choices].find(field => field.key === key);
@@ -1107,8 +1327,37 @@
     syncProfile();
   });
   section.querySelector('[data-bd02-back]').addEventListener('click', () => tab('tramites'));
-  section.querySelector('[data-bd02-pending]').addEventListener('click', async () => {if(await guidedReview.review({guided:true}))action('preview',true);});
+  section.querySelector('[data-bd02-pending]').addEventListener('click', () => {reviewPanel.open(); refreshReview();});
   section.querySelectorAll('[data-bd02-action]').forEach(button => button.addEventListener('click', () => action(button.dataset.bd02Action)));
+  section.addEventListener('click', event => {
+    if (event.target.closest('[data-bd02-mnc-cancel]')) {mncDialog.close(); return;}
+    if (event.target.closest('[data-bd02-mnc-confirm]')) {
+      const key = pendingMncKey;
+      const input = controls.get(key);
+      const field = fields.find(item => item.key === key);
+      if (input && !input.disabled && !required(field)) {
+        const previous = input.value;
+        input.value = '';
+        if (mnc.get(key).set(true, false)) {
+          mncPrevious[key] = previous;
+          marked.add(key);
+          touched.add(key);
+          origin.delete(key);
+          acknowledged[key] = profileValue(field);
+          changed();
+        } else input.value = previous;
+      }
+      mncDialog.close();
+      return;
+    }
+    const button = event.target.closest('[data-bd02-draft-action]');
+    if (!button) return;
+    const operation = button.dataset.bd02DraftAction;
+    if (operation === 'save') {readControls(); save();}
+    if (operation === 'clear') {draftReturnFocus = button; clearDialog.showModal();}
+    if (operation === 'cancel') clearDialog.close();
+    if (operation === 'confirm-clear') {clearDialog.close(); clearDraft();}
+  });
   section.querySelectorAll('[data-bd02-zoom]').forEach(button => button.addEventListener('click', () => {
     fit = button.dataset.bd02Zoom === 'fit';
     if (!fit) zoom += button.dataset.bd02Zoom === 'in' ? .15 : -.15;
@@ -1123,12 +1372,18 @@
   });
   window.adcBD02Open = () => {
     if (!initialized) {
+      configureActions();
+      initializeViewer();
+      initializeReview();
       load();
       initialized = true;
     }
     updateSchoolOptions();
     syncProfile();
     tab('bd02');
+    reviewPanel.setEnabled(true);
+    refreshReview();
+    smartViewer.setEnabled(true);
     updateZoom();
     section.querySelector('h2').focus();
     if (window.PDFLib) font().then(refresh).catch(error => {

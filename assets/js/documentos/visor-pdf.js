@@ -1,6 +1,7 @@
 // Navegación visual. La escala y el PDF siguen perteneciendo al motor del formulario.
 (() => {
-  function create({viewport,size,getScale,setScale,fit}) {
+  function create({viewport,size,getScale,setScale,fit,doubleActivateFullscreen=()=>false,
+    toggleFullscreenOnDoubleActivate=()=>false,exitFullscreenOnBack=()=>false}) {
     const frame=document.createElement('div');
     frame.className='adc-pdf-viewer';
     viewport.before(frame);
@@ -28,9 +29,46 @@
     const output=controls.querySelector('output');
     const fullButton=controls.querySelector('[data-viewer-action=fullscreen]');
     let enabled=false,timer,drag=null,pinch=null,controlsActive=false,previousOverflow='';
+    let fullscreenPending=false,historyEntry=null,historyCleanup=null,finishHistoryCleanup=null;
     const interactive='input,textarea,select,button,a,label,[contenteditable],.adc-document-editor-shield';
     const editing=()=>document.body.classList.contains('adcDesignActive');
     const blocked=target=>editing()||Boolean(target.closest(interactive));
+    let tapStart=null,lastTap=null,lastTouchTime=-Infinity;
+    function resetTaps(){tapStart=null;lastTap=null;}
+    function enterFullscreen(){
+      if((document.fullscreenElement===frame||frame.classList.contains('adc-pdf-expanded'))&&!toggleFullscreenOnDoubleActivate())return;
+      fullscreen();
+    }
+    viewport.addEventListener('dblclick',event=>{
+      if(!enabled||!doubleActivateFullscreen()||blocked(event.target)||performance.now()-lastTouchTime<700)return;
+      event.preventDefault();enterFullscreen();
+    });
+    viewport.addEventListener('touchstart',event=>{
+      lastTouchTime=performance.now();
+      if(!enabled||!doubleActivateFullscreen()||event.touches.length!==1||blocked(event.target)){
+        resetTaps();return;
+      }
+      const touch=event.touches[0];
+      tapStart={id:touch.identifier,x:touch.clientX,y:touch.clientY,time:performance.now()};
+    },{passive:true});
+    viewport.addEventListener('touchmove',event=>{
+      const touch=[...event.touches].find(item=>item.identifier===tapStart?.id);
+      if(!touch||event.touches.length!==1||Math.hypot(touch.clientX-tapStart.x,touch.clientY-tapStart.y)>12)resetTaps();
+    },{passive:true});
+    viewport.addEventListener('touchend',event=>{
+      const start=tapStart;
+      tapStart=null;lastTouchTime=performance.now();
+      const touch=[...event.changedTouches].find(item=>item.identifier===start?.id);
+      if(!enabled||!doubleActivateFullscreen()||!start||!touch||event.touches.length||blocked(event.target)||lastTouchTime-start.time>350){
+        resetTaps();return;
+      }
+      if(Math.hypot(touch.clientX-start.x,touch.clientY-start.y)>12){resetTaps();return;}
+      if(lastTap&&lastTouchTime-lastTap.time<400&&Math.hypot(touch.clientX-lastTap.x,touch.clientY-lastTap.y)<28){
+        if(event.cancelable)event.preventDefault();
+        resetTaps();enterFullscreen();
+      }else lastTap={x:touch.clientX,y:touch.clientY,time:lastTouchTime};
+    },{passive:false});
+    viewport.addEventListener('touchcancel',resetTaps,{passive:true});
     const clamp=value=>Math.max(.25,Math.min(2,value));
     function schedule(){
       clearTimeout(timer);
@@ -68,19 +106,55 @@
         frame.classList.remove('adc-pdf-expanded');document.body.style.overflow=previousOverflow;
       }
       fullButton.textContent='Pantalla completa';fullButton.setAttribute('aria-pressed','false');
+      if(historyEntry){
+        const entry=historyEntry;
+        historyEntry=null;
+        if(history.state?.adcPdfFullscreen===entry){
+          historyCleanup=new Promise(resolve=>{finishHistoryCleanup=resolve;});
+          history.back();
+        }
+      }
     }
     async function fullscreen(){
-      if(document.fullscreenElement===frame){await document.exitFullscreen();return;}
-      if(frame.classList.contains('adc-pdf-expanded')){leaveExpanded();sync();return;}
+      if(fullscreenPending)return;
+      fullscreenPending=true;
       try{
-        if(!frame.requestFullscreen)throw Error('Sin pantalla completa nativa');
-        await frame.requestFullscreen();
-      }catch{
-        previousOverflow=document.body.style.overflow;
-        document.body.style.overflow='hidden';frame.classList.add('adc-pdf-expanded');
+        if(document.fullscreenElement===frame){await document.exitFullscreen();return;}
+        if(frame.classList.contains('adc-pdf-expanded')){leaveExpanded();sync();return;}
+        if(historyCleanup)await historyCleanup;
+        if(!enabled)return;
+        try{
+          if(!frame.requestFullscreen)throw Error('Sin pantalla completa nativa');
+          await frame.requestFullscreen();
+        }catch{
+          previousOverflow=document.body.style.overflow;
+          document.body.style.overflow='hidden';frame.classList.add('adc-pdf-expanded');
+        }
+        if(exitFullscreenOnBack()){
+          const entry=crypto.randomUUID();
+          try{
+            history.pushState({...history.state,adcPdfFullscreen:entry},'');
+            historyEntry=entry;
+          }catch{
+            historyEntry=null;
+          }
+        }
+        fullButton.textContent='Salir de pantalla completa';fullButton.setAttribute('aria-pressed','true');reveal();
+      }finally{
+        fullscreenPending=false;
       }
-      fullButton.textContent='Salir de pantalla completa';fullButton.setAttribute('aria-pressed','true');reveal();
     }
+    window.addEventListener('popstate',()=>{
+      if(finishHistoryCleanup){
+        const resolve=finishHistoryCleanup;
+        historyCleanup=null;finishHistoryCleanup=null;
+        resolve();
+      }
+      if(historyEntry&&history.state?.adcPdfFullscreen!==historyEntry){
+        historyEntry=null;
+        if(document.fullscreenElement===frame||frame.classList.contains('adc-pdf-expanded'))fullscreen();
+      }
+    });
     controls.addEventListener('click',event=>{
       const action=event.target.closest('[data-viewer-action]')?.dataset.viewerAction;
       if(action==='out')scaleAt(getScale()-.1);
@@ -156,6 +230,7 @@
     });
     new ResizeObserver(sync).observe(viewport);
     function setEnabled(value){
+      resetTaps();lastTouchTime=-Infinity;
       enabled=Boolean(value);frame.classList.toggle('adc-pdf-viewer-active',enabled);
       controls.hidden=!enabled;vertical.hidden=!enabled;
       if(enabled){reveal();sync();}

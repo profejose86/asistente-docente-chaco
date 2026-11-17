@@ -1,5 +1,15 @@
 # Estructura y ejecución
 
+Para las auditorías individuales de formularios, consultar el criterio MNC aprobado y su estado real en [DP-01 — implementación por etapas](dp01-implementacion.md#criterio-aprobado-para-auditar-mnc). Comprobar confirmación al anular contenido, recuperación al desmarcar, persistencia y salidas. Distinguir capacidades implementadas y probadas de las aprobadas pendientes.
+
+## Rondas de auditoría acordadas
+
+El propietario estableció el 17/11/2026 la palabra clave **Auditoría 01** para iniciar la primera ronda de revisión de todos los formularios, uno por uno. La ronda comenzará cuando el propietario lo indique; este acuerdo sólo registra el procedimiento futuro y mantiene el alcance actual de DP-01.
+
+Para cada formulario registrar fecha, archivos y versión revisados, funciones presentes, faltantes, errores comprobados, oportunidades de agregar, quitar o reutilizar funciones, decisiones del propietario y verificaciones realizadas. Comparar con capacidades efectivamente implementadas en los formularios de referencia, incluyendo el criterio MNC documentado. Diferenciar propuestas, cambios aprobados, implementados y probados. Conservar los pendientes y la evidencia de cada revisión para retomar sin perder decisiones. La revisión por sí sola no autoriza cambios en formularios protegidos, commit, push o publicación.
+
+**Auditoría 02** identificará una segunda ronda posterior. Utilizará los resultados y decisiones de Auditoría 01 como punto de partida, comprobará su estado y registrará nuevas propuestas y cambios sin reemplazar el historial de la primera ronda.
+
 La sincronización docente está implementada con aislamiento por cuenta, consentimiento y versiones por documento. Su clasificación, primera importación, archivos y límites están en [sincronizacion-usuarios.md](sincronizacion-usuarios.md). Tras la aprobación desde PC y celular, el usuario autorizó el 14/11/2026 integrar en `main`, publicar y aplicar en producción las migraciones `202611140001_adc_user_records.sql` y `202611140002_adc_sync_conflict_http.sql`. Ambas se verificaron sin cambiar los perfiles existentes; ver [cierre de publicación](cierre-publicacion-sincronizacion.md). El [staging](prueba-sincronizacion.md) conserva su Supabase independiente. Las referencias históricas siguientes a datos exclusivamente locales describen la etapa previa; la subida de estos datos requiere autorización explícita del usuario en cada dispositivo.
 
 El mapa vigente está en [arquitectura-mapa.md](arquitectura-mapa.md); la [auditoría y reglas de modularización](arquitectura-auditoria.md) distingue lo refactorizado de la deuda pendiente. `AGENTS.md` registra cómo reutilizar estos módulos. Regenerar con `npm run architecture:audit` y verificar con `npm run architecture:check`.

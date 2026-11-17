@@ -87,6 +87,7 @@
   let draftToolbars=null,clearDialog=null,draftReturnFocus=null;
   const smartViewer=window.adcPdfViewer.create({
     viewport,size:documentSize,getScale:()=>zoom,
+    doubleActivateFullscreen:()=>Boolean(preparedDocument()?.doubleActivateFullscreen),
     setScale(value){zoom=value;fitWidth=false;fitPage=false;updateZoom();},
     fit(mode){fitPage=mode==='page';fitWidth=!fitPage;updateZoom();}
   });
