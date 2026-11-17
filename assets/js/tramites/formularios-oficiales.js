@@ -90,6 +90,7 @@
     setScale(value){zoom=value;fitWidth=false;fitPage=false;updateZoom();},
     fit(mode){fitPage=mode==='page';fitWidth=!fitPage;updateZoom();}
   });
+  let interinosReview=null;
 
   function matches(condition) {
     if (!condition) return true;
@@ -111,7 +112,10 @@
     return String(value || '').normalize('NFD').replace(/[\u0300-\u036f]/g,'').trim().toLowerCase();
   }
   function profileValue(field) {
-    if(field.profileId)return document.getElementById(field.profileId)?.value || '';
+    if(field.profileId){
+      const value=document.getElementById(field.profileId)?.value || '';
+      return activeForm?.id==='interinos'&&field.type==='date'?value.replace(/^(\d{2})\/(\d{2})\/(\d{4})$/,'$3-$2-$1'):value;
+    }
     const property=preparedDocument()?.fields?.[field.path||field.key]?.institution;
     if(!property)return '';
     const known=inst.filter(item=>item.name?.trim());
@@ -126,14 +130,14 @@
     return `adc-official-form-${form.id}-draft-v1`;
   }
   function draftStatus(state,message){
-    if(activeForm?.id!=='incapacidad'||!draftToolbars)return;
+    if((activeForm?.id!=='incapacidad'&&!preparedDocument()?.commonActions)||!draftToolbars)return;
     for(const toolbar of draftToolbars){
       const output=toolbar.querySelector('[data-adc-draft-status]');
       output.dataset.saveState=state;output.textContent=message;
     }
   }
   function configureDraftActions(){
-    const enabled=activeForm?.id==='incapacidad';
+    const enabled=activeForm?.id==='incapacidad'||Boolean(preparedDocument()?.commonActions);
     if(enabled){
       const primaryIcons={
         preview:'<path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/>',
@@ -151,7 +155,7 @@
       const clearIcon='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m16 3 3 3-8 8-3-3 8-8ZM8 11l5 5-5 6-6-6 6-5ZM4 16l4 4m-1-7 4 4"/></svg>';
       draftToolbars=[...section.querySelectorAll('.adc-official-actions')].map(actions=>{
         const toolbar=document.createElement('div');toolbar.className='adc-incapacidad-draft-tools';
-        toolbar.setAttribute('role','group');toolbar.setAttribute('aria-label','Guardar o limpiar el borrador de Incapacidad');
+        toolbar.setAttribute('role','group');toolbar.setAttribute('aria-label','Guardar o limpiar el borrador del formulario');
         toolbar.innerHTML=`<button type="button" class="alt" data-adc-draft-action="save">${saveIcon}Guardar cambios</button><button type="button" class="alt" data-adc-draft-action="clear">${clearIcon}Limpiar formulario</button><span data-adc-draft-status role="status" aria-live="polite"></span>`;
         actions.after(toolbar);return toolbar;
       });
@@ -697,6 +701,7 @@
     }
     updatePending();
     updateZoom();
+    if(preparedDocument()?.reviewPanel)interinosReview?.refresh();
   }
   function renderProfileConflicts() {
     const container = section.querySelector('[data-adc-profile-conflicts]');
@@ -704,15 +709,18 @@
     for (const field of formFields()) {
       if ((!field.profileId && !preparedDocument()?.fields?.[field.path]?.institution) || field.repeatIndex > 0 || (!touched.has(field.path) && !marked.has(field.path))) continue;
       const next = profileValue(field);
-      if (next === String(values[field.path] || '') || profileAcknowledged[field.path] === next) continue;
+      const comparable=value=>field.document?String(value||'').replace(/[.\s-]/g,''):normalized(value).replace(/\s+/g,' ');
+      const same=preparedDocument()?.reviewPanel?comparable(next)===comparable(values[field.path]):next===String(values[field.path]||'');
+      if (same || profileAcknowledged[field.path] === next) continue;
       const notice = document.createElement('div');
       notice.className = 'adc-profile-conflict';
+      if(preparedDocument()?.reviewPanel){const heading=document.createElement('strong');heading.textContent='Diferencia con el perfil — aviso revisable';notice.append(heading);}
       const text = document.createElement('p');
       text.textContent = `${field.label}: el perfil contiene «${next || 'sin dato'}». Revisá la diferencia con el borrador${marked.has(field.path) ? ' marcado No corresponde' : ''}.`;
       notice.append(text);
       for (const useProfile of [false,true]) {
         const button = document.createElement('button');
-        button.type = 'button';button.className = 'alt';button.textContent = useProfile ? 'Usar dato del perfil' : 'Conservar en el formulario';
+        button.type = 'button';button.className = 'alt';button.textContent = useProfile ? 'Usar dato del perfil' : preparedDocument()?.reviewPanel?'Mantener solo en este formulario':'Conservar en el formulario';
         button.addEventListener('click',() => {
           profileAcknowledged[field.path] = next;
           if (useProfile) {
@@ -726,6 +734,7 @@
       }
       container.append(notice);
     }
+    if(preparedDocument()?.reviewPanel)interinosReview?.refresh();
   }
   function readFieldValue(field) {
     const controls = allControls(field.path);
@@ -879,13 +888,19 @@
     const field = formFields().find(item => item.path === path);
     if (!field) return;
     const controls = allControls(path);
+    const previousValue=values[path];
     if (field.type === 'checks') values[path] = controls.filter(item => item.checked).map(item => item.value);
     else if (field.type === 'choices') {
       if (input.checked) values[path] = input.value;
     } else values[path] = input.value;
+    // El blur posterior a input no debe reconstruir una tarjeta durante su clic.
+    if(preparedDocument()?.reviewPanel&&touched.has(path)&&JSON.stringify(previousValue)===JSON.stringify(values[path]))return;
     touched.add(path);
     profileOrigin.delete(path);
-    if (field.profileId) profileAcknowledged[path] = profileValue(field);
+    if (field.profileId) {
+      if(preparedDocument()?.reviewPanel)delete profileAcknowledged[path];
+      else profileAcknowledged[path] = profileValue(field);
+    }
     input.setCustomValidity('');
     const schoolChanged=path==='establecimiento'&&syncPreparedInstitution();
     invalidatePreview();
@@ -927,6 +942,18 @@
     return Boolean(validationMessage(field)) && (isEmptyValue(values[field.path]) || field.requiredOptions || field.conditionalOption || field.requireOneOf);
   }
   const guidedReview = adcGuidedValidation.create({root:section,save:persistCurrentValues,collect:()=>formFields().filter(missingField).map(field=>({key:field.path,label:`${field.label}${field.repeatLabel ? ` — ${field.repeatLabel} ${field.repeatIndex+1}` : ''}`,get controls(){return allControls(field.path);}}))});
+  function interinosIssues(){
+    if(!preparedDocument()?.reviewPanel)return [];
+    const issues=[];
+    for(const field of formFields()){
+      const controls=allControls(field.path);if(!controls.length)continue;
+      const message=validationMessage(field)||(controls.some(input=>input.validity.typeMismatch)?`Revisá el formato de ${field.label.toLowerCase()}.`:'');
+      if(message)issues.push({key:field.path,title:field.label,message,controls,blocking:true});
+    }
+    for(const [i,message] of (documentLayout?.errors||[]).entries())issues.push({key:`layout-${i}`,title:'Texto que excede el casillero',message,blocking:true,controls:allControls(formFields().find(field=>message.startsWith(field.label+':'))?.path)});
+    if(!String(document.getElementById('dni')?.value||'').trim())issues.push({key:'profile-dni',title:'DNI del perfil pendiente',message:'El perfil no tiene un DNI para comparar. Esto no verifica la identidad ni impide conservar el borrador.',blocking:false,actionLabel:'Revisar Mi perfil docente',action(){persistCurrentValues();tab('profile');document.getElementById('dni')?.focus()}});
+    return issues;
+  }
   function validate(allowMissing = false) {
     persistCurrentValues();
     let firstInvalid = null;
@@ -1130,6 +1157,7 @@
     return layout;
   }
   async function createPdf() {
+    if(preparedDocument()?.reviewPanel&&!interinosReview.canGenerate())throw new Error('Resolvé los datos obligatorios del panel de revisión antes de generar el PDF.');
     const prepared = preparedDocument();
     if (prepared) {
       const response = await fetch(prepared.pdf);
@@ -1169,7 +1197,8 @@
   }
   async function runAction(action,reviewed=false) {
     if (!activeForm) return;
-    if (!preparedReadOnly() && (!validate(true) || (!reviewed&&!await guidedReview.review({action})) || !validate(true))) return;
+    if(preparedDocument()?.reviewPanel){persistCurrentValues();if(!interinosReview.check()||!validate())return;}
+    else if (!preparedReadOnly() && (!validate(true) || (!reviewed&&!await guidedReview.review({action})) || !validate(true))) return;
     const buttons = [...section.querySelectorAll('[data-adc-official-action]')];
     buttons.forEach(button => {button.disabled = true;});
     status.textContent = 'Generando el PDF…';
@@ -1217,7 +1246,11 @@
     section.dataset.adcFormId = form.id;
     invalidatePreview();
     activeForm = form;
+    documentLayout=null;
     const prepared = preparedDocument();
+    section.dataset.adcCommonActions=String(Boolean(prepared?.commonActions));
+    if(prepared?.reviewPanel&&!interinosReview)interinosReview=window.adcInterinosReview.create({root:section,viewer:viewport.closest('.adc-pdf-viewer'),conflicts:section.querySelector('[data-adc-profile-conflicts]'),collect:interinosIssues,save:persistCurrentValues});
+    interinosReview?.setEnabled(Boolean(prepared?.reviewPanel));
     fullScreenButton.hidden=!prepared?.fullScreen;
     fitPage=false;
     if(prepared?.smartViewer)fitWidth=true;
@@ -1231,7 +1264,7 @@
     notices.replaceChildren();
     for (const message of draftWarnings) {
       const paragraph = document.createElement('p');
-      if(form.id==='incapacidad')paragraph.dataset.adcDraftNotice='';
+      if(form.id==='incapacidad'||prepared?.commonActions)paragraph.dataset.adcDraftNotice='';
       paragraph.textContent = message; notices.append(paragraph);
     }
     for (const source of form.extraSources || []) {
@@ -1255,7 +1288,7 @@
       for(const group of form.sections)for(const field of group.fields){
         if(field.legacyOnly&&!prepared.fields?.[field.key]&&!isEmptyValue(values[field.key])){
           const legacy=document.createElement('p');legacy.className='warning';
-          if(form.id==='incapacidad')legacy.dataset.adcDraftNotice='';
+          if(form.id==='incapacidad'||prepared?.commonActions)legacy.dataset.adcDraftNotice='';
           legacy.textContent=`Dato del borrador anterior conservado para revisar: ${field.label}: ${values[field.key]}. No se ubica ni se exporta automáticamente porque reúne datos de varios casilleros.`;notices.append(legacy);
         }
       }
@@ -1311,7 +1344,7 @@
   sheet.addEventListener('submit',event => event.preventDefault());
   section.addEventListener('click',event => {
     const draftButton=event.target.closest('[data-adc-draft-action]');
-    if(draftButton&&activeForm?.id==='incapacidad'){
+    if(draftButton&&(activeForm?.id==='incapacidad'||preparedDocument()?.commonActions)){
       const action=draftButton.dataset.adcDraftAction;
       if(action==='save')persistCurrentValues();
       if(action==='clear'){draftReturnFocus=draftButton;clearDialog.showModal();}
@@ -1325,7 +1358,7 @@
   });
   section.addEventListener('input',onFieldChange);
   section.addEventListener('change',onFieldChange);
-  section.querySelector('[data-adc-document-pending]').addEventListener('click',async() => {if(await guidedReview.review({guided:true}))runAction('preview',true);});
+  section.querySelector('[data-adc-document-pending]').addEventListener('click',async() => {if(preparedDocument()?.reviewPanel){interinosReview.open();return;}if(await guidedReview.review({guided:true}))runAction('preview',true);});
   section.querySelectorAll('[data-adc-zoom]').forEach(button => button.addEventListener('click',() => {
     const action = button.dataset.adcZoom;
     fitPage=false;

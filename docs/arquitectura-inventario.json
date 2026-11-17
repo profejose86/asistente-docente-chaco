@@ -57,6 +57,7 @@
     "assets/css/tramites/dj02-registro.css",
     "assets/css/tramites/dl01.css",
     "assets/css/tramites/formularios-oficiales.css",
+    "assets/css/tramites/interinos.css",
     "assets/css/tramites/ol01.css",
     "assets/css/tramites/sc01.css",
     "assets/datos/ajustes-pagina.json",
@@ -80,6 +81,8 @@
     "assets/formularios/Formulario-6.pdf",
     "assets/formularios/Incapacidad-pagina-1.png",
     "assets/formularios/Incapacidad.pdf",
+    "assets/formularios/Interinos-Expectativas-pagina-1.png",
+    "assets/formularios/Interinos-Expectativas.pdf",
     "assets/formularios/Reubicacion-pagina-1.png",
     "assets/formularios/Reubicacion.pdf",
     "assets/formularios/SC-01-plantilla.png",
@@ -167,6 +170,7 @@
     "assets/js/tramites/dl01-reglas.js",
     "assets/js/tramites/formularios-oficiales-datos.js",
     "assets/js/tramites/formularios-oficiales.js",
+    "assets/js/tramites/interinos-revision.js",
     "assets/js/tramites/mnc-adaptadores.js",
     "assets/js/tramites/ol01.js",
     "assets/js/tramites/sc01.js",
@@ -227,6 +231,7 @@
     "docs/funciones-respaldo.md",
     "docs/google-y-recuperacion-staging.md",
     "docs/incapacidad-pdf-piloto.md",
+    "docs/interinos-formulario.md",
     "docs/ol01-revision.md",
     "docs/prueba-contact-icon.md",
     "docs/prueba-sincronizacion.md",
@@ -279,6 +284,7 @@
     "tests/geografia.test.cjs",
     "tests/incapacidad-pdf.test.cjs",
     "tests/ingreso.test.cjs",
+    "tests/interinos-pdf.test.cjs",
     "tests/local-editor-bridge.test.cjs",
     "tests/local-editor-ui.test.cjs",
     "tests/mbit.test.cjs",
@@ -440,6 +446,7 @@
         "assets/datos/formularios-pdf.js",
         "assets/js/documentos/pdf-campos.js",
         "assets/js/documentos/visor-pdf.js",
+        "assets/js/tramites/interinos-revision.js",
         "assets/js/tramites/formularios-oficiales.js",
         "assets/js/tramites/bd02.js",
         "assets/js/tramites/busqueda-inteligente.js",
@@ -484,6 +491,7 @@
         "assets/css/interfaz/responsive.css",
         "assets/css/tramites/sc01.css",
         "assets/css/tramites/formularios-oficiales.css",
+        "assets/css/tramites/interinos.css",
         "assets/css/tramites/bd02.css",
         "assets/css/tramites/dl01.css",
         "assets/css/perfil/datos-personales.css"
@@ -565,7 +573,7 @@
     },
     {
       "file": "assets/css/base.css",
-      "bytes": 26325,
+      "bytes": 26102,
       "lines": 224,
       "generated": false,
       "functions": [],
@@ -574,7 +582,7 @@
     },
     {
       "file": "assets/css/calendario/base.css",
-      "bytes": 11899,
+      "bytes": 11767,
       "lines": 133,
       "generated": false,
       "functions": [],
@@ -583,7 +591,7 @@
     },
     {
       "file": "assets/css/calendario/meses.css",
-      "bytes": 696,
+      "bytes": 688,
       "lines": 9,
       "generated": false,
       "functions": [],
@@ -592,7 +600,7 @@
     },
     {
       "file": "assets/css/calendario/navegacion.css",
-      "bytes": 302,
+      "bytes": 297,
       "lines": 6,
       "generated": false,
       "functions": [],
@@ -601,7 +609,7 @@
     },
     {
       "file": "assets/css/calendario/solicitudes.css",
-      "bytes": 1924,
+      "bytes": 1903,
       "lines": 22,
       "generated": false,
       "functions": [],
@@ -610,7 +618,7 @@
     },
     {
       "file": "assets/css/documentos/panel.css",
-      "bytes": 2353,
+      "bytes": 2320,
       "lines": 34,
       "generated": false,
       "functions": [],
@@ -664,7 +672,7 @@
     },
     {
       "file": "assets/css/interfaz/dialogos.css",
-      "bytes": 286,
+      "bytes": 282,
       "lines": 5,
       "generated": false,
       "functions": [],
@@ -673,7 +681,7 @@
     },
     {
       "file": "assets/css/interfaz/espacio-trabajo.css",
-      "bytes": 2465,
+      "bytes": 2427,
       "lines": 39,
       "generated": false,
       "functions": [],
@@ -691,7 +699,7 @@
     },
     {
       "file": "assets/css/interfaz/mnc.css",
-      "bytes": 983,
+      "bytes": 976,
       "lines": 8,
       "generated": false,
       "functions": [],
@@ -700,7 +708,7 @@
     },
     {
       "file": "assets/css/interfaz/navegacion.css",
-      "bytes": 554,
+      "bytes": 548,
       "lines": 7,
       "generated": false,
       "functions": [],
@@ -745,7 +753,7 @@
     },
     {
       "file": "assets/css/interfaz/validacion-guiada.css",
-      "bytes": 2109,
+      "bytes": 2092,
       "lines": 18,
       "generated": false,
       "functions": [],
@@ -763,7 +771,7 @@
     },
     {
       "file": "assets/css/perfil/nombres.css",
-      "bytes": 958,
+      "bytes": 948,
       "lines": 11,
       "generated": false,
       "functions": [],
@@ -772,7 +780,7 @@
     },
     {
       "file": "assets/css/perfil/revision.css",
-      "bytes": 975,
+      "bytes": 966,
       "lines": 10,
       "generated": false,
       "functions": [],
@@ -781,7 +789,7 @@
     },
     {
       "file": "assets/css/tramites/bd02.css",
-      "bytes": 4303,
+      "bytes": 4262,
       "lines": 42,
       "generated": false,
       "functions": [],
@@ -790,7 +798,7 @@
     },
     {
       "file": "assets/css/tramites/buscador.css",
-      "bytes": 3136,
+      "bytes": 3111,
       "lines": 26,
       "generated": false,
       "functions": [],
@@ -799,7 +807,7 @@
     },
     {
       "file": "assets/css/tramites/catalogo.css",
-      "bytes": 564,
+      "bytes": 555,
       "lines": 10,
       "generated": false,
       "functions": [],
@@ -808,7 +816,7 @@
     },
     {
       "file": "assets/css/tramites/dj01-advertencias.css",
-      "bytes": 1456,
+      "bytes": 1442,
       "lines": 15,
       "generated": false,
       "functions": [],
@@ -817,7 +825,7 @@
     },
     {
       "file": "assets/css/tramites/dj01-distribucion.css",
-      "bytes": 4784,
+      "bytes": 4705,
       "lines": 80,
       "generated": false,
       "functions": [],
@@ -826,7 +834,7 @@
     },
     {
       "file": "assets/css/tramites/dj02-base.css",
-      "bytes": 1336,
+      "bytes": 1329,
       "lines": 8,
       "generated": false,
       "functions": [],
@@ -835,7 +843,7 @@
     },
     {
       "file": "assets/css/tramites/dj02-formulario.css",
-      "bytes": 4100,
+      "bytes": 4062,
       "lines": 39,
       "generated": false,
       "functions": [],
@@ -844,7 +852,7 @@
     },
     {
       "file": "assets/css/tramites/dj02-plantilla.css",
-      "bytes": 2798,
+      "bytes": 2767,
       "lines": 32,
       "generated": false,
       "functions": [],
@@ -853,7 +861,7 @@
     },
     {
       "file": "assets/css/tramites/dj02-registro.css",
-      "bytes": 2482,
+      "bytes": 2456,
       "lines": 27,
       "generated": false,
       "functions": [],
@@ -871,8 +879,17 @@
     },
     {
       "file": "assets/css/tramites/formularios-oficiales.css",
-      "bytes": 23156,
+      "bytes": 23588,
       "lines": 194,
+      "generated": false,
+      "functions": [],
+      "globals": [],
+      "storageKeys": []
+    },
+    {
+      "file": "assets/css/tramites/interinos.css",
+      "bytes": 1853,
+      "lines": 19,
       "generated": false,
       "functions": [],
       "globals": [],
@@ -889,7 +906,7 @@
     },
     {
       "file": "assets/css/tramites/sc01.css",
-      "bytes": 5810,
+      "bytes": 5512,
       "lines": 299,
       "generated": false,
       "functions": [],
@@ -907,7 +924,7 @@
     },
     {
       "file": "assets/datos/config-publica.js",
-      "bytes": 358,
+      "bytes": 356,
       "lines": 3,
       "generated": false,
       "functions": [],
@@ -929,8 +946,8 @@
     },
     {
       "file": "assets/datos/formularios-pdf.js",
-      "bytes": 33127,
-      "lines": 398,
+      "bytes": 35570,
+      "lines": 434,
       "generated": false,
       "functions": [],
       "globals": [
@@ -1111,7 +1128,7 @@
     },
     {
       "file": "assets/js/core/cursos.js",
-      "bytes": 2576,
+      "bytes": 2532,
       "lines": 45,
       "generated": false,
       "functions": [
@@ -1151,7 +1168,7 @@
     },
     {
       "file": "assets/js/core/mnc.js",
-      "bytes": 4168,
+      "bytes": 4097,
       "lines": 72,
       "generated": false,
       "functions": [
@@ -1170,7 +1187,7 @@
     },
     {
       "file": "assets/js/core/validacion-guiada.js",
-      "bytes": 11183,
+      "bytes": 11004,
       "lines": 180,
       "generated": false,
       "functions": [
@@ -1196,7 +1213,7 @@
     },
     {
       "file": "assets/js/documentos/acciones.js",
-      "bytes": 1357,
+      "bytes": 1342,
       "lines": 16,
       "generated": false,
       "functions": [
@@ -1224,7 +1241,7 @@
     },
     {
       "file": "assets/js/documentos/pdf-utilidades.js",
-      "bytes": 1874,
+      "bytes": 1847,
       "lines": 28,
       "generated": false,
       "functions": [
@@ -1240,7 +1257,7 @@
     },
     {
       "file": "assets/js/documentos/plantillas-dl01.js",
-      "bytes": 470134,
+      "bytes": 470132,
       "lines": 3,
       "generated": false,
       "functions": [],
@@ -1335,7 +1352,7 @@
     },
     {
       "file": "assets/js/editor/documento-fondo.js",
-      "bytes": 12638,
+      "bytes": 12549,
       "lines": 90,
       "generated": false,
       "functions": [
@@ -1469,7 +1486,7 @@
     },
     {
       "file": "assets/js/editor/studio-alineacion.js",
-      "bytes": 4117,
+      "bytes": 4065,
       "lines": 53,
       "generated": false,
       "functions": [
@@ -1601,7 +1618,7 @@
     },
     {
       "file": "assets/js/interfaz/espacio-trabajo.js",
-      "bytes": 4884,
+      "bytes": 4794,
       "lines": 91,
       "generated": false,
       "functions": [
@@ -1682,7 +1699,7 @@
     },
     {
       "file": "assets/js/perfil/contactos-instituciones.js",
-      "bytes": 5553,
+      "bytes": 5454,
       "lines": 100,
       "generated": false,
       "functions": [
@@ -1867,7 +1884,7 @@
     },
     {
       "file": "assets/js/servicios/supabase-runtime.js",
-      "bytes": 228146,
+      "bytes": 228117,
       "lines": 30,
       "generated": true,
       "functions": [],
@@ -1994,7 +2011,7 @@
     },
     {
       "file": "assets/js/tramites/busqueda-inteligente.js",
-      "bytes": 3193,
+      "bytes": 3138,
       "lines": 56,
       "generated": false,
       "functions": [
@@ -2052,7 +2069,7 @@
     },
     {
       "file": "assets/js/tramites/dj01-guia.js",
-      "bytes": 12240,
+      "bytes": 12119,
       "lines": 122,
       "generated": false,
       "functions": [
@@ -2068,7 +2085,7 @@
     },
     {
       "file": "assets/js/tramites/dj01-traslados.js",
-      "bytes": 3715,
+      "bytes": 3645,
       "lines": 71,
       "generated": false,
       "functions": [
@@ -2084,7 +2101,7 @@
     },
     {
       "file": "assets/js/tramites/dj01-zoom.js",
-      "bytes": 1552,
+      "bytes": 1522,
       "lines": 31,
       "generated": false,
       "functions": [
@@ -2202,7 +2219,7 @@
     },
     {
       "file": "assets/js/tramites/dj02-formulario.js",
-      "bytes": 4838,
+      "bytes": 4787,
       "lines": 52,
       "generated": false,
       "functions": [
@@ -2311,7 +2328,7 @@
     },
     {
       "file": "assets/js/tramites/dl01-reglas.js",
-      "bytes": 9484,
+      "bytes": 9377,
       "lines": 108,
       "generated": false,
       "functions": [
@@ -2335,8 +2352,8 @@
     },
     {
       "file": "assets/js/tramites/formularios-oficiales-datos.js",
-      "bytes": 90400,
-      "lines": 1312,
+      "bytes": 90700,
+      "lines": 1314,
       "generated": false,
       "functions": [],
       "globals": [
@@ -2346,8 +2363,8 @@
     },
     {
       "file": "assets/js/tramites/formularios-oficiales.js",
-      "bytes": 75419,
-      "lines": 1351,
+      "bytes": 78676,
+      "lines": 1384,
       "generated": false,
       "functions": [
         "matches",
@@ -2388,6 +2405,7 @@
         "isEmptyValue",
         "validationMessage",
         "missingField",
+        "interinosIssues",
         "validate",
         "pdfString",
         "wrap",
@@ -2404,6 +2422,23 @@
         "replaceCatalogCards"
       ],
       "globals": [],
+      "storageKeys": []
+    },
+    {
+      "file": "assets/js/tramites/interinos-revision.js",
+      "bytes": 5256,
+      "lines": 60,
+      "generated": false,
+      "functions": [
+        "create",
+        "expand",
+        "reveal",
+        "refresh",
+        "setEnabled"
+      ],
+      "globals": [
+        "adcInterinosReview"
+      ],
       "storageKeys": []
     },
     {
@@ -2570,7 +2605,7 @@
     },
     {
       "file": "docs/arquitectura-auditoria.md",
-      "bytes": 15727,
+      "bytes": 15767,
       "lines": 122,
       "generated": false,
       "functions": [],
@@ -2588,7 +2623,7 @@
     },
     {
       "file": "docs/cf01-pdf-original.md",
-      "bytes": 3767,
+      "bytes": 3736,
       "lines": 32,
       "generated": false,
       "functions": [],
@@ -2624,7 +2659,7 @@
     },
     {
       "file": "docs/documentos-fondo-relativo.md",
-      "bytes": 5052,
+      "bytes": 5012,
       "lines": 41,
       "generated": false,
       "functions": [],
@@ -2642,7 +2677,7 @@
     },
     {
       "file": "docs/estructura.md",
-      "bytes": 35712,
+      "bytes": 35752,
       "lines": 242,
       "generated": false,
       "functions": [],
@@ -2669,7 +2704,7 @@
     },
     {
       "file": "docs/formularios-pdf-preparados.md",
-      "bytes": 6960,
+      "bytes": 7195,
       "lines": 65,
       "generated": false,
       "functions": [],
@@ -2678,7 +2713,7 @@
     },
     {
       "file": "docs/funciones-respaldo.md",
-      "bytes": 8083,
+      "bytes": 7633,
       "lines": 451,
       "generated": false,
       "functions": [],
@@ -2704,8 +2739,17 @@
       "storageKeys": []
     },
     {
+      "file": "docs/interinos-formulario.md",
+      "bytes": 3926,
+      "lines": 27,
+      "generated": false,
+      "functions": [],
+      "globals": [],
+      "storageKeys": []
+    },
+    {
       "file": "docs/ol01-revision.md",
-      "bytes": 5996,
+      "bytes": 5954,
       "lines": 43,
       "generated": false,
       "functions": [],
@@ -2768,7 +2812,7 @@
     },
     {
       "file": "docs/reubicacion-pdf-original.md",
-      "bytes": 2846,
+      "bytes": 2873,
       "lines": 28,
       "generated": false,
       "functions": [],
@@ -2777,7 +2821,7 @@
     },
     {
       "file": "docs/revision-ajustes-2026-11-14.md",
-      "bytes": 4267,
+      "bytes": 4227,
       "lines": 41,
       "generated": false,
       "functions": [],
@@ -2804,7 +2848,7 @@
     },
     {
       "file": "docs/sr01-pdf-original.md",
-      "bytes": 4706,
+      "bytes": 4663,
       "lines": 44,
       "generated": false,
       "functions": [],
@@ -2813,7 +2857,7 @@
     },
     {
       "file": "docs/structure-manifest.json",
-      "bytes": 15177,
+      "bytes": 14819,
       "lines": 359,
       "generated": false,
       "functions": [],
@@ -2831,7 +2875,7 @@
     },
     {
       "file": "docs/traslado-transitorio-pdf.md",
-      "bytes": 3466,
+      "bytes": 3437,
       "lines": 30,
       "generated": false,
       "functions": [],
@@ -2840,7 +2884,7 @@
     },
     {
       "file": "docs/unificacion-main.md",
-      "bytes": 1955,
+      "bytes": 1930,
       "lines": 26,
       "generated": false,
       "functions": [],
@@ -2849,7 +2893,7 @@
     },
     {
       "file": "index.html",
-      "bytes": 46298,
+      "bytes": 46426,
       "lines": 164,
       "generated": false,
       "functions": [],
@@ -2958,7 +3002,7 @@
     },
     {
       "file": "tests/cf01-pdf.test.cjs",
-      "bytes": 6845,
+      "bytes": 6794,
       "lines": 52,
       "generated": false,
       "functions": [],
@@ -3031,7 +3075,7 @@
     },
     {
       "file": "tests/dev-server.test.cjs",
-      "bytes": 2134,
+      "bytes": 2095,
       "lines": 40,
       "generated": false,
       "functions": [],
@@ -3183,7 +3227,7 @@
     },
     {
       "file": "tests/formularios-oficiales.test.cjs",
-      "bytes": 52895,
+      "bytes": 52907,
       "lines": 673,
       "generated": false,
       "functions": [
@@ -3253,6 +3297,25 @@
       "storageKeys": []
     },
     {
+      "file": "tests/interinos-pdf.test.cjs",
+      "bytes": 11835,
+      "lines": 67,
+      "generated": false,
+      "functions": [],
+      "globals": [
+        "draws",
+        "open",
+        "printCalled",
+        "realStore",
+        "adcUserStorage"
+      ],
+      "storageKeys": [
+        "adc_v08",
+        "adc-official-form-interinos-draft-v1",
+        "adc-official-form-form-3-draft-v1"
+      ]
+    },
+    {
       "file": "tests/local-editor-bridge.test.cjs",
       "bytes": 3975,
       "lines": 40,
@@ -3285,7 +3348,7 @@
     },
     {
       "file": "tests/ol01-guia.test.cjs",
-      "bytes": 13306,
+      "bytes": 13151,
       "lines": 156,
       "generated": false,
       "functions": [
@@ -3339,7 +3402,7 @@
     },
     {
       "file": "tests/perfil-normal.test.cjs",
-      "bytes": 6463,
+      "bytes": 6394,
       "lines": 70,
       "generated": false,
       "functions": [],
@@ -3359,8 +3422,8 @@
     },
     {
       "file": "tests/reubicacion-pdf.test.cjs",
-      "bytes": 6692,
-      "lines": 40,
+      "bytes": 6297,
+      "lines": 37,
       "generated": false,
       "functions": [],
       "globals": [],
@@ -3430,7 +3493,7 @@
     },
     {
       "file": "tests/studio-alineacion.test.cjs",
-      "bytes": 1017,
+      "bytes": 1006,
       "lines": 12,
       "generated": false,
       "functions": [],
@@ -3562,7 +3625,7 @@
     },
     {
       "file": "tests/traslado-pdf.test.cjs",
-      "bytes": 6367,
+      "bytes": 6318,
       "lines": 50,
       "generated": false,
       "functions": [],
@@ -3665,7 +3728,7 @@
     },
     {
       "file": "tools/extract-nomenclatura.py",
-      "bytes": 7507,
+      "bytes": 7400,
       "lines": 108,
       "generated": false,
       "functions": [],
@@ -3794,7 +3857,7 @@
     },
     {
       "file": "tools/verify-structure.cjs",
-      "bytes": 2650,
+      "bytes": 2605,
       "lines": 46,
       "generated": false,
       "functions": [],
@@ -4029,6 +4092,24 @@
       "from": "assets/css/acceso/ingreso.css",
       "to": "assets/img/acceso/fondo-escolar-dark.png",
       "kind": "css-url",
+      "exists": true
+    },
+    {
+      "from": "assets/datos/formularios-pdf.js",
+      "to": "assets/formularios/Interinos-Expectativas.pdf",
+      "kind": "web-asset",
+      "exists": true
+    },
+    {
+      "from": "assets/datos/formularios-pdf.js",
+      "to": "assets/formularios/Interinos-Expectativas.pdf",
+      "kind": "web-asset",
+      "exists": true
+    },
+    {
+      "from": "assets/datos/formularios-pdf.js",
+      "to": "assets/formularios/Interinos-Expectativas-pagina-1.png",
+      "kind": "web-asset",
       "exists": true
     },
     {
@@ -4861,6 +4942,18 @@
     },
     {
       "from": "index.html",
+      "to": "assets/css/tramites/interinos.css",
+      "kind": "link",
+      "exists": true
+    },
+    {
+      "from": "index.html",
+      "to": "assets/js/tramites/interinos-revision.js",
+      "kind": "script",
+      "exists": true
+    },
+    {
+      "from": "index.html",
       "to": "assets/js/tramites/formularios-oficiales.js",
       "kind": "script",
       "exists": true
@@ -5306,6 +5399,18 @@
     {
       "from": "tests/ingreso.test.cjs",
       "to": "tests/support/demo-config.cjs",
+      "kind": "literal-module",
+      "exists": true
+    },
+    {
+      "from": "tests/interinos-pdf.test.cjs",
+      "to": "tests/support/demo-config.cjs",
+      "kind": "literal-module",
+      "exists": true
+    },
+    {
+      "from": "tests/interinos-pdf.test.cjs",
+      "to": "assets/js/editor/ajustes-proyecto-datos.js",
       "kind": "literal-module",
       "exists": true
     },
@@ -11883,9 +11988,9 @@
     ]
   },
   "summary": {
-    "files": 313,
-    "ownTextModules": 243,
-    "ownJavaScript": 150,
+    "files": 319,
+    "ownTextModules": 247,
+    "ownJavaScript": 152,
     "vendorFiles": 35,
     "missingLiteralReferences": 0,
     "duplicateLoads": 0,

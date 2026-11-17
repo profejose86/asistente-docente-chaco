@@ -1,0 +1,18 @@
+#adcOfficialForm[data-adc-form-id=interinos] [data-adc-official-title]{white-space:pre-line}
+#adcOfficialForm[data-adc-form-id=interinos] .adc-pdf-scroll{display:none}
+#adcOfficialForm .adc-interinos-workspace{display:grid;grid-template-columns:minmax(0,1fr) 260px;gap:12px;align-items:start}
+#adcOfficialForm .adc-interinos-workspace>.adc-pdf-viewer{min-width:0}
+#adcOfficialForm .adc-interinos-review{position:sticky;top:12px;min-width:0;border:1px solid #c4a270;border-radius:10px;background:var(--card,#fff);color:var(--text,#152844);padding:8px;box-sizing:border-box}
+#adcOfficialForm .adc-interinos-review-toggle{width:100%;margin:0;min-height:44px;white-space:normal;text-align:left}
+#adcOfficialForm .adc-interinos-review-body{max-height:70vh;overflow:auto;overscroll-behavior:contain}
+#adcOfficialForm .adc-interinos-review-card,#adcOfficialForm .adc-interinos-review .adc-profile-conflict{padding:10px;margin:8px 0;border-left:3px solid #d0913b;background:#fff3df;color:#553511;border-radius:5px;font-size:13px}
+#adcOfficialForm .adc-interinos-review-card p{margin:6px 0}
+#adcOfficialForm .adc-interinos-review button{white-space:normal;max-width:100%}
+#adcOfficialForm .adc-interinos-review [data-adc-interinos-blocking]{display:none}
+html[data-theme=dark] #adcOfficialForm .adc-interinos-review-card,html[data-theme=dark] #adcOfficialForm .adc-interinos-review .adc-profile-conflict{background:#49371f;color:#ffe6bf}
+@media(max-width:900px){
+ #adcOfficialForm .adc-interinos-workspace{display:block}
+ #adcOfficialForm .adc-interinos-review{position:fixed;left:8px;right:8px;bottom:0;top:auto;z-index:10500;padding:6px;border-radius:12px 12px 0 0;box-shadow:0 -4px 18px #0003}
+ #adcOfficialForm .adc-interinos-review-body{max-height:60dvh;padding:0 6px}
+ #adcOfficialForm.adc-interinos-review-enabled{padding-bottom:70px}
+}
