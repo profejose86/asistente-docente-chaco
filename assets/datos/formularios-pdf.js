@@ -381,6 +381,7 @@ window.adcPreparedPdfForms = Object.freeze({
     smartViewer: true,
     floatingFullscreen: true,
     doubleActivateFullscreen: true,
+    toggleFullscreenOnDoubleActivate: true,
     commonActions: true,
     pdf: 'assets/formularios/DP-01.pdf',
     pages: [{ image: 'assets/formularios/DP-01-pagina-1.png', width: 612, height: 1008 }],

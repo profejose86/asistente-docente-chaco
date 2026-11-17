@@ -88,6 +88,7 @@
   const smartViewer=window.adcPdfViewer.create({
     viewport,size:documentSize,getScale:()=>zoom,
     doubleActivateFullscreen:()=>Boolean(preparedDocument()?.doubleActivateFullscreen),
+    toggleFullscreenOnDoubleActivate:()=>Boolean(preparedDocument()?.toggleFullscreenOnDoubleActivate),
     floatingFullscreen:()=>Boolean(preparedDocument()?.floatingFullscreen),
     setScale(value){zoom=value;fitWidth=false;fitPage=false;updateZoom();},
     fit(mode){fitPage=mode==='page';fitWidth=!fitPage;updateZoom();}

@@ -949,8 +949,8 @@
     },
     {
       "file": "assets/datos/formularios-pdf.js",
-      "bytes": 35688,
-      "lines": 438,
+      "bytes": 35733,
+      "lines": 439,
       "generated": false,
       "functions": [],
       "globals": [
@@ -2380,8 +2380,8 @@
     },
     {
       "file": "assets/js/tramites/formularios-oficiales.js",
-      "bytes": 78842,
-      "lines": 1386,
+      "bytes": 78947,
+      "lines": 1387,
       "generated": false,
       "functions": [
         "matches",
@@ -2685,8 +2685,8 @@
     },
     {
       "file": "docs/dp01-implementacion.md",
-      "bytes": 8874,
-      "lines": 72,
+      "bytes": 9320,
+      "lines": 74,
       "generated": false,
       "functions": [],
       "globals": [],
@@ -3162,11 +3162,12 @@
     },
     {
       "file": "tests/dp01-experiencia.test.cjs",
-      "bytes": 11523,
-      "lines": 181,
+      "bytes": 12581,
+      "lines": 189,
       "generated": false,
       "functions": [],
       "globals": [
+        "dp01Tap",
         "dp01OriginalStorage",
         "adcUserStorage"
       ],

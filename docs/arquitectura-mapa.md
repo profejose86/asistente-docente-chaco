@@ -176,7 +176,7 @@ Hojas de estilo en orden de carga:
 | --- | ---: | ---: | --- |
 | `assets/datos/config-publica.js` | 3 | 0 | `adcConfig` |
 | `assets/datos/escuelas-chaco.js` | 2 | 0 | `adcEscuelasChaco` |
-| `assets/datos/formularios-pdf.js` | 438 | 0 | `adcPreparedPdfForms` |
+| `assets/datos/formularios-pdf.js` | 439 | 0 | `adcPreparedPdfForms` |
 | `assets/js/acceso/autenticacion.js` | 66 | 4 |  |
 | `assets/js/acceso/editor.js` | 956 | 34 |  |
 | `assets/js/acceso/efectos.js` | 33 | 4 |  |
@@ -251,7 +251,7 @@ Hojas de estilo en orden de carga:
 | `assets/js/tramites/dl01-pdf.js` | 224 | 11 |  |
 | `assets/js/tramites/dl01-reglas.js` | 108 | 14 |  |
 | `assets/js/tramites/formularios-oficiales-datos.js` | 1314 | 0 | `adcOfficialFormsData` |
-| `assets/js/tramites/formularios-oficiales.js` | 1386 | 53 |  |
+| `assets/js/tramites/formularios-oficiales.js` | 1387 | 53 |  |
 | `assets/js/tramites/interinos-revision.js` | 60 | 5 | `adcInterinosReview` |
 | `assets/js/tramites/mnc-adaptadores.js` | 49 | 1 |  |
 | `assets/js/tramites/ol01.js` | 588 | 41 |  |
@@ -274,7 +274,7 @@ Hojas de estilo en orden de carga:
 | `tests/dev-server.test.cjs` | 40 | 0 | `demo` |
 | `tests/dl01-interfaz.test.cjs` | 188 | 0 | `open`, `dlPrintCalls`, `testOriginalReview` |
 | `tests/documento-fondo.test.cjs` | 34 | 4 | `originalCard`, `originalSCInput`, `originalSCListener` |
-| `tests/dp01-experiencia.test.cjs` | 181 | 0 | `dp01OriginalStorage`, `adcUserStorage` |
+| `tests/dp01-experiencia.test.cjs` | 189 | 0 | `dp01Tap`, `dp01OriginalStorage`, `adcUserStorage` |
 | `tests/editor-botones.test.cjs` | 51 | 0 | `mouseActions` |
 | `tests/editor-comun.test.cjs` | 21 | 0 | `evil` |
 | `tests/editor-documentos.test.cjs` | 46 | 0 |  |

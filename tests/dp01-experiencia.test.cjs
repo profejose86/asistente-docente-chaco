@@ -59,6 +59,10 @@ test('DP-01: visor y acciones reutilizados, borrador y limpieza aislada', {timeo
     await floating.focus();await page.waitForTimeout(2000);assert.equal(await floating.evaluate(el=>getComputedStyle(el).opacity),'1');
     await floating.press('Enter');assert.equal(await viewer.evaluate(el=>document.fullscreenElement===el),true);assert.equal(await floating.getAttribute('aria-label'),'Restaurar vista del documento');
     await floating.click();assert.equal(await page.evaluate(()=>Boolean(document.fullscreenElement)),false);
+    await page.locator('#adcOfficialForm .adc-document-viewport').dblclick({position:{x:12,y:100}});
+    assert.equal(await viewer.evaluate(el=>document.fullscreenElement===el),true);
+    await page.locator('#adcOfficialForm .adc-document-viewport').dblclick({position:{x:12,y:100}});
+    assert.equal(await page.evaluate(()=>Boolean(document.fullscreenElement)),false);
     assert.equal(await navigation.locator('[data-viewer-action=fullscreen]').count(),1);
 
     // VPI-01: límites, teclado, rueda y desplazamiento sin alterar campos.
@@ -85,8 +89,10 @@ test('DP-01: visor y acciones reutilizados, borrador y limpieza aislada', {timeo
     // La entrada rápida usa la misma pantalla completa, sólo en el fondo de DP-01.
     await viewer.evaluate(node => node.requestFullscreen = undefined);
     await floating.click();assert.equal(await viewer.evaluate(node=>node.classList.contains('adc-pdf-expanded')),true);await page.keyboard.press('Escape');assert.equal(await floating.getAttribute('aria-pressed'),'false');
-    await viewport.dblclick({position:{x:12, y:30}});
+    await viewport.dblclick({position:{x:12, y:100}});
     assert.equal(await viewer.evaluate(node => node.classList.contains('adc-pdf-expanded')), true);
+    await viewport.dblclick({position:{x:12,y:100}});assert.equal(await viewer.evaluate(node=>node.classList.contains('adc-pdf-expanded')),false);
+    await viewport.dblclick({position:{x:12,y:100}});
     await page.keyboard.press('Escape');
     await field('apellido').dblclick();
     assert.equal(await viewer.evaluate(node => node.classList.contains('adc-pdf-expanded')), false);
@@ -97,9 +103,11 @@ test('DP-01: visor y acciones reutilizados, borrador y limpieza aislada', {timeo
         target.dispatchEvent(new TouchEvent('touchstart', {touches:[touch], changedTouches:[touch], bubbles:true, cancelable:true}));
         target.dispatchEvent(new TouchEvent('touchend', {touches:[], changedTouches:[touch], bubbles:true, cancelable:true}));
       };
-      tap();tap();
+      window.dp01Tap=()=>{tap();tap()};dp01Tap();
     });
     assert.equal(await viewer.evaluate(node => node.classList.contains('adc-pdf-expanded')), true);
+    await page.evaluate(()=>dp01Tap());assert.equal(await viewer.evaluate(node=>node.classList.contains('adc-pdf-expanded')),false);
+    await page.evaluate(()=>dp01Tap());assert.equal(await viewer.evaluate(node=>node.classList.contains('adc-pdf-expanded')),true);
     await page.keyboard.press('Escape');
 
     // ACC1: ambos juegos de controles y persistencia sin generar archivos.
@@ -170,7 +178,7 @@ test('DP-01: visor y acciones reutilizados, borrador y limpieza aislada', {timeo
     assert.equal(await save.first().isVisible(), false);
     await open('incapacidad');
     assert.equal(await floating.isVisible(),false);
-    await viewport.dblclick({position:{x:12, y:30}});
+    await viewport.dblclick({position:{x:12, y:100}});
     assert.equal(await viewer.evaluate(node => node.classList.contains('adc-pdf-expanded')), false);
     assert.deepEqual(errors, []);
   } finally {
