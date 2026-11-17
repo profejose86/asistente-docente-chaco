@@ -1,6 +1,42 @@
 // Configuración de documentos originales y coordenadas de sus controles.
 // Solo los formularios registrados aquí utilizan este modo; los demás conservan su implementación.
 window.adcPreparedPdfForms = Object.freeze({
+  interinos: Object.freeze({
+    pdf:'assets/formularios/Interinos-Expectativas.pdf',
+    source:'assets/formularios/Interinos-Expectativas.pdf',sourceLabel:'Ver PDF original del formulario de Interinos y Suplentes',
+    pages:[{image:'assets/formularios/Interinos-Expectativas-pagina-1.png',width:595.32,height:841.92}],
+    stage:'editable',smartViewer:true,fullScreen:true,commonActions:true,reviewPanel:true,
+    sha256:'a851f81274e3b0bd9299e36ee4e6fadaaeb746f3d430a9490ceae00c88ba09df',
+    draftDates:['fecha','fechaNacimiento'],
+    note:'Completá los casilleros del original y revisá la convocatoria vigente. Las comprobaciones de coherencia con el Perfil Docente no constituyen una verificación de identidad.',
+    repeats:{documentacion:{slots:5,label:'Organizar documentación (5 renglones)',rowLabel:'Documento'}},
+    fields:{
+      lugar:{x:180,top:232,width:201,height:12,fontSize:10},
+      fecha:{x:416,top:232,width:85,height:12,fontSize:10,dateFormat:'dmy'},
+      apellido:{x:183,top:254,width:157,height:12,fontSize:10},
+      nombres:{x:345,top:254,width:165,height:12,fontSize:10},
+      dni:{x:115,top:277,width:104,height:12,fontSize:10},
+      lugarNacimiento:{x:357,top:277,width:80,height:12,fontSize:10},
+      fechaNacimiento:{x:439,top:277,width:65,height:12,fontSize:9,dateFormat:'dmy'},
+      domicilio:{x:132,top:299,width:228,height:12,fontSize:10},
+      telefono:{x:410,top:299,width:94,height:12,fontSize:10},
+      correo:{x:122,top:322,width:244,height:12,fontSize:10},
+      celular:{x:405,top:322,width:102,height:12,fontSize:10},
+      localidad:{x:134,top:344,width:233,height:12,fontSize:10},
+      codigoPostal:{x:437,top:344,width:69,height:12,fontSize:10},
+      titulo:{x:165,top:367,width:198,height:12,fontSize:10},
+      registroTitulo:{x:418,top:367,width:83,height:12,fontSize:10},
+      titular:{x:334,top:389,width:37,height:12,options:[
+        {value:'Sí',x:353,top:389,width:15,height:10,marker:'underline'},
+        {value:'No',x:334,top:389,width:9,height:10,marker:'underline'}
+      ]},
+      cargoHoras:{x:224,top:479,width:269,height:12,fontSize:10},
+      ...Object.fromEntries(Array.from({length:5},(_,i)=>[
+        [`documentacion.${i}.documento`,{x:168,top:524.7+i*20.15,width:205,height:12,fontSize:10}],
+        [`documentacion.${i}.observacion`,{x:378,top:524.7+i*20.15,width:93,height:12,fontSize:9}]
+      ]).flat())
+    }
+  }),
   'seguro-descuento': Object.freeze({
     pdf:'assets/formularios/Descuento-por-Seguro.pdf',
     pages:[{image:'assets/formularios/Descuento-por-Seguro-pagina-1.png',width:612,height:1008}],

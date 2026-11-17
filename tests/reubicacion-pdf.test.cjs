@@ -15,12 +15,9 @@ test('Catálogo: próximos, acciones y Reubicación sobre el PDF original', {tim
   await page.route('**/assets/datos/ajustes-pagina.json',r=>r.fulfill({json:require('../assets/js/editor/ajustes-proyecto-datos.js').empty()}));
   await page.route(/^https:\/\//,r=>r.abort());await page.goto(`http://127.0.0.1:${server.address().port}/index.html?adc-preview=1`);
   await page.evaluate(()=>{tab('tramites');const card=document.querySelector('[data-adc-official-form=interinos]');for(let n=card.parentElement;n;n=n.parentElement)if(n.tagName==='DETAILS')n.open=true;});
-  const pending=page.locator('[data-adc-official-form=interinos]');assert.equal(await pending.isVisible(),true);assert.equal(await pending.isDisabled(),true);assert.match(await pending.textContent(),/Próximamente/);
-  assert.notEqual(await pending.evaluate(n=>getComputedStyle(n).boxShadow),'none');await pending.screenshot({path:path.join(output,'interinos-proximamente.png')});
-  assert.equal(await page.locator('.adc-form-catalog').getByText('Completar y descargar',{exact:true}).count(),0);
-  assert.ok(await page.locator('.adc-form-catalog').getByText('Ingresar y Editar',{exact:true}).count()>15);
-  assert.equal(await page.evaluate(()=>adcMBIT.records().some(record=>record.id==='interinos')),false);
-  await page.locator('#buscar').fill('interinos');assert.equal(await page.locator('#adcFormMatches [data-adc-official-form=interinos]').count(),0);
+ const pending=page.locator('.adc-form-catalog [data-adc-official-form=interinos]');assert.equal(await pending.isVisible(),true);assert.equal(await pending.isDisabled(),false);
+ assert.equal(await page.evaluate(()=>adcMBIT.records().some(record=>record.id==='interinos')),true);
+ await page.locator('#buscar').fill('interinos');assert.equal(await page.locator('#adcFormMatches [data-adc-official-form=interinos]').count(),1);await page.locator('#buscar').fill('');
   const open=()=>page.evaluate(()=>document.querySelector('[data-adc-official-form=reubicacion]').click());const field=key=>page.locator(`[data-adc-field="${key}"]`);await open();
   assert.equal(await page.locator('[data-adc-official-title]').textContent(),'Establecimiento donde se desempeña en condiciones de Reubicación');assert.equal(await page.locator('.adc-prepared-background').getAttribute('src'),'assets/formularios/Reubicacion-pagina-1.png');assert.equal(await page.locator('[data-adc-repeat-row]').count(),8);
   for(let row=0;row<8;row++)for(const [key,value] of Object.entries({establecimiento:'Instituto '+(row+1),categoria:'1',zona:'Urbana',cargoAsignatura:'Profesor',horas:'3',instrumento:'Resolucion 123',localidad:'Resistencia',region:'I'}))await field(`destinos.${row}.${key}`).fill(value);

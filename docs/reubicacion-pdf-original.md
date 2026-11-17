@@ -17,7 +17,7 @@ El original usa principalmente Calibri 11,04 puntos. El relleno usa la alternati
 ## Catálogo
 
 - «Completar y descargar» pasa a «Ingresar y Editar», incluida la tarjeta estática de SC-01. El formulario SC-01 no se modifica.
-- «Inscripción de interinos y suplentes» permanece visible como «Próximamente», deshabilitada y con halo rojo difuminado. Se conservan su definición y sus borradores; se excluye de los resultados que permiten abrir formularios disponibles.
+- En esta etapa histórica, «Inscripción de interinos y suplentes» permanecía como «Próximamente», deshabilitada. Posteriormente el usuario autorizó su [implementación con el PDF aportado](interinos-formulario.md), que habilita la ficha conservando sus borradores.
 - No se cambian otros nombres, códigos, categorías o formularios.
 
 ## Verificación
