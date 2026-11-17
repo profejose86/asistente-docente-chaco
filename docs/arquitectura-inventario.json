@@ -223,6 +223,7 @@
     "docs/codigo-ajustes.md",
     "docs/descuento-seguro-pdf-original.md",
     "docs/documentos-fondo-relativo.md",
+    "docs/dp01-implementacion.md",
     "docs/editor-local.md",
     "docs/estructura.md",
     "docs/formulario-3-pdf-original.md",
@@ -260,6 +261,7 @@
     "tests/acceso-ajustes.test.cjs",
     "tests/ajustes-proyecto.test.cjs",
     "tests/arquitectura.test.cjs",
+    "tests/bd02-estandares.test.cjs",
     "tests/bd07-pdf.test.cjs",
     "tests/cf01-pdf.test.cjs",
     "tests/contact-icon-web.test.cjs",
@@ -270,6 +272,7 @@
     "tests/dev-server.test.cjs",
     "tests/dl01-interfaz.test.cjs",
     "tests/documento-fondo.test.cjs",
+    "tests/dp01-experiencia.test.cjs",
     "tests/editor-botones.test.cjs",
     "tests/editor-comun.test.cjs",
     "tests/editor-documentos.test.cjs",
@@ -789,8 +792,8 @@
     },
     {
       "file": "assets/css/tramites/bd02.css",
-      "bytes": 4262,
-      "lines": 42,
+      "bytes": 6672,
+      "lines": 69,
       "generated": false,
       "functions": [],
       "globals": [],
@@ -879,8 +882,8 @@
     },
     {
       "file": "assets/css/tramites/formularios-oficiales.css",
-      "bytes": 23588,
-      "lines": 194,
+      "bytes": 26116,
+      "lines": 204,
       "generated": false,
       "functions": [],
       "globals": [],
@@ -946,8 +949,8 @@
     },
     {
       "file": "assets/datos/formularios-pdf.js",
-      "bytes": 35570,
-      "lines": 434,
+      "bytes": 35688,
+      "lines": 438,
       "generated": false,
       "functions": [],
       "globals": [
@@ -1266,11 +1269,14 @@
     },
     {
       "file": "assets/js/documentos/visor-pdf.js",
-      "bytes": 9432,
-      "lines": 169,
+      "bytes": 14414,
+      "lines": 265,
       "generated": false,
       "functions": [
         "create",
+        "syncFloating",
+        "resetTaps",
+        "enterFullscreen",
         "schedule",
         "reveal",
         "sync",
@@ -1943,12 +1949,15 @@
     },
     {
       "file": "assets/js/tramites/bd02.js",
-      "bytes": 51023,
-      "lines": 1139,
+      "bytes": 63339,
+      "lines": 1394,
       "generated": false,
       "functions": [
         "text",
         "date",
+        "actionIcon",
+        "configureActions",
+        "initializeViewer",
         "position",
         "unusedBox",
         "institutions",
@@ -1960,7 +1969,11 @@
         "renderEntries",
         "profileValue",
         "readControls",
+        "draftData",
+        "restoreDraft",
+        "draftStatus",
         "save",
+        "clearDraft",
         "invalidate",
         "rowUsed",
         "onlyTitulares",
@@ -1981,6 +1994,10 @@
         "updateSchoolOptions",
         "updateZoom",
         "font",
+        "reviewIssues",
+        "refreshReview",
+        "highlightReviewField",
+        "initializeReview",
         "validate",
         "completedPdf",
         "action"
@@ -2363,8 +2380,8 @@
     },
     {
       "file": "assets/js/tramites/formularios-oficiales.js",
-      "bytes": 78676,
-      "lines": 1384,
+      "bytes": 78842,
+      "lines": 1386,
       "generated": false,
       "functions": [
         "matches",
@@ -2667,6 +2684,15 @@
       "storageKeys": []
     },
     {
+      "file": "docs/dp01-implementacion.md",
+      "bytes": 8874,
+      "lines": 72,
+      "generated": false,
+      "functions": [],
+      "globals": [],
+      "storageKeys": []
+    },
+    {
       "file": "docs/editor-local.md",
       "bytes": 4246,
       "lines": 52,
@@ -2677,8 +2703,8 @@
     },
     {
       "file": "docs/estructura.md",
-      "bytes": 35752,
-      "lines": 242,
+      "bytes": 37362,
+      "lines": 252,
       "generated": false,
       "functions": [],
       "globals": [],
@@ -2987,6 +3013,23 @@
       "storageKeys": []
     },
     {
+      "file": "tests/bd02-estandares.test.cjs",
+      "bytes": 15679,
+      "lines": 249,
+      "generated": false,
+      "functions": [],
+      "globals": [
+        "bd02Store",
+        "adcUserStorage"
+      ],
+      "storageKeys": [
+        "adc_v08",
+        "adc-official-form-bd02-draft-v1",
+        "adc-official-form-cf01-draft-v1",
+        "adc-bd02-borrador-v1"
+      ]
+    },
+    {
       "file": "tests/bd07-pdf.test.cjs",
       "bytes": 7922,
       "lines": 49,
@@ -3116,6 +3159,22 @@
         "originalSCListener"
       ],
       "storageKeys": []
+    },
+    {
+      "file": "tests/dp01-experiencia.test.cjs",
+      "bytes": 11523,
+      "lines": 181,
+      "generated": false,
+      "functions": [],
+      "globals": [
+        "dp01OriginalStorage",
+        "adcUserStorage"
+      ],
+      "storageKeys": [
+        "adc_v08",
+        "adc-official-form-dp01-draft-v1",
+        "adc-official-form-cf01-draft-v1"
+      ]
     },
     {
       "file": "tests/editor-botones.test.cjs",
@@ -5085,6 +5144,18 @@
       "exists": true
     },
     {
+      "from": "tests/bd02-estandares.test.cjs",
+      "to": "tests/support/demo-config.cjs",
+      "kind": "literal-module",
+      "exists": true
+    },
+    {
+      "from": "tests/bd02-estandares.test.cjs",
+      "to": "assets/js/editor/ajustes-proyecto-datos.js",
+      "kind": "literal-module",
+      "exists": true
+    },
+    {
       "from": "tests/bd07-pdf.test.cjs",
       "to": "tests/support/demo-config.cjs",
       "kind": "literal-module",
@@ -5165,6 +5236,18 @@
     {
       "from": "tests/documento-fondo.test.cjs",
       "to": "tests/support/demo-config.cjs",
+      "kind": "literal-module",
+      "exists": true
+    },
+    {
+      "from": "tests/dp01-experiencia.test.cjs",
+      "to": "tests/support/demo-config.cjs",
+      "kind": "literal-module",
+      "exists": true
+    },
+    {
+      "from": "tests/dp01-experiencia.test.cjs",
+      "to": "assets/js/editor/ajustes-proyecto-datos.js",
       "kind": "literal-module",
       "exists": true
     },
@@ -11988,9 +12071,9 @@
     ]
   },
   "summary": {
-    "files": 319,
-    "ownTextModules": 247,
-    "ownJavaScript": 152,
+    "files": 322,
+    "ownTextModules": 250,
+    "ownJavaScript": 154,
     "vendorFiles": 35,
     "missingLiteralReferences": 0,
     "duplicateLoads": 0,

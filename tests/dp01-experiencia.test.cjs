@@ -24,7 +24,7 @@ test('DP-01: visor y acciones reutilizados, borrador y limpieza aislada', {timeo
   await new Promise(resolve => server.listen(0, '127.0.0.1', resolve));
   const browser = await chromium.launch({channel:'chrome', headless:true});
   try {
-    const page = await browser.newPage({viewport:{width:1440, height:1000}});
+    const page = await browser.newPage({viewport:{width:1440, height:1000},hasTouch:true});
     const errors = [];
     page.on('pageerror', error => errors.push(error.message));
     await page.route(/^https:\/\//, route => route.abort());
@@ -49,6 +49,18 @@ test('DP-01: visor y acciones reutilizados, borrador y limpieza aislada', {timeo
     }, value);
     const zoom = async () => Number(await range.inputValue());
 
+    // Acceso flotante exclusivo de DP-01: aparece con actividad y conserva teclado.
+    const floating=viewer.locator('.adc-pdf-floating-fullscreen');
+    assert.equal(await floating.count(),1);assert.equal(await floating.getAttribute('aria-label'),'Maximizar documento');
+    await viewer.scrollIntoViewIfNeeded();await page.mouse.move(2,2);await page.evaluate(()=>document.activeElement.blur());
+    await page.waitForFunction(()=>getComputedStyle(document.querySelector('.adc-pdf-floating-fullscreen')).opacity==='0');
+    const viewerBox=await viewer.boundingBox();await page.mouse.move(viewerBox.x+20,viewerBox.y+30);
+    await page.waitForFunction(()=>getComputedStyle(document.querySelector('.adc-pdf-floating-fullscreen')).opacity==='1');
+    await floating.focus();await page.waitForTimeout(2000);assert.equal(await floating.evaluate(el=>getComputedStyle(el).opacity),'1');
+    await floating.press('Enter');assert.equal(await viewer.evaluate(el=>document.fullscreenElement===el),true);assert.equal(await floating.getAttribute('aria-label'),'Restaurar vista del documento');
+    await floating.click();assert.equal(await page.evaluate(()=>Boolean(document.fullscreenElement)),false);
+    assert.equal(await navigation.locator('[data-viewer-action=fullscreen]').count(),1);
+
     // VPI-01: límites, teclado, rueda y desplazamiento sin alterar campos.
     assert.equal(await navigation.isVisible(), true);
     await setZoom(200);
@@ -72,6 +84,7 @@ test('DP-01: visor y acciones reutilizados, borrador y limpieza aislada', {timeo
 
     // La entrada rápida usa la misma pantalla completa, sólo en el fondo de DP-01.
     await viewer.evaluate(node => node.requestFullscreen = undefined);
+    await floating.click();assert.equal(await viewer.evaluate(node=>node.classList.contains('adc-pdf-expanded')),true);await page.keyboard.press('Escape');assert.equal(await floating.getAttribute('aria-pressed'),'false');
     await viewport.dblclick({position:{x:12, y:30}});
     assert.equal(await viewer.evaluate(node => node.classList.contains('adc-pdf-expanded')), true);
     await page.keyboard.press('Escape');
@@ -138,6 +151,11 @@ test('DP-01: visor y acciones reutilizados, borrador y limpieza aislada', {timeo
       await page.setViewportSize({width, height:1000});
       await navigation.locator('[data-viewer-action=width]').click();
       assert.equal(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth), false);
+      const frameBounds=await viewer.boundingBox(),iconBounds=await floating.boundingBox();
+      assert.ok(iconBounds.width>=44&&iconBounds.height>=44);
+      assert.ok(iconBounds.x>=frameBounds.x&&iconBounds.x+iconBounds.width<=frameBounds.x+frameBounds.width);
+      assert.ok(iconBounds.y>=frameBounds.y&&iconBounds.y+iconBounds.height<=frameBounds.y+frameBounds.height);
+      if(width===390){const viewportBounds=await viewport.boundingBox();assert.ok(iconBounds.x>=viewportBounds.x+viewportBounds.width);await viewer.evaluate(el=>el.requestFullscreen=undefined);await floating.tap();assert.equal(await viewer.evaluate(el=>el.classList.contains('adc-pdf-expanded')),true);await floating.tap();assert.equal(await viewer.evaluate(el=>el.classList.contains('adc-pdf-expanded')),false);}
       for (const theme of ['light', 'dark']) {
         await page.locator('html').evaluate((node, value) => node.dataset.theme = value, theme);
         assert.equal(await navigation.isVisible(), true);
@@ -147,9 +165,11 @@ test('DP-01: visor y acciones reutilizados, borrador y limpieza aislada', {timeo
       }
     }
     await open('form-3');
+    assert.equal(await floating.isVisible(),false);
     assert.equal(await navigation.isVisible(), false);
     assert.equal(await save.first().isVisible(), false);
     await open('incapacidad');
+    assert.equal(await floating.isVisible(),false);
     await viewport.dblclick({position:{x:12, y:30}});
     assert.equal(await viewer.evaluate(node => node.classList.contains('adc-pdf-expanded')), false);
     assert.deepEqual(errors, []);

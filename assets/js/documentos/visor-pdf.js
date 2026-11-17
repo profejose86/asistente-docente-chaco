@@ -1,7 +1,7 @@
 // Navegación visual. La escala y el PDF siguen perteneciendo al motor del formulario.
 (() => {
   function create({viewport,size,getScale,setScale,fit,doubleActivateFullscreen=()=>false,
-    toggleFullscreenOnDoubleActivate=()=>false,exitFullscreenOnBack=()=>false}) {
+    toggleFullscreenOnDoubleActivate=()=>false,exitFullscreenOnBack=()=>false,floatingFullscreen=()=>false}) {
     const frame=document.createElement('div');
     frame.className='adc-pdf-viewer';
     viewport.before(frame);
@@ -28,6 +28,14 @@
     const slider=controls.querySelector('input');
     const output=controls.querySelector('output');
     const fullButton=controls.querySelector('[data-viewer-action=fullscreen]');
+    let floatingButton=null;
+    function syncFloating(){
+      if(!floatingButton)return;
+      const expanded=document.fullscreenElement===frame||frame.classList.contains('adc-pdf-expanded');
+      const label=expanded?'Restaurar vista del documento':'Maximizar documento';
+      floatingButton.setAttribute('aria-label',label);floatingButton.title=label;
+      floatingButton.setAttribute('aria-pressed',String(expanded));
+    }
     let enabled=false,timer,drag=null,pinch=null,controlsActive=false,previousOverflow='';
     let fullscreenPending=false,historyEntry=null,historyCleanup=null,finishHistoryCleanup=null;
     const interactive='input,textarea,select,button,a,label,[contenteditable],.adc-document-editor-shield';
@@ -73,7 +81,7 @@
     function schedule(){
       clearTimeout(timer);
       timer=setTimeout(()=>{
-        if(drag||pinch||controlsActive||controls.matches(':hover,:focus-within')||vertical.matches(':hover,:focus'))return;
+        if(drag||pinch||controlsActive||controls.matches(':hover,:focus-within')||vertical.matches(':hover,:focus')||floatingButton?.matches(':hover,:focus'))return;
         frame.classList.remove('adc-pdf-controls-visible');
       },1700);
     }
@@ -83,6 +91,7 @@
     }
     function sync(){
       if(!enabled)return;
+      syncFloating();
       const percent=Math.round(getScale()*100);
       slider.value=String(percent);output.textContent=percent+' %';
       const maximum=viewport.scrollHeight-viewport.clientHeight;
@@ -106,6 +115,7 @@
         frame.classList.remove('adc-pdf-expanded');document.body.style.overflow=previousOverflow;
       }
       fullButton.textContent='Pantalla completa';fullButton.setAttribute('aria-pressed','false');
+      syncFloating();
       if(historyEntry){
         const entry=historyEntry;
         historyEntry=null;
@@ -140,6 +150,7 @@
           }
         }
         fullButton.textContent='Salir de pantalla completa';fullButton.setAttribute('aria-pressed','true');reveal();
+        syncFloating();
       }finally{
         fullscreenPending=false;
       }
@@ -233,6 +244,16 @@
       resetTaps();lastTouchTime=-Infinity;
       enabled=Boolean(value);frame.classList.toggle('adc-pdf-viewer-active',enabled);
       controls.hidden=!enabled;vertical.hidden=!enabled;
+      if(enabled&&floatingFullscreen()&&!floatingButton){
+        floatingButton=document.createElement('button');floatingButton.type='button';
+        floatingButton.className='adc-pdf-floating-fullscreen';floatingButton.dataset.adcStudioUi='';
+        floatingButton.innerHTML='<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path data-expand-icon d="M9 3H3v6m12-6h6v6M3 15v6h6m12-6v6h-6"/><path data-restore-icon d="M3 9h6V3m6 0v6h6M9 21v-6H3m12 6v-6h6"/></svg>';
+        floatingButton.addEventListener('click',()=>fullscreen());
+        floatingButton.addEventListener('pointerenter',()=>{reveal();clearTimeout(timer)});
+        floatingButton.addEventListener('pointerleave',schedule);
+        frame.append(floatingButton);
+      }
+      if(floatingButton)floatingButton.hidden=!enabled||!floatingFullscreen();
       if(enabled){reveal();sync();}
       else{endDrag();endPinch();clearTimeout(timer);leaveExpanded();if(document.fullscreenElement===frame)document.exitFullscreen().catch(()=>{});}
     }

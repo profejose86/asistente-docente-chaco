@@ -379,6 +379,7 @@ window.adcPreparedPdfForms = Object.freeze({
   }),
   dp01: Object.freeze({
     smartViewer: true,
+    floatingFullscreen: true,
     doubleActivateFullscreen: true,
     commonActions: true,
     pdf: 'assets/formularios/DP-01.pdf',

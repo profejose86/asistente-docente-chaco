@@ -48,6 +48,14 @@ El panel real de Interinos ofrece tarjetas, contador, foco y bandeja móvil. El 
 
 ## Verificaciones
 
+### Acceso flotante a pantalla completa
+
+DP-01 activa `floatingFullscreen` en su registro preparado. El visor compartido crea el botón gris únicamente al abrir un formulario que lo solicite; no se activa en otros documentos. Se ubica arriba a la derecha, dentro del visor y separado del borde de desplazamiento. Reutiliza la acción existente de pantalla completa, cambia al símbolo de restaurar y conserva el botón inferior, el doble clic/toque y la salida con Esc de la vista ampliada alternativa.
+
+El botón sigue la aparición y ocultamiento por actividad del VPI (1,7 segundos de inactividad más transición). El foco de teclado o el cursor sobre el botón impiden ocultarlo. Un toque revela los controles en móvil; la superficie del botón es de 44 × 44 px y se reserva margen lateral para no cubrir el documento ni su barra. Se adapta a claro/oscuro y a movimiento reducido. No se cambia el ancho exterior del compartimiento, el PDF, sus campos, borradores ni validaciones.
+
+`tests/dp01-experiencia.test.cjs` comprueba el acceso por teclado, pantalla completa nativa y alternativa, restauración, autoocultamiento, foco persistente, toque emulado, límites del botón a 390/1440 px y ausencia del acceso flotante en otros formularios. Las capturas son locales y no acreditan pruebas en dispositivos físicos ni publicación del staging.
+
 `tests/dp01-experiencia.test.cjs` utiliza Chrome sin interfaz y datos ficticios. Comprueba límites y teclado del zoom, rueda, barra vertical única, acciones superiores e inferiores, persistencia tras recarga, limpieza cancelada y confirmada, conservación del perfil y otro documento, fallos de escritura, ausencia de descargas al guardar, anchos de 390 y 1440 píxeles y activación exclusiva del visor. Genera capturas ignoradas por Git en `.adc-tools/dp01/` para inspección visual.
 
 Las pruebas de referencia cubren gestos táctiles, pantalla completa y salida PDF. La suite de formularios incluye la exportación de DP-01. Estas comprobaciones usan fixtures locales y no acceden a Supabase real. La comprobación de impresión automatizada no acredita una impresión física. Queda pendiente la revisión visual del propietario y la prueba manual en sus dispositivos.

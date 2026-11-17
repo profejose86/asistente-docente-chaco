@@ -159,6 +159,16 @@ html[data-theme=dark] #adcOfficialForm .adc-document-tools{background:#17263a}
 @media(prefers-reduced-motion:reduce){:is(#adcOfficialForm,#adcBD02) .adc-pdf-navigation,:is(#adcOfficialForm,#adcBD02) .adc-pdf-scroll{transition:none}}
 
 /* INCAPACIDAD conserva la barra nativa del documento y evita el rango redundante. */
+#adcOfficialForm[data-adc-form-id=dp01] .adc-pdf-floating-fullscreen{position:absolute;top:14px;right:62px;z-index:26;display:grid;place-items:center;width:44px;height:44px;min-height:44px;padding:10px;margin:0;border:1px solid #a7b2bf80;border-radius:9px;background:#e9edf2d9;color:#596574;box-shadow:0 2px 6px #0002;opacity:0;pointer-events:none;transition:opacity .2s;cursor:pointer}
+#adcOfficialForm[data-adc-form-id=dp01] .adc-pdf-controls-visible .adc-pdf-floating-fullscreen,#adcOfficialForm[data-adc-form-id=dp01] .adc-pdf-floating-fullscreen:focus-visible{opacity:1;pointer-events:auto}
+#adcOfficialForm .adc-pdf-floating-fullscreen[hidden]{display:none}
+#adcOfficialForm .adc-pdf-floating-fullscreen svg{width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+#adcOfficialForm .adc-pdf-floating-fullscreen [data-restore-icon],#adcOfficialForm .adc-pdf-floating-fullscreen[aria-pressed=true] [data-expand-icon]{display:none}
+#adcOfficialForm .adc-pdf-floating-fullscreen[aria-pressed=true] [data-restore-icon]{display:block}
+#adcOfficialForm .adc-pdf-floating-fullscreen:focus-visible{outline:2px solid #2453a3;outline-offset:2px}
+html[data-theme=dark] #adcOfficialForm[data-adc-form-id=dp01] .adc-pdf-floating-fullscreen{background:#354153e6;color:#d1d8e2;border-color:#708096}
+@media(max-width:650px){#adcOfficialForm[data-adc-form-id=dp01] .adc-pdf-viewer-active{padding-right:56px}#adcOfficialForm[data-adc-form-id=dp01] .adc-pdf-floating-fullscreen{right:6px}}
+@media(prefers-reduced-motion:reduce){#adcOfficialForm[data-adc-form-id=dp01] .adc-pdf-floating-fullscreen{transition:none}}
 :is(#adcOfficialForm,#adcBD02):is([data-adc-form-id=incapacidad],[data-adc-common-actions=true]) .adc-pdf-scroll{display:none}
 :is(#adcOfficialForm,#adcBD02)[data-adc-form-id=seguro-descuento] .adc-pdf-scroll{display:none}
 
