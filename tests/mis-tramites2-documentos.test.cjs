@@ -27,10 +27,10 @@ test('MT2: catálogo y apertura con visor compartido sin la pantalla Mis trámit
         await page.locator('#adcMT2DL01Reason').selectOption(reason);
         await page.locator('[data-mt2-selected]').getByRole('button',{name:'Continuar',exact:true}).click();
       }
-      assert.equal(await page.locator('#adcTramites2 dialog').isVisible(),true);
+      assert.equal(await page.locator('#adcTramites2 .mt2-dialog').isVisible(),true);
       assert.equal(await page.locator('#adcMT2IllnessSchool').count(),1);
-      assert.match(await page.locator('#adcTramites2 dialog').innerText(),/¿En qué institución vas a presentar\?/);
-      await page.locator('#adcTramites2 dialog').getByRole('button',{name:'Cerrar asistente',exact:true}).click();
+      assert.match(await page.locator('#adcTramites2 .mt2-dialog').innerText(),/¿En qué institución vas a presentar\?/);
+      await page.locator('#adcTramites2 .mt2-dialog').getByRole('button',{name:'Cerrar asistente',exact:true}).click();
     }    for(const {id,status} of records){
       if(status==='pending')continue;
       assert.equal(await page.evaluate(id=>adcMT2Documents.open(id,{reason:id==='dl01'?'Enfermedad o lesión común':null}),id),true,id+' abre');

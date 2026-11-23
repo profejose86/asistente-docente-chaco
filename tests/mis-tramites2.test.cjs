@@ -13,7 +13,7 @@ test('MT2-01: búsqueda local editable, catálogo y asistente explícito sin alt
       return {storage:Object.fromEntries(Object.entries(localStorage).filter(([key])=>!['adc-login-theme','adc_theme'].includes(key))),legacy:html('#adcTramitesMenu'),home:html('#adcInicio'),profile:html('#profile'),values:[...document.querySelectorAll('#profile input,#profile select,#adcTramitesMenu input,#adcTramitesMenu select')].map(el=>[el.id,el.value,el.checked])};
     });
     const before=await snapshot();await page.locator('#adcTabTramites2').click();
-    const root=page.locator('#adcTramites2'),input=root.locator('#adcMT2Search'),dialog=root.locator('dialog'),catalog=root.locator('#adcMT2Catalog'),suggestions=root.locator('#adcMT2Suggestions');
+    const root=page.locator('#adcTramites2'),input=root.locator('#adcMT2Search'),dialog=root.locator('.mt2-dialog'),catalog=root.locator('#adcMT2Catalog'),suggestions=root.locator('#adcMT2Suggestions');
     assert.deepEqual(errors,[]);assert.equal(await dialog.isVisible(),false);assert.equal(await catalog.isVisible(),true);assert.ok(await catalog.locator('[data-mt2-form]').count()>0);
     assert.equal(await input.evaluate(el=>el.classList.contains('mt2-search-start')),true);assert.equal(await input.evaluate(el=>getComputedStyle(el).animationName),'adcMT2SearchPulse');
     const all=await page.locator('#adcTramitesMenu .adc-form-grid > button').count();assert.equal(await root.locator('.mt2-total').innerText(),`${all} formularios`);
@@ -72,7 +72,7 @@ test('MT2-01: búsqueda local editable, catálogo y asistente explícito sin alt
     await touch.route(/^https:\/\//,r=>r.abort());await touch.route('**/assets/datos/ajustes-pagina.json',r=>r.fulfill({json:require('../assets/js/editor/ajustes-proyecto-datos.js').empty()}));
     await touch.goto(`http://127.0.0.1:${server.address().port}/adc/index.html?adc-preview=1&adc-inicio=1&adc-motor01=incapacidad`);
     await touch.locator('#adcTabTramites2').tap();await touch.locator('#adcMT2Search').fill('asuntos particulares');
-    await touch.locator('#adcMT2Suggestions').getByRole('option').filter({hasText:'Asuntos particulares'}).tap();assert.equal(await touch.locator('#adcTramites2 dialog').isVisible(),true);
+    await touch.locator('#adcMT2Suggestions').getByRole('option').filter({hasText:'Asuntos particulares'}).tap();assert.equal(await touch.locator('#adcTramites2 .mt2-dialog').isVisible(),true);
     await touch.getByRole('button',{name:'Cerrar asistente',exact:true}).tap();assert.equal(await touch.locator('#adcMT2Search').inputValue(),'asuntos particulares');await touch.close();
     await page.locator('#adcTabTramites2').click();await query('DJ-02');await suggestions.getByRole('option').filter({hasText:'Formulario · DJ-02'}).click();await root.locator('[data-mt2-selected] button').click();assert.equal(await page.locator('#dj02').isVisible(),true);
     await page.locator('#adcTabTramites2').click();await query('traslado');await suggestions.getByRole('option').filter({hasText:'Motivo'}).filter({hasText:'Traslado transitorio por razones de salud'}).click();await dialog.getByRole('button',{name:'Revisar respuestas',exact:true}).click();await dialog.getByRole('button',{name:/^DJ-02/}).click();await dialog.getByRole('button',{name:'Abrir DJ-02',exact:true}).click();

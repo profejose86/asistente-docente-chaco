@@ -224,18 +224,27 @@
       const daysLabel=el('label','Días indicados (opcional)'),days=el('input');days.type='number';days.min='1';days.max='366';days.step='1';days.id='adcMT2IllnessDays';daysLabel.htmlFor=days.id;daysLabel.append(days);
       const estimate=el('p',undefined,'mt2-muted');estimate.setAttribute('role','status');
       const useEstimate=button('Usar fecha estimada','mt2-secondary');useEstimate.hidden=true;
-      const toggle=button('Abrir Calendario de Agenda Escolar','mt2-secondary'),panel=el('section',undefined,'mt2-agenda-picker');panel.id='adcMT2IllnessCalendar';panel.hidden=true;panel.setAttribute('aria-label','Calendario de Agenda Escolar');toggle.setAttribute('aria-controls',panel.id);toggle.setAttribute('aria-expanded','false');
+      const toggle=button('Abrir Calendario de Agenda Escolar','mt2-secondary'),panel=el('dialog',undefined,'mt2-agenda-picker');panel.id='adcMT2IllnessCalendar';panel.setAttribute('aria-label','Calendario de Agenda Escolar');toggle.setAttribute('aria-controls',panel.id);toggle.setAttribute('aria-expanded','false');
       const heading=el('div',undefined,'mt2-agenda-heading'),headingText=el('strong','Calendario escolar'),year=el('input');year.type='number';year.min='1900';year.max='2100';year.value=String(typeof adcSchoolYear==='undefined'?2026:adcSchoolYear);year.setAttribute('aria-label','Año del calendario');heading.append(headingText,year);
       const targets=el('div',undefined,'mt2-agenda-targets'),pickFrom=button('Marcar Desde','mt2-secondary'),pickUntil=button('Marcar Hasta','mt2-secondary');targets.append(pickFrom,pickUntil);
       const hint=el('p',undefined,'mt2-muted'),months=el('div',undefined,'mt2-agenda-months'),coverage=el('p',undefined,'mt2-muted'),legend=el('p',undefined,'mt2-agenda-legend'),closeCalendar=button('Cerrar calendario','mt2-secondary');
       hint.setAttribute('role','status');legend.innerHTML='<span class="adc-holiday">Feriado</span> · <span class="adc-closure">Asueto / cierre</span> · <span class="adc-school-event">Evento escolar</span>';
       panel.append(heading,targets,hint,months,coverage,legend,closeCalendar);submit.before(daysLabel,estimate,useEstimate,toggle,panel);
       let month=null,target='from',manualUntil=false,lastEstimate='',suggested='';
+      function positionCalendar(){
+        if(!panel.open)return;
+        const anchor=dialog.getBoundingClientRect();panel.style.width=Math.min(560,anchor.width-24,innerWidth-32)+'px';
+        panel.style.left=Math.max(16,Math.min(anchor.left+12,innerWidth-panel.offsetWidth-16))+'px';
+        const below=until.getBoundingClientRect().bottom+8;
+        const top=Math.max(16,Math.min(below,innerHeight-220));
+        panel.style.top=top+'px';panel.style.maxHeight=(innerHeight-top-16)+'px';
+      }
       function render(){
         const y=Number(year.value);if(!year.checkValidity()||!y)return;
         calendar.render(months,y,month,{from:from.value,until:until.value,selectedDay:target==='from'?from.value:until.value,pickEnd:false,years:Array.from({length:201},(_,i)=>1900+i),institution,scoped:true,schoolLink:false});
         coverage.textContent=calendar.status(y,institution);hint.textContent=target==='from'?'Elegí Desde en el calendario.':'Elegí Hasta en el calendario.';
         pickFrom.setAttribute('aria-pressed',String(target==='from'));pickUntil.setAttribute('aria-pressed',String(target==='until'));pickUntil.disabled=!from.value;
+        positionCalendar();
       }
       function estimateUntil(){
         suggested=calendar.estimateCorridos(from.value,days.value?Number(days.value):0)||'';
@@ -249,8 +258,13 @@
       from.addEventListener('focus',()=>{target='from';render()});until.addEventListener('focus',()=>{target='until';render()});
       useEstimate.onclick=()=>{manualUntil=false;estimateUntil()};
       pickFrom.onclick=()=>{target='from';render()};pickUntil.onclick=()=>{target='until';render()};
-      toggle.onclick=()=>{panel.hidden=!panel.hidden;toggle.setAttribute('aria-expanded',String(!panel.hidden));if(!panel.hidden){month=null;if(from.value)year.value=from.value.slice(0,4);render();months.querySelector('button')?.focus()}};
-      closeCalendar.onclick=()=>{panel.hidden=true;toggle.setAttribute('aria-expanded','false');toggle.focus()};year.onchange=()=>{month=null;render()};
+      toggle.onclick=()=>{month=null;if(from.value)year.value=from.value.slice(0,4);render();if(!panel.open)panel.showModal();window.addEventListener('resize',positionCalendar);toggle.setAttribute('aria-expanded','true');positionCalendar();months.querySelector('button')?.focus()};
+      panel.addEventListener('close',()=>{window.removeEventListener('resize',positionCalendar);toggle.setAttribute('aria-expanded','false')});
+      panel.addEventListener('keydown',event=>{if(event.key==='Enter'&&event.target===year){event.preventDefault();year.blur();month=null;render();months.querySelector('button')?.focus()}});
+      closeCalendar.onclick=()=>{panel.close();toggle.setAttribute('aria-expanded','false');toggle.focus()};
+      panel.addEventListener('cancel',event=>{event.preventDefault();event.stopPropagation();closeCalendar.click()});
+      panel.addEventListener('click',event=>{if(event.target!==panel)return;event.stopPropagation();const rect=panel.getBoundingClientRect();if(event.clientX<rect.left||event.clientX>rect.right||event.clientY<rect.top||event.clientY>rect.bottom)closeCalendar.click()});
+      year.onchange=()=>{month=null;render()};
       months.onclick=event=>{
         const control=event.target.closest('button');if(!control)return;
         const action=control.dataset.monthAction,iso=control.dataset.date;

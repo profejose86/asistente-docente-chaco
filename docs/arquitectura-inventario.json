@@ -945,8 +945,8 @@
     },
     {
       "file": "assets/css/tramites/mis-tramites2.css",
-      "bytes": 16209,
-      "lines": 121,
+      "bytes": 16457,
+      "lines": 122,
       "generated": false,
       "functions": [],
       "globals": [],
@@ -1152,7 +1152,7 @@
     },
     {
       "file": "assets/js/calendario/solicitudes.js",
-      "bytes": 23157,
+      "bytes": 23167,
       "lines": 369,
       "generated": false,
       "functions": [
@@ -2557,8 +2557,8 @@
     },
     {
       "file": "assets/js/tramites/mis-tramites2.js",
-      "bytes": 28733,
-      "lines": 276,
+      "bytes": 30025,
+      "lines": 290,
       "generated": false,
       "functions": [
         "hideSuggestions",
@@ -2579,6 +2579,7 @@
         "startAssistant",
         "startIllness",
         "addIllnessCalendar",
+        "positionCalendar",
         "render",
         "estimateUntil",
         "closeAssistant"
@@ -2966,8 +2967,8 @@
     },
     {
       "file": "docs/mt2-visor-compartido.md",
-      "bytes": 7864,
-      "lines": 34,
+      "bytes": 8575,
+      "lines": 36,
       "generated": false,
       "functions": [],
       "globals": [],
@@ -3710,7 +3711,7 @@
     },
     {
       "file": "tests/mis-tramites2-documentos.test.cjs",
-      "bytes": 7412,
+      "bytes": 7427,
       "lines": 89,
       "generated": false,
       "functions": [],
@@ -3721,7 +3722,7 @@
     },
     {
       "file": "tests/mis-tramites2.test.cjs",
-      "bytes": 14063,
+      "bytes": 14073,
       "lines": 83,
       "generated": false,
       "functions": [],
@@ -3744,8 +3745,8 @@
     },
     {
       "file": "tests/mt2-enfermedad.test.cjs",
-      "bytes": 7389,
-      "lines": 70,
+      "bytes": 8208,
+      "lines": 77,
       "generated": false,
       "functions": [],
       "globals": [],
