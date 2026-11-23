@@ -151,8 +151,7 @@ function moveMonth(delta){
  year.value=nextYear;openMonth=target.getUTCMonth();
  return true;
 }
-function render(){
- const y=Number(year.value), root=$('adcCalMonths');
+function renderMonthView(root,y,openMonth,{from='',until='',selectedDay='',pickEnd=false,years=[2026,2027],institution=null,scoped=false,schoolLink=true}={}){
  root.replaceChildren();
  if(openMonth===null){
   const months=document.createElement('div');months.className='adc-month-menu';
@@ -160,12 +159,13 @@ function render(){
   root.append(months);
  }else{
   const m=openMonth;
-  root.append(monthButton('Volver a los meses','back'),monthButton('Ir al calendario escolar','school'));
+  root.append(monthButton('Volver a los meses','back'));
+  if(schoolLink)root.append(monthButton('Ir al calendario escolar','school'));
   const month=document.createElement('section');
   const first=new Date(Date.UTC(y,m,1));
   const nav=document.createElement('div');nav.className='adc-month-nav';
   const prev=monthButton('←','prev','Mes anterior'), next=monthButton('→','next','Mes siguiente');
-  const available=Array.from(year.options,option=>Number(option.value));
+  const available=years;
   prev.disabled=m===0&&!available.includes(y-1);
   next.disabled=m===11&&!available.includes(y+1);
   const title=document.createElement('strong');title.textContent=monthName.format(first)+' '+y;
@@ -174,17 +174,24 @@ function render(){
   for(const label of ['Lu','Ma','Mi','Ju','Vi','Sá','Do']){const span=document.createElement('small');span.textContent=label;grid.append(span)}
   for(let j=0;j<(first.getUTCDay()+6)%7;j++)grid.append(document.createElement('span'));
   for(let n=1;n<=new Date(Date.UTC(y,m+1,0)).getUTCDate();n++){
-   const iso=new Date(Date.UTC(y,m,n)).toISOString().slice(0,10), es=events(iso), b=document.createElement('button');
-   b.type='button';b.textContent=n;b.dataset.date=iso;b.setAttribute('aria-label',iso+(es.length?' · '+es.map(e=>e.label).join(', '):''));b.setAttribute('aria-pressed',String(day.value===iso&&!(pickEnd&&$('hasta').value===iso)));
-   if($('desde').value===iso||!pickEnd&&$('hasta').value===iso)b.classList.add('adc-chosen-date');
+   const iso=new Date(Date.UTC(y,m,n)).toISOString().slice(0,10), es=events(iso).filter(e=>!scoped||(e.ies?isIES(institution):matches(e,institution))), b=document.createElement('button');
+   b.type='button';b.textContent=n;b.dataset.date=iso;b.setAttribute('aria-label',iso+(es.length?' · '+es.map(e=>e.label).join(', '):''));b.setAttribute('aria-pressed',String(selectedDay===iso&&!(pickEnd&&until===iso)));
+   if(from===iso||!pickEnd&&until===iso)b.classList.add('adc-chosen-date');
    if(es.length)b.classList.add(es.some(e=>e.type==='Feriado')?'adc-holiday':es.some(e=>e.closed)?'adc-closure':'adc-school-event');
    grid.append(b);
   }
   root.append(month);
  }
- $('adcCalStatus').textContent=(y!==2026||!isIES(school())?'Calendario escolar de Chaco pendiente de confirmar. ':'Calendario institucional 2026. ')+versions();
- showDay();
 }
+function calendarStatus(y,institution){return (y!==2026||!isIES(institution)?'Calendario escolar de Chaco pendiente de confirmar. ':'Calendario institucional 2026. ')+versions();}
+function render(){
+ renderMonthView($('adcCalMonths'),Number(year.value),openMonth,{from:$('desde').value,until:$('hasta').value,selectedDay:day.value,pickEnd,years:Array.from(year.options,option=>Number(option.value))});
+ $('adcCalStatus').textContent=calendarStatus(Number(year.value),school());showDay();
+}
+window.adcRequestCalendarView=Object.freeze({render:renderMonthView,status:calendarStatus,estimateCorridos(start,days){
+ if(!/^\d{4}-\d{2}-\d{2}$/.test(start)||!Number.isInteger(days)||days<1||days>366||!date(start))return null;
+ return count(start,days,'corridos',null)?.date||null;
+}});
 function showDay(){
  const list=events(day.value), area=$('adcCalDayInfo');
  area.textContent=list.length?list.map(e=>e.type+' · '+e.label+' · '+e.scope+' · '+e.source).join('\n'):'Sin eventos registrados para esta fecha.';

@@ -198,6 +198,7 @@
           const submit=button('Abrir DL-01 en el visor','mt2-open');submit.type='submit';form.append(el('p',schools.find(item=>String(item.id)===school.value).name,'mt2-muted'),dates,feedback,submit);body.replaceChildren(form);footer.replaceChildren();
           const back=button('Cambiar institución','mt2-secondary');back.onclick=()=>startIllness(record,trigger);footer.append(back);
           from.onchange=()=>{until.min=from.value;until.setCustomValidity('')};until.oninput=()=>until.setCustomValidity('');
+          addIllnessCalendar({form,from,until,institution:schools.find(item=>String(item.id)===school.value),submit});
           form.onsubmit=async event=>{
             event.preventDefault();if(!form.reportValidity())return;
             if(until.value<from.value){until.setCustomValidity('Hasta debe ser igual o posterior a Desde.');until.reportValidity();return;}
@@ -217,6 +218,55 @@
         };footer.append(next);
       }
       if(!dialog.open)dialog.showModal();school.focus();
+    }
+    function addIllnessCalendar({form,from,until,institution,submit}){
+      const calendar=window.adcRequestCalendarView;if(!calendar)return;
+      const daysLabel=el('label','Días indicados (opcional)'),days=el('input');days.type='number';days.min='1';days.max='366';days.step='1';days.id='adcMT2IllnessDays';daysLabel.htmlFor=days.id;daysLabel.append(days);
+      const estimate=el('p',undefined,'mt2-muted');estimate.setAttribute('role','status');
+      const useEstimate=button('Usar fecha estimada','mt2-secondary');useEstimate.hidden=true;
+      const toggle=button('Abrir Calendario de Agenda Escolar','mt2-secondary'),panel=el('section',undefined,'mt2-agenda-picker');panel.id='adcMT2IllnessCalendar';panel.hidden=true;panel.setAttribute('aria-label','Calendario de Agenda Escolar');toggle.setAttribute('aria-controls',panel.id);toggle.setAttribute('aria-expanded','false');
+      const heading=el('div',undefined,'mt2-agenda-heading'),headingText=el('strong','Calendario escolar'),year=el('input');year.type='number';year.min='1900';year.max='2100';year.value=String(typeof adcSchoolYear==='undefined'?2026:adcSchoolYear);year.setAttribute('aria-label','Año del calendario');heading.append(headingText,year);
+      const targets=el('div',undefined,'mt2-agenda-targets'),pickFrom=button('Marcar Desde','mt2-secondary'),pickUntil=button('Marcar Hasta','mt2-secondary');targets.append(pickFrom,pickUntil);
+      const hint=el('p',undefined,'mt2-muted'),months=el('div',undefined,'mt2-agenda-months'),coverage=el('p',undefined,'mt2-muted'),legend=el('p',undefined,'mt2-agenda-legend'),closeCalendar=button('Cerrar calendario','mt2-secondary');
+      hint.setAttribute('role','status');legend.innerHTML='<span class="adc-holiday">Feriado</span> · <span class="adc-closure">Asueto / cierre</span> · <span class="adc-school-event">Evento escolar</span>';
+      panel.append(heading,targets,hint,months,coverage,legend,closeCalendar);submit.before(daysLabel,estimate,useEstimate,toggle,panel);
+      let month=null,target='from',manualUntil=false,lastEstimate='',suggested='';
+      function render(){
+        const y=Number(year.value);if(!year.checkValidity()||!y)return;
+        calendar.render(months,y,month,{from:from.value,until:until.value,selectedDay:target==='from'?from.value:until.value,pickEnd:false,years:Array.from({length:201},(_,i)=>1900+i),institution,scoped:true,schoolLink:false});
+        coverage.textContent=calendar.status(y,institution);hint.textContent=target==='from'?'Elegí Desde en el calendario.':'Elegí Hasta en el calendario.';
+        pickFrom.setAttribute('aria-pressed',String(target==='from'));pickUntil.setAttribute('aria-pressed',String(target==='until'));pickUntil.disabled=!from.value;
+      }
+      function estimateUntil(){
+        suggested=calendar.estimateCorridos(from.value,days.value?Number(days.value):0)||'';
+        if(suggested&&(!manualUntil||until.value===lastEstimate)){until.value=suggested;lastEstimate=suggested;manualUntil=false;}
+        else if(!suggested&&!manualUntil&&until.value===lastEstimate){until.value='';lastEstimate='';}
+        until.min=from.value;until.setCustomValidity('');
+        estimate.textContent=suggested?`Hasta estimado: ${suggested.split('-').reverse().join('/')} · ${days.value} día(s) corridos, contando Desde. Podés ajustarlo manualmente.`:'Ingresá los días indicados para estimar Hasta, o elegí ambas fechas manualmente.';
+        useEstimate.hidden=!suggested||until.value===suggested;render();
+      }
+      from.addEventListener('change',()=>{estimateUntil();render()});until.addEventListener('input',()=>{manualUntil=true;estimateUntil()});days.addEventListener('input',estimateUntil);
+      from.addEventListener('focus',()=>{target='from';render()});until.addEventListener('focus',()=>{target='until';render()});
+      useEstimate.onclick=()=>{manualUntil=false;estimateUntil()};
+      pickFrom.onclick=()=>{target='from';render()};pickUntil.onclick=()=>{target='until';render()};
+      toggle.onclick=()=>{panel.hidden=!panel.hidden;toggle.setAttribute('aria-expanded',String(!panel.hidden));if(!panel.hidden){month=null;if(from.value)year.value=from.value.slice(0,4);render();months.querySelector('button')?.focus()}};
+      closeCalendar.onclick=()=>{panel.hidden=true;toggle.setAttribute('aria-expanded','false');toggle.focus()};year.onchange=()=>{month=null;render()};
+      months.onclick=event=>{
+        const control=event.target.closest('button');if(!control)return;
+        const action=control.dataset.monthAction,iso=control.dataset.date;
+        if(action!==undefined){
+          if(action==='back')month=null;
+          else if(action==='prev'||action==='next'){const value=new Date(Date.UTC(Number(year.value),month+(action==='next'?1:-1),1));year.value=String(value.getUTCFullYear());month=value.getUTCMonth()}
+          else month=Number(action);
+          render();months.querySelector('.adc-month-nav strong,button')?.focus();return;
+        }
+        if(!iso)return;
+        if(target==='until'&&iso<from.value){hint.textContent='Hasta debe ser igual o posterior a Desde.';return;}
+        if(target==='from'){from.value=iso;if(until.value&&until.value<iso){until.value='';manualUntil=false;}estimateUntil();target='until';}
+        else{until.value=iso;manualUntil=true;estimateUntil();}
+        render();months.querySelector(`[data-date="${iso}"]`)?.focus();
+      };
+      estimateUntil();
     }
     function closeAssistant(){if(dialog.open)dialog.close();(returnFocus?.isConnected?returnFocus:input).focus({preventScroll:true});}
     close.onclick=closeAssistant;dialog.addEventListener('cancel',event=>{event.preventDefault();closeAssistant()});

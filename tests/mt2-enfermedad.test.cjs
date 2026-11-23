@@ -2,7 +2,7 @@ const {test}=require('node:test'),assert=require('node:assert/strict'),path=requ
 const {chromium}=require(path.join(os.homedir(),'.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright'));
 test('MT2 enfermedad: institución, período y PDF DL-01 autocompletado en VPI',{timeout:90000},async()=>{
   const server=require('../tools/motor01-preview.cjs').createMotor01Server();await new Promise(resolve=>server.listen(0,'127.0.0.1',resolve));
-  const browser=await chromium.launch({channel:'chrome',headless:true});
+  const browser=await chromium.launch({channel:'chrome',headless:true}),output=fs.mkdtempSync(path.join(os.tmpdir(),'adc-mt2-enfermedad-'));
   try{
     const page=await browser.newPage({viewport:{width:1440,height:1000}}),errors=[];
     page.on('pageerror',error=>errors.push(error.message));await page.route(/^https:\/\//,route=>route.abort());
@@ -20,6 +20,25 @@ test('MT2 enfermedad: institución, período y PDF DL-01 autocompletado en VPI',
     assert.equal(await dialog.getByRole('button',{name:'Continuar',exact:true}).isDisabled(),true);
     await page.locator('#adcMT2IllnessSchool').selectOption({label:'IES Elegida'});
     await dialog.getByRole('button',{name:'Continuar',exact:true}).click();
+    const storedBeforeCalendar=await page.evaluate(()=>JSON.stringify(Object.fromEntries(Object.entries(localStorage))));
+    await dialog.getByRole('button',{name:'Abrir Calendario de Agenda Escolar',exact:true}).click();
+    const calendar=page.locator('#adcMT2IllnessCalendar');assert.equal(await calendar.locator('.adc-month-menu button').count(),12);
+    await page.setViewportSize({width:390,height:1000});assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false);
+    await page.screenshot({path:path.join(output,'calendario-meses-movil.png')});await page.setViewportSize({width:1440,height:1000});
+    await calendar.locator('[data-month-action="10"]').click();
+    await calendar.locator('[data-date="2026-11-23"]').click();assert.equal(await page.locator('#adcMT2IllnessFrom').inputValue(),'2026-11-23');
+    await page.locator('#adcMT2IllnessDays').fill('3');assert.equal(await page.locator('#adcMT2IllnessUntil').inputValue(),'2026-11-25');
+    await calendar.locator('[data-date="2026-11-24"]').click();assert.equal(await page.locator('#adcMT2IllnessUntil').inputValue(),'2026-11-24');
+    await calendar.locator('[data-month-action=next]').click();assert.match(await calendar.locator('.adc-month-nav strong').innerText(),/diciembre/i);
+    await calendar.locator('[data-date="2026-12-01"]').click();assert.equal(await page.locator('#adcMT2IllnessUntil').inputValue(),'2026-12-01');
+    await calendar.locator('[data-month-action=prev]').click();await calendar.locator('[data-date="2026-11-24"]').click();
+    await page.screenshot({path:path.join(output,'calendario-noviembre.png')});
+    await page.locator('#adcMT2IllnessDays').fill('4');assert.equal(await page.locator('#adcMT2IllnessUntil').inputValue(),'2026-11-24','Conservar ajuste manual');
+    assert.equal(await dialog.getByRole('button',{name:'Usar fecha estimada',exact:true}).isVisible(),true);
+    await page.locator('#adcMT2IllnessDays').fill('');
+    assert.equal(await page.evaluate(()=>JSON.stringify(Object.fromEntries(Object.entries(localStorage)))),storedBeforeCalendar);
+    await calendar.getByRole('button',{name:'Cerrar calendario',exact:true}).click();assert.equal(await calendar.isVisible(),false);
+    await page.locator('#adcMT2IllnessFrom').fill('');await page.locator('#adcMT2IllnessUntil').fill('');
     await dialog.getByRole('button',{name:'Abrir DL-01 en el visor',exact:true}).click();assert.equal(await dialog.isVisible(),true);
     await page.locator('#adcMT2IllnessFrom').fill('2026-11-23');await page.locator('#adcMT2IllnessUntil').fill('2026-11-22');
     await dialog.getByRole('button',{name:'Abrir DL-01 en el visor',exact:true}).click();assert.equal(await dialog.isVisible(),true);
@@ -42,7 +61,7 @@ test('MT2 enfermedad: institución, período y PDF DL-01 autocompletado en VPI',
       const words=[];for(let i=1;i<=pdf.numPages;i++)words.push(...(await(await pdf.getPage(i)).getTextContent()).items.map(item=>item.str));await pdf.destroy();return words.join(' ');
     });
     assert.match(text,/PRUEBA/);assert.match(text,/ANA/);assert.match(text,/30\.123\.456/);assert.match(text,/IES Elegida/);assert.match(text,/23\s+11\s+2026\s+24\s+11\s+2026/);
-    const output=fs.mkdtempSync(path.join(os.tmpdir(),'adc-mt2-enfermedad-'));await page.screenshot({path:path.join(output,'dl01-vpi.png'),fullPage:true});
+    await page.screenshot({path:path.join(output,'dl01-vpi.png'),fullPage:true});
     await page.locator('.adc-mt2-document-back').click();assert.equal(await page.locator('#adcTramites2').isVisible(),true);
     assert.equal(await page.locator('body').getAttribute('data-adc-mt2-dl01-ready'),null);
     assert.deepEqual(errors,[]);console.log('DL-01 generado y verificado: '+output);

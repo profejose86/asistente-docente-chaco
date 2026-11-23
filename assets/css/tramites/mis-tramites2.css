@@ -76,6 +76,22 @@ html[data-theme] #adcTramites2 dialog.mt2-dialog{border:2px solid var(--mt2-oran
 body[data-adc-mt2-document=dl01][data-adc-mt2-dl01-ready=true] [data-mt2-dl01-aux]{display:none!important}
 #adcTramites2 .mt2-license-dates{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
 #adcTramites2 .mt2-license-dates input{min-width:0;width:100%;box-sizing:border-box}
+#adcTramites2 .mt2-agenda-picker{margin-top:14px;padding:14px;border:1px solid var(--mt2-border);border-radius:12px;background:var(--mt2-card)}
+#adcTramites2 .mt2-agenda-heading{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:12px}
+#adcTramites2 .mt2-agenda-heading input{width:92px;min-width:0;margin:0}
+#adcTramites2 .mt2-agenda-targets{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px}
+#adcTramites2 .mt2-agenda-picker button{margin:3px 0;min-width:0;white-space:normal}
+#adcTramites2 .mt2-agenda-months .adc-month-menu{grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+#adcTramites2 .mt2-agenda-months :is(.adc-month-menu button,[data-month-action]){padding:7px;background:#edf2f8;color:#142e51;font-size:13px}
+#adcTramites2 .mt2-agenda-months .adc-date-grid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:4px}
+#adcTramites2 .mt2-agenda-months .adc-date-grid button{padding:7px 2px;font-size:13px;background:#edf2f8;color:#142e51}
+#adcTramites2 .mt2-agenda-months .adc-chosen-date{outline:2px solid #168171;outline-offset:-2px;font-weight:750}
+#adcTramites2 .mt2-agenda-picker .adc-holiday{background:#ffe3de!important;color:#822519!important}
+#adcTramites2 .mt2-agenda-picker .adc-closure{background:#fff0bf!important;color:#684908!important}
+#adcTramites2 .mt2-agenda-picker .adc-school-event{background:#dceee1!important;color:#214f32!important}
+#adcTramites2 .mt2-agenda-legend{font-size:12px;line-height:1.8}
+#adcTramites2 .mt2-agenda-legend span{padding:2px 3px}
+#adcTramites2 .mt2-agenda-picker .mt2-muted{font-size:12px;margin:10px 0}
 @media(max-width:420px){#adcTramites2 .mt2-license-dates{grid-template-columns:minmax(0,1fr)}}
 body[data-adc-mt2-document] :is(#adcDocsDock,[data-mt2-legacy-back],#adcTramiteBack){display:none!important}
 body[data-adc-mt2-document] .adc43-work{display:block;width:auto;margin-inline:0}

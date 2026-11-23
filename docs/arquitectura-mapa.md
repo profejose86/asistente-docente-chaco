@@ -189,7 +189,7 @@ Hojas de estilo en orden de carga:
 | `assets/js/acceso/marca.js` | 12 | 0 |  |
 | `assets/js/acceso/visibilidad-clave.js` | 25 | 1 |  |
 | `assets/js/calendario/calendario.js` | 988 | 22 |  |
-| `assets/js/calendario/solicitudes.js` | 362 | 17 | `adcOLCalendarClosed`, `adcOLCalendarCoverage`, `adcRequestDaySummary`, `adcDateSnapshot`, `adcStoreIssuedDates` |
+| `assets/js/calendario/solicitudes.js` | 369 | 19 | `adcOLCalendarClosed`, `adcOLCalendarCoverage`, `adcRequestDaySummary`, `adcRequestCalendarView`, `adcDateSnapshot`, `adcStoreIssuedDates` |
 | `assets/js/core/cursos.js` | 45 | 4 | `adcAcademic` |
 | `assets/js/core/estado.js` | 4 | 0 |  |
 | `assets/js/core/inicializacion.js` | 18 | 0 |  |
@@ -260,7 +260,7 @@ Hojas de estilo en orden de carga:
 | `assets/js/tramites/formularios-oficiales.js` | 1520 | 57 | `adcOfficialForms`, `tab`, `adcMotor01Pilot` |
 | `assets/js/tramites/interinos-revision.js` | 60 | 5 | `adcInterinosReview` |
 | `assets/js/tramites/mis-tramites2-documentos.js` | 109 | 8 | `tab`, `adcMT2Documents` |
-| `assets/js/tramites/mis-tramites2.js` | 226 | 18 |  |
+| `assets/js/tramites/mis-tramites2.js` | 276 | 21 |  |
 | `assets/js/tramites/mnc-adaptadores.js` | 49 | 1 |  |
 | `assets/js/tramites/ol01.js` | 588 | 41 |  |
 | `assets/js/tramites/sc01.js` | 745 | 26 | `adcSC01Open` |
@@ -307,7 +307,7 @@ Hojas de estilo en orden de carga:
 | `tests/mis-tramites2-documentos.test.cjs` | 89 | 0 |  |
 | `tests/mis-tramites2.test.cjs` | 83 | 0 |  |
 | `tests/motor01-piloto.test.cjs` | 116 | 0 | `originalPilotStore`, `adcUserStorage` |
-| `tests/mt2-enfermedad.test.cjs` | 51 | 0 |  |
+| `tests/mt2-enfermedad.test.cjs` | 70 | 0 |  |
 | `tests/ol01-guia.test.cjs` | 156 | 1 | `olPrintCalls` |
 | `tests/ol01-interfaz.test.cjs` | 64 | 0 |  |
 | `tests/ol01-perfil.test.cjs` | 55 | 1 |  |
