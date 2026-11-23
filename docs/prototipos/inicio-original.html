@@ -1,0 +1,987 @@
+<!DOCTYPE html>
+<html lang="es" class="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ADC | Asistente Docente Chaco</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+          },
+          colors: {
+            adc: {
+              navy: '#0B192C',
+              navyLight: '#132744',
+              cardDark: '#162C4B',
+              borderDark: '#24416B',
+              orange: '#D66824',
+              orangeHover: '#BE591B',
+              royal: '#144D9C',
+              royalHover: '#0F3D7E'
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    /* Patrón sutil escolar / chaqueño para el Modo Oscuro */
+    .dark body {
+      background-color: #0B192C;
+      background-image: url("data:image/svg+xml,%3Csvg width='120' height='120' viewBox='0 0 120 120' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' stroke='%23234069' stroke-width='1.2' stroke-opacity='0.45'%3E%3Cpath d='M20 25h18v14H20zM29 25v14M17 39h24'/%3E%3Cpath d='M75 18l4 8 9 1-6.5 6 1.5 9-8-4.5-8 4.5 1.5-9-6.5-6 9-1z'/%3E%3Cpath d='M18 82c6-4 14-4 20 0v14c-6-4-14-4-20 0V82zm20 0c6-4 14-4 20 0v14c-6-4-14-4-20 0V82z'/%3E%3Cpath d='M82 72l12 4-4 18-10 4-6-10 4-12z'/%3E%3Ccircle cx='60' cy='56' r='6'/%3E%3C/g%3E%3C/svg%3E");
+    }
+
+    /* Animación suave de resaltado cuando se hace clic en "Ir al campo" */
+    @keyframes pulseField {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(214, 104, 36, 0.7); border-color: #D66824; background-color: #FFF7ED; }
+      50% { box-shadow: 0 0 0 6px rgba(214, 104, 36, 0); border-color: #EA580C; background-color: #FFEDD5; }
+    }
+    .field-highlight {
+      animation: pulseField 1.4s ease-in-out 2;
+      border-color: #D66824 !important;
+      background-color: #FFF7ED !important;
+    }
+
+    /* Estilos de impresión */
+    @media print {
+      .no-print { display: none !important; }
+      body { background: white !important; }
+      #pdf-sheet { box-shadow: none !important; border: none !important; width: 100% !important; transform: scale(1) !important; }
+    }
+  </style>
+</head>
+<body class="bg-[#F2F5F9] text-slate-800 dark:text-slate-100 min-h-screen flex flex-col transition-colors duration-200">
+
+  <!-- NOTIFICACIÓN FLOTANTE (TOAST) -->
+  <div id="toast" class="fixed bottom-5 right-5 z-50 transform translate-y-20 opacity-0 transition-all duration-300 pointer-events-none no-print">
+    <div class="bg-slate-900 dark:bg-adc-cardDark text-white px-4 py-3 rounded-xl shadow-xl border border-slate-700 dark:border-adc-borderDark flex items-center gap-3 text-sm font-medium">
+      <span id="toast-icon" class="w-2.5 h-2.5 rounded-full bg-emerald-400"></span>
+      <span id="toast-msg">Acción realizada</span>
+    </div>
+  </div>
+
+  <!-- ======================================================================= -->
+  <!-- 1. HEADER AZUL MARINO OSCURO FIJO ARRIBA (#0B192C)                      -->
+  <!-- ======================================================================= -->
+  <header class="bg-[#0B192C] text-white border-b border-blue-950/80 sticky top-0 z-40 shadow-md no-print">
+    <div class="w-full px-4 sm:px-8 h-16 flex items-center justify-between gap-3">
+      
+      <!-- Izquierda: Logo circular naranja + Nombre institucional -->
+      <div class="flex items-center gap-3 cursor-pointer shrink-0" onclick="navigateTo('inicio')">
+        <div class="w-10 h-10 rounded-full bg-[#D66824] flex items-center justify-center shadow-inner shrink-0">
+          <svg class="w-6 h-6 text-[#0B192C]" viewBox="0 0 36 36" fill="none">
+            <!-- Asterisco 6 puntas -->
+            <path d="M18 5V17M12.8 8L23.2 14M23.2 8L12.8 14" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/>
+            <!-- Libro abierto -->
+            <path d="M7 22C11.5 22 15.5 23.5 18 26C20.5 23.5 24.5 22 29 22V26.5C24.5 26.5 20.5 28 18 30.5C15.5 28 11.5 26.5 7 26.5V22Z" fill="currentColor"/>
+            <path d="M8.5 18.5C12.2 18.8 15.5 20.2 18 22.8C20.5 20.2 23.8 18.8 27.5 18.5L26.8 21.2C23.5 21.5 20.5 22.8 18 25.2C15.5 22.8 12.5 21.5 9.2 21.2L8.5 18.5Z" fill="currentColor"/>
+          </svg>
+        </div>
+        <div class="flex items-center gap-3">
+          <span class="text-2xl font-extrabold tracking-tight">ADC</span>
+          <div class="hidden sm:block h-7 w-px bg-blue-400/30"></div>
+          <div class="hidden sm:block leading-tight">
+            <div class="font-semibold text-sm text-white">Asistente Docente Chaco</div>
+            <div class="text-[11px] text-blue-200/80">Formularios Oficiales · Trámites · Gestiones</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Centro: Pestañas de Navegación Global -->
+      <nav class="hidden md:flex items-center bg-[#071220] p-1 rounded-xl border border-blue-900/50">
+        <button id="nav-inicio" onclick="navigateTo('inicio')" class="nav-tab px-3.5 py-1.5 rounded-lg text-sm font-medium transition-all flex items-center gap-1.5 text-blue-100 hover:text-white">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+          Inicio
+        </button>
+        <button id="nav-perfil" onclick="navigateTo('perfil')" class="nav-tab px-3.5 py-1.5 rounded-lg text-sm font-medium transition-all flex items-center gap-1.5 text-blue-100 hover:text-white">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
+          Mi perfil docente
+        </button>
+        <button id="nav-tramites" onclick="navigateTo('tramites')" class="nav-tab px-3.5 py-1.5 rounded-lg text-sm font-medium transition-all flex items-center gap-1.5 bg-[#D66824] text-white shadow-sm">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+          Mis trámites
+        </button>
+        <button id="nav-agenda" onclick="navigateTo('agenda')" class="nav-tab px-3.5 py-1.5 rounded-lg text-sm font-medium transition-all flex items-center gap-1.5 text-blue-100 hover:text-white">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+          Mi agenda
+        </button>
+      </nav>
+
+      <!-- Derecha: Switch Modo Claro/Oscuro + Menú Docente ADC -->
+      <div class="flex items-center gap-3 sm:gap-5">
+        <div class="flex items-center gap-2 text-xs font-medium">
+          <span class="hidden lg:inline-flex items-center gap-1 text-blue-100">
+            <svg class="w-4 h-4 text-amber-300" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M4.93 4.93l1.41 1.41m11.32 11.32l1.41 1.41M2 12h2m16 0h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
+            Modo claro
+          </span>
+          <button id="theme-toggle" onclick="toggleTheme()" aria-label="Cambiar tema" class="w-12 h-6 rounded-full bg-blue-500/40 dark:bg-[#D66824] p-1 transition-colors flex items-center border border-blue-300/30">
+            <span id="theme-knob" class="w-4 h-4 rounded-full bg-white shadow transform transition-transform translate-x-0 dark:translate-x-6"></span>
+          </button>
+          <span class="hidden lg:inline-flex items-center gap-1 text-blue-200/80">
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
+            Modo oscuro
+          </span>
+        </div>
+
+        <div class="h-6 w-px bg-blue-400/30 hidden sm:block"></div>
+
+        <button onclick="navigateTo('perfil')" class="flex items-center gap-2 text-sm font-medium text-white hover:bg-white/10 px-2.5 py-1.5 rounded-lg transition-colors">
+          <div class="w-7 h-7 rounded-full bg-blue-500/30 border border-blue-300/40 flex items-center justify-center text-xs font-bold">
+            AP
+          </div>
+          <span class="hidden sm:inline">Docente ADC</span>
+          <svg class="w-4 h-4 text-blue-200" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Barra móvil inferior dentro del header para pantallas chicas -->
+    <div class="md:hidden flex border-t border-blue-900/60 bg-[#081322] px-2 py-1.5 justify-around text-xs">
+      <button onclick="navigateTo('inicio')" class="mobile-tab px-2.5 py-1.5 rounded-lg text-blue-200 font-medium" data-target="inicio">Inicio</button>
+      <button onclick="navigateTo('perfil')" class="mobile-tab px-2.5 py-1.5 rounded-lg text-blue-200 font-medium" data-target="perfil">Mi perfil</button>
+      <button onclick="navigateTo('tramites')" class="mobile-tab px-2.5 py-1.5 rounded-lg bg-[#D66824] text-white font-semibold" data-target="tramites">Mis trámites</button>
+      <button onclick="navigateTo('agenda')" class="mobile-tab px-2.5 py-1.5 rounded-lg text-blue-200 font-medium" data-target="agenda">Mi agenda</button>
+    </div>
+  </header>
+
+  <!-- ======================================================================= -->
+  <!-- 2. FRANJA LIMPIA DE MIGAS DE PAN (BREADCRUMB BAR) - ANCHO COMPLETO      -->
+  <!--    Ubicada inmediatamente debajo del header, sin botones extra          -->
+  <!-- ======================================================================= -->
+  <div id="breadcrumb-bar" class="w-full bg-[#F1F5F9] dark:bg-[#0F233D] border-b border-[#E2E8F0] dark:border-[#24416B] transition-colors no-print">
+    <div class="w-full px-4 sm:px-8 py-3 flex items-center">
+      <nav aria-label="Breadcrumb" class="flex items-center gap-2.5 text-sm">
+        <button onclick="navigateTo('inicio')" class="inline-flex items-center gap-1.5 text-[#64748B] dark:text-slate-300 hover:underline hover:text-slate-900 dark:hover:text-white font-normal transition-colors">
+          <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M3 10.5L12 3l9 7.5V20a1 1 0 01-1 1h-5v-6H9v6H4a1 1 0 01-1-1v-9.5z"/>
+          </svg>
+          <span>Inicio</span>
+        </button>
+        <span class="text-[#94A3B8] dark:text-slate-500 select-none">&gt;</span>
+        <button onclick="navigateTo('tramites')" class="text-[#64748B] dark:text-slate-300 hover:underline hover:text-slate-900 dark:hover:text-white font-normal transition-colors">
+          Formularios
+        </button>
+        <span class="text-[#94A3B8] dark:text-slate-500 select-none">&gt;</span>
+        <span id="breadcrumb-form-title" class="font-bold text-[#1E293B] dark:text-[#F8FAFC]">
+          Declaración Jurada (DJ-01)
+        </span>
+      </nav>
+    </div>
+  </div>
+
+  <!-- CONTENIDO PRINCIPAL -->
+  <main class="flex-1 w-full px-4 sm:px-8 py-5">
+
+    <!-- ===================================================================== -->
+    <!-- VISTA 0: INICIO (DASHBOARD PRINCIPAL CON LAS 3 TARJETAS GRANDES)      -->
+    <!-- ===================================================================== -->
+    <section id="view-inicio" class="hidden max-w-[1380px] mx-auto space-y-6">
+      <!-- Banner de Bienvenida -->
+      <div class="bg-white dark:bg-adc-cardDark rounded-2xl p-6 sm:p-8 border border-slate-200 dark:border-adc-borderDark shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-6">
+        <div class="space-y-2 max-w-2xl">
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-50 dark:bg-[#D66824]/20 border border-amber-200/80 dark:border-[#D66824]/40 text-[#D66824] text-xs font-bold">
+            <span class="w-2 h-2 rounded-full bg-[#D66824]"></span>
+            Panel Principal · Provincia del Chaco
+          </div>
+          <h1 class="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight">
+            ¡Hola, Ana María! Tus trámites y tu agenda en un solo lugar
+          </h1>
+          <p class="text-sm sm:text-base text-slate-600 dark:text-slate-300">
+            Accedé rápidamente a tus datos docentes sincronizados, completá formularios oficiales con revisión inteligente u organizá tu calendario escolar.
+          </p>
+        </div>
+        <div class="shrink-0">
+          <button onclick="openFormEditor('DJ-01', 'Declaración Jurada (DJ-01)', 'DECLARACIÓN JURADA DE CARGOS Y HORAS (DJ-01)')" class="px-5 py-3 rounded-xl bg-adc-royal hover:bg-adc-royalHover text-white font-semibold text-sm shadow-sm transition-all flex items-center justify-center gap-2">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
+            Retomar DJ-01 en borrador
+          </button>
+        </div>
+      </div>
+
+      <!-- Las 3 Tarjetas Principales: Mi perfil docente, Mis trámites y Mi agenda -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <!-- Tarjeta 1: Mi perfil docente -->
+        <div onclick="navigateTo('perfil')" class="cursor-pointer group bg-white dark:bg-adc-cardDark rounded-2xl p-6 border border-slate-200 dark:border-adc-borderDark hover:border-[#D66824] dark:hover:border-[#D66824] shadow-sm hover:shadow-md transition-all flex flex-col justify-between">
+          <div>
+            <div class="w-12 h-12 rounded-xl bg-blue-50 dark:bg-adc-navyLight text-adc-royal dark:text-blue-300 group-hover:bg-[#D66824] group-hover:text-white flex items-center justify-center transition-colors mb-4">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
+            </div>
+            <div class="flex items-center gap-2">
+              <span class="w-1 h-5 rounded-full bg-[#D66824]"></span>
+              <h2 class="text-lg font-bold text-slate-900 dark:text-white">Mi perfil docente</h2>
+            </div>
+            <p class="text-sm text-slate-600 dark:text-slate-300 mt-2">
+              Revisá tu legajo, domicilio declarado, CUIL y establecimientos activos para autocompletar formularios sin errores.
+            </p>
+          </div>
+          <div class="mt-6 pt-4 border-t border-slate-100 dark:border-adc-borderDark flex items-center justify-between text-xs font-bold text-adc-royal dark:text-blue-300 group-hover:text-[#D66824]">
+            <span>2 establecimientos vinculados</span>
+            <span class="group-hover:translate-x-1 transition-transform">Ingresar →</span>
+          </div>
+        </div>
+
+        <!-- Tarjeta 2: Mis trámites -->
+        <div onclick="navigateTo('tramites')" class="cursor-pointer group bg-white dark:bg-adc-cardDark rounded-2xl p-6 border-2 border-adc-royal/40 dark:border-blue-500/40 hover:border-[#D66824] dark:hover:border-[#D66824] shadow-sm hover:shadow-md transition-all flex flex-col justify-between">
+          <div>
+            <div class="w-12 h-12 rounded-xl bg-adc-royal text-white group-hover:bg-[#D66824] flex items-center justify-center transition-colors mb-4">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+            </div>
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-2">
+                <span class="w-1 h-5 rounded-full bg-[#D66824]"></span>
+                <h2 class="text-lg font-bold text-slate-900 dark:text-white">Mis trámites</h2>
+              </div>
+              <span class="text-[11px] font-bold px-2.5 py-0.5 rounded-full bg-blue-100 dark:bg-blue-900/60 text-adc-royal dark:text-blue-200">30 formularios</span>
+            </div>
+            <p class="text-sm text-slate-600 dark:text-slate-300 mt-2">
+              Buscá licencias por motivo o código (DJ-01, DJ-02, DL-01), completá el PDF oficial y validalo antes de imprimir.
+            </p>
+          </div>
+          <div class="mt-6 pt-4 border-t border-slate-100 dark:border-adc-borderDark flex items-center justify-between text-xs font-bold text-adc-royal dark:text-blue-300 group-hover:text-[#D66824]">
+            <span>Ir al buscador de formularios</span>
+            <span class="group-hover:translate-x-1 transition-transform">Ingresar →</span>
+          </div>
+        </div>
+
+        <!-- Tarjeta 3: Mi agenda -->
+        <div onclick="navigateTo('agenda')" class="cursor-pointer group bg-white dark:bg-adc-cardDark rounded-2xl p-6 border border-slate-200 dark:border-adc-borderDark hover:border-[#D66824] dark:hover:border-[#D66824] shadow-sm hover:shadow-md transition-all flex flex-col justify-between">
+          <div>
+            <div class="w-12 h-12 rounded-xl bg-blue-50 dark:bg-adc-navyLight text-adc-royal dark:text-blue-300 group-hover:bg-[#D66824] group-hover:text-white flex items-center justify-center transition-colors mb-4">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+            </div>
+            <div class="flex items-center gap-2">
+              <span class="w-1 h-5 rounded-full bg-[#D66824]"></span>
+              <h2 class="text-lg font-bold text-slate-900 dark:text-white">Mi agenda</h2>
+            </div>
+            <p class="text-sm text-slate-600 dark:text-slate-300 mt-2">
+              Consultá el calendario escolar oficial del Chaco, vencimientos de presentaciones y tus anotaciones personales.
+            </p>
+          </div>
+          <div class="mt-6 pt-4 border-t border-slate-100 dark:border-adc-borderDark flex items-center justify-between text-xs font-bold text-adc-royal dark:text-blue-300 group-hover:text-[#D66824]">
+            <span>1 recordatorio próximo</span>
+            <span class="group-hover:translate-x-1 transition-transform">Ingresar →</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================================================================== -->
+    <!-- VISTA 1: MIS TRÁMITES (BUSCADOR Y CATÁLOGO DE FORMULARIOS)            -->
+    <!-- ===================================================================== -->
+    <section id="view-tramites" class="hidden max-w-[1380px] mx-auto space-y-6">
+      <div class="bg-white dark:bg-adc-cardDark rounded-2xl p-5 sm:p-6 border border-slate-200 dark:border-adc-borderDark shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div>
+          <div class="flex items-center gap-2.5">
+            <span class="w-1.5 h-6 rounded-full bg-[#D66824]"></span>
+            <h1 class="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white">Gestión de Trámites y Formularios</h1>
+          </div>
+          <p class="text-sm text-slate-500 dark:text-slate-300 mt-1 ml-4">Seleccioná un motivo de licencia o formulario oficial de la Provincia del Chaco para autocompletar con tu perfil.</p>
+        </div>
+        <button onclick="openFormEditor('DJ-01', 'Declaración Jurada (DJ-01)', 'DECLARACIÓN JURADA DE CARGOS Y HORAS (DJ-01)')" class="bg-adc-royal hover:bg-adc-royalHover text-white font-semibold px-4 py-2.5 rounded-xl text-sm shadow-sm transition-all flex items-center gap-2 shrink-0 self-start sm:self-auto">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
+          Continuar borrador DJ-01
+        </button>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+        <!-- Sidebar Izquierdo: Mis trámites frecuentes -->
+        <aside class="lg:col-span-3 bg-white dark:bg-adc-cardDark rounded-2xl p-4 border border-slate-200 dark:border-adc-borderDark shadow-sm">
+          <h2 class="text-sm font-bold uppercase tracking-wider text-slate-500 dark:text-slate-300 mb-3 px-1">Mis trámites frecuentes</h2>
+          <div class="space-y-2">
+            <button onclick="openFormEditor('DJ-01', 'Declaración Jurada (DJ-01)', 'DECLARACIÓN JURADA DE CARGOS Y HORAS (DJ-01)')" class="w-full text-left px-3.5 py-3 rounded-xl bg-blue-50 dark:bg-adc-royal/30 border border-blue-200 dark:border-blue-500/40 text-adc-royal dark:text-white font-semibold text-sm flex items-center justify-between group transition-all">
+              <span>Declaración Jurada (DJ-01)</span>
+              <span class="text-xs bg-[#D66824] text-white px-2 py-0.5 rounded-full">Activo</span>
+            </button>
+            <button onclick="openFormEditor('DL-01', 'Enfermedad o lesión común (DL-01)', 'SOLICITUD DE LICENCIA POR ENFERMEDAD COMÚN (DL-01)')" class="w-full text-left px-3.5 py-3 rounded-xl bg-slate-50 dark:bg-adc-navyLight/60 hover:bg-slate-100 dark:hover:bg-adc-navyLight border border-slate-200/80 dark:border-adc-borderDark text-slate-700 dark:text-slate-200 font-medium text-sm transition-all flex items-center justify-between">
+              <span>Enfermedad o lesión común</span>
+              <svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+            </button>
+            <button onclick="openFormEditor('DL-01', 'Donación de sangre (DL-01)', 'SOLICITUD DE LICENCIA POR DONACIÓN DE SANGRE (DL-01)')" class="w-full text-left px-3.5 py-3 rounded-xl bg-slate-50 dark:bg-adc-navyLight/60 hover:bg-slate-100 dark:hover:bg-adc-navyLight border border-slate-200/80 dark:border-adc-borderDark text-slate-700 dark:text-slate-200 font-medium text-sm transition-all flex items-center justify-between">
+              <span>Donación de sangre</span>
+              <svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+            </button>
+            <button onclick="openFormEditor('DL-01', 'Asuntos particulares (DL-01)', 'SOLICITUD DE LICENCIA POR ASUNTOS PARTICULARES (DL-01)')" class="w-full text-left px-3.5 py-3 rounded-xl bg-slate-50 dark:bg-adc-navyLight/60 hover:bg-slate-100 dark:hover:bg-adc-navyLight border border-slate-200/80 dark:border-adc-borderDark text-slate-700 dark:text-slate-200 font-medium text-sm transition-all flex items-center justify-between">
+              <span>Asuntos particulares</span>
+              <svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+            </button>
+            <button onclick="openFormEditor('DL-01', 'Licencia por exámenes (DL-01)', 'SOLICITUD DE LICENCIA POR EXÁMENES (DL-01)')" class="w-full text-left px-3.5 py-3 rounded-xl bg-slate-50 dark:bg-adc-navyLight/60 hover:bg-slate-100 dark:hover:bg-adc-navyLight border border-slate-200/80 dark:border-adc-borderDark text-slate-700 dark:text-slate-200 font-medium text-sm transition-all flex items-center justify-between">
+              <span>Exámenes</span>
+              <svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+            </button>
+          </div>
+        </aside>
+
+        <!-- Buscador Central y Catálogo -->
+        <div class="lg:col-span-9 space-y-6">
+          <div class="bg-white dark:bg-adc-cardDark rounded-2xl p-5 sm:p-6 border border-slate-200 dark:border-adc-borderDark shadow-sm">
+            <div class="text-center max-w-xl mx-auto mb-5">
+              <h2 class="text-xl font-bold text-slate-900 dark:text-white">¿Qué trámite necesitás?</h2>
+              <p class="text-xs text-slate-500 dark:text-slate-300 mt-1">Buscá por nombre, motivo, artículo del Estatuto o código de formulario</p>
+            </div>
+
+            <div class="relative max-w-2xl mx-auto">
+              <svg class="w-5 h-5 text-slate-400 absolute left-4 top-1/2 -translate-y-1/2" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+              <input id="search-input" type="text" oninput="filterProcedures()" placeholder="Ej: DJ-01, DL-01, enfermedad, maternidad, cargos..." class="w-full pl-12 pr-4 py-3.5 rounded-xl bg-slate-50 dark:bg-adc-navy border-2 border-slate-200 dark:border-teal-500/50 focus:border-adc-royal dark:focus:border-teal-400 outline-none text-sm text-slate-800 dark:text-white transition-all" />
+            </div>
+
+            <div class="flex items-center justify-between mt-5 mb-2 px-1">
+              <span id="results-count" class="text-xs font-medium text-slate-500 dark:text-slate-400">7 trámites encontrados</span>
+              <span class="text-xs text-[#D66824] font-semibold">Clic para abrir el editor PDF</span>
+            </div>
+
+            <div id="procedures-list" class="divide-y divide-slate-100 dark:divide-adc-borderDark border border-slate-200 dark:border-adc-borderDark rounded-xl overflow-hidden"></div>
+          </div>
+
+          <!-- Catálogo de formularios en tarjetas -->
+          <div class="bg-white dark:bg-adc-cardDark rounded-2xl p-5 sm:p-6 border border-slate-200 dark:border-adc-borderDark shadow-sm">
+            <div class="mb-4">
+              <h3 class="text-lg font-bold text-slate-900 dark:text-white">Catálogo de formularios oficiales</h3>
+              <p class="text-xs text-slate-500 dark:text-slate-300">Elegí por código oficial. Se autocompletan con tus datos y permiten descargar o imprimir el PDF listo para presentar.</p>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+              <div onclick="openFormEditor('DJ-01', 'Declaración Jurada (DJ-01)', 'DECLARACIÓN JURADA DE CARGOS Y HORAS (DJ-01)')" class="cursor-pointer rounded-xl p-4 bg-slate-50 dark:bg-adc-navyLight/70 hover:bg-blue-50/70 dark:hover:bg-adc-navyLight border border-slate-200 dark:border-adc-borderDark hover:border-adc-royal transition-all group">
+                <div class="flex items-center justify-between mb-2">
+                  <span class="text-xs font-bold px-2.5 py-1 rounded-md bg-adc-royal text-white">DJ-01</span>
+                  <span class="text-xs text-[#D66824] font-semibold group-hover:translate-x-0.5 transition-transform">Abrir →</span>
+                </div>
+                <h4 class="font-bold text-slate-900 dark:text-white text-sm">Cargos y horarios</h4>
+                <p class="text-xs text-slate-500 dark:text-slate-300 mt-1">Declaración jurada de incompatibilidad horaria y situación de revista.</p>
+              </div>
+
+              <div onclick="openFormEditor('DJ-02', 'Declaración Jurada (DJ-02)', 'DECLARACIÓN JURADA DE LICENCIAS ANTERIORES (DJ-02)')" class="cursor-pointer rounded-xl p-4 bg-slate-50 dark:bg-adc-navyLight/70 hover:bg-blue-50/70 dark:hover:bg-adc-navyLight border border-slate-200 dark:border-adc-borderDark hover:border-adc-royal transition-all group">
+                <div class="flex items-center justify-between mb-2">
+                  <span class="text-xs font-bold px-2.5 py-1 rounded-md bg-adc-royal text-white">DJ-02</span>
+                  <span class="text-xs text-[#D66824] font-semibold group-hover:translate-x-0.5 transition-transform">Abrir →</span>
+                </div>
+                <h4 class="font-bold text-slate-900 dark:text-white text-sm">Licencias anteriores</h4>
+                <p class="text-xs text-slate-500 dark:text-slate-300 mt-1">Historial anual de inasistencias y licencias usufructuadas.</p>
+              </div>
+
+              <div onclick="openFormEditor('DL-01', 'Solicitud de Licencia (DL-01)', 'SOLICITUD DE LICENCIA DOCENTE (DL-01)')" class="cursor-pointer rounded-xl p-4 bg-slate-50 dark:bg-adc-navyLight/70 hover:bg-blue-50/70 dark:hover:bg-adc-navyLight border border-slate-200 dark:border-adc-borderDark hover:border-adc-royal transition-all group">
+                <div class="flex items-center justify-between mb-2">
+                  <span class="text-xs font-bold px-2.5 py-1 rounded-md bg-adc-royal text-white">DL-01</span>
+                  <span class="text-xs text-[#D66824] font-semibold group-hover:translate-x-0.5 transition-transform">Abrir →</span>
+                </div>
+                <h4 class="font-bold text-slate-900 dark:text-white text-sm">Solicitud de licencia</h4>
+                <p class="text-xs text-slate-500 dark:text-slate-300 mt-1">Formulario único para licencias médicas, particulares y especiales.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================================================================== -->
+    <!-- 3. VISTA POR DEFECTO: EDITOR DE FORMULARIO (DECLARACIÓN JURADA DJ-01) -->
+    <!--    Permite ver de entrada la franja limpia de migas de pan arriba     -->
+    <!-- ===================================================================== -->
+    <section id="view-editor" class="max-w-[1380px] mx-auto space-y-4">
+
+      <!-- Barra de Herramientas de Acción del Formulario -->
+      <div class="bg-white dark:bg-adc-cardDark p-3 rounded-2xl border border-slate-200 dark:border-adc-borderDark shadow-sm flex flex-wrap items-center justify-between gap-3 no-print">
+        <div class="flex flex-wrap items-center gap-2">
+          <button onclick="openPreviewModal()" class="px-4 py-2 rounded-xl bg-adc-royal hover:bg-adc-royalHover text-white font-semibold text-xs sm:text-sm flex items-center gap-2 shadow-sm transition-all">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
+            Ver vista preliminar
+          </button>
+          <button onclick="showToast('Generando PDF oficial completado...', 'emerald')" class="px-4 py-2 rounded-xl bg-adc-royal hover:bg-adc-royalHover text-white font-semibold text-xs sm:text-sm flex items-center gap-2 shadow-sm transition-all">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+            Descargar PDF completado
+          </button>
+          <button onclick="window.print()" class="px-4 py-2 rounded-xl bg-adc-royal hover:bg-adc-royalHover text-white font-semibold text-xs sm:text-sm flex items-center gap-2 shadow-sm transition-all">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"/></svg>
+            Imprimir
+          </button>
+        </div>
+
+        <div class="flex flex-wrap items-center gap-2">
+          <button onclick="saveDraft()" class="px-3.5 py-2 rounded-xl border border-slate-300 dark:border-adc-borderDark bg-white dark:bg-adc-navyLight text-slate-700 dark:text-slate-200 hover:bg-slate-100 font-semibold text-xs sm:text-sm flex items-center gap-1.5 transition-all">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4"/></svg>
+            Guardar cambios
+          </button>
+          <button onclick="clearForm()" class="px-3.5 py-2 rounded-xl border border-slate-300 dark:border-adc-borderDark bg-white dark:bg-adc-navyLight text-slate-700 dark:text-slate-200 hover:bg-red-50 hover:text-red-600 dark:hover:bg-red-900/20 font-medium text-xs sm:text-sm flex items-center gap-1.5 transition-all">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
+            Limpiar formulario
+          </button>
+          <div id="draft-status" class="px-3 py-2 rounded-xl bg-emerald-50 dark:bg-emerald-950/50 border border-emerald-200 dark:border-emerald-700/50 text-emerald-700 dark:text-emerald-300 text-xs font-medium flex items-center gap-1.5">
+            <svg class="w-4 h-4 text-emerald-600 dark:text-emerald-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+            <span>Borrador guardado hace 2 minutos</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Espacio de trabajo en 2 Columnas: Izquierda (65%) Visor PDF + Derecha (35%) Panel de Revisión -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-5 items-start">
+        
+        <!-- COLUMNA IZQUIERDA (65% -> 8 de 12 cols): Visor de Documento Oficial -->
+        <div id="pdf-viewer-container" class="lg:col-span-8 rounded-2xl overflow-hidden border border-slate-300 dark:border-adc-borderDark shadow-md bg-slate-200/80 dark:bg-[#091526]">
+          
+          <!-- Barra superior oscura del visor PDF -->
+          <div class="bg-[#0B192C] text-white px-4 py-2.5 flex items-center justify-between text-xs sm:text-sm no-print">
+            <div class="flex items-center gap-3">
+              <svg class="w-4 h-4 text-slate-300" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2"/></svg>
+              <div class="flex items-center gap-1.5">
+                <span class="bg-slate-700/90 px-2.5 py-0.5 rounded font-semibold">1</span>
+                <span class="text-slate-300">/ 2</span>
+              </div>
+            </div>
+
+            <!-- Controles de Zoom -->
+            <div class="flex items-center gap-2">
+              <button onclick="changeZoom(-10)" class="w-7 h-7 rounded hover:bg-white/15 flex items-center justify-center font-bold" title="Alejar">−</button>
+              <span id="zoom-level" class="w-12 text-center font-semibold">100%</span>
+              <button onclick="changeZoom(10)" class="w-7 h-7 rounded hover:bg-white/15 flex items-center justify-center font-bold" title="Acercar">+</button>
+            </div>
+
+            <!-- Herramienta Mano + Pantalla Completa -->
+            <div class="flex items-center gap-2">
+              <button onclick="showToast('Modo desplazamiento de hoja activo', 'emerald')" class="p-1.5 rounded hover:bg-white/15 text-slate-200" title="Mover hoja">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M7 11.5V14m0-2.5v-6a1.5 1.5 0 113 0m-3 6a1.5 1.5 0 00-3 0v2a7.5 7.5 0 0015 0v-5a1.5 1.5 0 00-3 0m-6-3V11m0-5.5v-1a1.5 1.5 0 013 0v1m0 0V11m0-5.5a1.5 1.5 0 013 0v3m0 0V11"/></svg>
+              </button>
+              <button onclick="toggleFullscreenViewer()" class="p-1.5 rounded hover:bg-white/15 text-slate-200" title="Pantalla completa">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4"/></svg>
+              </button>
+            </div>
+          </div>
+
+          <!-- Hoja Oficial Blanca -->
+          <div class="p-4 sm:p-6 overflow-x-auto flex justify-center">
+            <div id="pdf-sheet" class="bg-white text-slate-900 w-full max-w-[780px] rounded-lg shadow-lg border border-slate-300 p-6 sm:p-8 transition-transform origin-top" style="transform: scale(1);">
+              
+              <!-- Encabezado Institucional Chaco -->
+              <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between border-b-2 border-slate-800 pb-4 mb-5 gap-4">
+                <div class="flex items-center gap-3">
+                  <div class="w-11 h-11 rounded-full border-2 border-slate-700 flex items-center justify-center shrink-0 bg-slate-50">
+                    <svg class="w-6 h-6 text-slate-700" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3l7 4v5c0 5-3.5 8.5-7 9-3.5-.5-7-4-7-9V7l7-4z"/></svg>
+                  </div>
+                  <div>
+                    <div class="text-xl font-black tracking-wide text-slate-900 leading-none">CHACO</div>
+                    <div class="text-[10px] font-bold tracking-wider text-slate-600 uppercase mt-0.5">Gobierno de la Provincia</div>
+                  </div>
+                </div>
+                <div class="hidden sm:block h-9 w-px bg-slate-300"></div>
+                <div class="text-left sm:text-right">
+                  <div class="text-xs font-semibold text-slate-600">Ministerio de</div>
+                  <div class="text-xs sm:text-sm font-extrabold text-slate-900 leading-tight">EDUCACIÓN, CULTURA,<br>CIENCIA Y TECNOLOGÍA</div>
+                </div>
+              </div>
+
+              <!-- Título del Formulario -->
+              <div id="pdf-form-banner" class="bg-slate-200/90 border border-slate-300 rounded-md py-2.5 px-4 text-center font-extrabold text-slate-900 text-sm sm:text-base tracking-wide mb-6">
+                DECLARACIÓN JURADA DE CARGOS Y HORAS (DJ-01)
+              </div>
+
+              <!-- SECCIÓN 1: DATOS PERSONALES -->
+              <div class="mb-6">
+                <div class="bg-slate-100 border-l-4 border-adc-royal px-3 py-1.5 font-bold text-xs sm:text-sm text-slate-800 uppercase mb-3">
+                  1. Datos Personales
+                </div>
+                <div class="space-y-3 text-xs sm:text-sm">
+                  <div class="grid grid-cols-1 sm:grid-cols-12 gap-2 items-center">
+                    <label class="sm:col-span-3 font-semibold text-slate-700">Apellido y nombres:</label>
+                    <input id="field-nombre" type="text" value="Pérez, Ana María" class="sm:col-span-9 border border-slate-300 rounded px-3 py-1.5 bg-slate-50 font-medium text-slate-900 focus:outline-none focus:border-adc-royal" />
+                  </div>
+
+                  <div class="grid grid-cols-1 sm:grid-cols-12 gap-3 items-center">
+                    <label class="sm:col-span-2 font-semibold text-slate-700">DNI:</label>
+                    <input id="field-dni" type="text" value="27.345.678" class="sm:col-span-4 border border-slate-300 rounded px-3 py-1.5 bg-white font-medium text-slate-900 focus:outline-none focus:border-adc-royal" />
+                    <label class="sm:col-span-3 font-semibold text-slate-700 sm:text-right">Fecha de nacimiento:</label>
+                    <input id="field-nacimiento" type="text" value="12 / 04 / 1980" class="sm:col-span-3 border border-slate-300 rounded px-3 py-1.5 bg-white font-medium text-slate-900 focus:outline-none focus:border-adc-royal" />
+                  </div>
+
+                  <div class="grid grid-cols-1 sm:grid-cols-12 gap-3 items-center">
+                    <label class="sm:col-span-2 font-semibold text-slate-700">Domicilio:</label>
+                    <input id="field-domicilio" type="text" value="Bv. San Juan 1250" class="sm:col-span-5 border-2 border-amber-400 bg-amber-50/60 rounded px-3 py-1.5 font-medium text-slate-900 focus:outline-none focus:border-[#D66824]" />
+                    <label class="sm:col-span-2 font-semibold text-slate-700 sm:text-right">Localidad:</label>
+                    <input id="field-localidad" type="text" value="Barranqueras" class="sm:col-span-3 border border-slate-300 rounded px-3 py-1.5 bg-white font-medium text-slate-900 focus:outline-none focus:border-adc-royal" />
+                  </div>
+                </div>
+              </div>
+
+              <!-- SECCIÓN 2: SITUACIÓN DE REVISTA -->
+              <div class="mb-6">
+                <div class="bg-slate-100 border-l-4 border-adc-royal px-3 py-1.5 font-bold text-xs sm:text-sm text-slate-800 uppercase mb-3">
+                  2. Situación de Revista
+                </div>
+                <div class="space-y-3 text-xs sm:text-sm">
+                  <div class="grid grid-cols-1 sm:grid-cols-12 gap-3 items-center">
+                    <label class="sm:col-span-2 font-semibold text-slate-700">Institución:</label>
+                    <select id="field-institucion" onchange="updateInstitutionCode()" class="sm:col-span-6 border-2 border-amber-400 bg-amber-50/60 rounded px-3 py-1.5 font-medium text-slate-900 focus:outline-none focus:border-[#D66824]">
+                      <option value="">-- Seleccionar establecimiento --</option>
+                      <option value="EEP N° 30 - Barranqueras">E.E.P. N° 30 "Juan Domingo Perón" (Barranqueras)</option>
+                      <option value="EES N° 76 - Resistencia">E.E.S. N° 76 "José María Paz" (Resistencia)</option>
+                    </select>
+                    <label class="sm:col-span-2 font-semibold text-slate-700 sm:text-right">Código:</label>
+                    <input id="field-codigo" type="text" value="111" class="sm:col-span-2 border border-slate-300 rounded px-3 py-1.5 bg-white font-bold text-center text-slate-900 focus:outline-none focus:border-adc-royal" />
+                  </div>
+
+                  <div class="grid grid-cols-1 sm:grid-cols-12 gap-3 items-center">
+                    <label class="sm:col-span-3 font-semibold text-slate-700">Cargo / Asignatura:</label>
+                    <input id="field-cargo" type="text" value="Maestro de Grado - Jornada Simple" class="sm:col-span-5 border border-slate-300 rounded px-3 py-1.5 bg-white font-medium text-slate-900 focus:outline-none focus:border-adc-royal" />
+                    <label class="sm:col-span-2 font-semibold text-slate-700 sm:text-right">Horas:</label>
+                    <input id="field-horas" type="text" value="20 hs" class="sm:col-span-2 border border-slate-300 rounded px-3 py-1.5 bg-white font-medium text-center text-slate-900 focus:outline-none focus:border-adc-royal" />
+                  </div>
+                </div>
+              </div>
+
+              <!-- SECCIÓN 3: PRESENTACIÓN Y FIRMA -->
+              <div>
+                <div class="bg-slate-100 border-l-4 border-adc-royal px-3 py-1.5 font-bold text-xs sm:text-sm text-slate-800 uppercase mb-3">
+                  3. Fecha de Presentación
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-12 gap-3 items-center text-xs sm:text-sm">
+                  <label class="sm:col-span-4 font-semibold text-slate-700">Fecha del formulario:</label>
+                  <input id="field-fecha" type="date" class="sm:col-span-4 border-2 border-amber-400 bg-amber-50/60 rounded px-3 py-1.5 font-medium text-slate-900 focus:outline-none focus:border-[#D66824]" />
+                  <div class="sm:col-span-4 text-right text-[11px] text-slate-500 italic">
+                    Carácter de Declaración Jurada
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+        <!-- COLUMNA DERECHA (35% -> 4 de 12 cols): Panel de Revisión Inteligente -->
+        <aside class="lg:col-span-4 rounded-2xl overflow-hidden border border-slate-200 dark:border-adc-borderDark bg-white dark:bg-adc-cardDark shadow-md no-print">
+          <!-- Encabezado Naranja (#D66824) -->
+          <div class="bg-[#D66824] text-white px-5 py-3.5 flex items-center justify-between">
+            <div class="flex items-center gap-2.5">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/></svg>
+              <h2 class="font-bold text-base">Panel de revisión inteligente</h2>
+            </div>
+            <span class="w-6 h-6 rounded-full border border-white/70 flex items-center justify-center text-xs font-bold" title="Asistente automático de validación">i</span>
+          </div>
+
+          <div class="p-4 sm:p-5 space-y-4">
+            <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-300">
+              Se detectaron <strong class="text-[#D66824] font-bold">3 aspectos</strong> que requieren tu atención antes de descargar o imprimir el formulario.
+            </p>
+
+            <!-- Tarjeta 1: Domicilio diferente -->
+            <div class="rounded-xl border border-[#D66824]/50 bg-amber-50/70 dark:bg-amber-950/20 p-4 transition-all hover:shadow-sm">
+              <div class="flex items-start gap-3">
+                <div class="w-9 h-9 rounded-lg bg-amber-100 dark:bg-amber-900/50 text-[#D66824] flex items-center justify-center shrink-0 mt-0.5">
+                  <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+                </div>
+                <div class="flex-1">
+                  <h3 class="font-bold text-sm text-slate-900 dark:text-white">Domicilio diferente</h3>
+                  <p class="text-xs text-slate-600 dark:text-slate-300 mt-1">El domicilio que escribiste no coincide con el de tu perfil docente (<em>Av. Gaboto 420</em>).</p>
+                  <div class="flex flex-wrap items-center gap-2 mt-3">
+                    <button onclick="syncDomicilio()" class="px-3 py-1.5 rounded-lg bg-adc-royal hover:bg-adc-royalHover text-white text-xs font-semibold flex items-center gap-1.5 transition-colors">
+                      <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+                      Revisar / Autocompletar
+                    </button>
+                    <button onclick="focusFormField('field-domicilio')" class="px-3 py-1.5 rounded-lg bg-white dark:bg-adc-navyLight border border-slate-300 dark:border-adc-borderDark text-slate-700 dark:text-slate-200 hover:bg-slate-50 text-xs font-semibold flex items-center gap-1.5 transition-colors">
+                      <svg class="w-3.5 h-3.5 text-adc-royal dark:text-blue-300" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 2v3m0 14v3M2 12h3m14 0h3"/></svg>
+                      Ir al campo
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Tarjeta 2: Fecha pendiente -->
+            <div class="rounded-xl border border-[#D66824]/50 bg-amber-50/70 dark:bg-amber-950/20 p-4 transition-all hover:shadow-sm">
+              <div class="flex items-start gap-3">
+                <div class="w-9 h-9 rounded-lg bg-amber-100 dark:bg-amber-900/50 text-[#D66824] flex items-center justify-center shrink-0 mt-0.5">
+                  <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                </div>
+                <div class="flex-1">
+                  <h3 class="font-bold text-sm text-slate-900 dark:text-white">Fecha pendiente</h3>
+                  <p class="text-xs text-slate-600 dark:text-slate-300 mt-1">Falta completar la fecha de presentación del formulario. Campo obligatorio.</p>
+                  <div class="flex flex-wrap items-center gap-2 mt-3">
+                    <button onclick="setTodayDate()" class="px-3 py-1.5 rounded-lg bg-adc-royal hover:bg-adc-royalHover text-white text-xs font-semibold flex items-center gap-1.5 transition-colors">
+                      <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+                      Revisar / Autocompletar
+                    </button>
+                    <button onclick="focusFormField('field-fecha')" class="px-3 py-1.5 rounded-lg bg-white dark:bg-adc-navyLight border border-slate-300 dark:border-adc-borderDark text-slate-700 dark:text-slate-200 hover:bg-slate-50 text-xs font-semibold flex items-center gap-1.5 transition-colors">
+                      <svg class="w-3.5 h-3.5 text-adc-royal dark:text-blue-300" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 2v3m0 14v3M2 12h3m14 0h3"/></svg>
+                      Ir al campo
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Tarjeta 3: Institución por confirmar -->
+            <div class="rounded-xl border border-[#D66824]/50 bg-amber-50/70 dark:bg-amber-950/20 p-4 transition-all hover:shadow-sm">
+              <div class="flex items-start gap-3">
+                <div class="w-9 h-9 rounded-lg bg-amber-100 dark:bg-amber-900/50 text-[#D66824] flex items-center justify-center shrink-0 mt-0.5">
+                  <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>
+                </div>
+                <div class="flex-1">
+                  <h3 class="font-bold text-sm text-slate-900 dark:text-white">Institución por confirmar</h3>
+                  <p class="text-xs text-slate-600 dark:text-slate-300 mt-1">Seleccioná cuál de tus instituciones corresponde a este trámite.</p>
+                  <div class="flex flex-wrap items-center gap-2 mt-3">
+                    <button onclick="selectDefaultSchool()" class="px-3 py-1.5 rounded-lg bg-adc-royal hover:bg-adc-royalHover text-white text-xs font-semibold flex items-center gap-1.5 transition-colors">
+                      <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+                      Revisar / Autocompletar
+                    </button>
+                    <button onclick="focusFormField('field-institucion')" class="px-3 py-1.5 rounded-lg bg-white dark:bg-adc-navyLight border border-slate-300 dark:border-adc-borderDark text-slate-700 dark:text-slate-200 hover:bg-slate-50 text-xs font-semibold flex items-center gap-1.5 transition-colors">
+                      <svg class="w-3.5 h-3.5 text-adc-royal dark:text-blue-300" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 2v3m0 14v3M2 12h3m14 0h3"/></svg>
+                      Ir al campo
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </aside>
+
+      </div>
+    </section>
+
+    <!-- ===================================================================== -->
+    <!-- VISTA 3: MI PERFIL DOCENTE                                            -->
+    <!-- ===================================================================== -->
+    <section id="view-perfil" class="hidden max-w-[1380px] mx-auto space-y-6">
+      <div class="bg-white dark:bg-adc-cardDark rounded-2xl p-6 border border-slate-200 dark:border-adc-borderDark shadow-sm">
+        <div class="flex items-center justify-between flex-wrap gap-4 border-b border-slate-100 dark:border-adc-borderDark pb-5">
+          <div class="flex items-center gap-4">
+            <div class="w-16 h-16 rounded-2xl bg-[#D66824] text-white flex items-center justify-center text-2xl font-extrabold shadow">
+              AP
+            </div>
+            <div>
+              <h1 class="text-xl font-bold text-slate-900 dark:text-white">Ana María Pérez</h1>
+              <p class="text-sm text-slate-500 dark:text-slate-300">CUIL: 27-27345678-4 · Legajo Docente N° 48.912</p>
+              <span class="inline-block mt-1 text-xs font-semibold px-2.5 py-0.5 rounded-full bg-emerald-100 text-emerald-800 dark:bg-emerald-900/50 dark:text-emerald-300">Datos sincronizados para autocompletado</span>
+            </div>
+          </div>
+          <button onclick="navigateTo('tramites')" class="px-4 py-2 rounded-xl bg-adc-royal hover:bg-adc-royalHover text-white text-sm font-semibold">
+            Ir a Mis trámites →
+          </button>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
+          <div class="space-y-3">
+            <h2 class="font-bold text-sm uppercase tracking-wider text-[#D66824]">Datos de contacto y domicilio</h2>
+            <div class="p-4 rounded-xl bg-slate-50 dark:bg-adc-navyLight/60 border border-slate-200 dark:border-adc-borderDark space-y-2 text-sm">
+              <div class="flex justify-between"><span class="text-slate-500 dark:text-slate-400">Domicilio declarado:</span><span class="font-semibold">Av. Gaboto 420</span></div>
+              <div class="flex justify-between"><span class="text-slate-500 dark:text-slate-400">Localidad:</span><span class="font-semibold">Barranqueras, Chaco</span></div>
+              <div class="flex justify-between"><span class="text-slate-500 dark:text-slate-400">Correo electrónico:</span><span class="font-semibold">ana.perez.docente@chaco.gob.ar</span></div>
+              <div class="flex justify-between"><span class="text-slate-500 dark:text-slate-400">Teléfono:</span><span class="font-semibold">(362) 4-558899</span></div>
+            </div>
+          </div>
+
+          <div class="space-y-3">
+            <h2 class="font-bold text-sm uppercase tracking-wider text-[#D66824]">Establecimientos y Cargos Activos</h2>
+            <div class="space-y-2.5 text-sm">
+              <div class="p-3.5 rounded-xl bg-slate-50 dark:bg-adc-navyLight/60 border border-slate-200 dark:border-adc-borderDark flex items-center justify-between">
+                <div>
+                  <div class="font-bold text-slate-900 dark:text-white">E.E.P. N° 30 "Juan Domingo Perón"</div>
+                  <div class="text-xs text-slate-500 dark:text-slate-300">Maestro de Grado · Turno Mañana · Barranqueras</div>
+                </div>
+                <span class="px-2.5 py-1 rounded-lg bg-adc-royal text-white text-xs font-bold">Cód. 111</span>
+              </div>
+              <div class="p-3.5 rounded-xl bg-slate-50 dark:bg-adc-navyLight/60 border border-slate-200 dark:border-adc-borderDark flex items-center justify-between">
+                <div>
+                  <div class="font-bold text-slate-900 dark:text-white">E.E.S. N° 76 "José María Paz"</div>
+                  <div class="text-xs text-slate-500 dark:text-slate-300">12 hs Cátedra · Turno Tarde · Resistencia</div>
+                </div>
+                <span class="px-2.5 py-1 rounded-lg bg-slate-600 text-white text-xs font-bold">Cód. 166</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================================================================== -->
+    <!-- VISTA 4: MI AGENDA ESCOLAR                                            -->
+    <!-- ===================================================================== -->
+    <section id="view-agenda" class="hidden max-w-[1380px] mx-auto space-y-6">
+      <div class="bg-white dark:bg-adc-cardDark rounded-2xl p-6 border border-slate-200 dark:border-adc-borderDark shadow-sm">
+        <div class="flex items-center justify-between flex-wrap gap-3 mb-5">
+          <div>
+            <div class="flex items-center gap-2">
+              <span class="w-1.5 h-6 rounded-full bg-[#D66824]"></span>
+              <h1 class="text-xl font-bold text-slate-900 dark:text-white">Mi Agenda y Calendario Escolar</h1>
+            </div>
+            <p class="text-sm text-slate-500 dark:text-slate-300 ml-4">Recordatorios de presentaciones, mesas de examen y anotaciones personales.</p>
+          </div>
+          <button onclick="showToast('Recordatorio agregado a tu agenda', 'emerald')" class="px-4 py-2 rounded-xl bg-[#D66824] hover:bg-adc-orangeHover text-white text-sm font-semibold shadow-sm">
+            + Nueva anotación
+          </button>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div class="p-4 rounded-xl border-l-4 border-[#D66824] bg-slate-50 dark:bg-adc-navyLight/70">
+            <span class="text-xs font-bold text-[#D66824] uppercase">Vencimiento próximo</span>
+            <h3 class="font-bold text-slate-900 dark:text-white mt-1">Presentación DJ-01 Actualizada</h3>
+            <p class="text-xs text-slate-500 dark:text-slate-300 mt-1">Entregar copia firmada en Secretaría de E.E.P. N° 30 antes del viernes.</p>
+            <button onclick="openFormEditor('DJ-01', 'Declaración Jurada (DJ-01)', 'DECLARACIÓN JURADA DE CARGOS Y HORAS (DJ-01)')" class="mt-3 text-xs font-bold text-adc-royal dark:text-blue-300 hover:underline">Abrir formulario DJ-01 →</button>
+          </div>
+          <div class="p-4 rounded-xl border-l-4 border-adc-royal bg-slate-50 dark:bg-adc-navyLight/70">
+            <span class="text-xs font-bold text-adc-royal dark:text-blue-300 uppercase">Calendario Escolar</span>
+            <h3 class="font-bold text-slate-900 dark:text-white mt-1">Jornada Institucional</h3>
+            <p class="text-xs text-slate-500 dark:text-slate-300 mt-1">Sin dictado de clases · Evaluación institucional en E.E.S. N° 76.</p>
+          </div>
+          <div class="p-4 rounded-xl border-l-4 border-emerald-500 bg-slate-50 dark:bg-adc-navyLight/70">
+            <span class="text-xs font-bold text-emerald-600 dark:text-emerald-400 uppercase">Nota personal</span>
+            <h3 class="font-bold text-slate-900 dark:text-white mt-1">Certificado médico Reconocimientos</h3>
+            <p class="text-xs text-slate-500 dark:text-slate-300 mt-1">Adjuntar talón de control junto con el formulario DL-01.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- MODAL DE VISTA PRELIMINAR -->
+  <div id="preview-modal" class="fixed inset-0 bg-slate-900/70 backdrop-blur-xs z-50 hidden items-center justify-center p-4 no-print">
+    <div class="bg-white dark:bg-adc-cardDark rounded-2xl max-w-lg w-full p-6 border border-slate-200 dark:border-adc-borderDark shadow-2xl">
+      <div class="flex items-center justify-between border-b border-slate-200 dark:border-adc-borderDark pb-3 mb-4">
+        <h3 class="font-bold text-lg text-slate-900 dark:text-white">Vista Preliminar Lista para Imprimir</h3>
+        <button onclick="closePreviewModal()" class="text-slate-400 hover:text-slate-600 dark:hover:text-white font-bold text-xl">×</button>
+      </div>
+      <p class="text-sm text-slate-600 dark:text-slate-300 mb-4">
+        El documento oficial <strong>CHACO - Ministerio de Educación</strong> se encuentra formateado en hoja A4 con los datos ingresados:
+      </p>
+      <div id="preview-summary" class="bg-slate-50 dark:bg-adc-navy rounded-xl p-4 text-xs space-y-1.5 border border-slate-200 dark:border-adc-borderDark mb-5"></div>
+      <div class="flex justify-end gap-2">
+        <button onclick="closePreviewModal()" class="px-4 py-2 rounded-xl border border-slate-300 dark:border-adc-borderDark text-sm font-semibold">Seguir editando</button>
+        <button onclick="closePreviewModal(); window.print();" class="px-4 py-2 rounded-xl bg-adc-royal hover:bg-adc-royalHover text-white text-sm font-semibold">Imprimir ahora</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Catálogo de trámites para el buscador en tiempo real
+    const proceduresData = [
+      { code: 'DJ-01', title: 'Declaración Jurada de Cargos y Horas', shortTitle: 'Declaración Jurada (DJ-01)', category: 'Declaraciones Juradas', badge: 'Más usado' },
+      { code: 'DL-01', title: 'Enfermedad o lesión común (Art. 319)', shortTitle: 'Enfermedad común (DL-01)', category: 'Licencias por razones de salud', badge: '' },
+      { code: 'DL-01', title: 'Enfermedad de largo tratamiento', shortTitle: 'Largo tratamiento (DL-01)', category: 'Licencias por razones de salud', badge: '' },
+      { code: 'DL-01', title: 'Gravidez y maternidad', shortTitle: 'Gravidez y maternidad (DL-01)', category: 'Licencias familiares', badge: '' },
+      { code: 'DL-01', title: 'Enfermedad de un miembro del grupo familiar', shortTitle: 'Atención familiar (DL-01)', category: 'Licencias por razones de salud', badge: '' },
+      { code: 'DJ-02', title: 'Declaración Jurada de Licencias Anteriores', shortTitle: 'Declaración Jurada (DJ-02)', category: 'Declaraciones Juradas', badge: '' },
+      { code: 'DL-01', title: 'Asuntos particulares / Exámenes / Donación de sangre', shortTitle: 'Licencia especial (DL-01)', category: 'Licencias especiales', badge: '' }
+    ];
+
+    let currentZoom = 100;
+
+    // Renderizar lista de trámites filtrables
+    function renderProcedures(filterText = '') {
+      const list = document.getElementById('procedures-list');
+      const countLabel = document.getElementById('results-count');
+      const query = filterText.toLowerCase().trim();
+
+      const filtered = proceduresData.filter(item =>
+        item.title.toLowerCase().includes(query) ||
+        item.code.toLowerCase().includes(query) ||
+        item.category.toLowerCase().includes(query)
+      );
+
+      countLabel.textContent = `${filtered.length} trámite${filtered.length === 1 ? '' : 's'} encontrado${filtered.length === 1 ? '' : 's'}`;
+
+      if (filtered.length === 0) {
+        list.innerHTML = `<div class="p-6 text-center text-sm text-slate-500 dark:text-slate-400">No se encontraron trámites con "${filterText}". Probá buscando DJ-01 o DL-01.</div>`;
+        return;
+      }
+
+      list.innerHTML = filtered.map((item, idx) => `
+        <button onclick="openFormEditor('${item.code}', '${item.shortTitle}', '${item.title.toUpperCase()} (${item.code})')" class="w-full text-left px-4 py-3.5 ${idx === 0 ? 'bg-blue-50/70 dark:bg-adc-royal/25' : 'bg-white dark:bg-adc-cardDark'} hover:bg-blue-50 dark:hover:bg-adc-navyLight transition-colors flex items-center justify-between gap-3">
+          <div class="flex items-center gap-3">
+            <span class="px-2 py-0.5 rounded text-xs font-bold bg-slate-200 dark:bg-adc-navy text-slate-800 dark:text-blue-200">${item.code}</span>
+            <span class="font-semibold text-sm text-slate-900 dark:text-white">${item.title}</span>
+            ${item.badge ? `<span class="hidden sm:inline-block text-[11px] font-bold px-2 py-0.5 rounded-full bg-[#D66824]/15 text-[#D66824]">${item.badge}</span>` : ''}
+          </div>
+          <span class="text-xs text-slate-500 dark:text-slate-400 shrink-0">${item.category}</span>
+        </button>
+      `).join('');
+    }
+
+    function filterProcedures() {
+      const val = document.getElementById('search-input').value;
+      renderProcedures(val);
+    }
+
+    // Navegación entre vistas principales (Inicio, Perfil, Trámites, Agenda, Editor)
+    function navigateTo(viewName) {
+      const views = ['inicio', 'tramites', 'editor', 'perfil', 'agenda'];
+      views.forEach(v => {
+        const el = document.getElementById(`view-${v}`);
+        if (el) el.classList.add('hidden');
+      });
+      const targetView = document.getElementById(`view-${viewName}`);
+      if (targetView) targetView.classList.remove('hidden');
+
+      // Mostrar la franja limpia de migas de pan SOLO cuando se está dentro de un formulario
+      const breadcrumbBar = document.getElementById('breadcrumb-bar');
+      if (viewName === 'editor') {
+        breadcrumbBar.classList.remove('hidden');
+      } else {
+        breadcrumbBar.classList.add('hidden');
+      }
+
+      // Actualizar estado activo de pestañas en desktop
+      document.querySelectorAll('.nav-tab').forEach(btn => {
+        btn.classList.remove('bg-[#D66824]', 'text-white', 'shadow-sm');
+        btn.classList.add('text-blue-100');
+      });
+
+      const activeTabId = viewName === 'editor' ? 'nav-tramites' : `nav-${viewName}`;
+      const activeBtn = document.getElementById(activeTabId);
+      if (activeBtn) {
+        activeBtn.classList.add('bg-[#D66824]', 'text-white', 'shadow-sm');
+        activeBtn.classList.remove('text-blue-100');
+      }
+
+      // Actualizar pestañas móviles
+      document.querySelectorAll('.mobile-tab').forEach(btn => {
+        const target = btn.getAttribute('data-target');
+        const isActive = (viewName === 'editor' && target === 'tramites') || target === viewName;
+        btn.className = isActive
+          ? 'mobile-tab px-2.5 py-1.5 rounded-lg bg-[#D66824] text-white font-semibold'
+          : 'mobile-tab px-2.5 py-1.5 rounded-lg text-blue-200 font-medium';
+      });
+
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // Abrir el editor PDF con el formulario seleccionado
+    function openFormEditor(code, breadcrumbTitle, fullBannerTitle) {
+      document.getElementById('breadcrumb-form-title').textContent = breadcrumbTitle;
+      document.getElementById('pdf-form-banner').textContent = fullBannerTitle || breadcrumbTitle.toUpperCase();
+      navigateTo('editor');
+    }
+
+    // Alternar Modo Claro / Modo Oscuro
+    function toggleTheme() {
+      const html = document.documentElement;
+      html.classList.toggle('dark');
+      const isDark = html.classList.contains('dark');
+      showToast(isDark ? 'Modo oscuro activado' : 'Modo claro activado', 'orange');
+    }
+
+    // Controles de Zoom del PDF
+    function changeZoom(delta) {
+      currentZoom = Math.min(120, Math.max(75, currentZoom + delta));
+      document.getElementById('zoom-level').textContent = `${currentZoom}%`;
+      document.getElementById('pdf-sheet').style.transform = `scale(${currentZoom / 100})`;
+    }
+
+    // Pantalla completa simulada para el visor
+    function toggleFullscreenViewer() {
+      const viewer = document.getElementById('pdf-viewer-container');
+      viewer.classList.toggle('lg:col-span-12');
+      viewer.classList.toggle('lg:col-span-8');
+      showToast('Vista de hoja alternada', 'emerald');
+    }
+
+    // Actualizar código según establecimiento seleccionado
+    function updateInstitutionCode() {
+      const val = document.getElementById('field-institucion').value;
+      const codeInput = document.getElementById('field-codigo');
+      if (val.includes('EES N° 76')) {
+        codeInput.value = '166';
+      } else if (val.includes('EEP N° 30')) {
+        codeInput.value = '111';
+      }
+    }
+
+    // Enfocar y resaltar campo desde el Panel de Revisión Inteligente
+    function focusFormField(fieldId) {
+      const el = document.getElementById(fieldId);
+      if (!el) return;
+      el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      el.focus();
+      el.classList.remove('field-highlight');
+      void el.offsetWidth;
+      el.classList.add('field-highlight');
+    }
+
+    // Acciones rápidas del Panel de Revisión Inteligente
+    function syncDomicilio() {
+      const field = document.getElementById('field-domicilio');
+      field.value = 'Av. Gaboto 420';
+      field.classList.remove('border-amber-400', 'bg-amber-50/60');
+      field.classList.add('border-emerald-500', 'bg-emerald-50');
+      showToast('Domicilio actualizado según tu perfil docente', 'emerald');
+    }
+
+    function setTodayDate() {
+      const field = document.getElementById('field-fecha');
+      const today = new Date().toISOString().split('T')[0];
+      field.value = today;
+      field.classList.remove('border-amber-400', 'bg-amber-50/60');
+      field.classList.add('border-emerald-500', 'bg-emerald-50');
+      showToast('Fecha de presentación completada', 'emerald');
+    }
+
+    function selectDefaultSchool() {
+      const field = document.getElementById('field-institucion');
+      field.value = 'EEP N° 30 - Barranqueras';
+      updateInstitutionCode();
+      field.classList.remove('border-amber-400', 'bg-amber-50/60');
+      field.classList.add('border-emerald-500', 'bg-emerald-50');
+      showToast('Establecimiento E.E.P. N° 30 asignado', 'emerald');
+    }
+
+    function saveDraft() {
+      const status = document.getElementById('draft-status');
+      status.innerHTML = `
+        <svg class="w-4 h-4 text-emerald-600 dark:text-emerald-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+        <span>Borrador guardado recién</span>
+      `;
+      showToast('Cambios guardados en tu dispositivo', 'emerald');
+    }
+
+    function clearForm() {
+      ['field-domicilio', 'field-institucion', 'field-fecha', 'field-horas'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.value = '';
+      });
+      showToast('Campos variables limpiados', 'orange');
+    }
+
+    // Vista preliminar modal
+    function openPreviewModal() {
+      const summary = document.getElementById('preview-summary');
+      summary.innerHTML = `
+        <div><strong>Docente:</strong> ${document.getElementById('field-nombre').value} (DNI ${document.getElementById('field-dni').value})</div>
+        <div><strong>Domicilio:</strong> ${document.getElementById('field-domicilio').value}, ${document.getElementById('field-localidad').value}</div>
+        <div><strong>Establecimiento:</strong> ${document.getElementById('field-institucion').value || 'Sin seleccionar'} (Cód. ${document.getElementById('field-codigo').value})</div>
+        <div><strong>Cargo / Horas:</strong> ${document.getElementById('field-cargo').value} · ${document.getElementById('field-horas').value}</div>
+        <div><strong>Fecha de presentación:</strong> ${document.getElementById('field-fecha').value || 'Pendiente'}</div>
+      `;
+      const modal = document.getElementById('preview-modal');
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+    }
+
+    function closePreviewModal() {
+      const modal = document.getElementById('preview-modal');
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+    }
+
+    // Toast helper
+    let toastTimer;
+    function showToast(message, color = 'emerald') {
+      const toast = document.getElementById('toast');
+      const msg = document.getElementById('toast-msg');
+      const icon = document.getElementById('toast-icon');
+      msg.textContent = message;
+      icon.className = `w-2.5 h-2.5 rounded-full ${color === 'orange' ? 'bg-[#D66824]' : 'bg-emerald-400'}`;
+      toast.classList.remove('translate-y-20', 'opacity-0');
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => {
+        toast.classList.add('translate-y-20', 'opacity-0');
+      }, 2600);
+    }
+
+    // Inicializar lista de trámites al cargar
+    renderProcedures();
+  </script>
+</body>
+</html>

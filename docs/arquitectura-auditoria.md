@@ -98,7 +98,15 @@ Estos son riesgos o deuda arquitectónica; no se presentan como fallos funcional
 5. Mantener rutas relativas compatibles con Pages, IDs, borradores y APIs públicas.
 6. Añadir pruebas del contrato nuevo y actualizar el mapa. `AGENTS.md` registra estas reglas para futuras tareas en este repositorio; no es una memoria automática fuera de él.
 
-## Verificación y límites
+## Reconciliación AUD-01 + MOTOR-01 del 22/11/2026
+
+La pantalla `#adcOfficialForm`, el visor `documentos/visor-pdf.js`, ACC1 y la presentación de revisión ya ofrecen componentes compartidos. MOTOR-01 todavía no se implementa. BD-02 mantiene su adaptador especializado; MD-01 y DL-02 tienen cambios locales interrelacionados en registro, esquema, motor y estilos.
+
+Hallazgos confirmados por inspección: `persistCurrentValues()` no propaga el resultado de `save()`; el visor expone `setEnabled`/`sync` sin `destroy`; la clave común identifica un formulario pero no una instancia; algunos mensajes de privacidad niegan envío a servidor pese a la sincronización autorizada. La pérdida de datos y la acumulación de memoria son riesgos estáticos, no fallos reproducidos por esa inspección. La sincronización existente se conserva y no se vuelve a desarrollar.
+
+La preservación externa y los resultados de las pruebas seleccionadas se registran en [motor01-linea-base.md](motor01-linea-base.md). No equivalen a una suite completa ni a pruebas online. La reconciliación modifica documentación/pruebas, no código de aplicación. DP-01 sigue pendiente de confirmación y recuperación MNC con contenido; esas capacidades locales de MD-01/BD-02 no se le atribuyen.
+
+## Verificación y límites históricos de la refactorización inicial
 
 Verificación realizada: **71 pruebas aprobadas, cero fallos**, ejecutando `npm test`. Incluye editor de ambas pantallas, gestos, documentos, guardado directo y conflictos, esquema de 26 formularios, perfil/precarga, navegación, búsqueda MBIT, MNC y PDF, autenticación con SDK y API simulada, y RLS sobre PostgreSQL aislado. Se añadió una prueba de arquitectura y otra del registro/saneamiento compartido. El cliente Supabase se recompiló correctamente con `npm run build`.
 

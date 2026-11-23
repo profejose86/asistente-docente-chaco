@@ -1,0 +1,50 @@
+const {test}=require('node:test'),assert=require('node:assert/strict'),path=require('node:path'),os=require('node:os'),fs=require('node:fs');
+const {chromium}=require(path.join(os.homedir(),'.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright'));
+test('MT2 enfermedad: institución, período y PDF DL-01 autocompletado en VPI',{timeout:90000},async()=>{
+  const server=require('../tools/motor01-preview.cjs').createMotor01Server();await new Promise(resolve=>server.listen(0,'127.0.0.1',resolve));
+  const browser=await chromium.launch({channel:'chrome',headless:true});
+  try{
+    const page=await browser.newPage({viewport:{width:1440,height:1000}}),errors=[];
+    page.on('pageerror',error=>errors.push(error.message));await page.route(/^https:\/\//,route=>route.abort());
+    await page.route('**/assets/datos/ajustes-pagina.json',route=>route.fulfill({json:require('../assets/js/editor/ajustes-proyecto-datos.js').empty()}));
+    await page.goto(`http://127.0.0.1:${server.address().port}/adc/index.html?adc-preview=1&adc-inicio=1&adc-motor01=incapacidad`);
+    await page.evaluate(()=>{
+      adcSetSharedField('perfilApellidos','PRUEBA');adcSetSharedField('perfilNombres','ANA');adcSetSharedField('dni','30123456');$('sexo').value='F';
+      inst=[];
+      for(const name of ['IES Primera','IES Elegida'])addInst({name,office:'1438',level:'Superior',entries:[{type:'asignatura',subject:'Matemática',year:'1',division:'1',revista:'Titular',turno:'Mañana',schedule:[2,2,2,2,2,0,0]}]});
+    });
+    await page.locator('#adcTabTramites2').click();
+    await page.locator('[data-mt2-frequent]').getByRole('button',{name:'Enfermedad o lesión común',exact:true}).click();
+    const dialog=page.locator('#adcTramites2 dialog');
+    assert.equal(await dialog.isVisible(),true);assert.match(await dialog.innerText(),/¿En qué institución vas a presentar\?/);
+    assert.equal(await dialog.getByRole('button',{name:'Continuar',exact:true}).isDisabled(),true);
+    await page.locator('#adcMT2IllnessSchool').selectOption({label:'IES Elegida'});
+    await dialog.getByRole('button',{name:'Continuar',exact:true}).click();
+    await dialog.getByRole('button',{name:'Abrir DL-01 en el visor',exact:true}).click();assert.equal(await dialog.isVisible(),true);
+    await page.locator('#adcMT2IllnessFrom').fill('2026-11-23');await page.locator('#adcMT2IllnessUntil').fill('2026-11-22');
+    await dialog.getByRole('button',{name:'Abrir DL-01 en el visor',exact:true}).click();assert.equal(await dialog.isVisible(),true);
+    await page.locator('#adcMT2IllnessUntil').fill('2026-11-24');
+    await page.setViewportSize({width:390,height:1000});
+    assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false);
+    const box=await dialog.boundingBox();assert.ok(box.x>=0&&box.x+box.width<=390);
+    await page.setViewportSize({width:1440,height:1000});
+    await dialog.getByRole('button',{name:'Abrir DL-01 en el visor',exact:true}).click();
+    await page.waitForFunction(()=>document.body.dataset.adcMt2Dl01Ready==='true');
+    await page.waitForFunction(()=>document.body.dataset.adcMt2Dl01Ready==='true',{},{timeout:20000});
+    assert.equal(await dialog.isVisible(),false);assert.equal(await page.locator('#escuelaSelect option:checked').innerText(),'IES Elegida');
+    assert.equal(await page.locator('#desde').inputValue(),'2026-11-23');assert.equal(await page.locator('#hasta').inputValue(),'2026-11-24');
+    assert.equal(await page.locator('[data-mt2-viewer=dl01].adc-pdf-viewer-active').isVisible(),true);
+    assert.ok(await page.locator('#preview').evaluate(frame=>frame.contentDocument.querySelectorAll('canvas').length)>0);
+    const text=await page.evaluate(async()=>{
+      const directory=new URL('assets/vendor/pdfjs/',location.href).href;
+      const pdfjs=await import(directory+'pdf.min.mjs');pdfjs.GlobalWorkerOptions.workerSrc=directory+'pdf.worker.min.mjs';
+      const data=await(await fetch(adcPDFRequest.url)).arrayBuffer(),pdf=await pdfjs.getDocument({data,isEvalSupported:false}).promise;
+      const words=[];for(let i=1;i<=pdf.numPages;i++)words.push(...(await(await pdf.getPage(i)).getTextContent()).items.map(item=>item.str));await pdf.destroy();return words.join(' ');
+    });
+    assert.match(text,/PRUEBA/);assert.match(text,/ANA/);assert.match(text,/30\.123\.456/);assert.match(text,/IES Elegida/);assert.match(text,/23\s+11\s+2026\s+24\s+11\s+2026/);
+    const output=fs.mkdtempSync(path.join(os.tmpdir(),'adc-mt2-enfermedad-'));await page.screenshot({path:path.join(output,'dl01-vpi.png'),fullPage:true});
+    await page.locator('.adc-mt2-document-back').click();assert.equal(await page.locator('#adcTramites2').isVisible(),true);
+    assert.equal(await page.locator('body').getAttribute('data-adc-mt2-dl01-ready'),null);
+    assert.deepEqual(errors,[]);console.log('DL-01 generado y verificado: '+output);
+  }finally{await browser.close();await new Promise(resolve=>server.close(resolve))}
+});

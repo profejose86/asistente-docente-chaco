@@ -71,6 +71,15 @@ test('BD-02: VPI-01 con activación por doble gesto y edición independiente', {
     await page.mouse.up();
     assert.ok(await viewport.evaluate(node => node.scrollTop) < before);
     await viewer.evaluate(node => node.requestFullscreen = undefined);
+    const floating = viewer.locator('.adc-pdf-floating-fullscreen');
+    assert.equal(await floating.count(), 1);
+    assert.equal(await floating.getAttribute('aria-label'), 'Maximizar documento');
+    await floating.click();
+    assert.equal(await floating.getAttribute('aria-label'), 'Restaurar vista del documento');
+    assert.equal(await viewer.evaluate(node => node.classList.contains('adc-pdf-expanded')), true);
+    await floating.click();
+    await page.waitForFunction(() => !history.state?.adcPdfFullscreen);
+    assert.equal(await floating.getAttribute('aria-label'), 'Maximizar documento');
     const originalUrl = page.url();
     await page.evaluate(() => history.replaceState({bd02Test:'estado previo'}, ''));
     await viewport.dblclick({position:{x:12, y:100}});
@@ -104,6 +113,11 @@ test('BD-02: VPI-01 con activación por doble gesto y edición independiente', {
       await page.setViewportSize({width, height:1000});
       await nav.locator('[data-viewer-action=width]').click();
       assert.equal(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth), false);
+      assert.equal(await viewer.evaluate(node => getComputedStyle(node).paddingRight), '8px');
+      const viewBounds = await viewport.boundingBox();
+      const iconBounds = await floating.boundingBox();
+      assert.ok(iconBounds.x >= viewBounds.x && iconBounds.x + iconBounds.width <= viewBounds.x + viewBounds.width);
+      assert.ok(iconBounds.y >= viewBounds.y && iconBounds.y + iconBounds.height <= viewBounds.y + viewBounds.height);
       assert.equal(await viewer.locator('.adc-pdf-scroll').isVisible(), false);
       assert.equal(await viewport.evaluate(node => getComputedStyle(node).overflowY), 'auto');
       for (const theme of ['light', 'dark']) {
@@ -111,6 +125,13 @@ test('BD-02: VPI-01 con activación por doble gesto y edición independiente', {
         assert.equal(await nav.isVisible(), true);
       }
     }
+    await page.evaluate(() => document.activeElement.blur());
+    await viewport.scrollIntoViewIfNeeded();
+    const idleBox = await viewport.boundingBox();
+    await page.mouse.move(idleBox.x + 12, idleBox.y + 100);
+    await page.waitForFunction(() => getComputedStyle(document.querySelector('#adcBD02 .adc-pdf-floating-fullscreen')).opacity === '0');
+    await page.mouse.move(idleBox.x + 15, idleBox.y + 105);
+    await page.waitForFunction(() => getComputedStyle(document.querySelector('#adcBD02 .adc-pdf-floating-fullscreen')).opacity === '1');
     await page.evaluate(() => {
       const target = document.querySelector('#adcBD02 .adc-bd02-viewport');
       const touch = new Touch({identifier:1, target, clientX:25, clientY:100});

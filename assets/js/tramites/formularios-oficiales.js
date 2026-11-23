@@ -51,6 +51,11 @@
   const preview = section.querySelector('[data-adc-official-preview]');
   const sourceLink = section.querySelector('[data-adc-official-source]');
   let activeForm = null;
+  // Sólo el servidor local de prueba habilita esta capacidad; la URL sola no alcanza.
+  const pilotEnabled = window.adcConfig?.authMode === 'demo' && window.adcConfig?.motor01Pilot === true &&
+    ['localhost','127.0.0.1','[::1]'].includes(location.hostname) && new URL(location.href).searchParams.get('adc-motor01') === 'incapacidad';
+  let pilotOwned = false;
+  let pilotNavigation = null;
   let returnFocus = null;
   let values = {};
   let marked = new Set();
@@ -61,6 +66,8 @@
   let revision = 0;
   let draftWarnings = [];
   let profileAcknowledged = {};
+  let md01MncValues = {};
+  let md01MncConfirmed = new Set();
   let zoom = 1;
   let fitWidth = true;
   let fitPage = false;
@@ -82,14 +89,34 @@
   const paperGap = 18;
   const preparedDocument = () => window.adcPreparedPdfForms?.[activeForm?.id];
   const preparedReadOnly = () => Boolean(preparedDocument() && !preparedDocument().fields);
+  const md01MncEnabled = () => activeForm?.id==='md01'&&preparedDocument()?.md01Mnc===true;
+  function md01MncRule(path){
+    if(path==='observaciones')return true;
+    if(path==='codigoAnexo')return 'la institución consignada no tiene anexo';
+    if(path==='fechaIngreso')return values.tipoMovimiento==='Egreso';
+    if(path==='fechaEgreso')return values.tipoMovimiento==='Ingreso';
+    if(/^movimientos\.\d+\.horas$/.test(path))return 'este movimiento corresponde a un cargo sin horas cátedra';
+    if(/^movimientos\.\d+\.curso$/.test(path))return 'este movimiento no está asociado a un curso';
+    if(/^movimientos\.\d+\.division$/.test(path))return 'este movimiento no tiene división';
+    return false;
+  }
+  function md01MncIssue(field){
+    if(!md01MncEnabled())return '';
+    const rule=md01MncRule(field.path);
+    if(marked.has(field.path)&&(!rule||(typeof rule==='string'&&!md01MncConfirmed.has(field.path))))return `${field.label}: la marca histórica o la selección actual requiere revisión. El dato se conserva; quitá la marca antes de exportar y volvé a confirmarla sólo si corresponde.`;
+    if(field.path==='sexo'&&values.sexo&&!['F','M'].includes(values.sexo))return 'Sexo: el PDF original sólo dispone de F/M. El valor anterior se conserva en el borrador; revisá cómo presentarlo antes de exportar.';
+    return '';
+  }
+  function md01MncProblems(){return md01MncEnabled()?formFields().map(md01MncIssue).filter(Boolean):[];}
   const viewport = section.querySelector('.adc-document-viewport');
   const documentSize = section.querySelector('.adc-document-size');
   let draftToolbars=null,clearDialog=null,draftReturnFocus=null;
+  let masterViewer=false;
   const smartViewer=window.adcPdfViewer.create({
     viewport,size:documentSize,getScale:()=>zoom,
-    doubleActivateFullscreen:()=>Boolean(preparedDocument()?.doubleActivateFullscreen),
-    toggleFullscreenOnDoubleActivate:()=>Boolean(preparedDocument()?.toggleFullscreenOnDoubleActivate),
-    floatingFullscreen:()=>Boolean(preparedDocument()?.floatingFullscreen),
+    doubleActivateFullscreen:()=>masterViewer||Boolean(preparedDocument()?.doubleActivateFullscreen),
+    toggleFullscreenOnDoubleActivate:()=>masterViewer||Boolean(preparedDocument()?.toggleFullscreenOnDoubleActivate),
+    floatingFullscreen:()=>masterViewer||Boolean(preparedDocument()?.floatingFullscreen),
     setScale(value){zoom=value;fitWidth=false;fitPage=false;updateZoom();},
     fit(mode){fitPage=mode==='page';fitWidth=!fitPage;updateZoom();}
   });
@@ -172,10 +199,10 @@
     if(!enabled&&clearDialog?.open)clearDialog.close();
   }
   function clearIncapacityDraft(){
-    const previous={values,marked,profileOrigin,touched,rowCounts,draftWarnings,profileAcknowledged};
+    const previous={values,marked,profileOrigin,touched,rowCounts,draftWarnings,profileAcknowledged,md01MncValues,md01MncConfirmed};
     loadDraft(activeForm,{fresh:true});
     if(!save()){
-      ({values,marked,profileOrigin,touched,rowCounts,draftWarnings,profileAcknowledged}=previous);
+      ({values,marked,profileOrigin,touched,rowCounts,draftWarnings,profileAcknowledged,md01MncValues,md01MncConfirmed}=previous);
       draftStatus('error','No se pudo limpiar el formulario. El borrador anterior se conserva.');
       return;
     }
@@ -186,9 +213,12 @@
     if (!activeForm || preparedReadOnly()) return;
     draftStatus('saving','Guardando…');
     try {
-      (globalThis.adcUserStorage||localStorage).setItem(storageKey(activeForm),JSON.stringify({
-        schemaVersion:2,values,marked:[...marked],profileOrigin:[...profileOrigin],touched:[...touched],rowCounts,draftWarnings,profileAcknowledged
-      }));
+      const store = globalThis.adcUserStorage||localStorage;
+      const raw = JSON.stringify({
+        schemaVersion:2,values,marked:[...marked],profileOrigin:[...profileOrigin],touched:[...touched],rowCounts,draftWarnings,profileAcknowledged,...(md01MncEnabled()?{md01MncValues,md01MncConfirmed:[...md01MncConfirmed]}:{})
+      });
+      store.setItem(storageKey(activeForm),raw);
+      if(pilotOwned && store.getItem(storageKey(activeForm)) !== raw)throw Error('No se pudo confirmar la copia local.');
       draftStatus('saved','Borrador guardado en este dispositivo');
       return true;
     } catch (error) {
@@ -241,7 +271,7 @@
     input.required = Boolean((field.required || (field.requiredWhen && matches(field.requiredWhen))) && !isMarked);
     if (isMarked) input.setCustomValidity('');
     for (const button of [...sheet.querySelectorAll('[data-adc-mnc]')].filter(node => node.dataset.adcMnc === path)) {
-      button.hidden = !isMarked && Boolean(input.value.trim());
+      button.hidden = !isMarked && (md01MncEnabled()?!md01MncRule(path):Boolean(input.value.trim()));
       button.setAttribute('aria-pressed',String(isMarked));
       button.setAttribute('aria-label',isMarked
         ? `Quitar el tachado de ${field.label.toLowerCase()} y volver a editar`
@@ -381,8 +411,9 @@
       const a = baseFieldPath(field.key,first,child.key);
       const b = baseFieldPath(field.key,second,child.key);
       [values[a],values[b]] = [values[b],values[a]];
+      if(md01MncEnabled())[md01MncValues[a],md01MncValues[b]]=[md01MncValues[b],md01MncValues[a]];
       [profileAcknowledged[a],profileAcknowledged[b]] = [profileAcknowledged[b],profileAcknowledged[a]];
-      for (const set of [marked,touched,profileOrigin]) {
+      for (const set of [marked,touched,profileOrigin,...(md01MncEnabled()?[md01MncConfirmed]:[])]) {
         const hasA = set.has(a),hasB = set.has(b);
         set.delete(a); set.delete(b);
         if (hasA) set.add(b);
@@ -440,10 +471,11 @@
               const from = baseFieldPath(field.key,rowIndex+1,child.key);
               const to = baseFieldPath(field.key,rowIndex,child.key);
               values[to] = values[from];
+              if(md01MncEnabled()){md01MncValues[to]=md01MncValues[from];delete md01MncValues[from];}
               profileAcknowledged[to] = profileAcknowledged[from];
               delete values[from];
               delete profileAcknowledged[from];
-              for (const set of [marked,touched,profileOrigin]) {
+              for (const set of [marked,touched,profileOrigin,...(md01MncEnabled()?[md01MncConfirmed]:[])]) {
                 if (set.has(from)) set.add(to);
                 else set.delete(to);
                 set.delete(from);
@@ -453,6 +485,7 @@
           for (const child of field.fields) {
             const lastPath = baseFieldPath(field.key,count-1,child.key);
             delete values[lastPath];
+            if(md01MncEnabled()){delete md01MncValues[lastPath];md01MncConfirmed.delete(lastPath);}
             delete profileAcknowledged[lastPath];
             marked.delete(lastPath);
             touched.delete(lastPath);
@@ -748,7 +781,7 @@
   }
   function persistCurrentValues() {
     for (const field of formFields()) if (!preparedDocument()?.fields || allControls(field.path).length) values[field.path] = readFieldValue(field);
-    save();
+    return save();
   }
   function syncPreparedInstitution() {
     const template=preparedDocument();if(!template?.fields)return false;
@@ -795,6 +828,8 @@
     rowCounts = {};
     draftWarnings = [];
     profileAcknowledged = {};
+    md01MncValues = {};
+    md01MncConfirmed = new Set();
     let draftVersion = 0;
     try {
       const draft = fresh?null:JSON.parse((globalThis.adcUserStorage||localStorage).getItem(storageKey(form)) || 'null');
@@ -806,6 +841,11 @@
         rowCounts = draft.rowCounts && typeof draft.rowCounts === 'object' ? draft.rowCounts : {};
         draftWarnings = Array.isArray(draft.draftWarnings) ? draft.draftWarnings : [];
         draftVersion = Number(draft.schemaVersion) || 0;
+        if(md01MncEnabled()){
+          const known=new Set(fieldsFor(form).map(field=>field.path));
+          md01MncConfirmed=new Set((Array.isArray(draft.md01MncConfirmed)?draft.md01MncConfirmed:[]).filter(path=>known.has(path)));
+          if(draft.md01MncValues&&typeof draft.md01MncValues==='object'&&!Array.isArray(draft.md01MncValues))md01MncValues=Object.fromEntries(Object.entries(draft.md01MncValues).filter(([path,value])=>typeof value==='string'&&known.has(path)));
+        }
         profileAcknowledged = draft.profileAcknowledged && typeof draft.profileAcknowledged === 'object' ? draft.profileAcknowledged : {};
       }
     } catch (error) {
@@ -844,6 +884,7 @@
         const warning = `Revisá ${field.label}: el borrador lo marcaba No corresponde y las reglas actuales de este campo ya no admiten MNC.`;
         if (!draftWarnings.includes(warning)) draftWarnings.push(warning);
       }
+      if(marked.has(field.path)&&md01MncEnabled()&&!Object.hasOwn(md01MncValues,field.path)&&String(values[field.path]??'').trim())md01MncValues[field.path]=String(values[field.path]);
       if (marked.has(field.path)) values[field.path] = '';
     }
     for (const group of form.sections) {
@@ -865,7 +906,19 @@
     if (!field || !input) return;
     if (!adcMnc.eligible(field)) return;
     const next = !marked.has(path);
-    if (next && String(input.value || '').trim()) {
+    let restoredMncValue='';
+    if(md01MncEnabled()){
+      const rule=md01MncRule(path);
+      if(next&&!rule){status.textContent='Este casillero no tiene permiso MNC para la selección actual.';return;}
+      const content=String(input.value||'');
+      if(next&&(typeof rule==='string'||content.trim())){
+        const context=typeof rule==='string'?`¿Confirmás que ${rule}? `:'';
+        if(!window.confirm(context+`¿Querés marcar «No corresponde» en ${field.label}?`+(content.trim()?' Se retirará el texto y quedará guardado para recuperarlo al desmarcar.':'')))return;
+      }
+      if(next){if(typeof rule==='string')md01MncConfirmed.add(path);md01MncValues[path]=field.academicPart&&content===String(presented(field,values[path])??'')?String(values[path]??''):content;input.value='';}
+      else{restoredMncValue=md01MncValues[path]??'';input.value=String(presented(field,restoredMncValue)??'');delete md01MncValues[path];md01MncConfirmed.delete(path);}
+    }
+    if (next && !md01MncEnabled() && String(input.value || '').trim()) {
       status.textContent = 'Solo se puede tachar un campo vacío.';
       return;
     }
@@ -874,7 +927,7 @@
       touched.add(path);
       profileOrigin.delete(path);
     } else marked.delete(path);
-    values[path] = input.value;
+    values[path] = md01MncEnabled()&&!next?restoredMncValue:input.value;
     if (field.profileId) profileAcknowledged[path] = profileValue(field);
     invalidatePreview();
     updateMnc(path,field);
@@ -885,6 +938,7 @@
     save();
   }
   function onFieldChange(event) {
+    if(activeForm?.id==='dl02')event.target.classList.remove('adc-dl02-review-focus','adc-pending-pulse');
     const input = event.target.closest('[data-adc-field]');
     if (!input) return;
     const path = input.dataset.adcField;
@@ -908,6 +962,7 @@
     const schoolChanged=path==='establecimiento'&&syncPreparedInstitution();
     invalidatePreview();
     updateMnc(path,field);
+    if(md01MncEnabled()&&path==='tipoMovimiento')for(const item of formFields())updateMnc(item.path,item);
     save();
     const controlsConditions = activeForm.sections.some(group => group.fields.some(item => item.when?.key === path || item.requiredWhen?.key === path));
     if (controlsConditions || schoolChanged) renderFields();
@@ -939,7 +994,7 @@
     }
     const startPath = field.repeatKey ? baseFieldPath(field.repeatKey,field.repeatIndex,field.after) : field.after;
     if (field.after && value && values[startPath] && value < values[startPath]) message = 'La fecha final debe ser igual o posterior a la fecha inicial.';
-    return message;
+    return md01MncIssue(field)||message;
   }
   function missingField(field) {
     return Boolean(validationMessage(field)) && (isEmptyValue(values[field.path]) || field.requiredOptions || field.conditionalOption || field.requireOneOf);
@@ -1160,6 +1215,10 @@
     return layout;
   }
   async function createPdf() {
+    if(md01MncEnabled()){
+      const problems=md01MncProblems();
+      if(problems.length)throw new Error(problems.join(' '));
+    }
     if(preparedDocument()?.reviewPanel&&!interinosReview.canGenerate())throw new Error('Resolvé los datos obligatorios del panel de revisión antes de generar el PDF.');
     const prepared = preparedDocument();
     if (prepared) {
@@ -1200,6 +1259,7 @@
   }
   async function runAction(action,reviewed=false) {
     if (!activeForm) return;
+    const mdProblems=md01MncProblems();if(mdProblems.length){status.textContent=mdProblems.join(' ');return;}
     if(preparedDocument()?.reviewPanel){persistCurrentValues();if(!interinosReview.check()||!validate())return;}
     else if (!preparedReadOnly() && (!validate(true) || (!reviewed&&!await guidedReview.review({action})) || !validate(true))) return;
     const buttons = [...section.querySelectorAll('[data-adc-official-action]')];
@@ -1245,7 +1305,12 @@
       buttons.forEach(button => {button.disabled = false;});
     }
   }
-  function loadForm(form,trigger) {
+  function loadForm(form,trigger,pilotRequest=false,masterRequest=false) {
+    if(pilotOwned&&!pilotRequest){
+      if(form.id===activeForm?.id)return true;
+      if(!releasePilot())return false;
+    }
+    masterViewer=masterRequest;
     section.dataset.adcFormId = form.id;
     invalidatePreview();
     activeForm = form;
@@ -1256,10 +1321,10 @@
     interinosReview?.setEnabled(Boolean(prepared?.reviewPanel));
     fullScreenButton.hidden=!prepared?.fullScreen;
     fitPage=false;
-    if(prepared?.smartViewer)fitWidth=true;
-    section.dataset.adcSmartViewer=String(Boolean(prepared?.smartViewer));
-    smartViewer.setEnabled(prepared?.smartViewer);
-    if(prepared?.smartViewer)fullScreenButton.hidden=true;
+    if(prepared?.smartViewer||masterViewer)fitWidth=true;
+    section.dataset.adcSmartViewer=String(Boolean(prepared?.smartViewer||masterViewer));
+    smartViewer.setEnabled(prepared?.smartViewer||masterViewer);
+    if(prepared?.smartViewer||masterViewer)fullScreenButton.hidden=true;
     section.dataset.adcDocumentMode = preparedReadOnly() ? 'original' : prepared?.fields ? 'overlay' : 'editable';
     returnFocus = trigger;
     loadDraft(form);
@@ -1300,6 +1365,7 @@
     privacy.textContent = form.sensitive
       ? 'Este trámite puede incluir información sensible. El borrador se guarda únicamente en este dispositivo y no se envía a un servidor.'
       : 'Los datos del formulario permanecen en este dispositivo; la aplicación no los envía a un servidor.';
+    if(form.id==='dl02')privacy.textContent='Este trámite puede incluir datos sensibles. El borrador se guarda en este navegador. La sincronización con tu cuenta requiere tu autorización en Mis datos / sincronización.';
     sourceLink.href = form.sourceUrl || sourcePage;
     sourceLink.textContent = form.sourceUrl ? 'Consultar documento oficial' : 'Consultar formularios y planillas oficiales';
     if (prepared) {
@@ -1341,11 +1407,19 @@
     }
   }
   section.querySelector('[data-adc-official-back]').addEventListener('click',() => {
-    tab('tramites');
-    returnFocus?.focus();
+    const result=tab('tramites');
+    if(result!==false)returnFocus?.focus();
   });
   sheet.addEventListener('submit',event => event.preventDefault());
   section.addEventListener('click',event => {
+    if(activeForm?.id==='dl02'&&event.target.closest('button')?.textContent==='Ir al campo'){
+      const input=document.activeElement;
+      if(input?.matches('[data-adc-field]')){
+        section.querySelectorAll('.adc-dl02-review-focus').forEach(node=>node.classList.remove('adc-dl02-review-focus'));
+        input.classList.add('adc-dl02-review-focus','adc-pending-pulse');
+        setTimeout(()=>input.classList.remove('adc-pending-pulse'),2000);
+      }
+    }
     const draftButton=event.target.closest('[data-adc-draft-action]');
     if(draftButton&&(activeForm?.id==='incapacidad'||preparedDocument()?.commonActions)){
       const action=draftButton.dataset.adcDraftAction;
@@ -1379,8 +1453,67 @@
   document.addEventListener('click',event => {
     const trigger = event.target.closest('[data-adc-official-form]');
     const form = trigger && formById.get(trigger.dataset.adcOfficialForm);
+    if(pilotOwned&&form?.id!==activeForm?.id&&form&&!releasePilot())return;
     if (form?.id === 'bd02' && window.adcBD02Open) window.adcBD02Open();
     else if (form && form.catalogState!=='pending') loadForm(form,trigger);
   });
   replaceCatalogCards();
+  // Apertura compartida: no necesita una tarjeta ni la pantalla del catálogo.
+  window.adcOfficialForms=Object.freeze({open(id,{trigger=null,smartViewer=false}={}){
+    const form=formById.get(id);
+    if(!form||form.catalogState==='pending')return false;
+    if(pilotOwned&&!releasePilot())return false;
+    if(activeForm&&!preparedReadOnly()&&persistCurrentValues()!==true)return false;
+    return loadForm(form,trigger,false,smartViewer)!==false;
+  },releaseViewer(){if(masterViewer){masterViewer=false;smartViewer.setEnabled(false);}}});
+
+  function releasePilot(){
+    if(!pilotOwned)return true;
+    if(persistCurrentValues()!==true){
+      status.textContent='No se pudo confirmar el guardado. El formulario sigue abierto con tus cambios. Reintentá Guardar cambios antes de salir.';
+      section.querySelector('[data-adc-draft-action="save"]')?.focus({preventScroll:true});
+      return false;
+    }
+    guidedReview.cancel();invalidatePreview();smartViewer.setEnabled(false);
+    pilotOwned=false;
+    return true;
+  }
+  if(pilotEnabled)document.addEventListener('DOMContentLoaded',()=>{
+    // Montaje posterior al registro histórico del editor, sin modificar índices base-*.
+    const entry=document.createElement('section');entry.dataset.adcMotor01Entry='';
+    const heading=document.createElement('h2');heading.textContent='Prueba MOTOR-01 · INCAPACIDAD';
+    const note=document.createElement('p');note.textContent='Usá únicamente datos ficticios. Se reutiliza el borrador de este navegador; esta prueba no sincroniza datos con una cuenta.';
+    const open=document.createElement('button');open.type='button';open.textContent='Abrir INCAPACIDAD';
+    const output=document.createElement('p');output.setAttribute('role','status');output.setAttribute('aria-live','polite');
+    entry.append(heading,note,open,output);
+    document.querySelector('#adcTramitesMenu .adc-form-catalog').prepend(entry);
+    pilotNavigation=window.tab;
+    window.tab=function(next){
+      if(pilotOwned&&next!=='official'&&!releasePilot())return false;
+      return pilotNavigation.apply(this,arguments);
+    };
+    const result=estado=>Object.freeze({estado,formId:'incapacidad',instanceId:'historico'});
+    const api=Object.freeze({
+      abrir({formId='incapacidad',instanceId='historico'}={}){
+        if(formId!=='incapacidad'||instanceId!=='historico')return result('identidad-no-admitida');
+        if(pilotOwned)return result('abierto');
+        if(activeForm&&!preparedReadOnly()&&persistCurrentValues()!==true)return result('bloqueado');
+        pilotOwned=true;
+        loadForm(formById.get('incapacidad'),open,true);
+        output.textContent='INCAPACIDAD abierto. Guardar confirma únicamente la copia local; salir vuelve a comprobarla.';
+        return result('abierto');
+      },
+      guardar(){return result(!pilotOwned?'sin-documento':persistCurrentValues()===true?'guardado-local':'error');},
+      cerrar(){
+        if(!pilotOwned)return result('sin-documento');
+        if(!releasePilot())return result('bloqueado');
+        window.tab('tramites');open.focus();output.textContent='Borrador guardado en este dispositivo. Podés volver a abrirlo.';
+        return result('cerrado');
+      }
+    });
+    open.addEventListener('click',()=>api.abrir());
+    window.adcMotor01Pilot=api;
+    pilotNavigation('tramites');
+    entry.scrollIntoView({block:'start'});open.focus({preventScroll:true});
+  },{once:true});
 })();

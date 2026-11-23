@@ -776,7 +776,7 @@
           text("zona","Zona"),
           text("jornada","Jornada"),
           text("localidad","Localidad o paraje"),
-          text("selloRegional","Sello regional / actuación simple",{"signature":true,"mnc":false})
+          text("selloRegional","Sello regional / actuación simple",{"signature":true,"mnc":false,"legacyOnly":true})
         ]},
         {title:"Movimientos de cargos / horas",fields:[
           repeat("movimientos","Cargo / asignatura",[
@@ -798,8 +798,8 @@
           date("fechaEgreso","Fecha de egreso"),
           area("observaciones","Observaciones",{"wide":true}),
           text("notificacion","Notificación del docente"),
-          text("firmaDirector","Firma y sello del director",{"signature":true,"mnc":false}),
-          text("firmaAgente","Firma del agente",{"signature":true,"mnc":false}),
+          text("firmaDirector","Firma y sello del director",{"signature":true,"mnc":false,"legacyOnly":true}),
+          text("firmaAgente","Firma del agente",{"signature":true,"mnc":false,"legacyOnly":true}),
           date("fecha","Fecha"),
           choices("tipoMovimiento","Tipo de movimiento",["Ingreso","Egreso"],{"required":true})
         ]},
@@ -809,6 +809,7 @@
       id:"dl02",
       code:"DL-02",
       title:"Interrupción de licencia",
+      displayTitle:"Disposición de interrupción de licencia · DL-02",
       catalogTitle:"Interrupción de licencia",
       sourceUrl:"https://dirdocumentacion.educacion.chaco.gob.ar/wp-content/uploads/2023/03/22-FORMULARIO-DL-02-Disposicion-Interrupcion-Licencia.doc",
       notices:["Disposición de interrupción de licencia o permiso para personal interino, suplente y titular. Completar el código, artículo y descripción de la licencia o del permiso que se interrumpe."],
@@ -818,23 +819,33 @@
           text("apellido","Apellido",{"required":true,"profileId":"perfilApellidos"}),
           text("nombres","Nombres",{"required":true,"profileId":"perfilNombres"}),
           text("dni","DNI",{"required":true,"profileId":"dni","inputmode":"numeric","document":true}),
-          select("sexo","Sexo",["F","M"],{"profileId":"sexo"}),
+          choices("sexo","Sexo",["F","M"],{"profileId":"sexo","mnc":false}),
           text("numeroDisposicion","Número de disposición de interrupción"),
-          text("selloRegional","Sello regional / actuación simple",{"signature":true,"mnc":false})
+          text("actuacionSerie","Actuación simple, grupo después de A",{"mnc":false}),
+          text("actuacionNumero","Actuación simple, grupo central",{"mnc":false}),
+          text("actuacionGrupoFinal","Actuación simple, grupo final",{"mnc":false}),
+          text("selloRegional","Sello regional / actuación simple anterior",{"signature":true,"mnc":false,"legacyOnly":true})
+        ]},
+        {title:"Institución del encabezado",fields:[
+          text("codigoOficina","Código de oficina",{"mnc":false}),
+          text("codigoAnexo","Código de anexo",{"mnc":false}),
+          text("establecimiento","Unidad educativa",{"mnc":false}),
+          text("nivelModalidad","Nivel/Modalidad",{"mnc":false})
         ]},
         {title:"Licencias y cargos",fields:[
           repeat("interrupciones","Interrupción",[
-            text("codigoOficina","Código de oficina"),
-            text("codigoAnexo","Código de anexo"),
-            text("establecimiento","Unidad educativa / establecimiento"),
-            text("nivel","Nivel"),
-            text("modalidad","Modalidad"),
-            text("categoria","Categoría"),
-            text("zona","Zona"),
-            text("jornada","Jornada"),
-            text("localidad","Localidad o paraje"),
-            text("cargo","Cargo / horas"),
-            text("situacionRevista","Situación de revista"),
+            text("codigoOficina","Código de oficina anterior",{"legacyOnly":true}),
+            text("codigoAnexo","Código de anexo anterior",{"legacyOnly":true}),
+            text("establecimiento","Unidad educativa anterior",{"legacyOnly":true}),
+            text("nivel","Nivel anterior",{"legacyOnly":true}),
+            text("modalidad","Modalidad anterior",{"legacyOnly":true}),
+            text("categoria","Categoría anterior",{"legacyOnly":true}),
+            text("zona","Zona anterior",{"legacyOnly":true}),
+            text("jornada","Jornada anterior",{"legacyOnly":true}),
+            text("localidad","Localidad o paraje anterior",{"legacyOnly":true}),
+            text("cargo","Cargo / horas anterior",{"legacyOnly":true}),
+            text("situacionRevista","Situación de revista anterior",{"legacyOnly":true,"mnc":false}),
+            choices("revista","Situación de revista",["Titular","Interino","Suplente"],{"mnc":false}),
             text("codigoLicencia","Código de licencia"),
             text("articulo","Artículo"),
             text("descripcion","Descripción"),
@@ -854,9 +865,11 @@
         ]},
         {title:"Observaciones y firmas",fields:[
           area("observaciones","Observaciones",{"wide":true}),
-          text("firmaResponsable","Firma del responsable",{"signature":true,"mnc":false}),
-          text("firmaAgente","Firma del agente",{"signature":true,"mnc":false}),
-          date("fecha","Fecha")
+          text("firmaResponsable","Firma del responsable anterior",{"signature":true,"mnc":false,"legacyOnly":true}),
+          text("firmaAgente","Firma del agente anterior",{"signature":true,"mnc":false,"legacyOnly":true}),
+          date("fecha","Fecha"),
+          text("notificacion","Notificación del docente",{"mnc":false}),
+          text("aclaracion","Aclaración",{"mnc":false})
         ]},
       ]
     },

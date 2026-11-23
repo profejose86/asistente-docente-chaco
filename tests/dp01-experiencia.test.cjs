@@ -177,7 +177,9 @@ test('DP-01: visor y acciones reutilizados, borrador y limpieza aislada', {timeo
     assert.equal(await navigation.isVisible(), false);
     assert.equal(await save.first().isVisible(), false);
     await open('incapacidad');
-    assert.equal(await floating.isVisible(),false);
+    assert.equal(await floating.isVisible(),true);
+    await viewport.dblclick({position:{x:12, y:100}});
+    assert.equal(await viewer.evaluate(node => node.classList.contains('adc-pdf-expanded')), true);
     await viewport.dblclick({position:{x:12, y:100}});
     assert.equal(await viewer.evaluate(node => node.classList.contains('adc-pdf-expanded')), false);
     assert.deepEqual(errors, []);

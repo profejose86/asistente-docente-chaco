@@ -1,7 +1,7 @@
 // Navegación visual. La escala y el PDF siguen perteneciendo al motor del formulario.
 (() => {
   function create({viewport,size,getScale,setScale,fit,doubleActivateFullscreen=()=>false,
-    toggleFullscreenOnDoubleActivate=()=>false,exitFullscreenOnBack=()=>false,floatingFullscreen=()=>false}) {
+    toggleFullscreenOnDoubleActivate=()=>false,exitFullscreenOnBack=()=>false,floatingFullscreen=()=>false,minScale=.25}) {
     const frame=document.createElement('div');
     frame.className='adc-pdf-viewer';
     viewport.before(frame);
@@ -26,6 +26,7 @@
     vertical.setAttribute('aria-orientation','vertical');
     frame.append(controls,vertical);
     const slider=controls.querySelector('input');
+    slider.min=String(minScale*100);
     const output=controls.querySelector('output');
     const fullButton=controls.querySelector('[data-viewer-action=fullscreen]');
     let floatingButton=null;
@@ -77,7 +78,7 @@
       }else lastTap={x:touch.clientX,y:touch.clientY,time:lastTouchTime};
     },{passive:false});
     viewport.addEventListener('touchcancel',resetTaps,{passive:true});
-    const clamp=value=>Math.max(.25,Math.min(2,value));
+    const clamp=value=>Math.max(minScale,Math.min(2,value));
     function schedule(){
       clearTimeout(timer);
       timer=setTimeout(()=>{

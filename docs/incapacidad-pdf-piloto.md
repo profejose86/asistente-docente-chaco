@@ -37,6 +37,14 @@ Las barras aparecen al interactuar y se ocultan después de 1,7 segundos, conser
 
 ## Verificación y extensión
 
+### Ampliación de pantalla completa del 22/11/2026
+
+Por pedido explícito del propietario, INCAPACIDAD activa `doubleActivateFullscreen`, `toggleFullscreenOnDoubleActivate` y `floatingFullscreen` del visor existente. El doble clic sobre el fondo entra y sale de pantalla completa; los campos editables continúan excluidos. El botón de 44 × 44 px queda flotante y visible arriba a la derecha, alterna Maximizar/Restaurar y conserva acceso por teclado, temas y salida con Escape. No se modifica el PDF, sus coordenadas ni los borradores. La configuración corresponde a INCAPACIDAD tanto en el acceso habitual como en el piloto local, sin publicación nueva.
+
+`tests/motor01-piloto.test.cjs` verifica el doble clic en modo nativo y alternativo, el botón, la exclusión de campos, foco/Enter/Escape, posición y recepción del clic a 390/1440 px en ambos temas y conservación de datos. Las tres pruebas de ese archivo aprobaron. Los toques se emulan; no acreditan un dispositivo físico.
+
+### Verificaciones históricas anteriores a la ampliación
+
 `tests/incapacidad-pdf.test.cjs` usa Chrome con prefijo `/adc/`. Comprueba precarga, edición, MNC, borradores nuevos e históricos, ambos temas, anchos 320/390/1440, botones, teclado, límites de escala, rueda, arrastre horizontal/vertical, barra sincronizada, ocultamiento y foco, pantalla completa nativa y alternativa, y reaperturas sin listeners duplicados. Los gestos de dos dedos y el desplazamiento con un dedo se ejercitan mediante eventos táctiles CDP de Chrome. Una copia de configuración de dos páginas existe sólo dentro de la prueba para comprobar navegación multipágina.
 
 La descarga se abre con pdf-lib y se comparan las instrucciones de texto exportadas al 100 % y al 200 %. Se conserva una página con las dimensiones originales. La impresión se comprueba sustituyendo la ventana de impresión por un receptor de prueba. El PDF completado se renderiza para inspeccionar alineación. No se ha probado impresión física, trackpad físico, dispositivos móviles reales, Safari ni una cuenta online. La interacción táctil real requiere revisión del piloto antes de ampliar el alcance.

@@ -1,5 +1,9 @@
 # Estructura y ejecución
 
+La rama `inicio` conserva una [fachada local basada en el prototipo del propietario](inicio-fachada.md). Se habilita con `adc-inicio=1`, conserva el acceso habitual y añade Inicio y Mis trámites 2. El HTML original está preservado como referencia; sus guardados y datos simulados no se incorporan a ADC.
+
+Mis trámites 2 dispone de un [registro independiente de aperturas y adaptadores del visor compartido](mt2-visor-compartido.md), sin leer tarjetas de la pantalla anterior. Los módulos de formularios siguen siendo compartidos por ADC. La eliminación del arranque histórico de Mis trámites y el contrato completo MOTOR-01 continúan pendientes.
+
 Para las auditorías individuales de formularios, consultar el criterio MNC aprobado y su estado real en [DP-01 — implementación por etapas](dp01-implementacion.md#criterio-aprobado-para-auditar-mnc). Comprobar confirmación al anular contenido, recuperación al desmarcar, persistencia y salidas. Distinguir capacidades implementadas y probadas de las aprobadas pendientes.
 
 ## Rondas de auditoría acordadas
@@ -10,9 +14,13 @@ Para cada formulario registrar fecha, archivos y versión revisados, funciones p
 
 **Auditoría 02** identificará una segunda ronda posterior. Utilizará los resultados y decisiones de Auditoría 01 como punto de partida, comprobará su estado y registrará nuevas propuestas y cambios sin reemplazar el historial de la primera ronda.
 
+El 22/11/2026 el propietario inició AUD-01 + MOTOR-01 y autorizó después la preservación local y una línea base. La revisión estática incluyó los 26 esquemas y los cinco formularios especializados adicionales. MD-01 tiene edición/MNC local más avanzada que su informe histórico; BD-02 conserva su motor especializado y DL-02 tiene un registro local de dos páginas. La revisión siguiente autoriza reconciliar documentación y las dos pruebas de MD-01, sin modificar formularios ni implementar MOTOR-01. Ver [línea base y pendientes](motor01-linea-base.md). Los resultados históricos anteriores no validan automáticamente los cambios locales actuales.
+
 La sincronización docente está implementada con aislamiento por cuenta, consentimiento y versiones por documento. Su clasificación, primera importación, archivos y límites están en [sincronizacion-usuarios.md](sincronizacion-usuarios.md). Tras la aprobación desde PC y celular, el usuario autorizó el 14/11/2026 integrar en `main`, publicar y aplicar en producción las migraciones `202611140001_adc_user_records.sql` y `202611140002_adc_sync_conflict_http.sql`. Ambas se verificaron sin cambiar los perfiles existentes; ver [cierre de publicación](cierre-publicacion-sincronizacion.md). El [staging](prueba-sincronizacion.md) conserva su Supabase independiente. Las referencias históricas siguientes a datos exclusivamente locales describen la etapa previa; la subida de estos datos requiere autorización explícita del usuario en cada dispositivo.
 
 El mapa vigente está en [arquitectura-mapa.md](arquitectura-mapa.md); la [auditoría y reglas de modularización](arquitectura-auditoria.md) distingue lo refactorizado de la deuda pendiente. `AGENTS.md` registra cómo reutilizar estos módulos. Regenerar con `npm run architecture:audit` y verificar con `npm run architecture:check`.
+
+MOTOR-01 inicia con una [prueba demo local de INCAPACIDAD](motor01-piloto-incapacidad.md), habilitada exclusivamente por su servidor de prueba y parámetro de URL. Reutiliza el motor existente y conserva borradores; confirma el guardado antes de la salida interna. No modifica el acceso habitual ni habilita el experimento en producción. El contrato completo y la integración de BD-02 permanecen pendientes.
 
 La cuenta superior utiliza `interfaz/cuenta.js`, que presenta las acciones de sesión y sincronización existentes. Login y aplicación comparten `tema/inicial.js`, `tema/controles.js` y `interfaz/selector-tema.css`, con la preferencia histórica del login. Ver [integración del avatar y temas](prueba-contact-icon.md).
 

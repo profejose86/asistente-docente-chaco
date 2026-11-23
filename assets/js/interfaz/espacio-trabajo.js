@@ -2,6 +2,7 @@
 const adc43Zooms=[];
 function adc43Fit(){
  for(const item of adc43Zooms){
+  if(item.host.closest('.adc-mt2-viewer-active'))continue;
   const papers=[...item.host.querySelectorAll(item.selector)];
   if(!papers.length||!item.host.clientWidth)continue;
   papers.forEach(paper=>paper.style.zoom='1');

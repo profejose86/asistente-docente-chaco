@@ -313,6 +313,7 @@
       doubleActivateFullscreen: () => !String(getSelection()).trim(),
       toggleFullscreenOnDoubleActivate: () => true,
       exitFullscreenOnBack: () => true,
+      floatingFullscreen: () => true,
       setScale(value) {
         zoom = value;
         fit = false;
@@ -324,6 +325,10 @@
         fit = !fitPage;
         updateZoom();
       }
+    });
+    viewport.closest('.adc-pdf-viewer').addEventListener('pointerout', event => {
+      const button = event.target.closest('.adc-pdf-floating-fullscreen');
+      if (button && !button.contains(event.relatedTarget) && !button.matches(':focus-visible')) button.blur();
     });
   }
 

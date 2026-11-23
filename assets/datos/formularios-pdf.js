@@ -1,6 +1,120 @@
 // Configuración de documentos originales y coordenadas de sus controles.
 // Solo los formularios registrados aquí utilizan este modo; los demás conservan su implementación.
 window.adcPreparedPdfForms = Object.freeze({
+  md01: Object.freeze({
+    pdf:'assets/formularios/MD-01.pdf',
+    pages:[{image:'assets/formularios/MD-01-pagina-1.png',width:612.12,height:1008.12}],
+    source:'assets/formularios/MD-01.pdf',sourceLabel:'Ver PDF original de MD-01',
+    sha256:'e28ec2b53445bbfa20b04d48b399281534b76d4114e89ec368be47a0036b874a',stage:'editable',smartViewer:true,fullScreen:true,
+    floatingFullscreen:true,doubleActivateFullscreen:true,toggleFullscreenOnDoubleActivate:true,
+    md01Mnc:true,draftDates:['fechaIngreso','fechaEgreso','fecha'],
+    note:'Prueba local de casilleros y MNC según permisos aprobados. Las marcas conservan el valor anterior. Los datos administrativos se completan sin inferir códigos, fechas ni roles de origen/destino. ACC1 y REV-01 siguen pendientes.',
+    repeats:{movimientos:{slots:4,label:'Organizar movimientos (4 filas del PDF)',rowLabel:'Movimiento'}},
+    fields:{
+      apellido:{x:294,top:142,width:286,height:14,fontSize:11},nombres:{x:127,top:163,width:454,height:14,fontSize:11},
+      dni:{x:113,top:184,width:215,height:14,fontSize:11},
+      sexo:{x:384,top:184,width:94,height:14,options:[{value:'F',x:404,top:187},{value:'M',x:463,top:187}]},
+      codigoOficina:{x:176,top:204,width:198,height:14,fontSize:11},codigoAnexo:{x:476,top:204,width:107,height:14,fontSize:11},
+      establecimiento:{x:177,top:225,width:216,height:14,fontSize:11,schoolSuggestions:true},
+      nivel:{x:490,top:225,width:42,height:14,fontSize:10},modalidad:{x:536,top:225,width:46,height:14,fontSize:10},
+      categoria:{x:132,top:253,width:115,height:14,fontSize:11},zona:{x:285,top:253,width:104,height:14,fontSize:11},jornada:{x:446,top:253,width:135,height:14,fontSize:11},
+      localidad:{x:174,top:274,width:407,height:14,fontSize:11},
+      descripcionMotivo:{x:210,top:486,width:370,height:14,fontSize:11},instrumento:{x:410,top:506,width:170,height:14,fontSize:11},
+      fechaIngreso:{x:186,top:540,width:91,height:14,fontSize:10,dateParts:[{x:186,width:21},{x:212,width:23},{x:241,width:35}]},
+      fechaEgreso:{x:461,top:540,width:94,height:14,fontSize:10,dateParts:[{x:461,width:21},{x:488,width:23},{x:517,width:37}]},
+      observaciones:{x:36,top:574,width:526,height:55,fontSize:11,multiline:true},
+      fecha:{x:89,top:703,width:109,height:17,fontSize:11,dateParts:[{x:89,width:27},{x:121,width:28},{x:154,width:44}]},
+      notificacion:{x:184,top:779,width:145,height:14,fontSize:11},
+      tipoMovimiento:{x:433.75,top:88,width:92,height:12,options:[{value:'Ingreso',x:479.62,top:88,width:34.19,height:5,marker:'underline'},{value:'Egreso',x:433.75,top:88,width:36.97,height:5,marker:'underline'}]},
+      ...Object.fromEntries(Array.from({length:8},(_,i)=>{
+        const cols=[['codigoCargo',40,52,11],['descripcionCargo',96,119,9],['asignatura',96,119,9],['horas',220,37,11],['curso',260,58,11],['division',322,48,11],['turno',375,51,10],['situacionRevista',431,55,9],['codigoMotivo',495,81,11]];
+        return cols.map(([key,x,width,fontSize],j)=>[`movimientos.${i}.${key}`,i<4?
+          {x,top:key==='codigoMotivo'?378+i*22.35:(key==='descripcionCargo'?381:key==='asignatura'?391:385)+i*20,height:key==='descripcionCargo'||key==='asignatura'?10:14,width,fontSize,...(key==='codigoMotivo'?{digits:5}:{})}:
+          {x:38+(j%3)*185,top:1050+(i-4)*190+Math.floor(j/3)*55,width:175,height:40,fontSize:11,multiline:true,overflow:true,overflowMessage:'El PDF oficial sólo tiene cuatro filas. El dato histórico se conserva debajo del documento; reorganizalo antes de exportar.'}]);
+      }).flat())
+    }
+  }),
+  dl02: (() => {
+    const fields = {
+      numeroDisposicion:{x:413.2,top:114.7,width:134.8,height:12.4,fontSize:10},
+      apellido:{x:258,top:166.58,width:326,height:12},
+      nombres:{x:90.8,top:187.22,width:494,height:12},
+      dni:{x:79,top:207.98,width:208,height:12},
+      sexo:{x:364.75,top:207.74,width:48.72,height:11.52,options:[
+        {value:'F',x:364.75,top:207.74,width:11.52,height:11.52},
+        {value:'M',x:401.95,top:207.74,width:11.52,height:11.52}
+      ]},
+      actuacionSerie:{x:282.6,top:85.8,width:16,height:10,fontSize:9},
+      actuacionNumero:{x:301,top:85.8,width:40,height:10,fontSize:9},
+      actuacionGrupoFinal:{x:344,top:85.8,width:25,height:10,fontSize:9},
+      codigoOficina:{x:137.54,top:228.62,width:215.88,height:12,institution:'office'},
+      codigoAnexo:{x:457,top:228.62,width:127,height:12},
+      establecimiento:{x:143.54,top:249.26,width:215.88,height:12,institution:'name'},
+      nivelModalidad:{x:454.84,top:249.26,width:129.93,height:12},
+      observaciones:{page:1,x:119,top:522.55,width:465,height:56,multiline:true},
+      fecha:{page:1,x:89.06,top:710.74,width:109,height:14,dateParts:[{x:89.06,width:25},{x:121,width:25},{x:154,width:44}]},
+      notificacion:{page:1,x:171.48,top:781.3,width:159.22,height:12},
+      aclaracion:{page:1,x:340.27,top:781.3,width:213.43,height:12}
+    };
+    const slots = [
+      {page:0,baseline:315.89,revista:383.21},
+      {page:0,baseline:545.11,revista:612.43},
+      {page:0,baseline:784.78,revista:852.1},
+      {page:1,baseline:90.24,revista:157.58},
+      {page:1,baseline:316.13,revista:383.45}
+    ];
+    const geometry = {
+      codigoCargo:{x:166,offset:0,width:97},
+      descripcionCargo:{x:338,offset:0,width:241},
+      anio:{x:70,offset:25.8,width:42},
+      division:{x:227.96,offset:25.8,width:99.22},
+      turno:{x:375.26,offset:25.8,width:75.22},
+      horas:{x:531.18,offset:25.8,width:49.28},
+      asignatura:{x:106.62,offset:51.6,width:471.22},
+      codigoLicencia:{x:159.86,offset:103.2,width:58},
+      articulo:{x:267.2,offset:103.2,width:53.33},
+      descripcion:{x:393.14,offset:103.2,width:184.75},
+      codigoPermiso:{x:159.14,offset:129,width:58},
+      articuloPermiso:{x:266.48,offset:129,width:53.33},
+      descripcionPermiso:{x:392.42,offset:129,width:184.75},
+      instrumento:{x:498.94,offset:154.8,width:79.92}
+    };
+    for (const [index,slot] of slots.entries()) {
+      const prefix = `interrupciones.${index}.`;
+      for (const [key,box] of Object.entries(geometry)) {
+        fields[prefix+key] = {page:slot.page,x:box.x,top:slot.baseline+box.offset-9.84,width:box.width,height:12};
+      }
+      fields[prefix+'fechaInterrupcion'] = {page:slot.page,x:174.61,top:slot.baseline+154.8-9.84,width:120.15,height:12,
+        dateParts:[{x:174.61,width:25},{x:205.5,width:25},{x:236.4,width:58}]};
+      fields[prefix+'revista'] = {page:slot.page,x:229.73,top:slot.revista,width:196.46,height:11.52,
+        options:[['Titular',229.73],['Interino',317.47],['Suplente',414.67]].map(([value,x])=>({value,x,top:slot.revista,width:11.52,height:11.52}))};
+    }
+    // Los datos históricos sin casillero oficial conservan un control revisable fuera del PDF.
+    const schema = window.adcOfficialFormsData.find(form=>form.id==='dl02');
+    let legacyIndex = 0;
+    const preserve = path => {
+      if (fields[path]) return;
+      fields[path] = {page:1,x:35.4,top:1040+legacyIndex++*42,width:544,height:16,fontSize:10,
+        overflow:true,overflowMessage:'Este dato histórico no tiene un casillero propio en el PDF oficial. Se conserva para revisión y requiere una decisión antes de exportar.'};
+    };
+    for (const group of schema.sections) for (const field of group.fields) {
+      if (field.type==='repeat') {
+        for (let index=0;index<5;index++) for (const child of field.fields) preserve(`${field.key}.${index}.${child.key}`);
+      } else preserve(field.key);
+    }
+    return Object.freeze({
+      pdf:'assets/formularios/DL-02.pdf',source:'assets/formularios/DL-02.pdf',sourceLabel:'Abrir PDF oficial de DL-02',
+      sha256:'d14c189630e5ae6d7ceb9c811bc8c02305d72352bdf7c502df63f07a1a0ab0cf',
+      pages:[{image:'assets/formularios/DL-02-pagina-1.png',width:612.12,height:1008.12},{image:'assets/formularios/DL-02-pagina-2.png',width:612.12,height:1008.12}],
+      stage:'editable',smartViewer:true,fullScreen:true,commonActions:true,reviewPanel:true,
+      doubleActivateFullscreen:true,toggleFullscreenOnDoubleActivate:true,floatingFullscreen:true,
+      institutionField:'establecimiento',
+      typography:{family:'Arial',fontSize:12,minFontSize:7},
+      note:'PDF oficial original de dos páginas. Revisá los datos precargados y completá únicamente lo que corresponda. Los datos anteriores sin casillero se conservan fuera del documento para su revisión.',
+      repeats:{interrupciones:{slots:5,label:'Organizar interrupciones (5 bloques del PDF)',rowLabel:'Bloque'}},
+      fields
+    });
+  })(),
   interinos: Object.freeze({
     pdf:'assets/formularios/Interinos-Expectativas.pdf',
     source:'assets/formularios/Interinos-Expectativas.pdf',sourceLabel:'Ver PDF original del formulario de Interinos y Suplentes',
@@ -64,6 +178,7 @@ window.adcPreparedPdfForms = Object.freeze({
     pages:[{image:'assets/formularios/Incapacidad-pagina-1.png',width:612.12,height:1008.12}],
     source:'assets/formularios/Incapacidad.pdf',sourceLabel:'Ver PDF original de la solicitud de incapacidad',
     stage:'editable',smartViewer:true,fullScreen:true,
+    floatingFullscreen:true,doubleActivateFullscreen:true,toggleFullscreenOnDoubleActivate:true,
     typography:{family:'Helvetica',fontSize:11,minFontSize:8},
     sha256:'485c8224765c7a5e8b5edadb458618307cb329a98691fce543d6a7742cbc2ce0',
     draftDates:['fechaNacimiento','fecha','fechaCese','fechaCertificacion'],
