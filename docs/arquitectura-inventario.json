@@ -945,8 +945,8 @@
     },
     {
       "file": "assets/css/tramites/mis-tramites2.css",
-      "bytes": 16457,
-      "lines": 122,
+      "bytes": 16834,
+      "lines": 126,
       "generated": false,
       "functions": [],
       "globals": [],
@@ -2557,8 +2557,8 @@
     },
     {
       "file": "assets/js/tramites/mis-tramites2.js",
-      "bytes": 30025,
-      "lines": 290,
+      "bytes": 30456,
+      "lines": 294,
       "generated": false,
       "functions": [
         "hideSuggestions",
@@ -2967,8 +2967,8 @@
     },
     {
       "file": "docs/mt2-visor-compartido.md",
-      "bytes": 8575,
-      "lines": 36,
+      "bytes": 8904,
+      "lines": 38,
       "generated": false,
       "functions": [],
       "globals": [],

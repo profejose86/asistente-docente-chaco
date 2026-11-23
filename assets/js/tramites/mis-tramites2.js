@@ -229,7 +229,11 @@
       const targets=el('div',undefined,'mt2-agenda-targets'),pickFrom=button('Marcar Desde','mt2-secondary'),pickUntil=button('Marcar Hasta','mt2-secondary');targets.append(pickFrom,pickUntil);
       const hint=el('p',undefined,'mt2-muted'),months=el('div',undefined,'mt2-agenda-months'),coverage=el('p',undefined,'mt2-muted'),legend=el('p',undefined,'mt2-agenda-legend'),closeCalendar=button('Cerrar calendario','mt2-secondary');
       hint.setAttribute('role','status');legend.innerHTML='<span class="adc-holiday">Feriado</span> · <span class="adc-closure">Asueto / cierre</span> · <span class="adc-school-event">Evento escolar</span>';
-      panel.append(heading,targets,hint,months,coverage,legend,closeCalendar);submit.before(daysLabel,estimate,useEstimate,toggle,panel);
+      const actions=el('div',undefined,'mt2-license-actions');
+      toggle.insertAdjacentHTML('afterbegin','<svg aria-hidden="true" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="4" y="5" width="16" height="16" rx="2"/><path d="M8 3v4m8-4v4M4 10h16"/></svg>');
+      form.querySelector('.mt2-license-dates').before(daysLabel,estimate,useEstimate);
+      submit.before(actions);actions.append(toggle,submit);
+      panel.append(heading,targets,hint,months,coverage,legend,closeCalendar);form.append(panel);
       let month=null,target='from',manualUntil=false,lastEstimate='',suggested='';
       function positionCalendar(){
         if(!panel.open)return;

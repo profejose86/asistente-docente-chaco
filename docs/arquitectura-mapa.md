@@ -260,7 +260,7 @@ Hojas de estilo en orden de carga:
 | `assets/js/tramites/formularios-oficiales.js` | 1520 | 57 | `adcOfficialForms`, `tab`, `adcMotor01Pilot` |
 | `assets/js/tramites/interinos-revision.js` | 60 | 5 | `adcInterinosReview` |
 | `assets/js/tramites/mis-tramites2-documentos.js` | 109 | 8 | `tab`, `adcMT2Documents` |
-| `assets/js/tramites/mis-tramites2.js` | 290 | 22 |  |
+| `assets/js/tramites/mis-tramites2.js` | 294 | 22 |  |
 | `assets/js/tramites/mnc-adaptadores.js` | 49 | 1 |  |
 | `assets/js/tramites/ol01.js` | 588 | 41 |  |
 | `assets/js/tramites/sc01.js` | 745 | 26 | `adcSC01Open` |

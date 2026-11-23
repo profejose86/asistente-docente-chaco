@@ -76,6 +76,10 @@ html[data-theme] #adcTramites2 dialog.mt2-dialog{border:2px solid var(--mt2-oran
 body[data-adc-mt2-document=dl01][data-adc-mt2-dl01-ready=true] [data-mt2-dl01-aux]{display:none!important}
 #adcTramites2 .mt2-license-dates{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
 #adcTramites2 .mt2-license-dates input{min-width:0;width:100%;box-sizing:border-box}
+#adcTramites2 .mt2-license-actions{display:flex;align-items:center;gap:24px;flex-wrap:wrap;margin-top:20px}
+#adcTramites2 .mt2-license-actions button{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;margin:0}
+#adcTramites2 .mt2-license-actions .mt2-secondary{flex:1;white-space:normal}
+#adcTramites2 .mt2-license-actions svg{flex:none}
 #adcTramites2 .mt2-agenda-picker{position:fixed;inset:auto;margin:0;padding:14px;max-width:calc(100vw - 32px);max-height:calc(100dvh - 32px);overflow:auto;box-sizing:border-box;border:1px solid var(--mt2-border);border-radius:12px;background:var(--mt2-card)!important;color:var(--mt2-text);box-shadow:0 14px 42px #071b3b40}
 #adcTramites2 .mt2-agenda-picker::backdrop{background:transparent}
 #adcTramites2 .mt2-agenda-heading{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:12px}
