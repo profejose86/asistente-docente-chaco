@@ -945,8 +945,8 @@
     },
     {
       "file": "assets/css/tramites/mis-tramites2.css",
-      "bytes": 16834,
-      "lines": 126,
+      "bytes": 17636,
+      "lines": 136,
       "generated": false,
       "functions": [],
       "globals": [],
@@ -2536,8 +2536,8 @@
     },
     {
       "file": "assets/js/tramites/mis-tramites2-documentos.js",
-      "bytes": 8818,
-      "lines": 109,
+      "bytes": 11183,
+      "lines": 131,
       "generated": false,
       "functions": [
         "records",
@@ -2967,8 +2967,8 @@
     },
     {
       "file": "docs/mt2-visor-compartido.md",
-      "bytes": 8904,
-      "lines": 38,
+      "bytes": 10164,
+      "lines": 40,
       "generated": false,
       "functions": [],
       "globals": [],
@@ -3745,8 +3745,8 @@
     },
     {
       "file": "tests/mt2-enfermedad.test.cjs",
-      "bytes": 8208,
-      "lines": 77,
+      "bytes": 11330,
+      "lines": 102,
       "generated": false,
       "functions": [],
       "globals": [],

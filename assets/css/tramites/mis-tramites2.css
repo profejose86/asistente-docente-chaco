@@ -74,6 +74,16 @@ html[data-theme] #adcTramites2 dialog.mt2-dialog{border:2px solid var(--mt2-oran
 /* Adaptadores del visor compartido: sólo las aperturas realizadas desde MT2. */
 .adc-mt2-document-back{margin:0 0 16px}
 body[data-adc-mt2-document=dl01][data-adc-mt2-dl01-ready=true] [data-mt2-dl01-aux]{display:none!important}
+body[data-adc-mt2-dl01-ready=true] #adcTramites2>*:not(#adcMT2DL01Workspace){display:none!important}
+#adcMT2DL01Workspace{min-width:0}
+#adcMT2DL01Workspace[hidden]{display:none!important}
+#adcMT2DL01Workspace>h2{font-size:24px;margin:0 0 10px}
+#adcMT2DL01Workspace>.status{display:flex;align-items:center;flex-wrap:wrap;gap:8px 14px;margin:16px 0;padding:12px;border:1px solid var(--mt2-border);border-radius:10px;background:var(--mt2-card);color:var(--mt2-text);font-size:13px}
+#adcMT2DL01Workspace>.status>br{display:none}
+#adcMT2DL01Workspace>.status>p{flex-basis:100%;margin:0}
+#adcMT2DL01Workspace>.status>.toolbar{margin:0}
+#adcMT2DL01Workspace .mt2-dl01-pages{width:max-content;max-width:none}
+#adcMT2DL01Workspace .mt2-dl01-pages canvas{display:block;margin:0 0 16px;background:#fff}
 #adcTramites2 .mt2-license-dates{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
 #adcTramites2 .mt2-license-dates input{min-width:0;width:100%;box-sizing:border-box}
 #adcTramites2 .mt2-license-actions{display:flex;align-items:center;gap:24px;flex-wrap:wrap;margin-top:20px}

@@ -21,7 +21,7 @@
     const size=document.querySelector(definition.size);if(!size)return null;
     let viewport=definition.viewport&&document.querySelector(definition.viewport);
     if(!viewport){viewport=document.createElement('div');size.before(viewport);viewport.append(size);}
-    const host=size.closest('#dj,#dj02,#adcOL,#adcSC01,#license');
+    const host=size.closest('#dj,#dj02,#adcOL,#adcSC01,#license,#adcMT2DL01Workspace');
     const oldZoom=size.style.zoom,oldWidth=size.style.width,isDJ02=definition.id==='dj02';
     const dj02Trial=isDJ02&&new URL(location.href).searchParams.get('adc-dj02-vpi')==='1';
     const minScale=dj02Trial ? .25 : isDJ02 ? .05 : .25;let scale=1,naturalWidth=1,fitMode='width';
@@ -56,7 +56,12 @@
     const adapter={enable(){frame.classList.add('adc-mt2-viewer-active');viewport.classList.add('adc-mt2-viewport');size.style.zoom='1';naturalWidth=Math.max(size.offsetWidth,size.scrollWidth,1);size.style.width=naturalWidth+'px';api.setEnabled(true);requestAnimationFrame(()=>fit('width'));},disable(){api.setEnabled(false);frame.classList.remove('adc-mt2-viewer-active');viewport.classList.remove('adc-mt2-viewport');size.style.zoom=oldZoom;size.style.width=oldWidth;adc43Fit();}};
     adapters.set(definition.id,adapter);return adapter;
   }
-  function release(){document.body.removeAttribute('data-adc-mt2-dl01-ready');document.querySelectorAll('[data-mt2-dl01-aux]').forEach(node=>node.removeAttribute('data-mt2-dl01-aux'));if(owned?.adapter)owned.adapter.disable();if(owned?.view==='official')adcOfficialForms.releaseViewer();owned=null;if(back)back.hidden=true;document.body.removeAttribute('data-adc-mt2-document');document.body.removeAttribute('data-adc-mt2-reason');}
+  function release(){
+    document.body.removeAttribute('data-adc-mt2-dl01-ready');document.querySelectorAll('[data-mt2-dl01-aux]').forEach(node=>node.removeAttribute('data-mt2-dl01-aux'));
+    if(owned?.adapter)owned.adapter.disable();
+    if(owned?.mounted){const {actions,actionsAnchor,pages,workspace}=owned.mounted;pages.replaceChildren();actionsAnchor.replaceWith(actions);workspace.hidden=true;if(back)document.querySelector('body > .wrap').prepend(back);}
+    if(owned?.view==='official')adcOfficialForms.releaseViewer();owned=null;if(back)back.hidden=true;document.body.removeAttribute('data-adc-mt2-document');document.body.removeAttribute('data-adc-mt2-reason');
+  }
   function open(id,{reason=null,trigger=null}={}){
     const record=records().find(item=>item.id===id);if(!record||record.status==='pending')return false;
     const definition=specialized.find(item=>item.id===id);
@@ -78,7 +83,7 @@
   }
   document.addEventListener('DOMContentLoaded',()=>{
     if(!document.getElementById('adcTramites2'))return;
-    back=document.createElement('button');back.type='button';back.className='adc-mt2-document-back';back.textContent='← Volver a Mis trámites 2';back.hidden=true;back.onclick=()=>tab('tramites2');
+    back=document.createElement('button');back.type='button';back.className='adc-mt2-document-back';back.textContent='← Volver a Mis trámites 2';back.hidden=true;back.onclick=()=>{if(owned?.mounted)release();tab('tramites2')};
     document.querySelector('body > .wrap').prepend(back);
     const previous=window.tab;
     window.tab=function(next){
@@ -97,12 +102,29 @@
   function showDL01(){
     const frame=document.querySelector('[data-mt2-viewer=dl01]'),preview=document.querySelector('#pdfResult iframe[data-adc-preview-state=ready]');
     if(owned?.id!=='dl01'||!frame||!preview||!adcPDFRequest?.url||adcPDFRequest.key!==adcPDFRequestKey())return false;
-    let child=frame;
-    while(child.parentElement&&child.id!=='license'){
-      for(const sibling of child.parentElement.children)if(sibling!==child)sibling.dataset.mt2Dl01Aux='';
-      child=child.parentElement;
+    if(owned.mounted)return true;
+    const sourcePages=[...preview.contentDocument.querySelectorAll('canvas')],root=document.getElementById('adcTramites2'),actions=document.querySelector('#pdfResult > .status');
+    if(!root||!sourcePages.length||!actions)return false;
+    let workspace=document.getElementById('adcMT2DL01Workspace');
+    if(!workspace){
+      workspace=document.createElement('section');workspace.id='adcMT2DL01Workspace';workspace.className='adc-mt2-viewer-host';workspace.setAttribute('aria-labelledby','adcMT2DL01Title');
+      workspace.innerHTML='<h2 id="adcMT2DL01Title" tabindex="-1">DL-01 · Enfermedad o lesión común</h2><p data-mt2-dl01-context></p><div id="adcMT2DL01Pages" class="mt2-dl01-pages"></div>';root.append(workspace);
     }
-    document.body.dataset.adcMt2Dl01Ready='true';frame.scrollIntoView({block:'start'});return true;
+    const title=workspace.querySelector('h2'),pages=workspace.querySelector('.mt2-dl01-pages');pages.replaceChildren();workspace.hidden=false;
+    workspace.querySelector('[data-mt2-dl01-context]').textContent=[document.getElementById('escuelaSelect').selectedOptions[0]?.textContent,...['desde','hasta'].map(id=>`${id==='desde'?'Desde':'Hasta'} ${document.getElementById(id).value.split('-').reverse().join('/')}`)].filter(Boolean).join(' · ');
+    for(const [index,source] of sourcePages.entries()){
+      const canvas=document.createElement('canvas');canvas.width=source.width;canvas.height=source.height;
+      canvas.style.width=source.style.width;canvas.style.height=source.style.height;canvas.setAttribute('role','img');canvas.setAttribute('aria-label',`DL-01 completado · página ${index+1} de ${sourcePages.length}`);
+      canvas.getContext('2d').drawImage(source,0,0);pages.append(canvas);
+    }
+    const actionsAnchor=document.createComment('Acciones originales DL-01');actions.before(actionsAnchor);
+    owned.adapter.disable();(workspace.querySelector('.adc-pdf-viewer')||pages).before(actions);
+    owned.view='tramites2';owned.mounted={actions,actionsAnchor,pages,workspace};
+    window.tab('tramites2');document.body.dataset.adcMt2Dl01Ready='true';
+    owned.adapter=attach({id:'dl01-mt2',size:'#adcMT2DL01Pages'});owned.adapter.enable();
+    if(back)workspace.prepend(back);
+    workspace.style.scrollMarginTop=((document.querySelector('.adc-start-header')?.offsetHeight||0)+16)+'px';
+    title.focus({preventScroll:true});workspace.scrollIntoView({block:'start'});return true;
   }
   window.adcMT2Documents=Object.freeze({records,open,showDL01});
 })();

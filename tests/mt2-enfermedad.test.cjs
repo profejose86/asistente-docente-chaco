@@ -59,7 +59,21 @@ test('MT2 enfermedad: institución, período y PDF DL-01 autocompletado en VPI',
     await page.waitForFunction(()=>document.body.dataset.adcMt2Dl01Ready==='true',{},{timeout:20000});
     assert.equal(await dialog.isVisible(),false);assert.equal(await page.locator('#escuelaSelect option:checked').innerText(),'IES Elegida');
     assert.equal(await page.locator('#desde').inputValue(),'2026-11-23');assert.equal(await page.locator('#hasta').inputValue(),'2026-11-24');
-    assert.equal(await page.locator('[data-mt2-viewer=dl01].adc-pdf-viewer-active').isVisible(),true);
+    assert.equal(await page.locator('[data-mt2-viewer=dl01-mt2].adc-pdf-viewer-active').isVisible(),true);
+    assert.equal(await page.locator('#adcTramites2').isVisible(),true);
+    assert.equal(await page.locator('#license').isVisible(),false);
+    assert.equal(await page.locator('#adcMT2DL01Workspace [data-mt2-viewer=dl01-mt2]').count(),1);
+    assert.equal(await page.locator('#adcTabTramites2').getAttribute('aria-current'),'page');
+    assert.equal(await page.locator('.mt2-dl01-pages canvas').isVisible(),true);
+    assert.equal(await page.evaluate(()=>document.querySelector('.mt2-dl01-pages canvas').toDataURL()===document.getElementById('preview').contentDocument.querySelector('canvas').toDataURL()),true,'Misma página renderizada, sin regenerar el PDF');
+    const viewer=page.locator('#adcMT2DL01Workspace .adc-pdf-viewer'),zoom=viewer.locator('.adc-pdf-navigation input');
+    const documentUrl=await page.evaluate(()=>adcPDFRequest.url),oldZoom=Number(await zoom.inputValue());
+    await page.locator('.mt2-dl01-pages canvas').dispatchEvent('wheel',{deltaY:-80,clientX:100,clientY:100});assert.ok(Number(await zoom.inputValue())>oldZoom);
+    await viewer.locator('.adc-pdf-floating-fullscreen').click();await page.waitForFunction(()=>Boolean(document.fullscreenElement||document.querySelector('.adc-pdf-expanded')));
+    await viewer.locator('.adc-pdf-floating-fullscreen').click();await page.waitForFunction(()=>!document.fullscreenElement&&!document.querySelector('.adc-pdf-expanded'));
+    assert.equal(await page.evaluate(()=>adcPDFRequest.url),documentUrl,'El zoom no regenera el PDF');
+    await page.locator('#preview').evaluate(frame=>{frame.contentWindow.print=()=>{frame.contentWindow.mt2PrintRequested=true}});
+    await page.locator('#adcMT2DL01Workspace #adcDL01Print').click();assert.equal(await page.locator('#preview').evaluate(frame=>frame.contentWindow.mt2PrintRequested),true);
     assert.ok(await page.locator('#preview').evaluate(frame=>frame.contentDocument.querySelectorAll('canvas').length)>0);
     const text=await page.evaluate(async()=>{
       const directory=new URL('assets/vendor/pdfjs/',location.href).href;
@@ -70,7 +84,18 @@ test('MT2 enfermedad: institución, período y PDF DL-01 autocompletado en VPI',
     assert.match(text,/PRUEBA/);assert.match(text,/ANA/);assert.match(text,/30\.123\.456/);assert.match(text,/IES Elegida/);assert.match(text,/23\s+11\s+2026\s+24\s+11\s+2026/);
     await page.screenshot({path:path.join(output,'dl01-vpi.png'),fullPage:true});
     await page.locator('.adc-mt2-document-back').click();assert.equal(await page.locator('#adcTramites2').isVisible(),true);
+    assert.equal(await page.locator('#adcMT2DL01Workspace').isVisible(),false);
+    assert.equal(await page.locator('#license #pdfResult').count(),1,'La vista histórica recupera su documento al salir');
     assert.equal(await page.locator('body').getAttribute('data-adc-mt2-dl01-ready'),null);
+    await page.locator('[data-mt2-frequent]').getByRole('button',{name:'Enfermedad o lesión común',exact:true}).click();
+    await page.locator('#adcMT2IllnessSchool').selectOption({label:'IES Elegida'});await dialog.getByRole('button',{name:'Continuar',exact:true}).click();
+    await page.locator('#adcMT2IllnessFrom').fill('2026-11-26');await page.locator('#adcMT2IllnessUntil').fill('2026-11-27');
+    await dialog.getByRole('button',{name:'Abrir DL-01 en el visor',exact:true}).click();await page.waitForFunction(()=>document.body.dataset.adcMt2Dl01Ready==='true');
+    assert.equal(await page.locator('#adcMT2DL01Workspace').count(),1,'Reutiliza el espacio, sin duplicados');
+    assert.match(await page.locator('[data-mt2-dl01-context]').innerText(),/26\/11\/2026.*27\/11\/2026/);
+    assert.equal(await page.locator('.adc-pdf-viewer-active:visible').count(),1);
+    await page.setViewportSize({width:390,height:1000});assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false);
+    await page.locator('.adc-mt2-document-back').click();
     assert.deepEqual(errors,[]);console.log('DL-01 generado y verificado: '+output);
   }finally{await browser.close();await new Promise(resolve=>server.close(resolve))}
 });
