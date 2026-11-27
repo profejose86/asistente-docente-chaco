@@ -19,4 +19,5 @@
  body:not(.adcDesignActive) .adc-design-annotation{pointer-events:none}
  #adcAnnotationColor{width:44px;height:24px;vertical-align:middle}
  #adcStroke{width:60px}
+ #adcDesignGear{left:auto;right:8px;top:8px}
  @media print{body.adc-keep-notes .adc-design-annotation{display:none!important}}

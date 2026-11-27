@@ -160,7 +160,8 @@
     let fullscreenPending = false;
 
     const interactiveSelector = 'input,textarea,select,button,a,label,[contenteditable],[data-vpi-interactive],[data-vpi-resize]';
-    const isInteractive = target => document.body.classList.contains('adcDesignActive') || Boolean(target?.closest?.(interactiveSelector));
+    const isInteractive = target => Boolean(target?.closest?.(interactiveSelector));
+    const isTijeraActive = () => document.body.classList.contains('adcTijeraActive');
     const clampScale = value => Math.max(MIN_SCALE, Math.min(MAX_SCALE, Number(value) || 1));
     const expanded = () => document.fullscreenElement === shell || shell.classList.contains('vpi-expanded');
 
@@ -611,17 +612,20 @@
     }, { passive: false });
 
     // Pan libre con mouse (vertical, horizontal y diagonal)
-    viewport.addEventListener('pointerdown', event => {
-      if (!activeEntry || event.pointerType !== 'mouse' || event.button !== 0 || isInteractive(event.target) || String(getSelection()).trim()) return;
+    function startPan(event) {
+      if (!activeEntry || event.pointerType !== 'mouse' || event.button !== 0 || isInteractive(event.target) || isTijeraActive() || String(getSelection()).trim()) return false;
       dragPan = { id: event.pointerId, x: event.clientX, y: event.clientY, left: viewport.scrollLeft, top: viewport.scrollTop };
       viewport.setPointerCapture(event.pointerId);
       shell.classList.add('vpi-grabbing');
       event.preventDefault();
-    });
+      return true;
+    }
+
+    viewport.addEventListener('pointerdown', startPan);
 
     viewport.addEventListener('pointermove', event => {
       if (dragPan?.id !== event.pointerId) return;
-      if (document.body.classList.contains('adcDesignActive')) { endPan(); return; }
+      if (isTijeraActive()) { endPan(); return; }
       viewport.scrollLeft = dragPan.left - (event.clientX - dragPan.x);
       viewport.scrollTop = dragPan.top - (event.clientY - dragPan.y);
       syncUi();
@@ -645,7 +649,7 @@
     const resetTaps = () => { tapStart = null; lastTap = null; };
 
     viewport.addEventListener('dblclick', event => {
-      if (!activeEntry || isInteractive(event.target) || performance.now() - lastTouchTime < 700) return;
+      if (!activeEntry || isInteractive(event.target) || isTijeraActive() || performance.now() - lastTouchTime < 700) return;
       event.preventDefault();
       toggleFullscreen();
     });
@@ -660,7 +664,7 @@
         revealControls();
         return;
       }
-      if (event.touches.length !== 1 || isInteractive(event.target)) { resetTaps(); return; }
+      if (event.touches.length !== 1 || isInteractive(event.target) || isTijeraActive()) { resetTaps(); return; }
       const touch = event.touches[0];
       tapStart = { id: touch.identifier, x: touch.clientX, y: touch.clientY, time: lastTouchTime };
     }, { passive: false });
@@ -870,6 +874,8 @@
       setContainerWidth: width => handleContainerResized(width),
       setContainerHeight: height => handleContainerHeightResized(height),
       toggleFullscreen,
+      beginPan: startPan,
+      getPages: () => pageMeta.map(item => ({ pageNumber: item.pageNumber, width: item.baseWidth, height: item.baseHeight, element: item.wrapper })),
       getActiveBytes: () => (activeBytes ? activeBytes.slice() : null),
       getDiagnostics,
       destroy

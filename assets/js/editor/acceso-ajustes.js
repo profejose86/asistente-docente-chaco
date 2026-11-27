@@ -1,12 +1,15 @@
 (() => {
  const gear=document.getElementById('adcDesignGear'),panel=document.getElementById('adcDesignPanel');
  if(!gear||!panel)return;
- const key='adc-adjustments-tab-session',realAuth=window.adcConfig?.authMode==='supabase';
+ const isLoginScreen=Boolean(document.getElementById('adcLoginCanvas'));
+ const key=isLoginScreen?'adc-adjustments-login-tab-session':'adc-adjustments-tab-session',realAuth=window.adcConfig?.authMode==='supabase';
+ const adminEmail=String(window.adcConfig?.adminEmail||'prof.josemiguelgomez@gmail.com').trim().toLowerCase();
  let owner=null,ready=false,allowed=!realAuth,clicks=0,tabs=0;
  if(realAuth)gear.setAttribute('data-adc-forbidden','');
  const read=()=>{try{return JSON.parse(sessionStorage.getItem(key)||'null');}catch{return null;}};
  const save=value=>{try{if(value)sessionStorage.setItem(key,JSON.stringify(value));else sessionStorage.removeItem(key);}catch{}};
  const notifyAdmin=()=>window.dispatchEvent(new CustomEvent('adc:editor-admin',{detail:{isAdmin:realAuth&&allowed,userId:realAuth&&allowed?owner:null}}));
+ const isAuthorizedAdmin=(authApi,u)=>Boolean(u&&(authApi?.isAdminUser?authApi.isAdminUser(u):u.app_metadata?.adc_role==='admin')&&String(u.email||'').trim().toLowerCase()===adminEmail);
  function lock(){
   // Cerrar mediante el editor para limpiar selección y herramientas activas.
   if(gear.getAttribute('aria-expanded')==='true'&&!gear.hasAttribute('data-adc-locked'))gear.click();
@@ -19,7 +22,8 @@
   owner=id||'anonymous';ready=true;
   const saved=read();lock();
   if(!allowed){save(null);notifyAdmin();return;}
-  if(saved?.owner===owner&&saved.visible)gear.removeAttribute('data-adc-locked');else save(null);
+  if(realAuth&&!isLoginScreen){gear.removeAttribute('data-adc-locked');save({owner,visible:true});}
+  else if(saved?.owner===owner&&saved.visible)gear.removeAttribute('data-adc-locked');else save(null);
   notifyAdmin();
  }
  window.adcEditorAccess=Object.freeze({
@@ -41,8 +45,7 @@
  },true);
  const auth=window.adcAuth;
  const checkServerAdmin=()=>Promise.resolve(auth?.user()).then(u=>{
-  const ok=Boolean(u&&(auth?.isAdminUser?auth.isAdminUser(u):u.app_metadata?.adc_role==='admin'));
-  identify(u?.id||null,ok);
+  identify(u?.id||null,isAuthorizedAdmin(auth,u));
  }).catch(()=>identify(null,false));
  window.addEventListener('adc:auth-changed',event=>{
   if(event.detail?.event==='SIGNED_OUT'){
@@ -56,8 +59,7 @@
   const initialOwner=owner;
   Promise.resolve(auth?.ready).then(()=>auth?.user()).then(u=>{
    if(owner===initialOwner){
-    const ok=Boolean(u&&(auth?.isAdminUser?auth.isAdminUser(u):u.app_metadata?.adc_role==='admin'));
-    identify(u?.id||null,ok);
+    identify(u?.id||null,isAuthorizedAdmin(auth,u));
    }
   }).catch(()=>{save(null);lock();gear.setAttribute('data-adc-forbidden','');ready=false;allowed=false;notifyAdmin();});
  }else identify(null,true);

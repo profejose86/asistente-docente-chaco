@@ -24,7 +24,11 @@ async function user(){
   if(!session)return null;
   return value(await api.auth.getUser()).user;
 }
-const isAdminUser=candidate=>candidate?.app_metadata?.adc_role==='admin';
+const isAdminEmail=candidate=>{
+  const adminEmail=String(config.adminEmail||'prof.josemiguelgomez@gmail.com').trim().toLowerCase();
+  return String(candidate?.email||'').trim().toLowerCase()===adminEmail;
+};
+const isAdminUser=candidate=>candidate?.app_metadata?.adc_role==='admin'&&isAdminEmail(candidate);
 async function isAdmin(){return isAdminUser(await user());}
 async function ensureTesterProfile(authenticated){
   const api=fail();

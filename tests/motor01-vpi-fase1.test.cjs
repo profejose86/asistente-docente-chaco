@@ -336,7 +336,7 @@ test('MOTOR-01 Fase 1: VPI-01 experimental aislado, bajo demanda, tiradores, ges
         id: role === 'admin' ? '11111111-1111-4111-8111-111111111111' : '22222222-2222-4222-8222-222222222222',
         aud: 'authenticated',
         role: 'authenticated',
-        email: role + '@test.local',
+        email: role === 'admin' ? 'prof.josemiguelgomez@gmail.com' : role + '@test.local',
         app_metadata: role === 'admin' ? { provider: 'email', adc_role: 'admin' } : { provider: 'email', adc_role: 'tester' },
         user_metadata: {}
       };

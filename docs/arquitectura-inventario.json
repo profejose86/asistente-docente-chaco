@@ -149,6 +149,7 @@
     "assets/js/motor01/acc1-motor.js",
     "assets/js/motor01/estado-borrador.js",
     "assets/js/motor01/registro-experimental.js",
+    "assets/js/motor01/tijera-motor.js",
     "assets/js/motor01/vpi-maestro-ui.js",
     "assets/js/motor01/vpi-motor.js",
     "assets/js/perfil/autoguardado.js",
@@ -327,6 +328,7 @@
     "tests/mis-tramites2.test.cjs",
     "tests/motor01-acc1-fase2.test.cjs",
     "tests/motor01-piloto.test.cjs",
+    "tests/motor01-tij01.test.cjs",
     "tests/motor01-vpi-fase1.test.cjs",
     "tests/mt2-enfermedad.test.cjs",
     "tests/navegacion.test.cjs",
@@ -506,6 +508,7 @@
         "assets/js/motor01/estado-borrador.js",
         "assets/js/motor01/acc1-motor.js",
         "assets/js/motor01/vpi-motor.js",
+        "assets/js/motor01/tijera-motor.js",
         "assets/js/motor01/vpi-maestro-ui.js"
       ],
       "styles": [
@@ -593,8 +596,8 @@
     },
     {
       "file": "assets/css/acceso/editor.css",
-      "bytes": 1885,
-      "lines": 23,
+      "bytes": 1931,
+      "lines": 24,
       "generated": false,
       "functions": [],
       "globals": [],
@@ -611,7 +614,7 @@
     },
     {
       "file": "assets/css/acceso/ingreso.css",
-      "bytes": 7330,
+      "bytes": 7351,
       "lines": 42,
       "generated": false,
       "functions": [],
@@ -827,8 +830,8 @@
     },
     {
       "file": "assets/css/motor01/vpi-maestro.css",
-      "bytes": 14730,
-      "lines": 142,
+      "bytes": 17235,
+      "lines": 169,
       "generated": false,
       "functions": [],
       "globals": [],
@@ -998,8 +1001,8 @@
     },
     {
       "file": "assets/datos/ajustes-pagina.json",
-      "bytes": 16726,
-      "lines": 611,
+      "bytes": 19444,
+      "lines": 675,
       "generated": false,
       "functions": [],
       "globals": [],
@@ -1054,8 +1057,8 @@
     },
     {
       "file": "assets/js/acceso/editor.js",
-      "bytes": 57419,
-      "lines": 956,
+      "bytes": 57582,
+      "lines": 959,
       "generated": false,
       "functions": [
         "showNotes",
@@ -1377,8 +1380,8 @@
     },
     {
       "file": "assets/js/editor/acceso-ajustes.js",
-      "bytes": 3462,
-      "lines": 65,
+      "bytes": 3836,
+      "lines": 67,
       "generated": false,
       "functions": [
         "lock",
@@ -1484,8 +1487,8 @@
     },
     {
       "file": "assets/js/editor/editor.js",
-      "bytes": 67176,
-      "lines": 1047,
+      "bytes": 68610,
+      "lines": 1072,
       "generated": false,
       "functions": [
         "linePointValues",
@@ -1509,6 +1512,7 @@
         "align",
         "alignedGesture",
         "placement",
+        "recordExternal",
         "setTool",
         "paintRulers",
         "rule",
@@ -1789,8 +1793,8 @@
     },
     {
       "file": "assets/js/motor01/acc1-motor.js",
-      "bytes": 11419,
-      "lines": 274,
+      "bytes": 11530,
+      "lines": 278,
       "generated": false,
       "functions": [
         "create",
@@ -1842,9 +1846,45 @@
       "storageKeys": []
     },
     {
+      "file": "assets/js/motor01/tijera-motor.js",
+      "bytes": 20292,
+      "lines": 659,
+      "generated": false,
+      "functions": [
+        "isValidBoxList",
+        "uniqueChildId",
+        "computeCutPlan",
+        "isVpiMaestroVisible",
+        "isAvailable",
+        "sayEditor",
+        "clearConfirmTimer",
+        "scheduleSuppressReset",
+        "clearGuideHighlights",
+        "clearPreviewSvg",
+        "createSvgNode",
+        "renderPointAMarker",
+        "renderPreview",
+        "showConfirmLine",
+        "renderBoxes",
+        "pageForPoint",
+        "toPagePercent",
+        "isExcludedTarget",
+        "commitCut",
+        "cancelPending",
+        "setActive",
+        "bindDocument",
+        "unbindDocument",
+        "resetDocumentBoxes"
+      ],
+      "globals": [
+        "adcMotor01Tijera"
+      ],
+      "storageKeys": []
+    },
+    {
       "file": "assets/js/motor01/vpi-maestro-ui.js",
-      "bytes": 11130,
-      "lines": 275,
+      "bytes": 11642,
+      "lines": 283,
       "generated": false,
       "functions": [
         "renderMeta",
@@ -1864,14 +1904,16 @@
     },
     {
       "file": "assets/js/motor01/vpi-motor.js",
-      "bytes": 31499,
-      "lines": 762,
+      "bytes": 37174,
+      "lines": 887,
       "generated": false,
       "functions": [
         "loadPdfJs",
         "create",
         "widthLimits",
         "applyContainerWidth",
+        "heightLimits",
+        "applyContainerHeight",
         "notifyState",
         "revealControls",
         "syncFullscreenButtons",
@@ -1886,6 +1928,8 @@
         "leaveExpanded",
         "toggleFullscreen",
         "handleContainerResized",
+        "handleContainerHeightResized",
+        "startPan",
         "endPan",
         "touchMetrics",
         "getDiagnostics",
@@ -2099,7 +2143,7 @@
     },
     {
       "file": "assets/js/servicios/supabase-runtime.js",
-      "bytes": 228251,
+      "bytes": 228402,
       "lines": 30,
       "generated": true,
       "functions": [],
@@ -2108,8 +2152,8 @@
     },
     {
       "file": "assets/js/servicios/supabaseClient.js",
-      "bytes": 5793,
-      "lines": 96,
+      "bytes": 6031,
+      "lines": 100,
       "generated": false,
       "functions": [
         "user",
@@ -3293,7 +3337,7 @@
     },
     {
       "file": "index.html",
-      "bytes": 47095,
+      "bytes": 47152,
       "lines": 164,
       "generated": false,
       "functions": [],
@@ -3356,8 +3400,8 @@
     },
     {
       "file": "tests/acceso-ajustes.test.cjs",
-      "bytes": 2790,
-      "lines": 33,
+      "bytes": 3312,
+      "lines": 40,
       "generated": false,
       "functions": [],
       "globals": [],
@@ -3367,8 +3411,8 @@
     },
     {
       "file": "tests/admin-github-studio.test.cjs",
-      "bytes": 12247,
-      "lines": 201,
+      "bytes": 14085,
+      "lines": 223,
       "generated": false,
       "functions": [
         "makeSession",
@@ -3925,9 +3969,22 @@
       ]
     },
     {
+      "file": "tests/motor01-tij01.test.cjs",
+      "bytes": 14536,
+      "lines": 241,
+      "generated": false,
+      "functions": [
+        "pagePoint"
+      ],
+      "globals": [],
+      "storageKeys": [
+        "adc_dj02_v1"
+      ]
+    },
+    {
       "file": "tests/motor01-vpi-fase1.test.cjs",
-      "bytes": 19697,
-      "lines": 321,
+      "bytes": 24421,
+      "lines": 385,
       "generated": false,
       "functions": [],
       "globals": [
@@ -5871,6 +5928,12 @@
     },
     {
       "from": "index.html",
+      "to": "assets/js/motor01/tijera-motor.js",
+      "kind": "script",
+      "exists": true
+    },
+    {
+      "from": "index.html",
       "to": "assets/js/motor01/vpi-maestro-ui.js",
       "kind": "script",
       "exists": true
@@ -6507,6 +6570,24 @@
     },
     {
       "from": "tests/motor01-piloto.test.cjs",
+      "to": "assets/js/editor/ajustes-proyecto-datos.js",
+      "kind": "literal-module",
+      "exists": true
+    },
+    {
+      "from": "tests/motor01-tij01.test.cjs",
+      "to": "tests/support/ajustes.cjs",
+      "kind": "literal-module",
+      "exists": true
+    },
+    {
+      "from": "tests/motor01-tij01.test.cjs",
+      "to": "tools/motor01-preview.cjs",
+      "kind": "literal-module",
+      "exists": true
+    },
+    {
+      "from": "tests/motor01-tij01.test.cjs",
       "to": "assets/js/editor/ajustes-proyecto-datos.js",
       "kind": "literal-module",
       "exists": true
@@ -8691,131 +8772,11 @@
       [
         {
           "file": "assets/js/acceso/editor.js",
-          "line": 288
-        },
-        {
-          "file": "assets/js/editor/editor.js",
-          "line": 314
-        }
-      ],
-      [
-        {
-          "file": "assets/js/acceso/editor.js",
-          "line": 289
-        },
-        {
-          "file": "assets/js/editor/editor.js",
-          "line": 315
-        }
-      ],
-      [
-        {
-          "file": "assets/js/acceso/editor.js",
-          "line": 290
-        },
-        {
-          "file": "assets/js/editor/editor.js",
-          "line": 316
-        }
-      ],
-      [
-        {
-          "file": "assets/js/acceso/editor.js",
-          "line": 291
-        },
-        {
-          "file": "assets/js/editor/editor.js",
-          "line": 317
-        }
-      ],
-      [
-        {
-          "file": "assets/js/acceso/editor.js",
-          "line": 292
-        },
-        {
-          "file": "assets/js/editor/editor.js",
-          "line": 318
-        }
-      ],
-      [
-        {
-          "file": "assets/js/acceso/editor.js",
-          "line": 293
-        },
-        {
-          "file": "assets/js/editor/editor.js",
-          "line": 319
-        }
-      ],
-      [
-        {
-          "file": "assets/js/acceso/editor.js",
-          "line": 294
-        },
-        {
-          "file": "assets/js/editor/editor.js",
-          "line": 320
-        }
-      ],
-      [
-        {
-          "file": "assets/js/acceso/editor.js",
-          "line": 295
-        },
-        {
-          "file": "assets/js/editor/editor.js",
-          "line": 321
-        }
-      ],
-      [
-        {
-          "file": "assets/js/acceso/editor.js",
-          "line": 296
-        },
-        {
-          "file": "assets/js/editor/editor.js",
-          "line": 322
-        }
-      ],
-      [
-        {
-          "file": "assets/js/acceso/editor.js",
-          "line": 297
-        },
-        {
-          "file": "assets/js/editor/editor.js",
-          "line": 323
-        }
-      ],
-      [
-        {
-          "file": "assets/js/acceso/editor.js",
-          "line": 298
-        },
-        {
-          "file": "assets/js/editor/editor.js",
-          "line": 324
-        }
-      ],
-      [
-        {
-          "file": "assets/js/acceso/editor.js",
-          "line": 299
-        },
-        {
-          "file": "assets/js/editor/editor.js",
-          "line": 325
-        }
-      ],
-      [
-        {
-          "file": "assets/js/acceso/editor.js",
           "line": 300
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 326
+          "line": 323
         }
       ],
       [
@@ -8825,7 +8786,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 327
+          "line": 324
         }
       ],
       [
@@ -8835,7 +8796,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 328
+          "line": 325
         }
       ],
       [
@@ -8845,7 +8806,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 329
+          "line": 326
         }
       ],
       [
@@ -8855,7 +8816,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 330
+          "line": 327
         }
       ],
       [
@@ -8865,7 +8826,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 331
+          "line": 328
         }
       ],
       [
@@ -8875,7 +8836,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 332
+          "line": 329
         }
       ],
       [
@@ -8885,7 +8846,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 333
+          "line": 330
         }
       ],
       [
@@ -8895,7 +8856,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 334
+          "line": 331
         }
       ],
       [
@@ -8905,7 +8866,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 335
+          "line": 332
         }
       ],
       [
@@ -8915,7 +8876,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 336
+          "line": 333
         }
       ],
       [
@@ -8925,7 +8886,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 337
+          "line": 334
         }
       ],
       [
@@ -8935,7 +8896,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 338
+          "line": 335
         }
       ],
       [
@@ -8945,7 +8906,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 339
+          "line": 336
         }
       ],
       [
@@ -8955,7 +8916,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 340
+          "line": 337
         }
       ],
       [
@@ -8965,7 +8926,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 341
+          "line": 338
         }
       ],
       [
@@ -8975,7 +8936,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 342
+          "line": 339
         }
       ],
       [
@@ -8985,7 +8946,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 343
+          "line": 340
         }
       ],
       [
@@ -8995,7 +8956,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 344
+          "line": 341
         }
       ],
       [
@@ -9005,7 +8966,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 345
+          "line": 342
         }
       ],
       [
@@ -9015,7 +8976,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 346
+          "line": 343
         }
       ],
       [
@@ -9025,7 +8986,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 347
+          "line": 344
         }
       ],
       [
@@ -9035,7 +8996,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 348
+          "line": 345
         }
       ],
       [
@@ -9045,7 +9006,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 349
+          "line": 346
         }
       ],
       [
@@ -9055,47 +9016,37 @@
         },
         {
           "file": "assets/js/editor/editor.js",
+          "line": 347
+        }
+      ],
+      [
+        {
+          "file": "assets/js/acceso/editor.js",
+          "line": 325
+        },
+        {
+          "file": "assets/js/editor/editor.js",
+          "line": 348
+        }
+      ],
+      [
+        {
+          "file": "assets/js/acceso/editor.js",
+          "line": 326
+        },
+        {
+          "file": "assets/js/editor/editor.js",
+          "line": 349
+        }
+      ],
+      [
+        {
+          "file": "assets/js/acceso/editor.js",
+          "line": 327
+        },
+        {
+          "file": "assets/js/editor/editor.js",
           "line": 350
-        }
-      ],
-      [
-        {
-          "file": "assets/js/acceso/editor.js",
-          "line": 333
-        },
-        {
-          "file": "assets/js/editor/editor.js",
-          "line": 359
-        }
-      ],
-      [
-        {
-          "file": "assets/js/acceso/editor.js",
-          "line": 342
-        },
-        {
-          "file": "assets/js/editor/editor.js",
-          "line": 368
-        }
-      ],
-      [
-        {
-          "file": "assets/js/acceso/editor.js",
-          "line": 343
-        },
-        {
-          "file": "assets/js/editor/editor.js",
-          "line": 369
-        }
-      ],
-      [
-        {
-          "file": "assets/js/acceso/editor.js",
-          "line": 344
-        },
-        {
-          "file": "assets/js/editor/editor.js",
-          "line": 370
         }
       ],
       [
@@ -9105,7 +9056,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 371
+          "line": 368
         }
       ],
       [
@@ -9115,77 +9066,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 372
-        }
-      ],
-      [
-        {
-          "file": "assets/js/acceso/editor.js",
-          "line": 347
-        },
-        {
-          "file": "assets/js/editor/editor.js",
-          "line": 373
-        }
-      ],
-      [
-        {
-          "file": "assets/js/acceso/editor.js",
-          "line": 348
-        },
-        {
-          "file": "assets/js/editor/editor.js",
-          "line": 374
-        }
-      ],
-      [
-        {
-          "file": "assets/js/acceso/editor.js",
-          "line": 349
-        },
-        {
-          "file": "assets/js/editor/editor.js",
-          "line": 375
-        }
-      ],
-      [
-        {
-          "file": "assets/js/acceso/editor.js",
-          "line": 350
-        },
-        {
-          "file": "assets/js/editor/editor.js",
-          "line": 376
-        }
-      ],
-      [
-        {
-          "file": "assets/js/acceso/editor.js",
-          "line": 351
-        },
-        {
-          "file": "assets/js/editor/editor.js",
-          "line": 377
-        }
-      ],
-      [
-        {
-          "file": "assets/js/acceso/editor.js",
-          "line": 352
-        },
-        {
-          "file": "assets/js/editor/editor.js",
-          "line": 378
-        }
-      ],
-      [
-        {
-          "file": "assets/js/acceso/editor.js",
-          "line": 353
-        },
-        {
-          "file": "assets/js/editor/editor.js",
-          "line": 379
+          "line": 369
         }
       ],
       [
@@ -9195,7 +9076,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 380
+          "line": 378
         }
       ],
       [
@@ -9205,7 +9086,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 381
+          "line": 379
         }
       ],
       [
@@ -9215,7 +9096,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 382
+          "line": 380
         }
       ],
       [
@@ -9225,7 +9106,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 383
+          "line": 381
         }
       ],
       [
@@ -9235,7 +9116,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 384
+          "line": 382
         }
       ],
       [
@@ -9245,7 +9126,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 385
+          "line": 383
         }
       ],
       [
@@ -9255,97 +9136,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 386
-        }
-      ],
-      [
-        {
-          "file": "assets/js/acceso/editor.js",
-          "line": 361
-        },
-        {
-          "file": "assets/js/editor/editor.js",
-          "line": 387
-        }
-      ],
-      [
-        {
-          "file": "assets/js/acceso/editor.js",
-          "line": 362
-        },
-        {
-          "file": "assets/js/editor/editor.js",
-          "line": 388
-        }
-      ],
-      [
-        {
-          "file": "assets/js/acceso/editor.js",
-          "line": 363
-        },
-        {
-          "file": "assets/js/editor/editor.js",
-          "line": 389
-        }
-      ],
-      [
-        {
-          "file": "assets/js/acceso/editor.js",
-          "line": 364
-        },
-        {
-          "file": "assets/js/editor/editor.js",
-          "line": 390
-        }
-      ],
-      [
-        {
-          "file": "assets/js/acceso/editor.js",
-          "line": 365
-        },
-        {
-          "file": "assets/js/editor/editor.js",
-          "line": 391
-        }
-      ],
-      [
-        {
-          "file": "assets/js/acceso/editor.js",
-          "line": 366
-        },
-        {
-          "file": "assets/js/editor/editor.js",
-          "line": 392
-        }
-      ],
-      [
-        {
-          "file": "assets/js/acceso/editor.js",
-          "line": 367
-        },
-        {
-          "file": "assets/js/editor/editor.js",
-          "line": 393
-        }
-      ],
-      [
-        {
-          "file": "assets/js/acceso/editor.js",
-          "line": 368
-        },
-        {
-          "file": "assets/js/editor/editor.js",
-          "line": 394
-        }
-      ],
-      [
-        {
-          "file": "assets/js/acceso/editor.js",
-          "line": 369
-        },
-        {
-          "file": "assets/js/editor/editor.js",
-          "line": 395
+          "line": 384
         }
       ],
       [
@@ -9355,7 +9146,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 396
+          "line": 402
         }
       ],
       [
@@ -9365,7 +9156,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 397
+          "line": 403
         }
       ],
       [
@@ -9375,7 +9166,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 398
+          "line": 404
         }
       ],
       [
@@ -9385,7 +9176,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 399
+          "line": 405
         }
       ],
       [
@@ -9395,7 +9186,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 400
+          "line": 406
         }
       ],
       [
@@ -9405,7 +9196,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 401
+          "line": 407
         }
       ],
       [
@@ -9415,7 +9206,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 402
+          "line": 408
         }
       ],
       [
@@ -9425,7 +9216,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 403
+          "line": 409
         }
       ],
       [
@@ -9435,7 +9226,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 404
+          "line": 410
         }
       ],
       [
@@ -9445,7 +9236,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 405
+          "line": 411
         }
       ],
       [
@@ -9455,7 +9246,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 406
+          "line": 412
         }
       ],
       [
@@ -9465,7 +9256,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 407
+          "line": 413
         }
       ],
       [
@@ -9475,7 +9266,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 408
+          "line": 414
         }
       ],
       [
@@ -9485,7 +9276,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 409
+          "line": 415
         }
       ],
       [
@@ -9495,7 +9286,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 410
+          "line": 416
         }
       ],
       [
@@ -9505,7 +9296,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 411
+          "line": 417
         }
       ],
       [
@@ -9515,7 +9306,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 412
+          "line": 418
         }
       ],
       [
@@ -9525,7 +9316,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 413
+          "line": 419
         }
       ],
       [
@@ -9535,7 +9326,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 414
+          "line": 420
         }
       ],
       [
@@ -9545,7 +9336,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 415
+          "line": 421
         }
       ],
       [
@@ -9555,7 +9346,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 416
+          "line": 422
         }
       ],
       [
@@ -9565,7 +9356,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 417
+          "line": 423
         }
       ],
       [
@@ -9575,7 +9366,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 418
+          "line": 424
         }
       ],
       [
@@ -9585,7 +9376,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 419
+          "line": 425
         }
       ],
       [
@@ -9595,7 +9386,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 420
+          "line": 426
         }
       ],
       [
@@ -9605,7 +9396,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 421
+          "line": 427
         }
       ],
       [
@@ -9615,7 +9406,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 422
+          "line": 428
         }
       ],
       [
@@ -9625,7 +9416,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 423
+          "line": 429
         }
       ],
       [
@@ -9635,7 +9426,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 424
+          "line": 430
         }
       ],
       [
@@ -9645,7 +9436,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 425
+          "line": 431
         }
       ],
       [
@@ -9655,7 +9446,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 426
+          "line": 432
         }
       ],
       [
@@ -9665,7 +9456,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 427
+          "line": 433
         }
       ],
       [
@@ -9675,7 +9466,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 428
+          "line": 434
         }
       ],
       [
@@ -9685,7 +9476,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 429
+          "line": 435
         }
       ],
       [
@@ -9695,7 +9486,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 430
+          "line": 436
         }
       ],
       [
@@ -9705,7 +9496,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 431
+          "line": 437
         }
       ],
       [
@@ -9715,7 +9506,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 432
+          "line": 438
         }
       ],
       [
@@ -9725,7 +9516,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 433
+          "line": 439
         }
       ],
       [
@@ -9735,63 +9526,13 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 434
-        }
-      ],
-      [
-        {
-          "file": "assets/js/acceso/editor.js",
-          "line": 410
-        },
-        {
-          "file": "assets/js/editor/editor.js",
-          "line": 436
-        }
-      ],
-      [
-        {
-          "file": "assets/js/acceso/editor.js",
-          "line": 411
-        },
-        {
-          "file": "assets/js/editor/editor.js",
-          "line": 437
-        }
-      ],
-      [
-        {
-          "file": "assets/js/acceso/editor.js",
-          "line": 412
-        },
-        {
-          "file": "assets/js/editor/editor.js",
-          "line": 438
-        }
-      ],
-      [
-        {
-          "file": "assets/js/acceso/editor.js",
-          "line": 413
-        },
-        {
-          "file": "assets/js/editor/editor.js",
-          "line": 439
-        }
-      ],
-      [
-        {
-          "file": "assets/js/acceso/editor.js",
-          "line": 414
-        },
-        {
-          "file": "assets/js/editor/editor.js",
           "line": 440
         }
       ],
       [
         {
           "file": "assets/js/acceso/editor.js",
-          "line": 415
+          "line": 409
         },
         {
           "file": "assets/js/editor/editor.js",
@@ -9801,7 +9542,7 @@
       [
         {
           "file": "assets/js/acceso/editor.js",
-          "line": 416
+          "line": 410
         },
         {
           "file": "assets/js/editor/editor.js",
@@ -9811,7 +9552,7 @@
       [
         {
           "file": "assets/js/acceso/editor.js",
-          "line": 417
+          "line": 411
         },
         {
           "file": "assets/js/editor/editor.js",
@@ -9821,97 +9562,7 @@
       [
         {
           "file": "assets/js/acceso/editor.js",
-          "line": 418
-        },
-        {
-          "file": "assets/js/editor/editor.js",
-          "line": 444
-        }
-      ],
-      [
-        {
-          "file": "assets/js/acceso/editor.js",
-          "line": 419
-        },
-        {
-          "file": "assets/js/editor/editor.js",
-          "line": 445
-        }
-      ],
-      [
-        {
-          "file": "assets/js/acceso/editor.js",
-          "line": 420
-        },
-        {
-          "file": "assets/js/editor/editor.js",
-          "line": 446
-        }
-      ],
-      [
-        {
-          "file": "assets/js/acceso/editor.js",
           "line": 421
-        },
-        {
-          "file": "assets/js/editor/editor.js",
-          "line": 447
-        }
-      ],
-      [
-        {
-          "file": "assets/js/acceso/editor.js",
-          "line": 422
-        },
-        {
-          "file": "assets/js/editor/editor.js",
-          "line": 448
-        }
-      ],
-      [
-        {
-          "file": "assets/js/acceso/editor.js",
-          "line": 423
-        },
-        {
-          "file": "assets/js/editor/editor.js",
-          "line": 449
-        }
-      ],
-      [
-        {
-          "file": "assets/js/acceso/editor.js",
-          "line": 424
-        },
-        {
-          "file": "assets/js/editor/editor.js",
-          "line": 450
-        }
-      ],
-      [
-        {
-          "file": "assets/js/acceso/editor.js",
-          "line": 425
-        },
-        {
-          "file": "assets/js/editor/editor.js",
-          "line": 451
-        }
-      ],
-      [
-        {
-          "file": "assets/js/acceso/editor.js",
-          "line": 426
-        },
-        {
-          "file": "assets/js/editor/editor.js",
-          "line": 452
-        }
-      ],
-      [
-        {
-          "file": "assets/js/acceso/editor.js",
-          "line": 427
         },
         {
           "file": "assets/js/editor/editor.js",
@@ -9921,7 +9572,7 @@
       [
         {
           "file": "assets/js/acceso/editor.js",
-          "line": 428
+          "line": 422
         },
         {
           "file": "assets/js/editor/editor.js",
@@ -9931,11 +9582,71 @@
       [
         {
           "file": "assets/js/acceso/editor.js",
-          "line": 429
+          "line": 423
         },
         {
           "file": "assets/js/editor/editor.js",
           "line": 455
+        }
+      ],
+      [
+        {
+          "file": "assets/js/acceso/editor.js",
+          "line": 424
+        },
+        {
+          "file": "assets/js/editor/editor.js",
+          "line": 456
+        }
+      ],
+      [
+        {
+          "file": "assets/js/acceso/editor.js",
+          "line": 425
+        },
+        {
+          "file": "assets/js/editor/editor.js",
+          "line": 457
+        }
+      ],
+      [
+        {
+          "file": "assets/js/acceso/editor.js",
+          "line": 426
+        },
+        {
+          "file": "assets/js/editor/editor.js",
+          "line": 458
+        }
+      ],
+      [
+        {
+          "file": "assets/js/acceso/editor.js",
+          "line": 427
+        },
+        {
+          "file": "assets/js/editor/editor.js",
+          "line": 459
+        }
+      ],
+      [
+        {
+          "file": "assets/js/acceso/editor.js",
+          "line": 428
+        },
+        {
+          "file": "assets/js/editor/editor.js",
+          "line": 460
+        }
+      ],
+      [
+        {
+          "file": "assets/js/acceso/editor.js",
+          "line": 429
+        },
+        {
+          "file": "assets/js/editor/editor.js",
+          "line": 461
         }
       ],
       [
@@ -9945,7 +9656,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 456
+          "line": 462
         }
       ],
       [
@@ -9955,7 +9666,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 457
+          "line": 463
         }
       ],
       [
@@ -9965,7 +9676,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 458
+          "line": 464
         }
       ],
       [
@@ -9975,7 +9686,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 459
+          "line": 465
         }
       ],
       [
@@ -9985,7 +9696,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 460
+          "line": 466
         }
       ],
       [
@@ -9995,7 +9706,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 461
+          "line": 467
         }
       ],
       [
@@ -10005,7 +9716,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 462
+          "line": 468
         }
       ],
       [
@@ -10015,7 +9726,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 463
+          "line": 469
         }
       ],
       [
@@ -10025,47 +9736,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 464
-        }
-      ],
-      [
-        {
-          "file": "assets/js/acceso/editor.js",
-          "line": 439
-        },
-        {
-          "file": "assets/js/editor/editor.js",
-          "line": 465
-        }
-      ],
-      [
-        {
-          "file": "assets/js/acceso/editor.js",
-          "line": 455
-        },
-        {
-          "file": "assets/js/editor/editor.js",
-          "line": 481
-        }
-      ],
-      [
-        {
-          "file": "assets/js/acceso/editor.js",
-          "line": 456
-        },
-        {
-          "file": "assets/js/editor/editor.js",
-          "line": 482
-        }
-      ],
-      [
-        {
-          "file": "assets/js/acceso/editor.js",
-          "line": 457
-        },
-        {
-          "file": "assets/js/editor/editor.js",
-          "line": 483
+          "line": 470
         }
       ],
       [
@@ -10075,7 +9746,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 484
+          "line": 494
         }
       ],
       [
@@ -10085,7 +9756,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 485
+          "line": 495
         }
       ],
       [
@@ -10095,7 +9766,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 486
+          "line": 496
         }
       ],
       [
@@ -10105,7 +9776,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 487
+          "line": 497
         }
       ],
       [
@@ -10115,7 +9786,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 488
+          "line": 498
         }
       ],
       [
@@ -10125,7 +9796,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 489
+          "line": 499
         }
       ],
       [
@@ -10135,7 +9806,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 490
+          "line": 500
         }
       ],
       [
@@ -10145,7 +9816,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 491
+          "line": 501
         }
       ],
       [
@@ -10155,7 +9826,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 492
+          "line": 502
         }
       ],
       [
@@ -10165,7 +9836,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 493
+          "line": 503
         }
       ],
       [
@@ -10175,7 +9846,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 494
+          "line": 504
         }
       ],
       [
@@ -10185,7 +9856,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 495
+          "line": 505
         }
       ],
       [
@@ -10195,7 +9866,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 496
+          "line": 506
         }
       ],
       [
@@ -10205,7 +9876,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 497
+          "line": 507
         }
       ],
       [
@@ -10215,7 +9886,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 498
+          "line": 508
         }
       ],
       [
@@ -10225,7 +9896,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 499
+          "line": 509
         }
       ],
       [
@@ -10235,7 +9906,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 500
+          "line": 510
         }
       ],
       [
@@ -10245,7 +9916,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 501
+          "line": 511
         }
       ],
       [
@@ -10255,7 +9926,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 502
+          "line": 512
         }
       ],
       [
@@ -10265,7 +9936,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 503
+          "line": 513
         }
       ],
       [
@@ -10275,7 +9946,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 504
+          "line": 514
         }
       ],
       [
@@ -10285,7 +9956,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 505
+          "line": 515
         }
       ],
       [
@@ -10295,7 +9966,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 506
+          "line": 516
         }
       ],
       [
@@ -10305,7 +9976,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 507
+          "line": 517
         }
       ],
       [
@@ -10315,7 +9986,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 508
+          "line": 518
         }
       ],
       [
@@ -10325,37 +9996,37 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 509
+          "line": 519
         }
       ],
       [
         {
           "file": "assets/js/acceso/editor.js",
-          "line": 492
+          "line": 484
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 525
+          "line": 520
         }
       ],
       [
         {
           "file": "assets/js/acceso/editor.js",
-          "line": 493
+          "line": 485
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 526
+          "line": 521
         }
       ],
       [
         {
           "file": "assets/js/acceso/editor.js",
-          "line": 494
+          "line": 486
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 527
+          "line": 522
         }
       ],
       [
@@ -10365,7 +10036,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 528
+          "line": 538
         }
       ],
       [
@@ -10375,7 +10046,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 529
+          "line": 539
         }
       ],
       [
@@ -10385,7 +10056,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 530
+          "line": 540
         }
       ],
       [
@@ -10395,37 +10066,37 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 531
+          "line": 541
         }
       ],
       [
         {
           "file": "assets/js/acceso/editor.js",
-          "line": 505
+          "line": 499
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 553
+          "line": 542
         }
       ],
       [
         {
           "file": "assets/js/acceso/editor.js",
-          "line": 506
+          "line": 500
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 554
+          "line": 543
         }
       ],
       [
         {
           "file": "assets/js/acceso/editor.js",
-          "line": 507
+          "line": 501
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 555
+          "line": 544
         }
       ],
       [
@@ -10435,7 +10106,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 556
+          "line": 566
         }
       ],
       [
@@ -10445,7 +10116,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 557
+          "line": 567
         }
       ],
       [
@@ -10455,7 +10126,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 558
+          "line": 568
         }
       ],
       [
@@ -10465,7 +10136,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 559
+          "line": 569
         }
       ],
       [
@@ -10475,7 +10146,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 560
+          "line": 570
         }
       ],
       [
@@ -10485,7 +10156,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 561
+          "line": 571
         }
       ],
       [
@@ -10495,7 +10166,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 562
+          "line": 572
         }
       ],
       [
@@ -10505,7 +10176,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 563
+          "line": 573
         }
       ],
       [
@@ -10515,7 +10186,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 564
+          "line": 574
         }
       ],
       [
@@ -10525,7 +10196,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 565
+          "line": 575
         }
       ],
       [
@@ -10535,7 +10206,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 566
+          "line": 576
         }
       ],
       [
@@ -10545,7 +10216,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 567
+          "line": 577
         }
       ],
       [
@@ -10555,7 +10226,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 568
+          "line": 578
         }
       ],
       [
@@ -10565,7 +10236,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 569
+          "line": 579
         }
       ],
       [
@@ -10575,7 +10246,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 570
+          "line": 580
         }
       ],
       [
@@ -10585,7 +10256,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 571
+          "line": 581
         }
       ],
       [
@@ -10595,7 +10266,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 572
+          "line": 582
         }
       ],
       [
@@ -10605,7 +10276,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 573
+          "line": 583
         }
       ],
       [
@@ -10615,7 +10286,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 574
+          "line": 584
         }
       ],
       [
@@ -10625,7 +10296,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 575
+          "line": 585
         }
       ],
       [
@@ -10635,7 +10306,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 576
+          "line": 586
         }
       ],
       [
@@ -10645,7 +10316,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 577
+          "line": 587
         }
       ],
       [
@@ -10655,7 +10326,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 578
+          "line": 588
         }
       ],
       [
@@ -10665,7 +10336,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 579
+          "line": 589
         }
       ],
       [
@@ -10675,7 +10346,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 580
+          "line": 590
         }
       ],
       [
@@ -10685,7 +10356,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 581
+          "line": 591
         }
       ],
       [
@@ -10695,7 +10366,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 582
+          "line": 592
         }
       ],
       [
@@ -10705,7 +10376,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 583
+          "line": 593
         }
       ],
       [
@@ -10715,7 +10386,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 584
+          "line": 594
         }
       ],
       [
@@ -10725,7 +10396,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 585
+          "line": 595
         }
       ],
       [
@@ -10735,7 +10406,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 586
+          "line": 596
         }
       ],
       [
@@ -10745,7 +10416,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 587
+          "line": 597
         }
       ],
       [
@@ -10755,7 +10426,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 588
+          "line": 598
         }
       ],
       [
@@ -10765,7 +10436,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 589
+          "line": 599
         }
       ],
       [
@@ -10775,7 +10446,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 590
+          "line": 600
         }
       ],
       [
@@ -10785,7 +10456,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 591
+          "line": 601
         }
       ],
       [
@@ -10795,7 +10466,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 592
+          "line": 602
         }
       ],
       [
@@ -10805,7 +10476,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 593
+          "line": 603
         }
       ],
       [
@@ -10815,7 +10486,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 594
+          "line": 604
         }
       ],
       [
@@ -10825,7 +10496,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 595
+          "line": 605
         }
       ],
       [
@@ -10835,33 +10506,13 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 596
-        }
-      ],
-      [
-        {
-          "file": "assets/js/acceso/editor.js",
-          "line": 556
-        },
-        {
-          "file": "assets/js/editor/editor.js",
-          "line": 605
-        }
-      ],
-      [
-        {
-          "file": "assets/js/acceso/editor.js",
-          "line": 557
-        },
-        {
-          "file": "assets/js/editor/editor.js",
           "line": 606
         }
       ],
       [
         {
           "file": "assets/js/acceso/editor.js",
-          "line": 558
+          "line": 549
         },
         {
           "file": "assets/js/editor/editor.js",
@@ -10871,7 +10522,7 @@
       [
         {
           "file": "assets/js/acceso/editor.js",
-          "line": 559
+          "line": 550
         },
         {
           "file": "assets/js/editor/editor.js",
@@ -10881,7 +10532,7 @@
       [
         {
           "file": "assets/js/acceso/editor.js",
-          "line": 560
+          "line": 551
         },
         {
           "file": "assets/js/editor/editor.js",
@@ -10891,11 +10542,31 @@
       [
         {
           "file": "assets/js/acceso/editor.js",
+          "line": 559
+        },
+        {
+          "file": "assets/js/editor/editor.js",
+          "line": 618
+        }
+      ],
+      [
+        {
+          "file": "assets/js/acceso/editor.js",
+          "line": 560
+        },
+        {
+          "file": "assets/js/editor/editor.js",
+          "line": 619
+        }
+      ],
+      [
+        {
+          "file": "assets/js/acceso/editor.js",
           "line": 561
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 610
+          "line": 620
         }
       ],
       [
@@ -10905,7 +10576,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 611
+          "line": 621
         }
       ],
       [
@@ -10915,7 +10586,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 612
+          "line": 622
         }
       ],
       [
@@ -10925,7 +10596,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 613
+          "line": 623
         }
       ],
       [
@@ -10935,7 +10606,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 614
+          "line": 624
         }
       ],
       [
@@ -10945,7 +10616,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 615
+          "line": 625
         }
       ],
       [
@@ -10955,7 +10626,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 616
+          "line": 626
         }
       ],
       [
@@ -10965,157 +10636,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 617
-        }
-      ],
-      [
-        {
-          "file": "assets/js/acceso/editor.js",
-          "line": 569
-        },
-        {
-          "file": "assets/js/editor/editor.js",
-          "line": 618
-        }
-      ],
-      [
-        {
-          "file": "assets/js/acceso/editor.js",
-          "line": 570
-        },
-        {
-          "file": "assets/js/editor/editor.js",
-          "line": 619
-        }
-      ],
-      [
-        {
-          "file": "assets/js/acceso/editor.js",
-          "line": 571
-        },
-        {
-          "file": "assets/js/editor/editor.js",
-          "line": 620
-        }
-      ],
-      [
-        {
-          "file": "assets/js/acceso/editor.js",
-          "line": 572
-        },
-        {
-          "file": "assets/js/editor/editor.js",
-          "line": 621
-        }
-      ],
-      [
-        {
-          "file": "assets/js/acceso/editor.js",
-          "line": 573
-        },
-        {
-          "file": "assets/js/editor/editor.js",
-          "line": 622
-        }
-      ],
-      [
-        {
-          "file": "assets/js/acceso/editor.js",
-          "line": 574
-        },
-        {
-          "file": "assets/js/editor/editor.js",
-          "line": 623
-        }
-      ],
-      [
-        {
-          "file": "assets/js/acceso/editor.js",
-          "line": 575
-        },
-        {
-          "file": "assets/js/editor/editor.js",
-          "line": 624
-        }
-      ],
-      [
-        {
-          "file": "assets/js/acceso/editor.js",
-          "line": 576
-        },
-        {
-          "file": "assets/js/editor/editor.js",
-          "line": 625
-        }
-      ],
-      [
-        {
-          "file": "assets/js/acceso/editor.js",
-          "line": 577
-        },
-        {
-          "file": "assets/js/editor/editor.js",
-          "line": 626
-        }
-      ],
-      [
-        {
-          "file": "assets/js/acceso/editor.js",
-          "line": 578
-        },
-        {
-          "file": "assets/js/editor/editor.js",
           "line": 627
-        }
-      ],
-      [
-        {
-          "file": "assets/js/acceso/editor.js",
-          "line": 579
-        },
-        {
-          "file": "assets/js/editor/editor.js",
-          "line": 628
-        }
-      ],
-      [
-        {
-          "file": "assets/js/acceso/editor.js",
-          "line": 580
-        },
-        {
-          "file": "assets/js/editor/editor.js",
-          "line": 629
-        }
-      ],
-      [
-        {
-          "file": "assets/js/acceso/editor.js",
-          "line": 581
-        },
-        {
-          "file": "assets/js/editor/editor.js",
-          "line": 630
-        }
-      ],
-      [
-        {
-          "file": "assets/js/acceso/editor.js",
-          "line": 582
-        },
-        {
-          "file": "assets/js/editor/editor.js",
-          "line": 631
-        }
-      ],
-      [
-        {
-          "file": "assets/js/acceso/editor.js",
-          "line": 583
-        },
-        {
-          "file": "assets/js/editor/editor.js",
-          "line": 632
         }
       ],
       [
@@ -11125,7 +10646,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 633
+          "line": 654
         }
       ],
       [
@@ -11135,7 +10656,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 634
+          "line": 655
         }
       ],
       [
@@ -11145,7 +10666,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 635
+          "line": 656
         }
       ],
       [
@@ -11155,7 +10676,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 636
+          "line": 657
         }
       ],
       [
@@ -11165,7 +10686,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 637
+          "line": 658
         }
       ],
       [
@@ -11175,7 +10696,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 638
+          "line": 659
         }
       ],
       [
@@ -11185,7 +10706,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 639
+          "line": 660
         }
       ],
       [
@@ -11195,7 +10716,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 640
+          "line": 661
         }
       ],
       [
@@ -11205,7 +10726,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 641
+          "line": 662
         }
       ],
       [
@@ -11215,7 +10736,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 642
+          "line": 663
         }
       ],
       [
@@ -11225,7 +10746,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 643
+          "line": 664
         }
       ],
       [
@@ -11235,7 +10756,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 644
+          "line": 665
         }
       ],
       [
@@ -11245,7 +10766,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 645
+          "line": 666
         }
       ],
       [
@@ -11255,7 +10776,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 646
+          "line": 667
         }
       ],
       [
@@ -11265,7 +10786,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 647
+          "line": 668
         }
       ],
       [
@@ -11275,7 +10796,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 648
+          "line": 669
         }
       ],
       [
@@ -11285,7 +10806,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 649
+          "line": 670
         }
       ],
       [
@@ -11295,103 +10816,13 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 650
-        }
-      ],
-      [
-        {
-          "file": "assets/js/acceso/editor.js",
-          "line": 614
-        },
-        {
-          "file": "assets/js/editor/editor.js",
-          "line": 663
-        }
-      ],
-      [
-        {
-          "file": "assets/js/acceso/editor.js",
-          "line": 615
-        },
-        {
-          "file": "assets/js/editor/editor.js",
-          "line": 664
-        }
-      ],
-      [
-        {
-          "file": "assets/js/acceso/editor.js",
-          "line": 616
-        },
-        {
-          "file": "assets/js/editor/editor.js",
-          "line": 665
-        }
-      ],
-      [
-        {
-          "file": "assets/js/acceso/editor.js",
-          "line": 617
-        },
-        {
-          "file": "assets/js/editor/editor.js",
-          "line": 666
-        }
-      ],
-      [
-        {
-          "file": "assets/js/acceso/editor.js",
-          "line": 618
-        },
-        {
-          "file": "assets/js/editor/editor.js",
-          "line": 667
-        }
-      ],
-      [
-        {
-          "file": "assets/js/acceso/editor.js",
-          "line": 619
-        },
-        {
-          "file": "assets/js/editor/editor.js",
-          "line": 668
-        }
-      ],
-      [
-        {
-          "file": "assets/js/acceso/editor.js",
-          "line": 620
-        },
-        {
-          "file": "assets/js/editor/editor.js",
-          "line": 669
-        }
-      ],
-      [
-        {
-          "file": "assets/js/acceso/editor.js",
-          "line": 621
-        },
-        {
-          "file": "assets/js/editor/editor.js",
-          "line": 670
-        }
-      ],
-      [
-        {
-          "file": "assets/js/acceso/editor.js",
-          "line": 622
-        },
-        {
-          "file": "assets/js/editor/editor.js",
           "line": 671
         }
       ],
       [
         {
           "file": "assets/js/acceso/editor.js",
-          "line": 623
+          "line": 602
         },
         {
           "file": "assets/js/editor/editor.js",
@@ -11401,7 +10832,7 @@
       [
         {
           "file": "assets/js/acceso/editor.js",
-          "line": 624
+          "line": 603
         },
         {
           "file": "assets/js/editor/editor.js",
@@ -11411,7 +10842,7 @@
       [
         {
           "file": "assets/js/acceso/editor.js",
-          "line": 625
+          "line": 604
         },
         {
           "file": "assets/js/editor/editor.js",
@@ -11421,11 +10852,101 @@
       [
         {
           "file": "assets/js/acceso/editor.js",
+          "line": 617
+        },
+        {
+          "file": "assets/js/editor/editor.js",
+          "line": 687
+        }
+      ],
+      [
+        {
+          "file": "assets/js/acceso/editor.js",
+          "line": 618
+        },
+        {
+          "file": "assets/js/editor/editor.js",
+          "line": 688
+        }
+      ],
+      [
+        {
+          "file": "assets/js/acceso/editor.js",
+          "line": 619
+        },
+        {
+          "file": "assets/js/editor/editor.js",
+          "line": 689
+        }
+      ],
+      [
+        {
+          "file": "assets/js/acceso/editor.js",
+          "line": 620
+        },
+        {
+          "file": "assets/js/editor/editor.js",
+          "line": 690
+        }
+      ],
+      [
+        {
+          "file": "assets/js/acceso/editor.js",
+          "line": 621
+        },
+        {
+          "file": "assets/js/editor/editor.js",
+          "line": 691
+        }
+      ],
+      [
+        {
+          "file": "assets/js/acceso/editor.js",
+          "line": 622
+        },
+        {
+          "file": "assets/js/editor/editor.js",
+          "line": 692
+        }
+      ],
+      [
+        {
+          "file": "assets/js/acceso/editor.js",
+          "line": 623
+        },
+        {
+          "file": "assets/js/editor/editor.js",
+          "line": 693
+        }
+      ],
+      [
+        {
+          "file": "assets/js/acceso/editor.js",
+          "line": 624
+        },
+        {
+          "file": "assets/js/editor/editor.js",
+          "line": 694
+        }
+      ],
+      [
+        {
+          "file": "assets/js/acceso/editor.js",
+          "line": 625
+        },
+        {
+          "file": "assets/js/editor/editor.js",
+          "line": 695
+        }
+      ],
+      [
+        {
+          "file": "assets/js/acceso/editor.js",
           "line": 626
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 675
+          "line": 696
         }
       ],
       [
@@ -11435,7 +10956,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 676
+          "line": 697
         }
       ],
       [
@@ -11445,7 +10966,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 677
+          "line": 698
         }
       ],
       [
@@ -11455,7 +10976,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 678
+          "line": 699
         }
       ],
       [
@@ -11465,37 +10986,37 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 679
+          "line": 700
         }
       ],
       [
         {
           "file": "assets/js/acceso/editor.js",
-          "line": 638
+          "line": 631
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 688
+          "line": 701
         }
       ],
       [
         {
           "file": "assets/js/acceso/editor.js",
-          "line": 639
+          "line": 632
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 689
+          "line": 702
         }
       ],
       [
         {
           "file": "assets/js/acceso/editor.js",
-          "line": 640
+          "line": 633
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 690
+          "line": 703
         }
       ],
       [
@@ -11505,7 +11026,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 691
+          "line": 712
         }
       ],
       [
@@ -11515,7 +11036,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 692
+          "line": 713
         }
       ],
       [
@@ -11525,7 +11046,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 693
+          "line": 714
         }
       ],
       [
@@ -11535,7 +11056,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 694
+          "line": 715
         }
       ],
       [
@@ -11545,7 +11066,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 695
+          "line": 716
         }
       ],
       [
@@ -11555,7 +11076,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 696
+          "line": 717
         }
       ],
       [
@@ -11565,37 +11086,37 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 697
+          "line": 718
         }
       ],
       [
         {
           "file": "assets/js/acceso/editor.js",
-          "line": 684
+          "line": 648
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 762
+          "line": 719
         }
       ],
       [
         {
           "file": "assets/js/acceso/editor.js",
-          "line": 685
+          "line": 649
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 763
+          "line": 720
         }
       ],
       [
         {
           "file": "assets/js/acceso/editor.js",
-          "line": 686
+          "line": 650
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 764
+          "line": 721
         }
       ],
       [
@@ -11605,7 +11126,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 765
+          "line": 786
         }
       ],
       [
@@ -11615,7 +11136,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 766
+          "line": 787
         }
       ],
       [
@@ -11625,7 +11146,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 767
+          "line": 788
         }
       ],
       [
@@ -11635,7 +11156,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 768
+          "line": 789
         }
       ],
       [
@@ -11645,7 +11166,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 769
+          "line": 790
         }
       ],
       [
@@ -11655,7 +11176,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 770
+          "line": 791
         }
       ],
       [
@@ -11665,7 +11186,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 771
+          "line": 792
         }
       ],
       [
@@ -11675,7 +11196,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 772
+          "line": 793
         }
       ],
       [
@@ -11685,7 +11206,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 773
+          "line": 794
         }
       ],
       [
@@ -11695,7 +11216,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 774
+          "line": 795
         }
       ],
       [
@@ -11705,7 +11226,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 775
+          "line": 796
         }
       ],
       [
@@ -11715,7 +11236,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 776
+          "line": 797
         }
       ],
       [
@@ -11725,7 +11246,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 777
+          "line": 798
         }
       ],
       [
@@ -11735,7 +11256,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 778
+          "line": 799
         }
       ],
       [
@@ -11745,7 +11266,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 779
+          "line": 800
         }
       ],
       [
@@ -11755,7 +11276,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 780
+          "line": 801
         }
       ],
       [
@@ -11765,47 +11286,37 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 781
+          "line": 802
         }
       ],
       [
         {
           "file": "assets/js/acceso/editor.js",
-          "line": 743
+          "line": 704
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 824
+          "line": 803
         }
       ],
       [
         {
           "file": "assets/js/acceso/editor.js",
-          "line": 756
+          "line": 705
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 840
+          "line": 804
         }
       ],
       [
         {
           "file": "assets/js/acceso/editor.js",
-          "line": 757
+          "line": 746
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 841
-        }
-      ],
-      [
-        {
-          "file": "assets/js/acceso/editor.js",
-          "line": 758
-        },
-        {
-          "file": "assets/js/editor/editor.js",
-          "line": 842
+          "line": 849
         }
       ],
       [
@@ -11815,7 +11326,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 843
+          "line": 865
         }
       ],
       [
@@ -11825,7 +11336,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 844
+          "line": 866
         }
       ],
       [
@@ -11835,7 +11346,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 845
+          "line": 867
         }
       ],
       [
@@ -11845,7 +11356,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 846
+          "line": 868
         }
       ],
       [
@@ -11855,7 +11366,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 847
+          "line": 869
         }
       ],
       [
@@ -11865,7 +11376,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 848
+          "line": 870
         }
       ],
       [
@@ -11875,7 +11386,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 849
+          "line": 871
         }
       ],
       [
@@ -11885,7 +11396,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 850
+          "line": 872
         }
       ],
       [
@@ -11895,7 +11406,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 851
+          "line": 873
         }
       ],
       [
@@ -11905,7 +11416,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 852
+          "line": 874
         }
       ],
       [
@@ -11915,7 +11426,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 853
+          "line": 875
         }
       ],
       [
@@ -11925,7 +11436,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 854
+          "line": 876
         }
       ],
       [
@@ -11935,7 +11446,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 855
+          "line": 877
         }
       ],
       [
@@ -11945,7 +11456,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 856
+          "line": 878
         }
       ],
       [
@@ -11955,7 +11466,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 857
+          "line": 879
         }
       ],
       [
@@ -11965,7 +11476,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 858
+          "line": 880
         }
       ],
       [
@@ -11975,7 +11486,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 859
+          "line": 881
         }
       ],
       [
@@ -11985,7 +11496,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 860
+          "line": 882
         }
       ],
       [
@@ -11995,7 +11506,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 861
+          "line": 883
         }
       ],
       [
@@ -12005,7 +11516,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 862
+          "line": 884
         }
       ],
       [
@@ -12015,7 +11526,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 863
+          "line": 885
         }
       ],
       [
@@ -12025,7 +11536,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 864
+          "line": 886
         }
       ],
       [
@@ -12035,7 +11546,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 865
+          "line": 887
         }
       ],
       [
@@ -12045,7 +11556,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 866
+          "line": 888
         }
       ],
       [
@@ -12055,7 +11566,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 867
+          "line": 889
         }
       ],
       [
@@ -12065,7 +11576,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 868
+          "line": 890
         }
       ],
       [
@@ -12075,7 +11586,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 869
+          "line": 891
         }
       ],
       [
@@ -12085,7 +11596,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 870
+          "line": 892
         }
       ],
       [
@@ -12095,7 +11606,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 871
+          "line": 893
         }
       ],
       [
@@ -12105,7 +11616,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 872
+          "line": 894
         }
       ],
       [
@@ -12115,7 +11626,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 873
+          "line": 895
         }
       ],
       [
@@ -12125,7 +11636,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 874
+          "line": 896
         }
       ],
       [
@@ -12135,7 +11646,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 875
+          "line": 897
         }
       ],
       [
@@ -12145,7 +11656,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 876
+          "line": 898
         }
       ],
       [
@@ -12155,7 +11666,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 877
+          "line": 899
         }
       ],
       [
@@ -12165,7 +11676,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 878
+          "line": 900
         }
       ],
       [
@@ -12175,7 +11686,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 879
+          "line": 901
         }
       ],
       [
@@ -12185,7 +11696,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 880
+          "line": 902
         }
       ],
       [
@@ -12195,7 +11706,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 881
+          "line": 903
         }
       ],
       [
@@ -12205,7 +11716,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 882
+          "line": 904
         }
       ],
       [
@@ -12215,7 +11726,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 883
+          "line": 905
         }
       ],
       [
@@ -12225,7 +11736,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 884
+          "line": 906
         }
       ],
       [
@@ -12235,7 +11746,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 885
+          "line": 907
         }
       ],
       [
@@ -12245,7 +11756,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 886
+          "line": 908
         }
       ],
       [
@@ -12255,7 +11766,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 887
+          "line": 909
         }
       ],
       [
@@ -12265,7 +11776,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 888
+          "line": 910
         }
       ],
       [
@@ -12275,7 +11786,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 889
+          "line": 911
         }
       ],
       [
@@ -12285,7 +11796,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 890
+          "line": 912
         }
       ],
       [
@@ -12295,7 +11806,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 891
+          "line": 913
         }
       ],
       [
@@ -12305,7 +11816,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 892
+          "line": 914
         }
       ],
       [
@@ -12315,7 +11826,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 893
+          "line": 915
         }
       ],
       [
@@ -12325,7 +11836,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 894
+          "line": 916
         }
       ],
       [
@@ -12335,7 +11846,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 895
+          "line": 917
         }
       ],
       [
@@ -12345,7 +11856,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 896
+          "line": 918
         }
       ],
       [
@@ -12355,7 +11866,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 897
+          "line": 919
         }
       ],
       [
@@ -12365,7 +11876,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 898
+          "line": 920
         }
       ],
       [
@@ -12375,7 +11886,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 899
+          "line": 921
         }
       ],
       [
@@ -12385,7 +11896,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 900
+          "line": 922
         }
       ],
       [
@@ -12395,7 +11906,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 901
+          "line": 923
         }
       ],
       [
@@ -12405,7 +11916,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 902
+          "line": 924
         }
       ],
       [
@@ -12415,7 +11926,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 903
+          "line": 925
         }
       ],
       [
@@ -12425,7 +11936,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 904
+          "line": 926
         }
       ],
       [
@@ -12435,7 +11946,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 905
+          "line": 927
         }
       ],
       [
@@ -12445,7 +11956,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 906
+          "line": 928
         }
       ],
       [
@@ -12455,7 +11966,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 907
+          "line": 929
         }
       ],
       [
@@ -12465,7 +11976,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 908
+          "line": 930
         }
       ],
       [
@@ -12475,7 +11986,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 909
+          "line": 931
         }
       ],
       [
@@ -12485,163 +11996,13 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 910
-        }
-      ],
-      [
-        {
-          "file": "assets/js/acceso/editor.js",
-          "line": 840
-        },
-        {
-          "file": "assets/js/editor/editor.js",
-          "line": 918
-        }
-      ],
-      [
-        {
-          "file": "assets/js/acceso/editor.js",
-          "line": 841
-        },
-        {
-          "file": "assets/js/editor/editor.js",
-          "line": 919
-        }
-      ],
-      [
-        {
-          "file": "assets/js/acceso/editor.js",
-          "line": 842
-        },
-        {
-          "file": "assets/js/editor/editor.js",
-          "line": 920
-        }
-      ],
-      [
-        {
-          "file": "assets/js/acceso/editor.js",
-          "line": 843
-        },
-        {
-          "file": "assets/js/editor/editor.js",
-          "line": 921
-        }
-      ],
-      [
-        {
-          "file": "assets/js/acceso/editor.js",
-          "line": 844
-        },
-        {
-          "file": "assets/js/editor/editor.js",
-          "line": 922
-        }
-      ],
-      [
-        {
-          "file": "assets/js/acceso/editor.js",
-          "line": 845
-        },
-        {
-          "file": "assets/js/editor/editor.js",
-          "line": 923
-        }
-      ],
-      [
-        {
-          "file": "assets/js/acceso/editor.js",
-          "line": 846
-        },
-        {
-          "file": "assets/js/editor/editor.js",
-          "line": 924
-        }
-      ],
-      [
-        {
-          "file": "assets/js/acceso/editor.js",
-          "line": 847
-        },
-        {
-          "file": "assets/js/editor/editor.js",
-          "line": 925
-        }
-      ],
-      [
-        {
-          "file": "assets/js/acceso/editor.js",
-          "line": 848
-        },
-        {
-          "file": "assets/js/editor/editor.js",
-          "line": 926
-        }
-      ],
-      [
-        {
-          "file": "assets/js/acceso/editor.js",
-          "line": 849
-        },
-        {
-          "file": "assets/js/editor/editor.js",
-          "line": 927
-        }
-      ],
-      [
-        {
-          "file": "assets/js/acceso/editor.js",
-          "line": 850
-        },
-        {
-          "file": "assets/js/editor/editor.js",
-          "line": 928
-        }
-      ],
-      [
-        {
-          "file": "assets/js/acceso/editor.js",
-          "line": 851
-        },
-        {
-          "file": "assets/js/editor/editor.js",
-          "line": 929
-        }
-      ],
-      [
-        {
-          "file": "assets/js/acceso/editor.js",
-          "line": 852
-        },
-        {
-          "file": "assets/js/editor/editor.js",
-          "line": 930
-        }
-      ],
-      [
-        {
-          "file": "assets/js/acceso/editor.js",
-          "line": 853
-        },
-        {
-          "file": "assets/js/editor/editor.js",
-          "line": 931
-        }
-      ],
-      [
-        {
-          "file": "assets/js/acceso/editor.js",
-          "line": 854
-        },
-        {
-          "file": "assets/js/editor/editor.js",
           "line": 932
         }
       ],
       [
         {
           "file": "assets/js/acceso/editor.js",
-          "line": 855
+          "line": 827
         },
         {
           "file": "assets/js/editor/editor.js",
@@ -12651,7 +12012,7 @@
       [
         {
           "file": "assets/js/acceso/editor.js",
-          "line": 856
+          "line": 828
         },
         {
           "file": "assets/js/editor/editor.js",
@@ -12661,7 +12022,7 @@
       [
         {
           "file": "assets/js/acceso/editor.js",
-          "line": 857
+          "line": 829
         },
         {
           "file": "assets/js/editor/editor.js",
@@ -12671,67 +12032,7 @@
       [
         {
           "file": "assets/js/acceso/editor.js",
-          "line": 858
-        },
-        {
-          "file": "assets/js/editor/editor.js",
-          "line": 936
-        }
-      ],
-      [
-        {
-          "file": "assets/js/acceso/editor.js",
-          "line": 859
-        },
-        {
-          "file": "assets/js/editor/editor.js",
-          "line": 937
-        }
-      ],
-      [
-        {
-          "file": "assets/js/acceso/editor.js",
-          "line": 860
-        },
-        {
-          "file": "assets/js/editor/editor.js",
-          "line": 938
-        }
-      ],
-      [
-        {
-          "file": "assets/js/acceso/editor.js",
-          "line": 861
-        },
-        {
-          "file": "assets/js/editor/editor.js",
-          "line": 939
-        }
-      ],
-      [
-        {
-          "file": "assets/js/acceso/editor.js",
-          "line": 863
-        },
-        {
-          "file": "assets/js/editor/editor.js",
-          "line": 941
-        }
-      ],
-      [
-        {
-          "file": "assets/js/acceso/editor.js",
-          "line": 864
-        },
-        {
-          "file": "assets/js/editor/editor.js",
-          "line": 942
-        }
-      ],
-      [
-        {
-          "file": "assets/js/acceso/editor.js",
-          "line": 865
+          "line": 843
         },
         {
           "file": "assets/js/editor/editor.js",
@@ -12741,7 +12042,7 @@
       [
         {
           "file": "assets/js/acceso/editor.js",
-          "line": 866
+          "line": 844
         },
         {
           "file": "assets/js/editor/editor.js",
@@ -12751,7 +12052,7 @@
       [
         {
           "file": "assets/js/acceso/editor.js",
-          "line": 867
+          "line": 845
         },
         {
           "file": "assets/js/editor/editor.js",
@@ -12761,7 +12062,217 @@
       [
         {
           "file": "assets/js/acceso/editor.js",
-          "line": 882
+          "line": 846
+        },
+        {
+          "file": "assets/js/editor/editor.js",
+          "line": 946
+        }
+      ],
+      [
+        {
+          "file": "assets/js/acceso/editor.js",
+          "line": 847
+        },
+        {
+          "file": "assets/js/editor/editor.js",
+          "line": 947
+        }
+      ],
+      [
+        {
+          "file": "assets/js/acceso/editor.js",
+          "line": 848
+        },
+        {
+          "file": "assets/js/editor/editor.js",
+          "line": 948
+        }
+      ],
+      [
+        {
+          "file": "assets/js/acceso/editor.js",
+          "line": 849
+        },
+        {
+          "file": "assets/js/editor/editor.js",
+          "line": 949
+        }
+      ],
+      [
+        {
+          "file": "assets/js/acceso/editor.js",
+          "line": 850
+        },
+        {
+          "file": "assets/js/editor/editor.js",
+          "line": 950
+        }
+      ],
+      [
+        {
+          "file": "assets/js/acceso/editor.js",
+          "line": 851
+        },
+        {
+          "file": "assets/js/editor/editor.js",
+          "line": 951
+        }
+      ],
+      [
+        {
+          "file": "assets/js/acceso/editor.js",
+          "line": 852
+        },
+        {
+          "file": "assets/js/editor/editor.js",
+          "line": 952
+        }
+      ],
+      [
+        {
+          "file": "assets/js/acceso/editor.js",
+          "line": 853
+        },
+        {
+          "file": "assets/js/editor/editor.js",
+          "line": 953
+        }
+      ],
+      [
+        {
+          "file": "assets/js/acceso/editor.js",
+          "line": 854
+        },
+        {
+          "file": "assets/js/editor/editor.js",
+          "line": 954
+        }
+      ],
+      [
+        {
+          "file": "assets/js/acceso/editor.js",
+          "line": 855
+        },
+        {
+          "file": "assets/js/editor/editor.js",
+          "line": 955
+        }
+      ],
+      [
+        {
+          "file": "assets/js/acceso/editor.js",
+          "line": 856
+        },
+        {
+          "file": "assets/js/editor/editor.js",
+          "line": 956
+        }
+      ],
+      [
+        {
+          "file": "assets/js/acceso/editor.js",
+          "line": 857
+        },
+        {
+          "file": "assets/js/editor/editor.js",
+          "line": 957
+        }
+      ],
+      [
+        {
+          "file": "assets/js/acceso/editor.js",
+          "line": 858
+        },
+        {
+          "file": "assets/js/editor/editor.js",
+          "line": 958
+        }
+      ],
+      [
+        {
+          "file": "assets/js/acceso/editor.js",
+          "line": 859
+        },
+        {
+          "file": "assets/js/editor/editor.js",
+          "line": 959
+        }
+      ],
+      [
+        {
+          "file": "assets/js/acceso/editor.js",
+          "line": 860
+        },
+        {
+          "file": "assets/js/editor/editor.js",
+          "line": 960
+        }
+      ],
+      [
+        {
+          "file": "assets/js/acceso/editor.js",
+          "line": 861
+        },
+        {
+          "file": "assets/js/editor/editor.js",
+          "line": 961
+        }
+      ],
+      [
+        {
+          "file": "assets/js/acceso/editor.js",
+          "line": 862
+        },
+        {
+          "file": "assets/js/editor/editor.js",
+          "line": 962
+        }
+      ],
+      [
+        {
+          "file": "assets/js/acceso/editor.js",
+          "line": 863
+        },
+        {
+          "file": "assets/js/editor/editor.js",
+          "line": 963
+        }
+      ],
+      [
+        {
+          "file": "assets/js/acceso/editor.js",
+          "line": 864
+        },
+        {
+          "file": "assets/js/editor/editor.js",
+          "line": 964
+        }
+      ],
+      [
+        {
+          "file": "assets/js/acceso/editor.js",
+          "line": 866
+        },
+        {
+          "file": "assets/js/editor/editor.js",
+          "line": 966
+        }
+      ],
+      [
+        {
+          "file": "assets/js/acceso/editor.js",
+          "line": 867
+        },
+        {
+          "file": "assets/js/editor/editor.js",
+          "line": 967
+        }
+      ],
+      [
+        {
+          "file": "assets/js/acceso/editor.js",
+          "line": 868
         },
         {
           "file": "assets/js/editor/editor.js",
@@ -12771,7 +12282,7 @@
       [
         {
           "file": "assets/js/acceso/editor.js",
-          "line": 883
+          "line": 869
         },
         {
           "file": "assets/js/editor/editor.js",
@@ -12781,7 +12292,7 @@
       [
         {
           "file": "assets/js/acceso/editor.js",
-          "line": 884
+          "line": 870
         },
         {
           "file": "assets/js/editor/editor.js",
@@ -12795,7 +12306,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 971
+          "line": 993
         }
       ],
       [
@@ -12805,7 +12316,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 972
+          "line": 994
         }
       ],
       [
@@ -12815,7 +12326,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 973
+          "line": 995
         }
       ],
       [
@@ -12825,7 +12336,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 974
+          "line": 996
         }
       ],
       [
@@ -12835,7 +12346,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 975
+          "line": 997
         }
       ],
       [
@@ -12845,7 +12356,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 976
+          "line": 998
         }
       ],
       [
@@ -12855,7 +12366,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 977
+          "line": 999
         }
       ],
       [
@@ -12865,7 +12376,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 978
+          "line": 1000
         }
       ],
       [
@@ -12875,7 +12386,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 979
+          "line": 1001
         }
       ],
       [
@@ -12885,7 +12396,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 980
+          "line": 1002
         }
       ],
       [
@@ -12895,7 +12406,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 981
+          "line": 1003
         }
       ],
       [
@@ -12905,7 +12416,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 982
+          "line": 1004
         }
       ],
       [
@@ -12915,7 +12426,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 983
+          "line": 1005
         }
       ],
       [
@@ -12925,7 +12436,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 984
+          "line": 1006
         }
       ],
       [
@@ -12935,7 +12446,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 985
+          "line": 1007
         }
       ],
       [
@@ -12945,7 +12456,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 986
+          "line": 1008
         }
       ],
       [
@@ -12955,7 +12466,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 987
+          "line": 1009
         }
       ],
       [
@@ -12965,7 +12476,7 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 988
+          "line": 1010
         }
       ],
       [
@@ -12975,73 +12486,13 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 989
-        }
-      ],
-      [
-        {
-          "file": "assets/js/acceso/editor.js",
-          "line": 919
-        },
-        {
-          "file": "assets/js/editor/editor.js",
-          "line": 1006
-        }
-      ],
-      [
-        {
-          "file": "assets/js/acceso/editor.js",
-          "line": 920
-        },
-        {
-          "file": "assets/js/editor/editor.js",
-          "line": 1007
-        }
-      ],
-      [
-        {
-          "file": "assets/js/acceso/editor.js",
-          "line": 921
-        },
-        {
-          "file": "assets/js/editor/editor.js",
-          "line": 1008
-        }
-      ],
-      [
-        {
-          "file": "assets/js/acceso/editor.js",
-          "line": 922
-        },
-        {
-          "file": "assets/js/editor/editor.js",
-          "line": 1009
-        }
-      ],
-      [
-        {
-          "file": "assets/js/acceso/editor.js",
-          "line": 923
-        },
-        {
-          "file": "assets/js/editor/editor.js",
-          "line": 1010
-        }
-      ],
-      [
-        {
-          "file": "assets/js/acceso/editor.js",
-          "line": 924
-        },
-        {
-          "file": "assets/js/editor/editor.js",
           "line": 1011
         }
       ],
       [
         {
           "file": "assets/js/acceso/editor.js",
-          "line": 925
+          "line": 904
         },
         {
           "file": "assets/js/editor/editor.js",
@@ -13051,7 +12502,7 @@
       [
         {
           "file": "assets/js/acceso/editor.js",
-          "line": 926
+          "line": 905
         },
         {
           "file": "assets/js/editor/editor.js",
@@ -13061,7 +12512,7 @@
       [
         {
           "file": "assets/js/acceso/editor.js",
-          "line": 927
+          "line": 906
         },
         {
           "file": "assets/js/editor/editor.js",
@@ -13071,11 +12522,71 @@
       [
         {
           "file": "assets/js/acceso/editor.js",
+          "line": 922
+        },
+        {
+          "file": "assets/js/editor/editor.js",
+          "line": 1031
+        }
+      ],
+      [
+        {
+          "file": "assets/js/acceso/editor.js",
+          "line": 923
+        },
+        {
+          "file": "assets/js/editor/editor.js",
+          "line": 1032
+        }
+      ],
+      [
+        {
+          "file": "assets/js/acceso/editor.js",
+          "line": 924
+        },
+        {
+          "file": "assets/js/editor/editor.js",
+          "line": 1033
+        }
+      ],
+      [
+        {
+          "file": "assets/js/acceso/editor.js",
+          "line": 925
+        },
+        {
+          "file": "assets/js/editor/editor.js",
+          "line": 1034
+        }
+      ],
+      [
+        {
+          "file": "assets/js/acceso/editor.js",
+          "line": 926
+        },
+        {
+          "file": "assets/js/editor/editor.js",
+          "line": 1035
+        }
+      ],
+      [
+        {
+          "file": "assets/js/acceso/editor.js",
+          "line": 927
+        },
+        {
+          "file": "assets/js/editor/editor.js",
+          "line": 1036
+        }
+      ],
+      [
+        {
+          "file": "assets/js/acceso/editor.js",
           "line": 928
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 1015
+          "line": 1037
         }
       ],
       [
@@ -13085,15 +12596,45 @@
         },
         {
           "file": "assets/js/editor/editor.js",
-          "line": 1016
+          "line": 1038
+        }
+      ],
+      [
+        {
+          "file": "assets/js/acceso/editor.js",
+          "line": 930
+        },
+        {
+          "file": "assets/js/editor/editor.js",
+          "line": 1039
+        }
+      ],
+      [
+        {
+          "file": "assets/js/acceso/editor.js",
+          "line": 931
+        },
+        {
+          "file": "assets/js/editor/editor.js",
+          "line": 1040
+        }
+      ],
+      [
+        {
+          "file": "assets/js/acceso/editor.js",
+          "line": 932
+        },
+        {
+          "file": "assets/js/editor/editor.js",
+          "line": 1041
         }
       ]
     ]
   },
   "summary": {
-    "files": 364,
-    "ownTextModules": 286,
-    "ownJavaScript": 178,
+    "files": 366,
+    "ownTextModules": 288,
+    "ownJavaScript": 180,
     "vendorFiles": 35,
     "missingLiteralReferences": 0,
     "duplicateLoads": 0,

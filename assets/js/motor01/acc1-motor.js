@@ -200,7 +200,8 @@
       setSaveState('saving', 'Guardando borrador experimental…');
       const result = drafts.save(ctx.entry.id, {
         code: ctx.entry.code,
-        diagnostics: ctx.diagnostics || null
+        diagnostics: ctx.diagnostics || null,
+        ...(ctx.boxes ? { boxes: ctx.boxes } : {})
       });
       if (result.ok) {
         setSaveState('local', 'Guardado local experimental (no altera productivos)');
@@ -239,7 +240,10 @@
       if (choice === 'yes' && activeDoc?.id) {
         const res = drafts.clear(activeDoc.id);
         confirmDialog.close();
-        if (res.ok) setSaveState('idle', 'Borrador experimental limpiado; productivos intactos.');
+        if (res.ok) {
+          getContext()?.onClear?.();
+          setSaveState('idle', 'Borrador experimental limpiado; productivos intactos.');
+        }
         else setSaveState('error', `No se pudo limpiar el borrador. ${res.error}`);
       }
     });

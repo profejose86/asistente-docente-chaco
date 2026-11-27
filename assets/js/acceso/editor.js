@@ -280,7 +280,8 @@
  }
  const settingsPositionKey='adc-login-panel-position';
  const settingsMargin=8;
- let settingsPosition={x:settingsMargin,y:settingsMargin};
+ const defaultSettingsPosition=()=>({x:Math.max(settingsMargin,document.documentElement.clientWidth-(gear.offsetWidth||96)-settingsMargin),y:settingsMargin});
+ let settingsPosition=null;
  let settingsDrag=null;
  let settingsMoved=false;
  try{
@@ -291,9 +292,11 @@
    const width=document.documentElement.clientWidth;
    const height=document.documentElement.clientHeight;
    const clamp=(value,max)=>Math.max(settingsMargin,Math.min(value,max-settingsMargin));
-   const x=clamp(settingsPosition.x,width-gear.offsetWidth);
-   const y=clamp(settingsPosition.y,height-gear.offsetHeight);
+   const base=settingsPosition||defaultSettingsPosition();
+   const x=clamp(base.x,width-gear.offsetWidth);
+   const y=clamp(base.y,height-gear.offsetHeight);
    gear.style.left=x+'px';
+   gear.style.right='auto';
    gear.style.top=y+'px';
    if(panel.hidden)return;
    const below=height-y-gear.offsetHeight-2*settingsMargin;
@@ -337,7 +340,7 @@
  resetSettingsPosition.type='button';
  resetSettingsPosition.textContent='Volver a la esquina';
  resetSettingsPosition.onclick=()=>{
-   settingsPosition={x:settingsMargin,y:settingsMargin};
+   settingsPosition=null;
    try{localStorage.removeItem(settingsPositionKey)}catch{}
    positionSettings();
  };

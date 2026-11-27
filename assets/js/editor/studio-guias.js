@@ -5,6 +5,9 @@
   const states={x:{left:compact?36:460,top:compact?innerHeight-56:90,length:Math.max(80,Math.min(500,innerWidth-(compact?80:500)))},y:{left:innerWidth-38,top:compact?innerHeight*.76:130,length:Math.min(400,innerHeight*(compact?.18:.6))}},rulers={};
   function render(){
    const visible=ui.active()&&document.getElementById('adcDevRules').checked;root.hidden=!visible;if(!visible)return;
+   const panelRect=api.panel.getBoundingClientRect();
+   const defaultYLeft=!api.panel.hidden&&panelRect.right>=innerWidth-52&&panelRect.left>innerWidth/2?Math.max(28,Math.round(panelRect.left-34)):innerWidth-38;
+   if(!states.y.moved)states.y.left=defaultYLeft;
    for(const axis of ['x','y']){
     const state=states[axis],ruler=rulers[axis];Object.assign(ruler.style,{left:state.left+'px',top:state.top+'px',width:(axis==='x'?state.length:24)+'px',height:(axis==='x'?24:state.length)+'px'});
     state.length=Math.max(80,Math.min(state.length,(axis==='x'?innerWidth:innerHeight)-80));
@@ -23,7 +26,7 @@
    const resize=document.createElement('button');resize.type='button';resize.dataset.rulerResize='';resize.textContent='↔';resize.title='Arrastrá para cambiar la longitud de la regla.';
    ruler.append(ticks,move,resize);root.append(ruler);rulers[axis]=ruler;
    ruler.onpointerdown=event=>{if(event.button!==0)return;event.preventDefault();event.stopImmediatePropagation();const kind=event.target.closest('[data-ruler-move]')?'move':event.target.closest('[data-ruler-resize]')?'resize':'guide';drag={axis,kind,x:event.clientX,y:event.clientY,before:{...states[axis]},pointer:event.pointerId};ruler.setPointerCapture(event.pointerId);};
-   ruler.onpointermove=event=>{if(!drag||event.pointerId!==drag.pointer)return;event.preventDefault();event.stopImmediatePropagation();const {before,kind}=drag,dx=event.clientX-drag.x,dy=event.clientY-drag.y;if(kind==='move'){states[axis].left=Math.max(0,before.left+dx);states[axis].top=Math.max(0,before.top+dy);}else if(kind==='resize')states[axis].length=Math.max(80,Math.min(2000,before.length+(axis==='x'?dx:dy)));render();};
+   ruler.onpointermove=event=>{if(!drag||event.pointerId!==drag.pointer)return;event.preventDefault();event.stopImmediatePropagation();const {before,kind}=drag,dx=event.clientX-drag.x,dy=event.clientY-drag.y;if(kind==='move'){states[axis].moved=true;states[axis].left=Math.max(0,before.left+dx);states[axis].top=Math.max(0,before.top+dy);}else if(kind==='resize')states[axis].length=Math.max(80,Math.min(2000,before.length+(axis==='x'?dx:dy)));render();};
    ruler.onpointerup=event=>{if(!drag||event.pointerId!==drag.pointer)return;event.preventDefault();event.stopImmediatePropagation();if(drag.kind==='guide'){
     const host=ui.host(),state=states[axis];api.commit({kind:'studioGuide',target:api.keyFor(host),id:window.adcStudioPolicy.uid(),axis:axis==='x'?'y':'x',left:axis==='x'?state.left:event.clientX,top:axis==='x'?event.clientY:state.top,length:state.length});api.say('Guía creada. Se guarda con el diseño y no se imprime.');
    }drag=null;};

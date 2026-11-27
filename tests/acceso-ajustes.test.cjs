@@ -12,6 +12,13 @@ test('Ajustes: cinco clics/toques o Tab, aislamiento por pestaña, recarga y cie
   });
   const page=await context.newPage();await page.goto('http://localhost:18765/adc/ADC_Ingreso_Editable.html');
   const gear=page.locator('#adcDesignGear'),panel=page.locator('#adcDesignPanel');
+  const layout=await page.evaluate(()=>{
+   const g=document.getElementById('adcDesignGear').getBoundingClientRect();
+   const t=document.getElementById('adcThemeSwitch').getBoundingClientRect();
+   return {gear:g,theme:t,vw:innerWidth,disjoint:g.left>=t.right-1||g.bottom<=t.top||g.top>=t.bottom};
+  });
+  assert.ok(layout.gear.right>=layout.vw-24&&layout.gear.top<=24,'Tuerquita en esquina superior derecha del login');
+  assert.equal(layout.disjoint,true,'Tuerquita no se solapa con el interruptor Light/Dark');
   assert.equal(await gear.evaluate(e=>getComputedStyle(e).opacity),'0');
   for(let i=0;i<4;i++)await gear.click();
   assert.equal(await gear.evaluate(e=>getComputedStyle(e).opacity),'0');assert.equal(await panel.isVisible(),false);

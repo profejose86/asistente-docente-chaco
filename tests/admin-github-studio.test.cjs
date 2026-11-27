@@ -12,9 +12,9 @@ function makeSession(user){
   return {access_token:[header,payload,'sig'].join('.'),refresh_token:'fixture',expires_at:Math.floor(Date.now()/1000)+3600,expires_in:3600,token_type:'bearer',user};
 }
 
-const makeUser=(id,role)=>({
+const makeUser=(id,role,{email}={})=>({
   id,aud:'authenticated',role:'authenticated',
-  email:role==='admin'?'admin@example.test':'tester@example.test',
+  email:email||(role==='admin'?'prof.josemiguelgomez@gmail.com':'tester@example.test'),
   app_metadata:role==='admin'?{provider:'email',providers:['email'],adc_role:'admin'}:{provider:'email',providers:['email']},
   user_metadata:{}
 });
@@ -39,12 +39,12 @@ test('ADC Studio online: restringido a admin verificado y Push to GitHub con CAS
   let remoteSha='sha-inicial-001';
   const githubPuts=[];
 
-  async function setupPage(role,{spoofLocal=false,authError=false}={}){
+  async function setupPage(role,{spoofLocal=false,authError=false,email}={}){
     const context=await browser.newContext({viewport:{width:1500,height:1100},hasTouch:true});
     const page=await context.newPage();
     page.setDefaultTimeout(15000);
     const errors=[];page.on('pageerror',e=>errors.push(e.message));
-    const serverUser=role==='admin'?makeUser(adminId,'admin'):makeUser(testerId,'tester');
+    const serverUser=role==='admin'?makeUser(adminId,'admin',{email}):makeUser(testerId,'tester',{email});
     const storedUser=spoofLocal?makeUser(testerId,'admin'):serverUser;
     await page.addInitScript(({s})=>{
       if(!localStorage.getItem('fixture-seeded')){
@@ -125,7 +125,22 @@ test('ADC Studio online: restringido a admin verificado y Push to GitHub con CAS
     assert.notEqual(await broken.page.locator('#adcDesignGear').getAttribute('data-adc-forbidden'),null);
     await broken.context.close();
 
-    // 3. Admin verificado desbloquea Studio online, guarda token local no sincronizable y hace Push a GitHub.
+    // 2b. Otro correo con adc_role='admin' o el correo admin sin adc_role='admin' siguen bloqueados.
+    const otherAdmin=await setupPage('admin',{email:'otro-admin@example.test'});
+    await otherAdmin.page.goto(localBase+'index.html');
+    await otherAdmin.page.waitForSelector('#adcSessionBar');
+    assert.equal(await otherAdmin.page.evaluate(()=>adcEditorAccess.isAdmin()),false);
+    assert.notEqual(await otherAdmin.page.locator('#adcDesignGear').getAttribute('data-adc-forbidden'),null);
+    await otherAdmin.context.close();
+
+    const nonRoleOwner=await setupPage('tester',{email:'prof.josemiguelgomez@gmail.com'});
+    await nonRoleOwner.page.goto(localBase+'index.html');
+    await nonRoleOwner.page.waitForSelector('#adcSessionBar');
+    assert.equal(await nonRoleOwner.page.evaluate(()=>adcEditorAccess.isAdmin()),false);
+    assert.notEqual(await nonRoleOwner.page.locator('#adcDesignGear').getAttribute('data-adc-forbidden'),null);
+    await nonRoleOwner.context.close();
+
+    // 3. Admin verificado (prof.josemiguelgomez@gmail.com): en index.html la tuerquita es SIEMPRE visible (sin 5 clics).
     const admin=await setupPage('admin');
     await admin.page.goto(localBase+'index.html');
     await admin.page.waitForSelector('#adcSessionBar');
@@ -133,8 +148,8 @@ test('ADC Studio online: restringido a admin verificado y Push to GitHub con CAS
     assert.equal(await admin.page.locator('html').getAttribute('data-adc-local-editor'),null);
     await admin.page.waitForFunction(()=>!document.getElementById('adcDesignGear').hasAttribute('data-adc-forbidden'));
     assert.equal(await admin.page.evaluate(()=>adcEditorAccess.isAdmin()),true);
-    for(let i=0;i<5;i++)await gear.click();
     assert.equal(await gear.getAttribute('data-adc-locked'),null);
+    assert.equal(await gear.evaluate(el=>getComputedStyle(el).opacity),'1');
     await gear.click();
     assert.equal(await panel.isVisible(),true);
     assert.equal(await admin.page.locator('#adcDesignPanel button:not([title])').count(),0);
@@ -177,10 +192,17 @@ test('ADC Studio online: restringido a admin verificado y Push to GitHub con CAS
     assert.match(await admin.page.locator('[data-push-github-feedback]').innerText(),/cambió en GitHub/);
     assert.equal(githubPuts.length,1);
 
-    // El admin puede abrir ADC_Ingreso_Editable.html?adc-studio=1 para editar el login online.
+    // El admin puede abrir ADC_Ingreso_Editable.html?adc-studio=1: la tuerquita está en esquina superior derecha e INVISIBLE hasta 5 clics.
     await admin.page.goto(localBase+'ADC_Ingreso_Editable.html?adc-studio=1');
     await admin.page.waitForFunction(()=>!document.getElementById('adcDesignGear').hasAttribute('data-adc-forbidden'));
     assert.equal(admin.page.url(),localBase+'ADC_Ingreso_Editable.html?adc-studio=1');
+    assert.notEqual(await admin.page.locator('#adcDesignGear').getAttribute('data-adc-locked'),null);
+    assert.equal(await admin.page.locator('#adcDesignGear').evaluate(el=>getComputedStyle(el).opacity),'0');
+    const loginGearBox=await admin.page.locator('#adcDesignGear').boundingBox();
+    assert.ok(loginGearBox.x+loginGearBox.width>=1500-24&&loginGearBox.y<=24,'Tuerquita de login en esquina superior derecha');
+    for(let i=0;i<5;i++)await admin.page.locator('#adcDesignGear').click();
+    assert.equal(await admin.page.locator('#adcDesignGear').getAttribute('data-adc-locked'),null);
+    assert.equal(await admin.page.locator('#adcDesignGear').evaluate(el=>getComputedStyle(el).opacity),'1');
 
     // Al cerrar sesión real desde la aplicación, la tuerquita vuelve a prohibirse y ocultarse.
     await admin.page.goto(localBase+'index.html');

@@ -174,7 +174,9 @@
           getContext: () => ({
             entry: selectedId ? registry.byId(selectedId) : null,
             bytes: viewer?.getActiveBytes?.() || null,
-            diagnostics: viewer?.getDiagnostics?.() || null
+            diagnostics: viewer?.getDiagnostics?.() || null,
+            boxes: window.adcMotor01Tijera?.exportBoxes?.() || null,
+            onClear: () => window.adcMotor01Tijera?.resetDocumentBoxes?.()
           })
         });
       }
@@ -194,6 +196,7 @@
       setMode('maestro');
       const instance = ensureViewer();
       acc1?.setDocument(null);
+      window.adcMotor01Tijera?.unbindDocument?.();
       selectedId = id;
       updatePickerButtons();
       const ok = await instance.loadPdf(entry);
@@ -202,6 +205,10 @@
         updatePickerButtons();
         acc1?.setDocument(null);
       } else if (ok) {
+        window.adcMotor01Tijera?.bindDocument?.(entry, instance.getPages?.() || [], {
+          viewer: instance,
+          onDirty: () => acc1?.setSaveState('idle', `${entry.code || entry.id} · cambios en casilleros sin guardar`)
+        });
         acc1?.setDocument(entry);
       }
       renderMeta(instance.getDiagnostics());
@@ -212,6 +219,7 @@
       selectedId = null;
       updatePickerButtons();
       acc1?.setDocument(null);
+      window.adcMotor01Tijera?.unbindDocument?.();
       if (viewer) {
         await viewer.unloadPdf();
         renderMeta(viewer.getDiagnostics());

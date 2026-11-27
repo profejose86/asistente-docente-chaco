@@ -145,3 +145,24 @@ html[data-theme=dark] #adcTramites2 .acc1-confirm{background:#192e4b;color:#edf3
   #adcTramites2 .acc1-status{flex:1 1 100%;margin-left:0}
   #adcTramites2 .acc1-preview-frame{height:60vh;min-height:280px}
 }
+
+/* TIJ-01: capa experimental de casilleros y previsualización por dos puntos en VPI Maestro */
+#adcVpiMaestro .vpi-page .tij-box-layer,
+#adcVpiMaestro .vpi-page .tij-preview-svg{position:absolute;inset:0;width:100%;height:100%;box-sizing:border-box}
+#adcVpiMaestro .vpi-page .tij-box-layer{z-index:4;pointer-events:none}
+#adcVpiMaestro .vpi-page .tij-preview-svg{z-index:8;overflow:visible;pointer-events:none}
+body.adcTijeraActive #adcVpiMaestro [data-vpi-shell] .vpi-viewport{cursor:crosshair}
+#adcVpiMaestro .tij-box{position:absolute;box-sizing:border-box;display:flex;flex-direction:column;justify-content:center;gap:2px;padding:3px 6px;border:1.5px solid #144d9c;border-radius:3px;background:#144d9c1f;color:#0f2847;font:600 12px/1.15 system-ui;overflow:hidden;pointer-events:none}
+#adcVpiMaestro .tij-box-label{font-size:11px;font-weight:700;letter-spacing:.01em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#adcVpiMaestro .tij-box-value{font-size:12px;font-weight:500;color:#1b385d;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#adcVpiMaestro .tij-box.is-affected{border-color:#d66824;background:#d6682433;box-shadow:0 0 0 2px #d6682455}
+#adcVpiMaestro .tij-box.is-invalid{border-color:#c92a2a;background:#c92a2a2e;box-shadow:0 0 0 2px #c92a2a55}
+#adcVpiMaestro .tij-point-a{fill:#d66824;stroke:#fff;stroke-width:2}
+#adcVpiMaestro .tij-guide-line{stroke:#144d9c;stroke-width:2.5;stroke-dasharray:6 4;stroke-linecap:round}
+#adcVpiMaestro .tij-guide-line.is-valid{stroke:#d66824}
+#adcVpiMaestro .tij-guide-line.is-invalid{stroke:#d73b45}
+#adcVpiMaestro .tij-confirm-line{stroke:#1c8a5d;stroke-width:3.5;stroke-linecap:round}
+html[data-theme=dark] #adcVpiMaestro .tij-box{border-color:#1c64c7;background:#1c64c72b;color:#091f3d}
+html[data-theme=dark] #adcVpiMaestro .tij-box.is-affected{border-color:#d96c1f;background:#d96c1f3a}
+html[data-theme=dark] #adcVpiMaestro .tij-guide-line.is-valid{stroke:#e06218}
+html[data-theme=dark] #adcVpiMaestro .tij-guide-line.is-invalid{stroke:#e03131}

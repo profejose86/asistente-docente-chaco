@@ -7,11 +7,11 @@ body{margin:0;font:16px/1.5 system-ui,sans-serif;color:var(--ink);background:var
 button,input,select,textarea{font:inherit}
 button{cursor:pointer}
 .wrap{min-height:100vh;background-image:var(--motifs),var(--doodles);background-size:300px 300px}
-.adc-header{display:flex;align-items:center;gap:14px;padding:20px clamp(18px,2vw,32px) 20px max(100px,5vw);background:#13243e;color:#fff}
+.adc-header{display:flex;align-items:center;gap:14px;padding:20px max(112px,5vw) 20px clamp(18px,2vw,32px);background:#13243e;color:#fff}
 .adc-header strong{font-size:clamp(18px,3vw,30px);line-height:1.15}
 .adc-emblem{width:50px;height:50px;flex:none;overflow:hidden;border-radius:50%;background:var(--accent)}
 .adc-emblem img{display:block;width:100%;height:100%;object-fit:cover;transform:scale(1.13);filter:brightness(1.16) saturate(.85) hue-rotate(5deg)}
-@media(max-width:460px){.adc-header{position:relative;padding:55px 16px 15px!important}#adcThemeSwitch{position:absolute;top:9px;right:16px}}
+@media(max-width:460px){.adc-header{position:relative;padding:55px 16px 15px!important}#adcThemeSwitch{position:absolute;top:9px;right:112px}}
 .adc-stage{width:min(100%,1320px);margin:auto;padding:clamp(28px,6vw,74px) clamp(18px,5vw,70px);display:grid;grid-template-columns:1.1fr 1fr;gap:clamp(22px,5vw,65px);align-items:center}
 .adc-intro h1{font-size:clamp(29px,4.5vw,54px);letter-spacing:-.04em;line-height:1.07;margin:0 0 24px;max-width:20ch}
 .accent-rule{height:5px;width:105px;background:var(--accent);border-radius:6px;margin-bottom:20px}
@@ -38,4 +38,4 @@ button{cursor:pointer}
 #adcLoginStatus{font-size:14px;margin-bottom:0}
 #adcLoginStatus:empty{display:none}
 :focus-visible{outline:2px solid #6798dd;outline-offset:3px}
-@media(max-width:700px){.adc-stage{grid-template-columns:minmax(0,1fr)}.adc-card{grid-row:1}.adc-header{gap:8px;padding-left:98px}.adc-header strong{font-size:15px}.adc-emblem{width:32px;height:32px}#adcThemeSwitch{font-size:12px}}
+@media(max-width:700px){.adc-stage{grid-template-columns:minmax(0,1fr)}.adc-card{grid-row:1}.adc-header{gap:8px;padding-left:16px;padding-right:112px}.adc-header strong{font-size:15px}.adc-emblem{width:32px;height:32px}#adcThemeSwitch{font-size:12px}}

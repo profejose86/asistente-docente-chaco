@@ -374,6 +374,7 @@
  document.addEventListener('click',event => {
    if (panel.hidden || event.target.closest('#adcDesignContext,[data-adc-studio-ui]') || event.target.closest('#adcThemeSwitch') || panel.contains(event.target) || gear.contains(event.target)||marks.contains(event.target)) return;
    if(suppressClick){event.preventDefault();event.stopImmediatePropagation();return}
+   if(window.adcMotor01Tijera?.isActive?.()&&event.target.closest('#adcVpiMaestro'))return;
    const node = event.target.closest(selector);
    if (!node || !keyFor(node)) return;
    event.preventDefault();
@@ -388,8 +389,16 @@
    select(node);
  },true);
  document.addEventListener('keydown',event => {
-   if (!panel.hidden && event.key === 'Escape'){event.preventDefault();setTool('');grouping=null;say('Gesto cancelado. Elegí otra herramienta.');}
- });
+   if (!panel.hidden && event.key === 'Escape'){
+     event.preventDefault();
+     if(tool==='split'&&window.adcMotor01Tijera?.cancelPending?.()){
+       event.stopImmediatePropagation();
+       say('Corte pendiente cancelado. Marcá un nuevo punto A o pulsá Esc otra vez para salir de Tijera.');
+       return;
+     }
+     setTool('');grouping=null;say('Gesto cancelado. Elegí otra herramienta.');
+   }
+ },true);
  document.addEventListener('invalid',event => {
    for (let node = event.target.parentElement; node; node = node.parentElement) {
      if (node.matches('details.adc-design-section')) node.open = true;
@@ -440,7 +449,7 @@
    redo=[];select(null);
    return 0;
  }
- const serialize = () => JSON.stringify({schema:storageKey,operations},null,2);
+ const serialize = () => JSON.stringify({schema:storageKey,operations:operations.filter(op=>!op.__tijera)},null,2);
  const importer = document.getElementById('adcDesignImport');
  importer.onchange = async () => {
    try {
@@ -466,7 +475,11 @@
    }
    if (act === 'redo') {
      const op = redo.pop();
-     if (op) { setTool(''); const reverse = apply(op); if (reverse) { operations.push(op); reversals.push(reverse);dirty=true;scheduleMarks();say('Cambio rehecho.'); } }
+     if (op) {
+       setTool('');
+       const reverse = op.__apply ? (op.__apply() ? op.__undo : null) : apply(op);
+       if (reverse) { operations.push(op); reversals.push(reverse);dirty=true;scheduleMarks();say('Cambio rehecho.'); }
+     }
      return;
    }
    if (act === 'save') {
@@ -619,14 +632,25 @@
    const r=rect(raw.left+(guides.find(g=>g.axis==='x')?.delta||0),raw.top+(guides.find(g=>g.axis==='y')?.delta||0),raw.width,raw.height);
    return {host,base,r,guides};
  }
+ function recordExternal({ kind, label, applyFn, undoFn }) {
+   if (typeof applyFn !== 'function' || typeof undoFn !== 'function') return false;
+   if (!applyFn()) return false;
+   const op = { kind: String(kind || 'tijera'), target: 'project:#adcVpiMaestro', label: label || '', __tijera: true, __apply: applyFn, __undo: undoFn };
+   operations.push(op); reversals.push(undoFn); redo = []; dirty = true; scheduleMarks();
+   window.dispatchEvent(new CustomEvent('adc:studio-change'));
+   return true;
+ }
  function setTool(next){
    centerPreview=null;centerApply.hidden=true;
    clearErase();previewErase(null);document.body.classList.toggle('adcEraser',next==='erase');
    tool=next;drag=null;cut=null;grouping=null;
+   const tijeraReady=next==='split'&&!panel.hidden&&window.adcMotor01Tijera?.isAvailable?.();
+   window.adcMotor01Tijera?.setActive?.(tijeraReady,{say,recordTransaction:recordExternal,deactivateTool:()=>{if(tool==='split')setTool('');}});
    document.body.classList.toggle('adcDesignSizing',next==='size'||next==='doc-size');
    document.body.classList.toggle('adcDesignMoving',!next&&!panel.hidden);
    panel.querySelectorAll('[data-act]').forEach(button=>{if(instructions[button.dataset.act])button.setAttribute('aria-pressed',String(tool===button.dataset.act))});
-   if(next)say(instructions[next]);
+   if(tijeraReady)say('Tijera TIJ-01 activa: hacé clic en A, mové el mouse y hacé clic en B para cortar. Esc cancela.');
+   else if(next)say(instructions[next]);
    scheduleMarks();
  }
  function paintRulers(){
@@ -785,6 +809,7 @@
      for(const g of preview.guides)drawGuide(g.axis,g.position,g.label);
    }
    if(tool==='split'){
+     if(window.adcMotor01Tijera?.isActive?.())return;
      marks.replaceChildren();
      const host=event.target.closest('section,article,aside,.card,main');
      if(!host||!usable(event.target))return;
@@ -1032,7 +1057,7 @@
  window.adcProjectLayout?.attach({
    commit,keyFor,select,setTool,selected:()=>selected,tool:()=>tool,
    scope:'pagina',panel,say,baseline:initialLayout,
-   operations:()=>operations.slice(),resolve,serialize,
+   operations:()=>operations.filter(op=>!op.__tijera),resolve,serialize,
    history:()=>({operations:operations.slice(),redo:redo.slice()}),
    append:op=>{const reverse=apply(op);if(!reverse)return false;operations.push(op);reversals.push(reverse);window.dispatchEvent(new CustomEvent('adc:studio-change'));return true;},
    refresh:op=>{const index=operations.indexOf(op);if(index<0)return false;const reverse=apply(op);if(!reverse)return false;reversals[index]=reverse;return true;},
