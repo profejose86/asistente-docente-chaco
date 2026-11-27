@@ -114,6 +114,7 @@
     let destroyed = false;
     let requestToken = 0;
     let activeEntry = null;
+    let activeBytes = null;
     let pdfDoc = null;
     let loadingTask = null;
     const renderTasks = new Set();
@@ -334,6 +335,7 @@
       renderTasks.clear();
       const hadActive = Boolean(activeEntry || pdfDoc || pageMeta.length);
       activeEntry = null;
+      activeBytes = null;
       if (hadActive) releasedCount++;
       for (const item of pageMeta) {
         item.canvas.width = 0;
@@ -380,6 +382,7 @@
         if (new TextDecoder().decode(bytes.slice(0, 5)) !== '%PDF-') {
           throw new Error('El recurso seleccionado no es un PDF válido.');
         }
+        const retainedCopy = bytes.slice();
         const pdfjs = await loadPdfJs();
         if (token !== requestToken || destroyed) return false;
         loadingTask = pdfjs.getDocument({
@@ -396,6 +399,7 @@
         }
         pdfDoc = loaded;
         activeEntry = entry;
+        activeBytes = retainedCopy;
         loadedCount++;
         const meta = [];
         let maxW = 0;
@@ -747,6 +751,7 @@
       setZoom: value => scaleAt(value),
       setContainerWidth: width => handleContainerResized(width),
       toggleFullscreen,
+      getActiveBytes: () => (activeBytes ? activeBytes.slice() : null),
       getDiagnostics,
       destroy
     });

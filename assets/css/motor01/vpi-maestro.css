@@ -37,7 +37,7 @@ html[data-theme=dark] #adcTramites2 .vpi-maestro-meta{background:#10223b;color:#
 
 /* VPI-01: contenedor redimensionable horizontalmente con barras y controles flotantes */
 #adcTramites2 .vpi-maestro-host{width:100%;padding:0 18px;box-sizing:border-box}
-[data-vpi-shell]{position:relative;box-sizing:border-box;max-width:100%;margin:0 auto;height:min(76vh,900px);min-height:360px;padding:10px 44px 76px 10px;border:1px solid #b8c6d6;border-radius:10px;background:#dde4ee}
+[data-vpi-shell]{position:relative;box-sizing:border-box;max-width:100%;margin:0 auto;height:min(68vh,780px);min-height:360px;padding:10px 44px 76px 10px;border:1px solid #b8c6d6;border-radius:10px;background:#dde4ee;scroll-margin-top:100px}
 html[data-theme=dark] [data-vpi-shell]{border-color:#3a567b;background:#102138}
 [data-vpi-shell].vpi-resizing{outline:2px solid #d66824;user-select:none}
 [data-vpi-shell] .vpi-viewport{width:100%;height:100%;overflow:auto;box-sizing:border-box;padding:10px;border-radius:6px;background:#cfd8e5;cursor:grab;scrollbar-width:none;-ms-overflow-style:none;touch-action:pan-x pan-y}
@@ -53,7 +53,7 @@ html[data-theme=dark] [data-vpi-shell] .vpi-empty-notice{background:#162c4b;colo
 [data-vpi-shell] .vpi-page-canvas{display:block;width:100%;height:100%}
 
 /* Tiradores superiores izquierdo y derecho */
-[data-vpi-shell] .vpi-resize-handle{position:absolute;top:10px;z-index:28;display:grid;place-items:center;width:32px;height:44px;min-height:44px;padding:0;margin:0;border:1px solid #7f94b0;border-radius:8px;background:#f4f7fc;color:#183857;font-size:15px;font-weight:700;cursor:ew-resize;box-shadow:0 2px 6px #0002;touch-action:none}
+[data-vpi-shell] .vpi-resize-handle{position:absolute;top:10px;z-index:28;display:grid;place-items:center;width:32px;height:44px;min-height:44px;padding:0;margin:0;border:1px solid #7f94b0;border-radius:8px;background:#f4f7fc;color:#183857;font-size:15px;font-weight:700;cursor:ew-resize;box-shadow:0 2px 6px #0002;touch-action:none;scroll-margin-top:100px}
 [data-vpi-shell] .vpi-resize-left{left:-16px}
 [data-vpi-shell] .vpi-resize-right{right:-16px}
 html[data-theme=dark] [data-vpi-shell] .vpi-resize-handle{background:#223b5e;color:#edf3fc;border-color:#5b789f}
@@ -102,4 +102,40 @@ html[data-theme=dark] [data-vpi-shell] .vpi-bottom-bar{border-color:#3a567b;back
 }
 @media(prefers-reduced-motion:reduce){
   [data-vpi-shell] .vpi-bottom-bar,[data-vpi-shell] .vpi-floating-fullscreen{transition:none}
+}
+
+/* FASE 2: ACC1 — Acciones comunes arriba y abajo del visor (referencia INCAPACIDAD) */
+#adcTramites2 .acc1-group{display:flex;flex-direction:column;gap:8px}
+#adcTramites2 .acc1-primary-row{display:flex;flex-wrap:wrap;gap:8px}
+#adcTramites2 .acc1-primary-row button{display:flex;align-items:center;justify-content:center;gap:10px;flex:1 1 180px;min-width:0;min-height:54px;margin:0;padding:10px 14px;border-radius:10px;font-size:15px;font-weight:600;line-height:1.25;white-space:normal;cursor:pointer}
+#adcTramites2 .acc1-primary-row button:disabled{opacity:.5;cursor:not-allowed}
+#adcTramites2 .acc1-icon{display:block;width:22px;height:22px;flex:none;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+#adcTramites2 .acc1-secondary-row{display:flex;flex-wrap:wrap;align-items:center;gap:8px}
+#adcTramites2 .acc1-secondary-row button{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:40px;width:190px;max-width:100%;margin:0;padding:7px 12px;border:1px solid #97a9bf;border-radius:8px;background:transparent;color:inherit;font-size:14px;font-weight:500;cursor:pointer}
+#adcTramites2 .acc1-secondary-row [data-acc1-action=save]{border-color:#409c73}
+#adcTramites2 .acc1-secondary-row button:disabled{opacity:.5;cursor:not-allowed}
+#adcTramites2 .acc1-secondary-row .acc1-icon{width:19px;height:19px}
+#adcTramites2 .acc1-status{margin-left:auto;font-size:13px;overflow-wrap:anywhere}
+#adcTramites2 .acc1-status::before{display:inline-grid;place-items:center;width:18px;height:18px;margin-right:6px;border-radius:50%;font-size:12px;font-weight:700;vertical-align:middle}
+#adcTramites2 .acc1-status[data-save-state=local]::before,#adcTramites2 .acc1-status[data-save-state=remote]::before{content:'✓';background:#278261;color:#fff}
+#adcTramites2 .acc1-status[data-save-state=saving]::before{content:'…';background:#8799ae24;color:inherit}
+#adcTramites2 .acc1-status[data-save-state=error]::before{content:'!';border:1px solid currentColor}
+#adcTramites2 .acc1-status[data-save-state=error]{color:#b24432}
+html[data-theme=dark] #adcTramites2 .acc1-status[data-save-state=error]{color:#ffb5a8}
+#adcTramites2 .acc1-note{margin:0;font-size:12.5px;line-height:1.45;color:var(--mt2-muted,#566579)}
+#adcTramites2 .acc1-preview-wrap{margin-top:6px;border:1px solid var(--mt2-border,#cbd5e1);border-radius:12px;overflow:hidden;background:var(--mt2-card,#fff)}
+#adcTramites2 .acc1-preview-head{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:10px;padding:10px 14px;border-bottom:1px solid var(--mt2-border,#cbd5e1)}
+#adcTramites2 .acc1-preview-head button{min-height:38px;margin:0}
+#adcTramites2 .acc1-preview-frame{display:block;width:100%;height:min(72vh,820px);min-height:360px;border:0;background:#fff}
+#adcTramites2 .acc1-confirm{box-sizing:border-box;width:min(460px,calc(100vw - 24px));padding:20px;border:1px solid #97a9bf;border-radius:12px;background:#fff;color:#152844}
+#adcTramites2 .acc1-confirm::backdrop{background:#07172b99}
+#adcTramites2 .acc1-confirm p{margin:0 0 16px;line-height:1.5}
+#adcTramites2 .acc1-confirm-actions{display:flex;flex-wrap:wrap;gap:8px;justify-content:flex-end}
+#adcTramites2 .acc1-confirm-actions button{margin:0;min-height:42px}
+html[data-theme=dark] #adcTramites2 .acc1-confirm{background:#192e4b;color:#edf3fc}
+@media(max-width:650px){
+  #adcTramites2 .acc1-primary-row button{flex:1 1 100%;min-height:50px;font-size:14px}
+  #adcTramites2 .acc1-secondary-row button{flex:1 1 140px;width:auto}
+  #adcTramites2 .acc1-status{flex:1 1 100%;margin-left:0}
+  #adcTramites2 .acc1-preview-frame{height:60vh;min-height:280px}
 }

@@ -95,3 +95,54 @@ test('DJ02-VPI-01: prueba aislada, gestos protegidos, ciclo de licencias y salid
     assert.deepEqual(errors,[]);console.log('Prueba DJ02-VPI-01: '+output);
   }finally{await browser.close();await new Promise(resolve=>server.close(resolve))}
 });
+test('DJ02-VPI-02: con ajustes-pagina.json real mantiene ancho completo y sin desplazamientos en pantalla e impresión',{timeout:120000},async()=>{
+  const server=require('../tools/motor01-preview.cjs').createMotor01Server();await new Promise(resolve=>server.listen(0,'127.0.0.1',resolve));
+  const browser=await chromium.launch({channel:'chrome',headless:true});
+  try{
+    const context=await browser.newContext({viewport:{width:1440,height:1000}}),page=await context.newPage(),errors=[];
+    page.on('pageerror',error=>errors.push(error.message));page.on('dialog',dialog=>dialog.accept());
+    await context.route(/^https:\/\//,route=>route.abort());
+    const url=`http://127.0.0.1:${server.address().port}/adc/index.html?adc-preview=1&adc-inicio=1&adc-dj02-vpi=1`;
+    await page.goto(url,{waitUntil:'networkidle'});
+    await page.evaluate(seed);
+    await page.evaluate(()=>{if(typeof window.tab==='function')window.tab('tramites2');return window.adcMT2Documents.open('dj02');});
+    await page.waitForTimeout(400);
+    await page.evaluate(()=>new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve))));
+    const screen=await page.evaluate(()=>{
+      const sec=document.querySelector('#dj02 > section');
+      const vp=document.querySelector('[data-mt2-viewer=dj02] .adc-mt2-viewport');
+      const preview=document.getElementById('dj02Preview');
+      const shell=preview?.querySelector('.adc58-page-shell');
+      const paper=preview?.querySelector('.dj02-paper');
+      const printBtn=document.getElementById('adcDJ02PrintButton');
+      const vpRect=vp.getBoundingClientRect(),paperRect=paper.getBoundingClientRect(),btnRect=printBtn.getBoundingClientRect();
+      return {
+        previewTranslate:getComputedStyle(preview).translate,
+        shellTranslate:getComputedStyle(shell).translate,
+        paperTranslate:getComputedStyle(paper).translate,
+        paperOffsetWidth:paper.offsetWidth,
+        paperLeft:paperRect.left,
+        vpLeft:vpRect.left,
+        sectionInlineHeight:sec.style.height,
+        printBtnVisible:btnRect.width>0&&btnRect.height>0
+      };
+    });
+    assert.equal(screen.previewTranslate,'none');
+    assert.equal(screen.shellTranslate,'none');
+    assert.equal(screen.paperTranslate,'none');
+    assert.ok(screen.paperOffsetWidth>=1300,`paper.offsetWidth=${screen.paperOffsetWidth}`);
+    assert.ok(screen.paperLeft>=screen.vpLeft-2,`paperLeft=${screen.paperLeft} < vpLeft=${screen.vpLeft}`);
+    assert.equal(screen.sectionInlineHeight,'');
+    assert.equal(screen.printBtnVisible,true);
+    await page.evaluate(()=>document.body.classList.add('dj02-print-mode'));
+    await page.emulateMedia({media:'print'});
+    await page.waitForTimeout(200);
+    const printState=await page.evaluate(()=>{
+      const paper=document.querySelector('#dj02Preview .dj02-paper');
+      return {translate:getComputedStyle(paper).translate,offsetWidth:paper.offsetWidth};
+    });
+    assert.equal(printState.translate,'none');
+    assert.ok(printState.offsetWidth>=1300,`print paper.offsetWidth=${printState.offsetWidth}`);
+    assert.deepEqual(errors,[]);
+  }finally{await browser.close();await new Promise(resolve=>server.close(resolve))}
+});

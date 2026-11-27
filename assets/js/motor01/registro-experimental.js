@@ -1,5 +1,5 @@
 // Registro experimental aislado para VPI Maestro (MOTOR-01 Fase 1).
-// Incluye los 15 PDF reales de assets/formularios y permite sumar crudos locales sin alterar el catálogo productivo.
+// Incluye los 16 PDF reales de assets/formularios y permite sumar crudos locales sin alterar el catálogo productivo.
 (() => {
   const catalogEntries = Object.freeze([
     { id: 'dp01', code: 'DP-01', title: 'Disposición de alta', orientation: 'portrait', orientationLabel: 'Vertical', dimensionsLabel: 'Vertical · 612 × 1008 pt · 1 pág.', pagesCount: 1, sourceGroup: 'adc', pdf: 'assets/formularios/DP-01.pdf' },
@@ -8,6 +8,7 @@
     { id: 'bd07', code: 'BD-07', title: 'Opción de Seguros', orientation: 'portrait', orientationLabel: 'Vertical', dimensionsLabel: 'Vertical · 595 × 842 pt · 1 pág.', pagesCount: 1, sourceGroup: 'adc', pdf: 'assets/formularios/BD-07.pdf' },
     { id: 'cf01', code: 'CF-01', title: 'Cambio de funciones', orientation: 'portrait', orientationLabel: 'Vertical', dimensionsLabel: 'Vertical · 612 × 1008 pt · 1 pág.', pagesCount: 1, sourceGroup: 'adc', pdf: 'assets/formularios/CF-01.pdf' },
     { id: 'seguro-descuento', code: 'Seguro Descuento', title: 'Solicitud de Descuento por Seguro', orientation: 'portrait', orientationLabel: 'Vertical', dimensionsLabel: 'Vertical · 612 × 1008 pt · 1 pág.', pagesCount: 1, sourceGroup: 'adc', pdf: 'assets/formularios/Descuento-por-Seguro.pdf' },
+    { id: 'dj02', code: 'DJ-02', title: 'Declaración Jurada de Licencias', orientation: 'landscape', orientationLabel: 'Horizontal', dimensionsLabel: 'Horizontal · 1008 × 612 pt · 1 pág.', pagesCount: 1, sourceGroup: 'adc', pdf: 'assets/formularios/DJ-02.pdf' },
     { id: 'dl02', code: 'DL-02', title: 'Interrupción de licencia', orientation: 'portrait', orientationLabel: 'Vertical', dimensionsLabel: 'Vertical · 612 × 1008 pt · 2 págs.', pagesCount: 2, sourceGroup: 'adc', pdf: 'assets/formularios/DL-02.pdf' },
     { id: 'form-3', code: 'Formulario N°3', title: 'Modificación de Datos de Identificación', orientation: 'portrait', orientationLabel: 'Vertical', dimensionsLabel: 'Vertical · 612 × 1008 pt · 1 pág.', pagesCount: 1, sourceGroup: 'adc', pdf: 'assets/formularios/Formulario-3.pdf' },
     { id: 'incapacidad', code: 'Incapacidad', title: 'Solicitud de Beneficio de Incapacidad', orientation: 'portrait', orientationLabel: 'Vertical', dimensionsLabel: 'Vertical · 612 × 1008 pt · 1 pág.', pagesCount: 1, sourceGroup: 'adc', pdf: 'assets/formularios/Incapacidad.pdf' },

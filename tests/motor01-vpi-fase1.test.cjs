@@ -152,6 +152,7 @@ test('MOTOR-01 Fase 1: VPI-01 experimental aislado, bajo demanda, tiradores, ges
     // 5. Tiradores laterales superiores: anchos intermedios, teclado, y preservación de zoom manual vs ajuste automático.
     const rightHandle = shell.locator('.vpi-resize-right');
     const leftHandle = shell.locator('.vpi-resize-left');
+    await rightHandle.scrollIntoViewIfNeeded();
     const rBox = await rightHandle.boundingBox();
     const beforeManualWidth = (await shell.boundingBox()).width;
     await slider.evaluate(el => { el.value = '135'; el.dispatchEvent(new Event('input', { bubbles: true })); });
@@ -164,6 +165,7 @@ test('MOTOR-01 Fase 1: VPI-01 experimental aislado, bajo demanda, tiradores, ges
     assert.equal(await page.evaluate(() => adcMotor01Maestro.getDiagnostics().percent), 135, 'Zoom manual preservado al redimensionar');
 
     // Arrastrar tirador izquierdo hacia afuera para ampliar gradualmente.
+    await leftHandle.scrollIntoViewIfNeeded();
     const lBox = await leftHandle.boundingBox();
     await page.mouse.move(lBox.x + lBox.width / 2, lBox.y + lBox.height / 2);
     await page.mouse.down();
@@ -209,6 +211,24 @@ test('MOTOR-01 Fase 1: VPI-01 experimental aislado, bajo demanda, tiradores, ges
     assert.equal(await shell.evaluate(el => el.classList.contains('vpi-expanded')), true);
     await page.keyboard.press('Escape');
     assert.equal(await shell.evaluate(el => el.classList.contains('vpi-expanded')), false);
+
+    // 6b. Cargar DJ-02 horizontal oficial desde el catálogo ADC de VPI Maestro.
+    await page.locator('[data-vpi-doc="dj02"]').click();
+    await page.waitForFunction(() => window.adcMotor01Maestro?.getDiagnostics()?.activeId === 'dj02' && window.adcMotor01Maestro.getDiagnostics().renderedCanvases === 1);
+    const dj02Diag = await page.evaluate(() => adcMotor01Maestro.getDiagnostics());
+    assert.equal(Math.round(dj02Diag.widthPt), 1008);
+    assert.equal(Math.round(dj02Diag.heightPt), 612);
+    assert.equal(dj02Diag.pageCount, 1);
+    assert.ok(pdfRequests.includes('/adc/assets/formularios/DJ-02.pdf'));
+    const dj02Pixels = await page.locator('[data-vpi-shell] canvas').evaluate(canvas => {
+      const ctx = canvas.getContext('2d');
+      const data = ctx.getImageData(0, 0, canvas.width, canvas.height).data;
+      for (let i = 0; i < data.length; i += 16) {
+        if (data[i] < 245 || data[i + 1] < 245 || data[i + 2] < 245) return true;
+      }
+      return false;
+    });
+    assert.equal(dj02Pixels, true, 'El canvas de DJ-02 debe estar renderizado');
 
     // 7. Claro / oscuro y móvil 390px sin desborde horizontal.
     await page.locator('[data-vpi-doc="dp01"]').click();

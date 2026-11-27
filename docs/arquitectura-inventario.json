@@ -76,6 +76,7 @@
     "assets/formularios/CF-01.pdf",
     "assets/formularios/Descuento-por-Seguro-pagina-1.png",
     "assets/formularios/Descuento-por-Seguro.pdf",
+    "assets/formularios/DJ-02.pdf",
     "assets/formularios/DL-02-pagina-1.png",
     "assets/formularios/DL-02-pagina-2.png",
     "assets/formularios/DL-02.pdf",
@@ -145,6 +146,8 @@
     "assets/js/interfaz/navegacion.js",
     "assets/js/interfaz/sesion.js",
     "assets/js/interfaz/sincronizacion.js",
+    "assets/js/motor01/acc1-motor.js",
+    "assets/js/motor01/estado-borrador.js",
     "assets/js/motor01/registro-experimental.js",
     "assets/js/motor01/vpi-maestro-ui.js",
     "assets/js/motor01/vpi-motor.js",
@@ -322,6 +325,7 @@
     "tests/md01-vpi.test.cjs",
     "tests/mis-tramites2-documentos.test.cjs",
     "tests/mis-tramites2.test.cjs",
+    "tests/motor01-acc1-fase2.test.cjs",
     "tests/motor01-piloto.test.cjs",
     "tests/motor01-vpi-fase1.test.cjs",
     "tests/mt2-enfermedad.test.cjs",
@@ -499,6 +503,8 @@
         "assets/js/tramites/mis-tramites2-documentos.js",
         "assets/js/tramites/mis-tramites2.js",
         "assets/js/motor01/registro-experimental.js",
+        "assets/js/motor01/estado-borrador.js",
+        "assets/js/motor01/acc1-motor.js",
         "assets/js/motor01/vpi-motor.js",
         "assets/js/motor01/vpi-maestro-ui.js"
       ],
@@ -821,8 +827,8 @@
     },
     {
       "file": "assets/css/motor01/vpi-maestro.css",
-      "bytes": 11021,
-      "lines": 106,
+      "bytes": 14730,
+      "lines": 142,
       "generated": false,
       "functions": [],
       "globals": [],
@@ -992,8 +998,8 @@
     },
     {
       "file": "assets/datos/ajustes-pagina.json",
-      "bytes": 37606,
-      "lines": 1363,
+      "bytes": 16726,
+      "lines": 611,
       "generated": false,
       "functions": [],
       "globals": [],
@@ -1782,9 +1788,50 @@
       "storageKeys": []
     },
     {
+      "file": "assets/js/motor01/acc1-motor.js",
+      "bytes": 11419,
+      "lines": 274,
+      "generated": false,
+      "functions": [
+        "create",
+        "revokePreview",
+        "revokePrint",
+        "syncBars",
+        "setSaveState",
+        "setDocument",
+        "runPreview",
+        "runPrint",
+        "runSave",
+        "runClear",
+        "destroy"
+      ],
+      "globals": [
+        "adcMotor01Acc1"
+      ],
+      "storageKeys": []
+    },
+    {
+      "file": "assets/js/motor01/estado-borrador.js",
+      "bytes": 2152,
+      "lines": 76,
+      "generated": false,
+      "functions": [
+        "keyFor",
+        "storage",
+        "load",
+        "has",
+        "save",
+        "clear"
+      ],
+      "globals": [
+        "adcMotor01Drafts"
+      ],
+      "storageKeys": []
+    },
+    {
       "file": "assets/js/motor01/registro-experimental.js",
-      "bytes": 5342,
-      "lines": 53,
+      "bytes": 5610,
+      "lines": 54,
       "generated": false,
       "functions": [
         "registerRawFiles"
@@ -1796,8 +1843,8 @@
     },
     {
       "file": "assets/js/motor01/vpi-maestro-ui.js",
-      "bytes": 10077,
-      "lines": 250,
+      "bytes": 11130,
+      "lines": 275,
       "generated": false,
       "functions": [
         "renderMeta",
@@ -1817,8 +1864,8 @@
     },
     {
       "file": "assets/js/motor01/vpi-motor.js",
-      "bytes": 31293,
-      "lines": 757,
+      "bytes": 31499,
+      "lines": 762,
       "generated": false,
       "functions": [
         "loadPdfJs",
@@ -3246,7 +3293,7 @@
     },
     {
       "file": "index.html",
-      "bytes": 46980,
+      "bytes": 47095,
       "lines": 164,
       "generated": false,
       "functions": [],
@@ -3474,13 +3521,15 @@
     },
     {
       "file": "tests/dj02-vpi-prueba.test.cjs",
-      "bytes": 10970,
-      "lines": 98,
+      "bytes": 14217,
+      "lines": 149,
       "generated": false,
       "functions": [
         "seed"
       ],
-      "globals": [],
+      "globals": [
+        "tab"
+      ],
       "storageKeys": [
         "adc_dj02_v1"
       ]
@@ -3847,6 +3896,21 @@
       "storageKeys": []
     },
     {
+      "file": "tests/motor01-acc1-fase2.test.cjs",
+      "bytes": 9117,
+      "lines": 151,
+      "generated": false,
+      "functions": [],
+      "globals": [
+        "__acc1BackupStore",
+        "adcUserStorage"
+      ],
+      "storageKeys": [
+        "adc-official-form-dp01-draft-v1",
+        "adc_v08"
+      ]
+    },
+    {
       "file": "tests/motor01-piloto.test.cjs",
       "bytes": 10762,
       "lines": 116,
@@ -3862,8 +3926,8 @@
     },
     {
       "file": "tests/motor01-vpi-fase1.test.cjs",
-      "bytes": 18525,
-      "lines": 301,
+      "bytes": 19697,
+      "lines": 321,
       "generated": false,
       "functions": [],
       "globals": [
@@ -4961,6 +5025,12 @@
     },
     {
       "from": "assets/js/motor01/registro-experimental.js",
+      "to": "assets/formularios/DJ-02.pdf",
+      "kind": "web-asset",
+      "exists": true
+    },
+    {
+      "from": "assets/js/motor01/registro-experimental.js",
       "to": "assets/formularios/DL-02.pdf",
       "kind": "web-asset",
       "exists": true
@@ -5783,6 +5853,18 @@
     },
     {
       "from": "index.html",
+      "to": "assets/js/motor01/estado-borrador.js",
+      "kind": "script",
+      "exists": true
+    },
+    {
+      "from": "index.html",
+      "to": "assets/js/motor01/acc1-motor.js",
+      "kind": "script",
+      "exists": true
+    },
+    {
+      "from": "index.html",
       "to": "assets/js/motor01/vpi-motor.js",
       "kind": "script",
       "exists": true
@@ -5946,6 +6028,12 @@
     {
       "from": "tests/dj02-vpi-prueba.test.cjs",
       "to": "assets/js/editor/ajustes-proyecto-datos.js",
+      "kind": "literal-module",
+      "exists": true
+    },
+    {
+      "from": "tests/dj02-vpi-prueba.test.cjs",
+      "to": "tools/motor01-preview.cjs",
       "kind": "literal-module",
       "exists": true
     },
@@ -6377,6 +6465,18 @@
     },
     {
       "from": "tests/mis-tramites2.test.cjs",
+      "to": "assets/js/editor/ajustes-proyecto-datos.js",
+      "kind": "literal-module",
+      "exists": true
+    },
+    {
+      "from": "tests/motor01-acc1-fase2.test.cjs",
+      "to": "tools/motor01-preview.cjs",
+      "kind": "literal-module",
+      "exists": true
+    },
+    {
+      "from": "tests/motor01-acc1-fase2.test.cjs",
       "to": "assets/js/editor/ajustes-proyecto-datos.js",
       "kind": "literal-module",
       "exists": true
@@ -12991,9 +13091,9 @@
     ]
   },
   "summary": {
-    "files": 360,
-    "ownTextModules": 283,
-    "ownJavaScript": 175,
+    "files": 364,
+    "ownTextModules": 286,
+    "ownJavaScript": 178,
     "vendorFiles": 35,
     "missingLiteralReferences": 0,
     "duplicateLoads": 0,

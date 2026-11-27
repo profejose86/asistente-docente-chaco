@@ -60,7 +60,10 @@
             <button type="button" class="vpi-maestro-unload" data-vpi-unload disabled>Descargar de memoria</button>
           </div>
           <div class="vpi-maestro-meta" role="status" aria-live="polite" data-vpi-meta></div>
+          <div class="acc1-mount" data-acc1-top></div>
           <div class="vpi-maestro-host" data-vpi-host></div>
+          <div class="acc1-mount" data-acc1-bottom></div>
+          <div class="acc1-preview-wrap" data-acc1-preview hidden></div>
         </div>
       </div>`;
 
@@ -74,8 +77,12 @@
     const unloadBtn = panel.querySelector('[data-vpi-unload]');
     const meta = panel.querySelector('[data-vpi-meta]');
     const host = panel.querySelector('[data-vpi-host]');
+    const accTop = panel.querySelector('[data-acc1-top]');
+    const accBottom = panel.querySelector('[data-acc1-bottom]');
+    const accPreview = panel.querySelector('[data-acc1-preview]');
 
     let viewer = null;
+    let acc1 = null;
     let activeMode = 'catalog';
     let selectedId = null;
     let rawManifestAttempted = false;
@@ -158,6 +165,19 @@
       if (!viewer) {
         viewer = vpiFactory.create({ host, onStateChange: renderMeta });
       }
+      if (!acc1 && window.adcMotor01Acc1 && window.adcMotor01Drafts) {
+        acc1 = window.adcMotor01Acc1.create({
+          topMount: accTop,
+          bottomMount: accBottom,
+          previewMount: accPreview,
+          drafts: window.adcMotor01Drafts,
+          getContext: () => ({
+            entry: selectedId ? registry.byId(selectedId) : null,
+            bytes: viewer?.getActiveBytes?.() || null,
+            diagnostics: viewer?.getDiagnostics?.() || null
+          })
+        });
+      }
       return viewer;
     }
 
@@ -173,12 +193,16 @@
       if (!entry) return false;
       setMode('maestro');
       const instance = ensureViewer();
+      acc1?.setDocument(null);
       selectedId = id;
       updatePickerButtons();
       const ok = await instance.loadPdf(entry);
       if (!ok && selectedId === id) {
         selectedId = null;
         updatePickerButtons();
+        acc1?.setDocument(null);
+      } else if (ok) {
+        acc1?.setDocument(entry);
       }
       renderMeta(instance.getDiagnostics());
       return ok;
@@ -187,6 +211,7 @@
     async function closeDocument() {
       selectedId = null;
       updatePickerButtons();
+      acc1?.setDocument(null);
       if (viewer) {
         await viewer.unloadPdf();
         renderMeta(viewer.getDiagnostics());
