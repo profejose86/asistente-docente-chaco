@@ -44,6 +44,7 @@
     "assets/css/interfaz/sincronizacion.css",
     "assets/css/interfaz/tema.css",
     "assets/css/interfaz/validacion-guiada.css",
+    "assets/css/motor01/vpi-maestro.css",
     "assets/css/perfil/datos-personales.css",
     "assets/css/perfil/nombres.css",
     "assets/css/perfil/revision.css",
@@ -144,6 +145,9 @@
     "assets/js/interfaz/navegacion.js",
     "assets/js/interfaz/sesion.js",
     "assets/js/interfaz/sincronizacion.js",
+    "assets/js/motor01/registro-experimental.js",
+    "assets/js/motor01/vpi-maestro-ui.js",
+    "assets/js/motor01/vpi-motor.js",
     "assets/js/perfil/autoguardado.js",
     "assets/js/perfil/contactos-instituciones.js",
     "assets/js/perfil/datos-personales.js",
@@ -319,6 +323,7 @@
     "tests/mis-tramites2-documentos.test.cjs",
     "tests/mis-tramites2.test.cjs",
     "tests/motor01-piloto.test.cjs",
+    "tests/motor01-vpi-fase1.test.cjs",
     "tests/mt2-enfermedad.test.cjs",
     "tests/navegacion.test.cjs",
     "tests/ol01-guia.test.cjs",
@@ -492,7 +497,10 @@
         "assets/js/perfil/presentacion.js",
         "assets/js/interfaz/inicio.js",
         "assets/js/tramites/mis-tramites2-documentos.js",
-        "assets/js/tramites/mis-tramites2.js"
+        "assets/js/tramites/mis-tramites2.js",
+        "assets/js/motor01/registro-experimental.js",
+        "assets/js/motor01/vpi-motor.js",
+        "assets/js/motor01/vpi-maestro-ui.js"
       ],
       "styles": [
         "assets/css/acceso/autenticacion.css",
@@ -535,7 +543,8 @@
         "assets/css/tramites/dl01.css",
         "assets/css/perfil/datos-personales.css",
         "assets/css/interfaz/inicio.css",
-        "assets/css/tramites/mis-tramites2.css"
+        "assets/css/tramites/mis-tramites2.css",
+        "assets/css/motor01/vpi-maestro.css"
       ]
     }
   ],
@@ -811,6 +820,15 @@
       "storageKeys": []
     },
     {
+      "file": "assets/css/motor01/vpi-maestro.css",
+      "bytes": 11021,
+      "lines": 106,
+      "generated": false,
+      "functions": [],
+      "globals": [],
+      "storageKeys": []
+    },
+    {
       "file": "assets/css/perfil/datos-personales.css",
       "bytes": 4051,
       "lines": 37,
@@ -974,8 +992,8 @@
     },
     {
       "file": "assets/datos/ajustes-pagina.json",
-      "bytes": 28546,
-      "lines": 996,
+      "bytes": 37606,
+      "lines": 1363,
       "generated": false,
       "functions": [],
       "globals": [],
@@ -1760,6 +1778,74 @@
       ],
       "globals": [
         "adcSyncUI"
+      ],
+      "storageKeys": []
+    },
+    {
+      "file": "assets/js/motor01/registro-experimental.js",
+      "bytes": 5342,
+      "lines": 53,
+      "generated": false,
+      "functions": [
+        "registerRawFiles"
+      ],
+      "globals": [
+        "adcMotor01Registry"
+      ],
+      "storageKeys": []
+    },
+    {
+      "file": "assets/js/motor01/vpi-maestro-ui.js",
+      "bytes": 10077,
+      "lines": 250,
+      "generated": false,
+      "functions": [
+        "renderMeta",
+        "renderPicker",
+        "ensureRawCatalogLoaded",
+        "ensureViewer",
+        "updatePickerButtons",
+        "openDocument",
+        "closeDocument",
+        "setMode",
+        "syncAccess"
+      ],
+      "globals": [
+        "adcMotor01Maestro"
+      ],
+      "storageKeys": []
+    },
+    {
+      "file": "assets/js/motor01/vpi-motor.js",
+      "bytes": 31293,
+      "lines": 757,
+      "generated": false,
+      "functions": [
+        "loadPdfJs",
+        "create",
+        "widthLimits",
+        "applyContainerWidth",
+        "notifyState",
+        "revealControls",
+        "syncFullscreenButtons",
+        "syncUi",
+        "applyScale",
+        "fit",
+        "scaleAt",
+        "renderPagesAtScale",
+        "scheduleCrispRender",
+        "unloadPdf",
+        "loadPdf",
+        "leaveExpanded",
+        "toggleFullscreen",
+        "handleContainerResized",
+        "endPan",
+        "touchMetrics",
+        "getDiagnostics",
+        "destroy"
+      ],
+      "globals": [
+        "adcMotor01Vpi"
       ],
       "storageKeys": []
     },
@@ -3160,7 +3246,7 @@
     },
     {
       "file": "index.html",
-      "bytes": 46736,
+      "bytes": 46980,
       "lines": 164,
       "generated": false,
       "functions": [],
@@ -3775,6 +3861,20 @@
       ]
     },
     {
+      "file": "tests/motor01-vpi-fase1.test.cjs",
+      "bytes": 18525,
+      "lines": 301,
+      "generated": false,
+      "functions": [],
+      "globals": [
+        "adcConfig"
+      ],
+      "storageKeys": [
+        "adc-supabase-auth",
+        "adc-auth-local-owner"
+      ]
+    },
+    {
       "file": "tests/mt2-enfermedad.test.cjs",
       "bytes": 12481,
       "lines": 113,
@@ -4230,10 +4330,11 @@
     },
     {
       "file": "tools/motor01-preview.cjs",
-      "bytes": 1156,
-      "lines": 23,
+      "bytes": 3058,
+      "lines": 64,
       "generated": false,
       "functions": [
+        "serveMateriales",
         "createMotor01Server"
       ],
       "globals": [],
@@ -4818,6 +4919,102 @@
     },
     {
       "from": "assets/js/editor/elementos.js",
+      "to": "assets/vendor/pdfjs/pdf.min.mjs",
+      "kind": "literal-module",
+      "exists": true
+    },
+    {
+      "from": "assets/js/motor01/registro-experimental.js",
+      "to": "assets/formularios/DP-01.pdf",
+      "kind": "web-asset",
+      "exists": true
+    },
+    {
+      "from": "assets/js/motor01/registro-experimental.js",
+      "to": "assets/formularios/Formulario-6.pdf",
+      "kind": "web-asset",
+      "exists": true
+    },
+    {
+      "from": "assets/js/motor01/registro-experimental.js",
+      "to": "assets/formularios/BD-02.pdf",
+      "kind": "web-asset",
+      "exists": true
+    },
+    {
+      "from": "assets/js/motor01/registro-experimental.js",
+      "to": "assets/formularios/BD-07.pdf",
+      "kind": "web-asset",
+      "exists": true
+    },
+    {
+      "from": "assets/js/motor01/registro-experimental.js",
+      "to": "assets/formularios/CF-01.pdf",
+      "kind": "web-asset",
+      "exists": true
+    },
+    {
+      "from": "assets/js/motor01/registro-experimental.js",
+      "to": "assets/formularios/Descuento-por-Seguro.pdf",
+      "kind": "web-asset",
+      "exists": true
+    },
+    {
+      "from": "assets/js/motor01/registro-experimental.js",
+      "to": "assets/formularios/DL-02.pdf",
+      "kind": "web-asset",
+      "exists": true
+    },
+    {
+      "from": "assets/js/motor01/registro-experimental.js",
+      "to": "assets/formularios/Formulario-3.pdf",
+      "kind": "web-asset",
+      "exists": true
+    },
+    {
+      "from": "assets/js/motor01/registro-experimental.js",
+      "to": "assets/formularios/Incapacidad.pdf",
+      "kind": "web-asset",
+      "exists": true
+    },
+    {
+      "from": "assets/js/motor01/registro-experimental.js",
+      "to": "assets/formularios/Interinos-Expectativas.pdf",
+      "kind": "web-asset",
+      "exists": true
+    },
+    {
+      "from": "assets/js/motor01/registro-experimental.js",
+      "to": "assets/formularios/MD-01.pdf",
+      "kind": "web-asset",
+      "exists": true
+    },
+    {
+      "from": "assets/js/motor01/registro-experimental.js",
+      "to": "assets/formularios/Reubicacion.pdf",
+      "kind": "web-asset",
+      "exists": true
+    },
+    {
+      "from": "assets/js/motor01/registro-experimental.js",
+      "to": "assets/formularios/SC-01.pdf",
+      "kind": "web-asset",
+      "exists": true
+    },
+    {
+      "from": "assets/js/motor01/registro-experimental.js",
+      "to": "assets/formularios/SR-01.pdf",
+      "kind": "web-asset",
+      "exists": true
+    },
+    {
+      "from": "assets/js/motor01/registro-experimental.js",
+      "to": "assets/formularios/Traslado-Transitorio.pdf",
+      "kind": "web-asset",
+      "exists": true
+    },
+    {
+      "from": "assets/js/motor01/vpi-motor.js",
       "to": "assets/vendor/pdfjs/pdf.min.mjs",
       "kind": "literal-module",
       "exists": true
@@ -5573,6 +5770,30 @@
       "exists": true
     },
     {
+      "from": "index.html",
+      "to": "assets/css/motor01/vpi-maestro.css",
+      "kind": "link",
+      "exists": true
+    },
+    {
+      "from": "index.html",
+      "to": "assets/js/motor01/registro-experimental.js",
+      "kind": "script",
+      "exists": true
+    },
+    {
+      "from": "index.html",
+      "to": "assets/js/motor01/vpi-motor.js",
+      "kind": "script",
+      "exists": true
+    },
+    {
+      "from": "index.html",
+      "to": "assets/js/motor01/vpi-maestro-ui.js",
+      "kind": "script",
+      "exists": true
+    },
+    {
       "from": "tests/acceso-ajustes.test.cjs",
       "to": "tests/support/demo-config.cjs",
       "kind": "literal-module",
@@ -6186,6 +6407,24 @@
     },
     {
       "from": "tests/motor01-piloto.test.cjs",
+      "to": "assets/js/editor/ajustes-proyecto-datos.js",
+      "kind": "literal-module",
+      "exists": true
+    },
+    {
+      "from": "tests/motor01-vpi-fase1.test.cjs",
+      "to": "tools/motor01-preview.cjs",
+      "kind": "literal-module",
+      "exists": true
+    },
+    {
+      "from": "tests/motor01-vpi-fase1.test.cjs",
+      "to": "assets/js/editor/ajustes-proyecto-datos.js",
+      "kind": "literal-module",
+      "exists": true
+    },
+    {
+      "from": "tests/motor01-vpi-fase1.test.cjs",
       "to": "assets/js/editor/ajustes-proyecto-datos.js",
       "kind": "literal-module",
       "exists": true
@@ -12752,9 +12991,9 @@
     ]
   },
   "summary": {
-    "files": 355,
-    "ownTextModules": 278,
-    "ownJavaScript": 171,
+    "files": 360,
+    "ownTextModules": 283,
+    "ownJavaScript": 175,
     "vendorFiles": 35,
     "missingLiteralReferences": 0,
     "duplicateLoads": 0,

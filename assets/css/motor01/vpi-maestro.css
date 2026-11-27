@@ -1,0 +1,105 @@
+/* MOTOR-01 · Fase 1: entorno experimental VPI Maestro aislado bajo #adcTramites2. */
+body.adc-inicio-shell:has(#adcVpiMaestro:not([hidden])) > .wrap{max-width:1760px}
+#adcTramites2 .vpi-maestro-subtabs{display:inline-flex;flex-wrap:wrap;gap:8px;margin-top:14px;padding:5px;border:1px solid var(--mt2-border,#d8e0eb);border-radius:11px;background:var(--mt2-card,#fff)}
+#adcTramites2 .vpi-maestro-subtabs[hidden],#adcTramites2 .vpi-maestro-panel[hidden],#adcTramites2 .mt2-layout[hidden]{display:none!important}
+#adcTramites2 .vpi-maestro-subtab{min-height:42px;margin:0;padding:8px 14px;border:0;border-radius:8px;background:transparent;color:var(--mt2-text,#17263c);font:600 14px/1.2 inherit;cursor:pointer}
+#adcTramites2 .vpi-maestro-subtab[aria-pressed=true]{background:#144d9c;color:#fff}
+#adcTramites2 .vpi-maestro-panel{padding:0;border:0;background:transparent;color:var(--mt2-text,#17263c)}
+#adcTramites2 .vpi-maestro-header{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-start;gap:16px}
+#adcTramites2 .vpi-maestro-header h2{margin:0 0 6px;font-size:22px;color:var(--mt2-gold,#80600f)}
+#adcTramites2 .vpi-maestro-badge{display:inline-block;margin:0 0 8px;padding:4px 10px;border:1px solid #f0d9b6;border-radius:999px;background:#fff5e9;color:#a64b15;font-size:12px;font-weight:700}
+html[data-theme=dark] #adcTramites2 .vpi-maestro-badge{background:#d668241c;border-color:#d6682455;color:#ffb378}
+#adcTramites2 .vpi-maestro-unload{min-height:44px;margin:0;padding:8px 14px;border:1px solid #97a9bf;border-radius:10px;background:transparent;color:inherit;cursor:pointer;flex:none}
+#adcTramites2 .vpi-maestro-unload:disabled{opacity:.55;cursor:not-allowed}
+
+/* Layout de 2 tarjetas separadas: buscador + catálogo lateral izquierdo y card visor a la derecha */
+#adcTramites2 .vpi-maestro-workspace{display:grid;grid-template-columns:300px minmax(0,1fr);gap:24px;align-items:start}
+#adcTramites2 .vpi-maestro-sidebar{position:sticky;top:92px;display:flex;flex-direction:column;gap:10px;min-width:0;max-height:calc(100vh - 116px);padding:18px;border:1px solid var(--mt2-border,#d8e0eb);border-radius:16px;background:var(--mt2-card,#fff);box-sizing:border-box}
+#adcTramites2 .vpi-maestro-sidebar-title{margin:0;font-size:18px;line-height:1.3;color:var(--mt2-gold,#80600f);font-weight:750}
+#adcTramites2 .vpi-maestro-filter{width:100%;min-width:0;box-sizing:border-box;min-height:42px;padding:8px 12px;margin:0;border:1px solid #9ab4dc;border-radius:10px;background:#fff;color:#17263c;font:inherit}
+html[data-theme=dark] #adcTramites2 .vpi-maestro-filter{border-color:#4b678f;background:#0b192c;color:#edf3fc}
+#adcTramites2 .vpi-maestro-count{margin:0;font-size:12px;color:var(--mt2-muted,#566579)}
+#adcTramites2 .vpi-maestro-picker{display:flex;flex-direction:column;gap:10px;min-width:0;min-height:0;overflow-y:auto;padding-right:6px}
+#adcTramites2 .vpi-maestro-group-title{flex:none;margin:8px 0 2px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:var(--mt2-gold,#80600f)}
+#adcTramites2 .vpi-maestro-group-title:first-child{margin-top:0}
+#adcTramites2 .vpi-maestro-doc-btn{display:flex;flex:0 0 auto;flex-direction:column;align-items:flex-start;gap:5px;width:100%;height:auto;min-width:0;min-height:68px;margin:0;padding:12px 14px;border:1px solid #9ab4dc;border-radius:12px;background:#fff;color:#17263c;text-align:left;white-space:normal;cursor:pointer;box-sizing:border-box}
+#adcTramites2 .vpi-maestro-doc-btn strong{font-size:14px;line-height:1.3;overflow-wrap:anywhere}
+#adcTramites2 .vpi-maestro-doc-btn small{color:#4d627d;font-size:12.5px;font-weight:500;line-height:1.4;overflow-wrap:anywhere}
+#adcTramites2 .vpi-maestro-doc-btn:hover{border-color:#144d9c}
+#adcTramites2 .vpi-maestro-doc-btn[aria-pressed=true]{border:2px solid #d66824;background:#fff4e8}
+html[data-theme=dark] #adcTramites2 .vpi-maestro-doc-btn{border-color:#4b678f;background:#1a304d;color:#edf3fc}
+html[data-theme=dark] #adcTramites2 .vpi-maestro-doc-btn small{color:#c0cee1}
+html[data-theme=dark] #adcTramites2 .vpi-maestro-doc-btn[aria-pressed=true]{border-color:#e89a4a;background:#3a2b1f}
+
+#adcTramites2 .vpi-maestro-stage-col{min-width:0;display:flex;flex-direction:column;gap:14px;padding:24px;border:1px solid var(--mt2-border,#d8e0eb);border-radius:16px;background:var(--mt2-card,#fff);box-sizing:border-box}
+#adcTramites2 .vpi-maestro-meta{margin:0;padding:10px 12px;border-radius:10px;background:#eef3f9;color:#273b56;font-size:13px;line-height:1.4}
+html[data-theme=dark] #adcTramites2 .vpi-maestro-meta{background:#10223b;color:#d6e4f6}
+
+/* VPI-01: contenedor redimensionable horizontalmente con barras y controles flotantes */
+#adcTramites2 .vpi-maestro-host{width:100%;padding:0 18px;box-sizing:border-box}
+[data-vpi-shell]{position:relative;box-sizing:border-box;max-width:100%;margin:0 auto;height:min(76vh,900px);min-height:360px;padding:10px 44px 76px 10px;border:1px solid #b8c6d6;border-radius:10px;background:#dde4ee}
+html[data-theme=dark] [data-vpi-shell]{border-color:#3a567b;background:#102138}
+[data-vpi-shell].vpi-resizing{outline:2px solid #d66824;user-select:none}
+[data-vpi-shell] .vpi-viewport{width:100%;height:100%;overflow:auto;box-sizing:border-box;padding:10px;border-radius:6px;background:#cfd8e5;cursor:grab;scrollbar-width:none;-ms-overflow-style:none;touch-action:pan-x pan-y}
+[data-vpi-shell] .vpi-viewport::-webkit-scrollbar{display:none}
+html[data-theme=dark] [data-vpi-shell] .vpi-viewport{background:#0b1729}
+[data-vpi-shell].vpi-grabbing .vpi-viewport{cursor:grabbing;user-select:none}
+[data-vpi-shell] .vpi-empty-notice{margin:24px auto;max-width:460px;padding:18px;border-radius:10px;background:#fff;color:#17263c;text-align:center}
+html[data-theme=dark] [data-vpi-shell] .vpi-empty-notice{background:#162c4b;color:#f1f5fb}
+[data-vpi-shell] .vpi-canvas-sizer{position:relative;margin:0 auto}
+[data-vpi-shell] .vpi-stage{position:relative;transform-origin:top left}
+[data-vpi-shell] .vpi-page{position:relative;margin:0 0 16px;background:#fff;box-shadow:0 3px 12px #09172a2e}
+[data-vpi-shell] .vpi-page:last-child{margin-bottom:0}
+[data-vpi-shell] .vpi-page-canvas{display:block;width:100%;height:100%}
+
+/* Tiradores superiores izquierdo y derecho */
+[data-vpi-shell] .vpi-resize-handle{position:absolute;top:10px;z-index:28;display:grid;place-items:center;width:32px;height:44px;min-height:44px;padding:0;margin:0;border:1px solid #7f94b0;border-radius:8px;background:#f4f7fc;color:#183857;font-size:15px;font-weight:700;cursor:ew-resize;box-shadow:0 2px 6px #0002;touch-action:none}
+[data-vpi-shell] .vpi-resize-left{left:-16px}
+[data-vpi-shell] .vpi-resize-right{right:-16px}
+html[data-theme=dark] [data-vpi-shell] .vpi-resize-handle{background:#223b5e;color:#edf3fc;border-color:#5b789f}
+
+/* Única barra vertical derecha */
+[data-vpi-shell] .vpi-vertical-scroll{position:absolute;right:6px;top:64px;bottom:84px;height:calc(100% - 148px);width:30px;min-height:0;margin:0;padding:0;writing-mode:vertical-lr;direction:ltr;cursor:ns-resize;accent-color:#144d9c;z-index:25}
+
+/* Botón flotante superpuesto arriba a la derecha (no reserva columna fija) */
+[data-vpi-shell] .vpi-floating-fullscreen{position:absolute;top:12px;right:48px;z-index:27;display:grid;place-items:center;width:44px;height:44px;min-height:44px;padding:9px;margin:0;border:1px solid #96a4b5;border-radius:9px;background:#e9edf2e6;color:#415063;box-shadow:0 2px 6px #0002;cursor:pointer;opacity:.25;transition:opacity .2s}
+[data-vpi-shell].vpi-controls-visible .vpi-floating-fullscreen,[data-vpi-shell] .vpi-floating-fullscreen:focus-visible,[data-vpi-shell] .vpi-floating-fullscreen:hover{opacity:1}
+html[data-theme=dark] [data-vpi-shell] .vpi-floating-fullscreen{background:#354153eb;color:#dde5f0;border-color:#6d7f97}
+[data-vpi-shell] .vpi-floating-fullscreen svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+[data-vpi-shell] .vpi-floating-fullscreen [data-restore-icon],[data-vpi-shell] .vpi-floating-fullscreen[aria-pressed=true] [data-expand-icon]{display:none}
+[data-vpi-shell] .vpi-floating-fullscreen[aria-pressed=true] [data-restore-icon]{display:block}
+
+/* Barra inferior de zoom y pantalla completa */
+[data-vpi-shell] .vpi-bottom-bar{position:absolute;left:10px;right:10px;bottom:10px;z-index:26;display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:6px;padding:8px;border:1px solid #b8c6d6;border-radius:8px;background:#fff;color:#17263c;opacity:0;pointer-events:none;transition:opacity .2s}
+html[data-theme=dark] [data-vpi-shell] .vpi-bottom-bar{border-color:#3a567b;background:#162c4b;color:#edf3fc}
+[data-vpi-shell].vpi-controls-visible .vpi-bottom-bar,[data-vpi-shell] .vpi-bottom-bar:focus-within,[data-vpi-shell] .vpi-bottom-bar:hover{opacity:1;pointer-events:auto}
+[data-vpi-shell] .vpi-bottom-bar button{min-height:44px;margin:0;padding:6px 11px;border-radius:8px;font-size:13px;cursor:pointer}
+[data-vpi-shell] .vpi-bottom-bar button[aria-pressed=true]{background:#144d9c;color:#fff;border-color:#144d9c}
+[data-vpi-shell] .vpi-bottom-bar input{width:120px;min-width:56px;margin:0;cursor:pointer}
+[data-vpi-shell] .vpi-bottom-bar output{min-width:48px;text-align:center;font-variant-numeric:tabular-nums;font-size:13px;font-weight:600}
+
+/* Pantalla completa nativa o ampliada segura */
+[data-vpi-shell]:fullscreen,[data-vpi-shell].vpi-expanded{position:fixed;inset:0;width:100vw!important;max-width:none;height:100dvh;max-height:none;z-index:12000;border-radius:0}
+[data-vpi-shell]:is(:fullscreen,.vpi-expanded) .vpi-resize-handle{display:none}
+[data-vpi-shell] :is(.vpi-bottom-bar,.vpi-vertical-scroll,.vpi-floating-fullscreen):focus-visible,[data-vpi-shell] .vpi-resize-handle:focus-visible{outline:2px solid #d66824;outline-offset:2px}
+
+@media(max-width:900px){
+  #adcTramites2 .vpi-maestro-workspace{grid-template-columns:minmax(0,1fr);gap:16px}
+  #adcTramites2 .vpi-maestro-sidebar{position:static;max-height:280px}
+}
+@media(max-width:650px){
+  #adcTramites2 .vpi-maestro-stage-col{padding:14px}
+  #adcTramites2 .vpi-maestro-host{padding:0}
+  [data-vpi-shell]{height:76dvh;min-height:320px;padding:8px 36px 134px 8px}
+  [data-vpi-shell] .vpi-resize-left{left:4px}
+  [data-vpi-shell] .vpi-resize-right{right:4px}
+  [data-vpi-shell] .vpi-vertical-scroll{top:60px;bottom:142px;height:calc(100% - 202px);width:26px}
+  [data-vpi-shell] .vpi-floating-fullscreen{right:40px;opacity:.9}
+  [data-vpi-shell] .vpi-bottom-bar{display:grid;grid-template-columns:44px minmax(50px,1fr) 48px 44px;gap:4px;padding:6px;opacity:1;pointer-events:auto}
+  [data-vpi-shell] .vpi-bottom-bar input{width:100%}
+  [data-vpi-shell] .vpi-bottom-bar [data-vpi-action=width],[data-vpi-shell] .vpi-bottom-bar [data-vpi-action=page]{grid-column:span 2}
+  [data-vpi-shell] .vpi-bottom-bar [data-vpi-action=fullscreen]{grid-column:span 4}
+}
+@media(prefers-reduced-motion:reduce){
+  [data-vpi-shell] .vpi-bottom-bar,[data-vpi-shell] .vpi-floating-fullscreen{transition:none}
+}
