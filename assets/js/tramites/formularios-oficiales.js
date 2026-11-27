@@ -55,7 +55,6 @@
   const pilotEnabled = window.adcConfig?.authMode === 'demo' && window.adcConfig?.motor01Pilot === true &&
     ['localhost','127.0.0.1','[::1]'].includes(location.hostname) && new URL(location.href).searchParams.get('adc-motor01') === 'incapacidad';
   let pilotOwned = false;
-  let pilotNavigation = null;
   let returnFocus = null;
   let values = {};
   let marked = new Set();
@@ -1487,11 +1486,17 @@
     const output=document.createElement('p');output.setAttribute('role','status');output.setAttribute('aria-live','polite');
     entry.append(heading,note,open,output);
     document.querySelector('#adcTramitesMenu .adc-form-catalog').prepend(entry);
-    pilotNavigation=window.tab;
-    window.tab=function(next){
-      if(pilotOwned&&next!=='official'&&!releasePilot())return false;
-      return pilotNavigation.apply(this,arguments);
-    };
+    if(window.adcNavigation?.registerGuard){
+      window.adcNavigation.registerGuard(next=>{
+        if(pilotOwned&&next!=='official'&&!releasePilot())return false;
+      });
+    }else{
+      const _prevTab=window.tab;
+      window.tab=function(next){
+        if(pilotOwned&&next!=='official'&&!releasePilot())return false;
+        return _prevTab.apply(this,arguments);
+      };
+    }
     const result=estado=>Object.freeze({estado,formId:'incapacidad',instanceId:'historico'});
     const api=Object.freeze({
       abrir({formId='incapacidad',instanceId='historico'}={}){
@@ -1513,7 +1518,7 @@
     });
     open.addEventListener('click',()=>api.abrir());
     window.adcMotor01Pilot=api;
-    pilotNavigation('tramites');
+    window.tab('tramites');
     entry.scrollIntoView({block:'start'});open.focus({preventScroll:true});
   },{once:true});
 })();

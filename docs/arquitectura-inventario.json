@@ -319,6 +319,7 @@
     "tests/mis-tramites2.test.cjs",
     "tests/motor01-piloto.test.cjs",
     "tests/mt2-enfermedad.test.cjs",
+    "tests/navegacion.test.cjs",
     "tests/ol01-guia.test.cjs",
     "tests/ol01-interfaz.test.cjs",
     "tests/ol01-perfil.test.cjs",
@@ -1705,8 +1706,8 @@
     },
     {
       "file": "assets/js/interfaz/inicio.js",
-      "bytes": 10889,
-      "lines": 87,
+      "bytes": 11092,
+      "lines": 94,
       "generated": false,
       "functions": [],
       "globals": [
@@ -1716,17 +1717,21 @@
     },
     {
       "file": "assets/js/interfaz/navegacion.js",
-      "bytes": 2088,
-      "lines": 13,
+      "bytes": 3401,
+      "lines": 70,
       "generated": false,
       "functions": [
         "adcTramiteLabel",
+        "adcRegisterNavHook",
         "adcOpenLastTramite",
         "adcBackToTramites",
         "adcToggleTramites",
         "tab"
       ],
-      "globals": [],
+      "globals": [
+        "tab",
+        "adcNavigation"
+      ],
       "storageKeys": []
     },
     {
@@ -2451,8 +2456,8 @@
     },
     {
       "file": "assets/js/tramites/formularios-oficiales.js",
-      "bytes": 88539,
-      "lines": 1520,
+      "bytes": 88704,
+      "lines": 1525,
       "generated": false,
       "functions": [
         "md01MncRule",
@@ -2539,8 +2544,8 @@
     },
     {
       "file": "assets/js/tramites/mis-tramites2-documentos.js",
-      "bytes": 16831,
-      "lines": 172,
+      "bytes": 16999,
+      "lines": 176,
       "generated": false,
       "functions": [
         "records",
@@ -2755,7 +2760,7 @@
     },
     {
       "file": "docs/arquitectura-auditoria.md",
-      "bytes": 17090,
+      "bytes": 17233,
       "lines": 130,
       "generated": false,
       "functions": [],
@@ -2845,8 +2850,8 @@
     },
     {
       "file": "docs/estructura.md",
-      "bytes": 39510,
-      "lines": 262,
+      "bytes": 40168,
+      "lines": 264,
       "generated": false,
       "functions": [],
       "globals": [],
@@ -3389,8 +3394,8 @@
     },
     {
       "file": "tests/dl02-pdf.test.cjs",
-      "bytes": 12479,
-      "lines": 192,
+      "bytes": 12857,
+      "lines": 197,
       "generated": false,
       "functions": [
         "contents"
@@ -3757,6 +3762,17 @@
         "mt2Navigation",
         "tab"
       ],
+      "storageKeys": []
+    },
+    {
+      "file": "tests/navegacion.test.cjs",
+      "bytes": 7557,
+      "lines": 179,
+      "generated": false,
+      "functions": [
+        "createDomStub"
+      ],
+      "globals": [],
       "storageKeys": []
     },
     {
@@ -6148,6 +6164,18 @@
     },
     {
       "from": "tests/mt2-enfermedad.test.cjs",
+      "to": "assets/js/editor/ajustes-proyecto-datos.js",
+      "kind": "literal-module",
+      "exists": true
+    },
+    {
+      "from": "tests/navegacion.test.cjs",
+      "to": "tools/motor01-preview.cjs",
+      "kind": "literal-module",
+      "exists": true
+    },
+    {
+      "from": "tests/navegacion.test.cjs",
       "to": "assets/js/editor/ajustes-proyecto-datos.js",
       "kind": "literal-module",
       "exists": true
@@ -12690,9 +12718,9 @@
     ]
   },
   "summary": {
-    "files": 353,
-    "ownTextModules": 276,
-    "ownJavaScript": 169,
+    "files": 354,
+    "ownTextModules": 277,
+    "ownJavaScript": 170,
     "vendorFiles": 35,
     "missingLiteralReferences": 0,
     "duplicateLoads": 0,

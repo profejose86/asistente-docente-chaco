@@ -85,11 +85,15 @@
     if(!document.getElementById('adcTramites2'))return;
     back=document.createElement('button');back.type='button';back.className='adc-mt2-document-back';back.textContent='← Volver a Mis trámites 2';back.hidden=true;back.onclick=()=>{if(owned?.mounted)release();tab('tramites2')};
     document.querySelector('body > .wrap').prepend(back);
-    const previous=window.tab;
-    window.tab=function(next){
-      const result=previous.apply(this,arguments);if(result===false)return false;
-      if(owned&&next!==owned.view)release();return result;
-    };
+    const onViewChange=next=>{if(owned&&next!==owned.view)release()};
+    if(window.adcNavigation?.onNavigate)window.adcNavigation.onNavigate(onViewChange);
+    else{
+      const previous=window.tab;
+      window.tab=function(next){
+        const result=previous.apply(this,arguments);if(result===false)return false;
+        onViewChange(next);return result;
+      };
+    }
     // Las salidas de los motores se dirigen al catálogo propietario de esta apertura.
     document.addEventListener('click',event=>{
       if(!owned)return;

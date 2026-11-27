@@ -113,6 +113,8 @@ Las hojas CSS también conservan su posición y precedencia originales. `base.cs
 
 El núcleo histórico se distribuye entre `core/estado.js`, `interfaz/navegacion.js`, `perfil/instituciones.js`, `perfil/datos-personales.js`, `perfil/respaldos.js`, `tramites/catalogo-datos.js`, `tramites/solicitudes.js`, `tramites/dl01-reglas.js`, `tramites/dl01-pdf.js`, `tramites/dj01-traslados.js`, `tramites/dj01.js`, `documentos/plantillas-dl01.js` y `documentos/pdf-utilidades.js`. `core/inicializacion.js` ejecuta el arranque después de cargar esas declaraciones. Los bloques DJ-02 conservan sus reemplazos sucesivos. El inventario detallado está en `funciones-respaldo.md`.
 
+La navegación de secciones conserva `window.tab(vista)` (devuelve `false` cuando una guardia cancela el cambio y `true` al completarlo) y publica `window.adcNavigation` con `go(next)`, `current()`, `registerGuard(fn)` y `onNavigate(fn)` (ambos devuelven una función para desregistrar). Las guardias reciben `(requested, previous)` antes de cambiar la vista; los oyentes reciben `(current, previous)` después. Los módulos que sincronizan cabeceras, liberan visores o confirman salidas (`interfaz/inicio.js`, `tramites/mis-tramites2-documentos.js`, `tramites/formularios-oficiales.js`) se suscriben a `adcNavigation` en lugar de reasignar `window.tab`.
+
 Las plantillas, imágenes y fuentes incrustadas permanecen en sus bloques originales extraídos. Su traslado a recursos independientes requiere implementar carga asíncrona y recuperación de errores. La biblioteca PDF conserva la versión 1.17.1 y se sirve desde `assets/vendor/pdf-lib/`, con su licencia, para evitar que la generación dependa de jsDelivr.
 
 ## Desarrollo

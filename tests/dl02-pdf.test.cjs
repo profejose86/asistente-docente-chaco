@@ -116,6 +116,11 @@ test('DL-02: PDF original íntegro, campos, visor, borrador, limpieza y revisió
     for (let index=0;index<2;index++) assert.deepEqual(contents(zoomPdf,zoomPdf.getPage(index)), contents(pdf,pdf.getPage(index)), 'El zoom conserva exactamente los comandos del PDF');
     const floating = viewer.locator('.adc-pdf-floating-fullscreen');
     await viewer.evaluate(node => node.requestFullscreen = undefined);
+    await viewer.scrollIntoViewIfNeeded();
+    const viewerBox = await viewer.boundingBox();
+    await page.mouse.move(viewerBox.x + 16, viewerBox.y + 26);
+    await page.mouse.move(viewerBox.x + 20, viewerBox.y + 30);
+    await page.waitForFunction(() => getComputedStyle(document.querySelector('#adcOfficialForm .adc-pdf-floating-fullscreen')).pointerEvents === 'auto');
     await floating.click();
     assert.equal(await floating.getAttribute('aria-pressed'), 'true');
     await page.keyboard.press('Escape');

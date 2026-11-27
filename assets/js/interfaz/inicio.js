@@ -46,11 +46,10 @@
       const count=document.querySelectorAll('.adc-form-catalog .adc-form-grid > button:not(:disabled)').length;
       home.querySelector('[data-adc-start-count]').textContent=count?`${count} formularios en el catálogo`:'Explorá el catálogo de formularios';
     };
-    const previousTab=window.tab;
+    const navHost=window.adcNavigation;
     let documentArea='tramites';
-    window.tab=function(next){
+    const syncStartView=next=>{
       const from=document.body.dataset.adcStartView;
-      const result=previousTab.apply(this,arguments);if(result===false)return false;
       home.classList.toggle('hide',next!=='inicio');lab.classList.toggle('hide',next!=='tramites2');
       document.body.dataset.adcStartView=next;
       if(next==='official'&&from!=='official')documentArea=from==='tramites2'?'tramites2':'tramites';
@@ -61,8 +60,16 @@
         if(active)el.setAttribute('aria-current','page');else el.removeAttribute('aria-current');
       }
       if(next==='inicio'||next==='tramites2'){refresh();document.getElementById(next==='inicio'?'adcInicioTitle':'adcTramites2Title').focus({preventScroll:true});window.scrollTo(0,0)}
-      return result;
     };
+    if(navHost?.onNavigate)navHost.onNavigate(syncStartView);
+    else{
+      const previousTab=window.tab;
+      window.tab=function(next){
+        const result=previousTab.apply(this,arguments);if(result===false)return false;
+        syncStartView(next);
+        return result;
+      };
+    }
     document.addEventListener('click',event=>{
       if(documentArea==='tramites2'&&document.body.dataset.adcStartView==='official'&&event.target.closest('[data-adc-official-back]')){
         event.preventDefault();event.stopImmediatePropagation();window.tab('tramites2');
