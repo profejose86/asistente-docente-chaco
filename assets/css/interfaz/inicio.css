@@ -19,16 +19,8 @@ html[data-theme=dark] .adc-inicio-shell .adc-main-nav button{background:transpar
 html[data-theme=dark] .adc-inicio-shell .adc-main-nav button.adc-start-nav-active{background:#d66824!important}
 .adc-inicio-shell .adc-main-nav svg{width:17px;height:17px}
 .adc-inicio-shell .adc-start-tools{display:flex;align-items:center;gap:14px}
-.adc-inicio-shell .adc-start-tools #adcThemeSwitch{position:static;display:inline-flex;gap:8px;min-width:0;min-height:44px;margin:0;padding:0;border:0;border-radius:6px;background:transparent;color:#e4edfb;font-size:11px;font-weight:600;white-space:nowrap;box-shadow:none}
-.adc-inicio-shell #adcThemeSwitch .adc-start-theme-label{display:inline-flex;align-items:center;gap:5px}
-.adc-inicio-shell #adcThemeSwitch .adc-start-theme-label svg{width:13px;height:13px}
-.adc-inicio-shell #adcThemeSwitch .adc-start-theme-label:first-child svg{color:#f7c95e}
-.adc-inicio-shell #adcThemeSwitch .adc-start-theme-label:last-child{color:#aebed4}
-.adc-inicio-shell #adcThemeSwitch .adc-start-theme-track{display:block;flex:none;width:43px;height:22px;padding:3px;border:1px solid #557db2;border-radius:999px;background:#214d86;box-sizing:border-box}
-.adc-inicio-shell #adcThemeSwitch .adc-start-theme-track>span{display:block;width:14px;height:14px;border-radius:50%;background:#fff;transition:transform .18s ease}
-.adc-inicio-shell #adcThemeSwitch[aria-checked=true] .adc-start-theme-track>span{transform:translateX(21px)}
+.adc-inicio-shell .adc-start-tools #adcThemeSwitch{position:static;margin:0}
 @media(max-width:600px){.adc-inicio-shell .adc-start-masthead .adc-start-tools{grid-column:1/-1;grid-row:2;justify-content:space-between}.adc-inicio-shell .adc-start-masthead .adc-main-nav{grid-row:3}}
-@media(prefers-reduced-motion:reduce){.adc-inicio-shell #adcThemeSwitch .adc-start-theme-track>span{transition:none}}
 .adc-inicio-shell .adc-start-tools #adcSessionBar.adc-account{position:relative;inset:auto;max-width:none;margin:0;padding:0;border:0;background:transparent;box-shadow:none}
 .adc-inicio-shell .adc-start-tools #adcProfileBtn{min-height:44px;gap:0;padding:0;color:#d5e4f6}
 .adc-inicio-shell .adc-start-tools #adcProfileBtn .adc-avatar{width:34px;height:34px;font-size:20px;border:1px solid #6585af;background:#203e64}

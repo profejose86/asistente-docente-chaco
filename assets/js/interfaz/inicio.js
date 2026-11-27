@@ -22,8 +22,7 @@
     brand.innerHTML='<span class="adc-start-emblem" aria-hidden="true"><svg viewBox="0 0 36 36"><path d="M18 5v12m-5.2-9 10.4 6m0-6-10.4 6" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/><path d="M7 22c5 0 8 1.5 11 4 3-2.5 6-4 11-4v4.5c-5 0-8 1.5-11 4-3-2.5-6-4-11-4z" fill="currentColor"/></svg></span><strong>ADC</strong><span class="adc-start-brand-copy">Asistente Docente Chaco<small>Formularios · Trámites · Gestiones</small></span>';
     const tools=document.createElement('div');tools.className='adc-start-tools';
     const themeSwitch=document.getElementById('adcThemeSwitch');
-    themeSwitch.innerHTML=`<span class="adc-start-theme-label">${icon('<circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.5 1.5m11 11L19 19M5 19l1.5-1.5m11-11L19 5"/>')}Modo claro</span><span class="adc-start-theme-track" aria-hidden="true"><span></span></span><span class="adc-start-theme-label">${icon('<path d="M20 15.5A9 9 0 0 1 8.5 4 9 9 0 1 0 20 15.5Z"/>')}Modo oscuro</span>`;
-    themeSwitch.setAttribute('aria-label','Modo oscuro');tools.append(themeSwitch);
+    if(themeSwitch)tools.append(themeSwitch);
     masthead.append(brand,nav,tools);header.append(masthead);document.body.insertBefore(header,wrap);
     document.body.classList.add('adc-inicio-shell');
     const moveAccount=()=>{const bar=document.getElementById('adcSessionBar');if(!bar)return false;if(bar.parentElement!==tools)tools.append(bar);return true};

@@ -740,8 +740,8 @@
     },
     {
       "file": "assets/css/interfaz/inicio.css",
-      "bytes": 11978,
-      "lines": 76,
+      "bytes": 10818,
+      "lines": 68,
       "generated": false,
       "functions": [],
       "globals": [],
@@ -974,8 +974,8 @@
     },
     {
       "file": "assets/datos/ajustes-pagina.json",
-      "bytes": 23773,
-      "lines": 837,
+      "bytes": 28546,
+      "lines": 996,
       "generated": false,
       "functions": [],
       "globals": [],
@@ -1709,8 +1709,8 @@
     },
     {
       "file": "assets/js/interfaz/inicio.js",
-      "bytes": 11184,
-      "lines": 95,
+      "bytes": 10737,
+      "lines": 94,
       "generated": false,
       "functions": [],
       "globals": [
@@ -2917,8 +2917,8 @@
     },
     {
       "file": "docs/inicio-fachada.md",
-      "bytes": 5205,
-      "lines": 38,
+      "bytes": 5588,
+      "lines": 40,
       "generated": false,
       "functions": [],
       "globals": [],
@@ -3649,7 +3649,7 @@
     },
     {
       "file": "tests/inicio.test.cjs",
-      "bytes": 7357,
+      "bytes": 7412,
       "lines": 65,
       "generated": false,
       "functions": [],

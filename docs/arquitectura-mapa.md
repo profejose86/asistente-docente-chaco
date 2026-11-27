@@ -220,7 +220,7 @@ Hojas de estilo en orden de carga:
 | `assets/js/interfaz/cuenta.js` | 37 | 1 | `adcAccount` |
 | `assets/js/interfaz/espacio-trabajo.js` | 92 | 3 |  |
 | `assets/js/interfaz/inicio-local.js` | 19 | 0 | `adcUserStorage` |
-| `assets/js/interfaz/inicio.js` | 95 | 0 | `tab` |
+| `assets/js/interfaz/inicio.js` | 94 | 0 | `tab` |
 | `assets/js/interfaz/navegacion.js` | 70 | 6 | `tab`, `adcNavigation` |
 | `assets/js/interfaz/sesion.js` | 45 | 2 |  |
 | `assets/js/interfaz/sincronizacion.js` | 83 | 2 | `adcSyncUI` |

@@ -24,10 +24,10 @@ test('Inicio: fachada aislada, navegación real, temas, perfil y borrador preser
       for(const theme of ['light','dark']){
         if(await page.locator('html').getAttribute('data-theme')!==theme)await page.locator('#adcThemeSwitch').click();
         assert.equal(await page.locator('html').getAttribute('data-theme'),theme);
-        assert.equal(await page.locator('#adcThemeSwitch').innerText(),'Modo claro\nModo oscuro');
+        assert.equal((await page.locator('#adcThemeSwitch').innerText()).trim(),theme==='dark'?'Dark':'Light');
         assert.equal(await page.locator('#adcThemeSwitch').getAttribute('aria-checked'),String(theme==='dark'));
-        const track=await page.locator('.adc-start-theme-track').boundingBox(),knob=await page.locator('.adc-start-theme-track>span').boundingBox();
-        assert.ok(theme==='dark'?knob.x>track.x+20:knob.x<track.x+5);
+        assert.equal(await page.locator('#adcThemeSwitch .theme-medallion').isVisible(),true);
+        assert.equal(await page.locator('#adcThemeSwitch').evaluate(el=>getComputedStyle(el).backgroundColor),theme==='dark'?'rgb(38, 53, 77)':'rgb(241, 245, 251)');
         assert.equal(await page.evaluate(()=>localStorage.getItem('adc-login-theme')),theme);
         assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false,`Sin desborde a ${width}/${theme}`);
         assert.equal(Math.round((await page.locator('.adc-start-header').boundingBox()).width),width);
