@@ -57,7 +57,8 @@
   try{
    if(!auth?.configured)throw auth?.error||Error('Falta configurar Supabase.');await auth.ready;
    if(auth.isRecovery()){login.hidden=true;signup.hidden=true;document.getElementById('adcSignupPrompt').hidden=true;document.getElementById('adcGoogle').hidden=true;recovery.hidden=false;document.getElementById('adcLoginTitle').textContent='Elegí una nueva contraseña';message('Usá una contraseña de al menos 12 caracteres.');return;}
-   if(await auth.user())location.replace(landing());
+   const current=await auth.user();
+   if(current&&!(auth.isAdminUser?.(current)&&new URL(location.href).searchParams.get('adc-studio')==='1'))location.replace(landing());
   }catch(error){message(friendly(error),true);}
  }
  window.addEventListener('adc:auth-changed',event=>{if(event.detail?.event==='PASSWORD_RECOVERY')resume();});

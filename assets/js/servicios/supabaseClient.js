@@ -24,6 +24,8 @@ async function user(){
   if(!session)return null;
   return value(await api.auth.getUser()).user;
 }
+const isAdminUser=candidate=>candidate?.app_metadata?.adc_role==='admin';
+async function isAdmin(){return isAdminUser(await user());}
 async function ensureTesterProfile(authenticated){
   const api=fail();
   const select=()=>api.from('adc_tester_profiles').select('id,display_name,created_at,updated_at').eq('id',authenticated.id);
@@ -66,13 +68,13 @@ let recovery=new URL(location.href).searchParams.get('flow')==='recovery'||locat
 if(client)client.auth.onAuthStateChange((event,session)=>{
   if(event==='PASSWORD_RECOVERY')recovery=true;
   // No consultar Postgres dentro de este callback: evita bloqueos del cliente Auth.
-  window.dispatchEvent(new CustomEvent('adc:auth-changed',{detail:{event,userId:session?.user?.id||null}}));
+  window.dispatchEvent(new CustomEvent('adc:auth-changed',{detail:{event,userId:session?.user?.id||null,isAdmin:isAdminUser(session?.user)}}));
 });
 window.adcAuth={
   mode:realAuth?'supabase':'demo',configured:!!client,error:configurationError,
   ready:client?client.auth.getSession().then(result=>{value(result);return true;}):Promise.resolve(!realAuth),
   isRecovery:()=>recovery,
-  user,profile,syncRecords,
+  user,isAdmin,isAdminUser,profile,syncRecords,
   async signIn(email,password){return value(await fail().auth.signInWithPassword({email,password}));},
   async signUp(email,password){return value(await fail().auth.signUp({email,password,options:{emailRedirectTo:callback()}}));},
   async signOut(){return value(await fail().auth.signOut({scope:'local'}));},

@@ -86,6 +86,129 @@
       if(!loaded)throw Error('Esperá que termine de cargar el diseño del proyecto antes de guardar.');
       return {changes:collect(),page:projectPage||contract.empty().pages[scope]};
     }});
+    const ghRepo='profejose86/asistente-docente-chaco',ghPath='assets/datos/ajustes-pagina.json',ghBranch='main';
+    let lastGithubRevision=null;
+    const sha256Hex=async text=>{
+      const buf=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(text));
+      return Array.from(new Uint8Array(buf),b=>b.toString(16).padStart(2,'0')).join('');
+    };
+    const fromBase64Utf8=b64=>{
+      const bin=atob(String(b64||'').replace(/\s+/g,'')),bytes=new Uint8Array(bin.length);
+      for(let i=0;i<bin.length;i++)bytes[i]=bin.charCodeAt(i);
+      return new TextDecoder().decode(bytes);
+    };
+    const toBase64Utf8=text=>{
+      const bytes=new TextEncoder().encode(text),parts=[];
+      for(let i=0;i<bytes.length;i+=0x8000)parts.push(String.fromCharCode(...bytes.subarray(i,i+0x8000)));
+      return btoa(parts.join(''));
+    };
+    const tokenKey=()=>{const id=window.adcEditorAccess?.owner?.();return id?'adc-auth-github-token:'+id:null;};
+    const pushBtn=document.createElement('button');pushBtn.type='button';pushBtn.dataset.pushGithub='';pushBtn.hidden=true;
+    pushBtn.textContent='⬆ Push to GitHub';pushBtn.title='Publica los ajustes visuales de esta pantalla directo en GitHub (rama main).';
+    const pushOut=document.createElement('output');pushOut.dataset.pushGithubFeedback='';pushOut.id='adcPushGithubFeedback';
+    pushOut.setAttribute('role','status');pushOut.setAttribute('aria-live','polite');pushOut.hidden=true;
+    pushBtn.setAttribute('aria-describedby',pushOut.id);
+    const ghDetails=document.createElement('details');ghDetails.dataset.githubConfig='';ghDetails.hidden=true;
+    ghDetails.innerHTML='<summary title="Configura en este navegador tu token Fine-Grained de GitHub.">GitHub · Publicación directa (admin)</summary>'
+      +'<p>Pegá un Fine-Grained Token con permiso <b>Contents: Read and write</b> únicamente en <code>asistente-docente-chaco</code>. Se guarda sólo en este navegador y no se sincroniza.</p>'
+      +'<input type="password" data-github-token-input autocomplete="off" spellcheck="false" placeholder="github_pat_..." aria-label="Token de GitHub" title="Pegá tu Fine-Grained Personal Access Token de GitHub."> '
+      +'<button type="button" data-github-token-save title="Guarda el token únicamente en este navegador local.">Guardar token</button> '
+      +'<button type="button" data-github-token-clear title="Elimina el token guardado de este navegador.">Olvidar token</button>'
+      +'<p data-github-token-status role="status"></p>';
+    panel.prepend(pushBtn,pushOut);panel.append(ghDetails);
+    const tokenInput=ghDetails.querySelector('[data-github-token-input]');
+    const tokenSave=ghDetails.querySelector('[data-github-token-save]');
+    const tokenClear=ghDetails.querySelector('[data-github-token-clear]');
+    const tokenStatus=ghDetails.querySelector('[data-github-token-status]');
+    const setPushState=(stateValue,label,message)=>{
+      pushBtn.dataset.saveState=stateValue;pushBtn.textContent=label;
+      pushBtn.setAttribute('aria-busy',String(stateValue==='saving'));
+      pushOut.dataset.saveState=stateValue;pushOut.textContent=message;if(message)say(message);
+    };
+    const syncAdminUi=()=>{
+      const active=Boolean(window.adcEditorAccess?.isAdmin?.());
+      pushBtn.hidden=!active;pushOut.hidden=!active;ghDetails.hidden=!active;
+      if(!document.documentElement.hasAttribute('data-adc-local-editor')){
+        const disabledLocal=panel.querySelector('[data-studio-local-disabled]');
+        if(disabledLocal)disabledLocal.hidden=active;
+      }
+      if(!active){tokenInput.value='';return;}
+      const k=tokenKey(),has=Boolean(k&&localStorage.getItem(k));
+      tokenStatus.textContent=has?'Estado: Token vinculado en este navegador.':'Estado: Sin token configurado en este navegador.';
+    };
+    window.addEventListener('adc:editor-admin',syncAdminUi);
+    tokenSave.onclick=event=>{
+      event.stopPropagation();
+      const k=tokenKey();if(!k)return;
+      const val=tokenInput.value.trim();
+      if(!val||/\s/.test(val)){tokenStatus.textContent='Ingresá un token válido sin espacios.';tokenInput.focus();return;}
+      localStorage.setItem(k,val);tokenInput.value='';ghDetails.open=false;
+      tokenStatus.textContent='Estado: Token vinculado en este navegador.';
+      setPushState('unchanged','⬆ Push to GitHub','Token vinculado en este navegador. Ya podés publicar directo a GitHub.');
+    };
+    tokenClear.onclick=event=>{
+      event.stopPropagation();
+      const k=tokenKey();if(k)localStorage.removeItem(k);
+      tokenInput.value='';tokenStatus.textContent='Estado: Sin token configurado en este navegador.';
+      setPushState('unchanged','⬆ Push to GitHub','Token eliminado de este navegador.');
+    };
+    const ghFetch=async(endpoint,token,options={})=>{
+      const res=await fetch('https://api.github.com/repos/'+ghRepo+endpoint,{
+        ...options,cache:'no-store',signal:AbortSignal.timeout(20000),
+        headers:{Accept:'application/vnd.github+json',Authorization:'Bearer '+token,'X-GitHub-Api-Version':'2022-11-28',...(options.headers||{})}
+      });
+      const data=await res.json().catch(()=>({}));
+      if(!res.ok){
+        if(res.status===401||res.status===403)throw Error('Token rechazado o sin permiso Contents (Read and write) en '+ghRepo+'.');
+        throw Error(data.message||'Error de GitHub HTTP '+res.status+'.');
+      }
+      return data;
+    };
+    pushBtn.onclick=async event=>{
+      event.stopPropagation();if(pushBtn.disabled)return;
+      if(!window.adcEditorAccess?.isAdmin?.()){setPushState('error','⚠ Sólo admin','Requiere sesión de administrador.');return;}
+      const k=tokenKey(),token=k?localStorage.getItem(k):null;
+      if(!token){
+        document.getElementById('adcStudioTab-proyecto')?.click();
+        ghDetails.open=true;tokenInput.focus();
+        setPushState('error','⬆ Push to GitHub','Configurá primero tu token Fine-Grained de GitHub en Proyecto / Borradores.');
+        return;
+      }
+      window.adcStudioText?.finish();pushBtn.disabled=true;
+      setPushState('saving','Publicando en GitHub…','Leyendo estado actual de main en GitHub…');
+      try{
+        if(!loaded)throw Error('Esperá que termine de cargar el diseño del proyecto antes de publicar.');
+        const changes=collect(),basePage=projectPage||contract.empty().pages[scope];
+        const expectedRevision=lastGithubRevision||await sha256Hex(JSON.stringify(basePage));
+        const meta=await ghFetch('/contents/'+ghPath+'?ref='+encodeURIComponent(ghBranch),token);
+        let remoteRaw;
+        if(meta.content)remoteRaw=fromBase64Utf8(meta.content);
+        else if(meta.sha){const blob=await ghFetch('/git/blobs/'+encodeURIComponent(meta.sha),token);remoteRaw=fromBase64Utf8(blob.content);}
+        else throw Error('GitHub no devolvió el contenido actual de ajustes.');
+        const remoteDoc=contract.validate(JSON.parse(remoteRaw)),beforeJson=JSON.stringify(remoteDoc);
+        const remoteScopeRev=await sha256Hex(JSON.stringify(remoteDoc.pages[scope]||contract.empty().pages[scope]));
+        if(remoteScopeRev!==expectedRevision)throw Error('Esta pantalla cambió en GitHub. Esperá ~1 min a que publique Pages, recargá y revisá antes de volver a guardar.');
+        remoteDoc.pages[scope]=changes.pages[scope];contract.validate(remoteDoc);
+        if(JSON.stringify(remoteDoc)===beforeJson){
+          lastGithubRevision=remoteScopeRev;
+          setPushState('unchanged','✓ Sin cambios nuevos','GitHub ya tiene estos ajustes. Sin cambios pendientes.');
+          return;
+        }
+        const bodyText=JSON.stringify(remoteDoc,null,2)+'\n';
+        if(new Blob([bodyText]).size>12e6)throw Error('El registro completo supera los 12 MB.');
+        const putResult=await ghFetch('/contents/'+ghPath,token,{
+          method:'PUT',
+          headers:{'Content-Type':'application/json'},
+          body:JSON.stringify({message:'style(studio): actualizar ajustes visuales ('+scope+')',content:toBase64Utf8(bodyText),sha:meta.sha,branch:ghBranch})
+        });
+        projectPage=remoteDoc.pages[scope];
+        lastGithubRevision=await sha256Hex(JSON.stringify(projectPage));
+        const sha7=String(putResult.commit?.sha||'').slice(0,7);
+        setPushState('saved','✓ Publicado en GitHub','✓ Commit '+sha7+' en main. Pages se actualiza en ~1 min; en tu PC ejecutá git pull.');
+      }catch(error){
+        setPushState('error','⚠ Reintentar GitHub',error.message||'No se pudo publicar en GitHub.');
+      }finally{pushBtn.disabled=false;}
+    };
     if((globalThis.adcUserStorage||localStorage).getItem('adc-project-backup-'+scope)){
       const restore=document.createElement('button');restore.type='button';restore.textContent='Recuperar borrador anterior';panel.append(restore);
       restore.onclick=event=>{event.stopPropagation();const saved=(globalThis.adcUserStorage||localStorage).getItem('adc-project-backup-'+scope);if(saved){api.restoreDraft(saved);location.reload();}};
@@ -128,6 +251,7 @@
       });replay();
     }).catch(error=>say('No se cargaron ajustes del proyecto: '+error.message));
     window.adcStudio?.attach(api);
+    syncAdminUi();
   }
   window.adcProjectLayout={describe,resolve,attach};
 })();

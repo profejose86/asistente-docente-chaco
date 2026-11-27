@@ -182,7 +182,7 @@ Hojas de estilo en orden de carga:
 | `assets/datos/config-publica.js` | 3 | 0 | `adcConfig` |
 | `assets/datos/escuelas-chaco.js` | 2 | 0 | `adcEscuelasChaco` |
 | `assets/datos/formularios-pdf.js` | 554 | 0 | `adcPreparedPdfForms` |
-| `assets/js/acceso/autenticacion.js` | 66 | 4 |  |
+| `assets/js/acceso/autenticacion.js` | 67 | 4 |  |
 | `assets/js/acceso/editor.js` | 956 | 34 |  |
 | `assets/js/acceso/efectos.js` | 33 | 4 |  |
 | `assets/js/acceso/ingreso.js` | 48 | 1 |  |
@@ -200,9 +200,9 @@ Hojas de estilo en orden de carga:
 | `assets/js/documentos/pdf-utilidades.js` | 28 | 6 |  |
 | `assets/js/documentos/plantillas-dl01.js` | 3 | 0 |  |
 | `assets/js/documentos/visor-pdf.js` | 266 | 13 | `adcPdfViewer` |
-| `assets/js/editor/acceso-ajustes.js` | 41 | 3 |  |
+| `assets/js/editor/acceso-ajustes.js` | 65 | 3 | `adcEditorAccess` |
 | `assets/js/editor/ajustes-proyecto-datos.js` | 68 | 3 |  |
-| `assets/js/editor/ajustes-proyecto.js` | 134 | 4 | `adcProjectLayout` |
+| `assets/js/editor/ajustes-proyecto.js` | 258 | 4 | `adcProjectLayout` |
 | `assets/js/editor/comun.js` | 91 | 8 | `adcEditorCommon` |
 | `assets/js/editor/documento-fondo.js` | 90 | 13 | `adcDocumentBackground` |
 | `assets/js/editor/documentos.js` | 101 | 4 | `adcDocumentEditor` |
@@ -216,7 +216,7 @@ Hojas de estilo en orden de carga:
 | `assets/js/editor/studio-operaciones.js` | 81 | 3 | `adcStudioOperations` |
 | `assets/js/editor/studio-politicas.js` | 28 | 2 | `adcStudioPolicy` |
 | `assets/js/editor/studio-texto.js` | 74 | 3 | `adcStudioText` |
-| `assets/js/editor/studio.js` | 176 | 14 | `adcStudio` |
+| `assets/js/editor/studio.js` | 180 | 14 | `adcStudio` |
 | `assets/js/interfaz/cuenta.js` | 37 | 1 | `adcAccount` |
 | `assets/js/interfaz/espacio-trabajo.js` | 92 | 3 |  |
 | `assets/js/interfaz/inicio-local.js` | 19 | 0 | `adcUserStorage` |
@@ -235,7 +235,7 @@ Hojas de estilo en orden de carga:
 | `assets/js/servicios/almacenamiento-usuario.js` | 89 | 7 | `adcUserStorage` |
 | `assets/js/servicios/sincronizacion-usuario.js` | 100 | 4 | `adcUserSync` |
 | `assets/js/servicios/supabase-runtime.js` | 30 | generado |  |
-| `assets/js/servicios/supabaseClient.js` | 94 | 4 | `adcAuth` |
+| `assets/js/servicios/supabaseClient.js` | 96 | 5 | `adcAuth` |
 | `assets/js/tema/controles.js` | 20 | 1 |  |
 | `assets/js/tema/inicial.js` | 5 | 0 |  |
 | `assets/js/tramites/ayuda.js` | 33 | 0 |  |
@@ -269,6 +269,7 @@ Hojas de estilo en orden de carga:
 | `supabase/migrations/202611140001_adc_user_records.sql` | 54 | 0 |  |
 | `supabase/migrations/202611140002_adc_sync_conflict_http.sql` | 22 | 0 |  |
 | `tests/acceso-ajustes.test.cjs` | 33 | 0 |  |
+| `tests/admin-github-studio.test.cjs` | 201 | 2 | `adcConfig` |
 | `tests/ajustes-proyecto.test.cjs` | 71 | 0 |  |
 | `tests/arquitectura.test.cjs` | 50 | 0 |  |
 | `tests/bd02-estandares.test.cjs` | 270 | 0 | `bd02Store`, `adcUserStorage` |
@@ -459,7 +460,7 @@ Hojas de estilo en orden de carga:
 | `assets/js/documentos/plantillas-dl01.js` | `index.html` |
 | `assets/js/documentos/visor-pdf.js` | `index.html` |
 | `assets/js/editor/acceso-ajustes.js` | `ADC_Ingreso_Editable.html`, `index.html` |
-| `assets/js/editor/ajustes-proyecto-datos.js` | `ADC_Ingreso_Editable.html`, `index.html`, `tests/ajustes-proyecto.test.cjs`, `tests/bd02-estandares.test.cjs`, `tests/bd07-pdf.test.cjs`, `tests/cf01-pdf.test.cjs`, `tests/descuento-seguro-pdf.test.cjs`, `tests/dj02-vpi-prueba.test.cjs`, `tests/dl02-pdf.test.cjs`, `tests/documento-fondo.test.cjs`, `tests/dp01-experiencia.test.cjs`, `tests/editor-elementos.test.cjs`, `tests/editor-herramientas.test.cjs`, `tests/form3-pdf.test.cjs`, `tests/form6-pdf.test.cjs`, `tests/incapacidad-pdf.test.cjs`, `tests/inicio.test.cjs`, `tests/interinos-pdf.test.cjs`, `tests/local-editor-bridge.test.cjs`, `tests/local-editor-ui.test.cjs`, `tests/md01-mnc.test.cjs`, `tests/md01-vpi.test.cjs`, `tests/mis-tramites2-documentos.test.cjs`, `tests/mis-tramites2.test.cjs`, `tests/motor01-piloto.test.cjs`, `tests/mt2-enfermedad.test.cjs`, `tests/navegacion.test.cjs`, `tests/reubicacion-pdf.test.cjs`, `tests/sr01-pdf.test.cjs`, `tests/studio-contrato.test.cjs`, `tests/studio-inplace.test.cjs`, `tests/studio.test.cjs`, `tests/traslado-pdf.test.cjs`, `tools/ajustes-store.cjs`, `tools/importar-ajustes.cjs` |
+| `assets/js/editor/ajustes-proyecto-datos.js` | `ADC_Ingreso_Editable.html`, `index.html`, `tests/admin-github-studio.test.cjs`, `tests/ajustes-proyecto.test.cjs`, `tests/bd02-estandares.test.cjs`, `tests/bd07-pdf.test.cjs`, `tests/cf01-pdf.test.cjs`, `tests/descuento-seguro-pdf.test.cjs`, `tests/dj02-vpi-prueba.test.cjs`, `tests/dl02-pdf.test.cjs`, `tests/documento-fondo.test.cjs`, `tests/dp01-experiencia.test.cjs`, `tests/editor-elementos.test.cjs`, `tests/editor-herramientas.test.cjs`, `tests/form3-pdf.test.cjs`, `tests/form6-pdf.test.cjs`, `tests/incapacidad-pdf.test.cjs`, `tests/inicio.test.cjs`, `tests/interinos-pdf.test.cjs`, `tests/local-editor-bridge.test.cjs`, `tests/local-editor-ui.test.cjs`, `tests/md01-mnc.test.cjs`, `tests/md01-vpi.test.cjs`, `tests/mis-tramites2-documentos.test.cjs`, `tests/mis-tramites2.test.cjs`, `tests/motor01-piloto.test.cjs`, `tests/mt2-enfermedad.test.cjs`, `tests/navegacion.test.cjs`, `tests/reubicacion-pdf.test.cjs`, `tests/sr01-pdf.test.cjs`, `tests/studio-contrato.test.cjs`, `tests/studio-inplace.test.cjs`, `tests/studio.test.cjs`, `tests/traslado-pdf.test.cjs`, `tools/ajustes-store.cjs`, `tools/importar-ajustes.cjs` |
 | `assets/js/editor/ajustes-proyecto.js` | `ADC_Ingreso_Editable.html`, `index.html` |
 | `assets/js/editor/comun.js` | `ADC_Ingreso_Editable.html`, `index.html` |
 | `assets/js/editor/documento-fondo.js` | `ADC_Ingreso_Editable.html`, `index.html` |

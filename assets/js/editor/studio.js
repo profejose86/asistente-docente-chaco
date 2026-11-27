@@ -25,11 +25,15 @@
   panel.replaceChildren(top,tabs,content);
   const commit=original.find(node=>node.matches('[data-commit-local]'));
   const commitFeedback=original.find(node=>node.matches('[data-commit-feedback]'));
+  const pushGithub=original.find(node=>node.matches('[data-push-github]'));
+  const pushGithubFeedback=original.find(node=>node.matches('[data-push-github-feedback]'));
   if(commit)top.insertBefore(commit,global);
   else{const unavailable=button('Commit to local','El guardado directo sólo funciona en la página local de tu PC.',()=>{},top);unavailable.disabled=true;unavailable.dataset.studioLocalDisabled='';top.insertBefore(unavailable,global);}
+  if(pushGithub)top.insertBefore(pushGithub,global);
+  if(pushGithubFeedback)top.insertBefore(pushGithubFeedback,global);
   const globalActs=new Set(['navigate','undo','redo']);
   for(const node of original){
-   if(node===commit)continue;
+   if(node===commit||node===pushGithub||node===pushGithubFeedback)continue;
    if(node===commitFeedback){top.insertBefore(node,global);continue;}
    if(node.matches('[data-status]')){top.append(node);continue;}
    if(node.matches('br,strong'))continue;

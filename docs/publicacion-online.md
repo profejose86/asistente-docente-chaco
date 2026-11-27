@@ -57,5 +57,6 @@ Después de publicar, comprobar:
 4. Una cuenta no accede a datos de otra; el navegador avisa si conserva borradores de otro propietario.
 5. Los formularios, su PDF y las herramientas de Ajustes siguen abriendo desde el catálogo.
 6. `.env.local`, `tools/` y las migraciones no están presentes en el sitio publicado.
+7. En modo Supabase, `ADC Studio` (`#adcDesignGear`) exige `app_metadata.adc_role === 'admin'` verificado por Supabase Auth y habilita `Push to GitHub` para guardar `assets/datos/ajustes-pagina.json` en `main` con control de concurrencia CAS y un token Fine-Grained almacenado únicamente en `localStorage` bajo `adc-auth-github-token:<uid>` (excluido de sincronización).
 
 Si un despliegue falla, el anterior permanece disponible. Corregir el error y ejecutar de nuevo el workflow; no cambiar a modo demo para ocultarlo ni forzar un push sobre la historia. Para volver a una versión anterior, revisar un revert o republicar un commit aprobado sin borrar ramas o datos.

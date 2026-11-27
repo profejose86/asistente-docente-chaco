@@ -1,5 +1,10 @@
 /* Zona invisible y operable; no se exporta como ajuste del proyecto. */
 #adcDesignGear[data-adc-locked]{opacity:0!important;z-index:2147483646!important;outline:none!important;cursor:default}
+#adcDesignGear[data-adc-forbidden]{display:none!important;pointer-events:none!important}
 #adcDesignGear[data-adc-locked]~#adcDesignPanel{display:none!important}
-#adcDesignPanel [data-commit-local]{width:100%;padding:10px 14px;background:#2453a3;color:white;font-weight:700}
-#adcDesignPanel [data-commit-local]:disabled{opacity:.65;cursor:wait}
+#adcDesignPanel :is([data-commit-local],[data-push-github]){width:100%;padding:10px 14px;background:#2453a3;color:white;font-weight:700}
+#adcDesignPanel [data-push-github]{background:#155e3b}
+#adcDesignPanel :is([data-commit-local],[data-push-github]):disabled{opacity:.65;cursor:wait}
+#adcDesignPanel :is([data-push-github],[data-push-github-feedback],[data-github-config])[hidden],#adcDesignPanel [data-studio-local-disabled][hidden]{display:none!important}
+#adcDesignPanel [data-push-github-feedback]{display:block;font-size:11px;line-height:1.35;margin:4px 2px;color:#18365e}
+#adcDesignPanel [data-github-config] input[type=password]{width:calc(100% - 8px);box-sizing:border-box}

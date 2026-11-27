@@ -278,6 +278,7 @@
     "supabase/migrations/202611140001_adc_user_records.sql",
     "supabase/migrations/202611140002_adc_sync_conflict_http.sql",
     "tests/acceso-ajustes.test.cjs",
+    "tests/admin-github-studio.test.cjs",
     "tests/ajustes-proyecto.test.cjs",
     "tests/arquitectura.test.cjs",
     "tests/bd02-estandares.test.cjs",
@@ -667,8 +668,8 @@
     },
     {
       "file": "assets/css/editor/acceso-ajustes.css",
-      "bytes": 453,
-      "lines": 6,
+      "bytes": 1048,
+      "lines": 11,
       "generated": false,
       "functions": [],
       "globals": [],
@@ -1015,8 +1016,8 @@
     },
     {
       "file": "assets/js/acceso/autenticacion.js",
-      "bytes": 6216,
-      "lines": 66,
+      "bytes": 6336,
+      "lines": 67,
       "generated": false,
       "functions": [
         "showUnavailable",
@@ -1352,15 +1353,17 @@
     },
     {
       "file": "assets/js/editor/acceso-ajustes.js",
-      "bytes": 2251,
-      "lines": 41,
+      "bytes": 3462,
+      "lines": 65,
       "generated": false,
       "functions": [
         "lock",
         "reveal",
         "identify"
       ],
-      "globals": [],
+      "globals": [
+        "adcEditorAccess"
+      ],
       "storageKeys": []
     },
     {
@@ -1378,8 +1381,8 @@
     },
     {
       "file": "assets/js/editor/ajustes-proyecto.js",
-      "bytes": 8420,
-      "lines": 134,
+      "bytes": 17115,
+      "lines": 258,
       "generated": false,
       "functions": [
         "describe",
@@ -1641,8 +1644,8 @@
     },
     {
       "file": "assets/js/editor/studio.js",
-      "bytes": 27936,
-      "lines": 176,
+      "bytes": 28277,
+      "lines": 180,
       "generated": false,
       "functions": [
         "attach",
@@ -1963,7 +1966,7 @@
     },
     {
       "file": "assets/js/servicios/supabase-runtime.js",
-      "bytes": 228117,
+      "bytes": 228251,
       "lines": 30,
       "generated": true,
       "functions": [],
@@ -1972,11 +1975,12 @@
     },
     {
       "file": "assets/js/servicios/supabaseClient.js",
-      "bytes": 5602,
-      "lines": 94,
+      "bytes": 5793,
+      "lines": 96,
       "generated": false,
       "functions": [
         "user",
+        "isAdmin",
         "ensureTesterProfile",
         "profile",
         "syncSession"
@@ -2760,7 +2764,7 @@
     },
     {
       "file": "docs/arquitectura-auditoria.md",
-      "bytes": 17233,
+      "bytes": 17417,
       "lines": 130,
       "generated": false,
       "functions": [],
@@ -3039,8 +3043,8 @@
     },
     {
       "file": "docs/publicacion-online.md",
-      "bytes": 5274,
-      "lines": 62,
+      "bytes": 5648,
+      "lines": 63,
       "generated": false,
       "functions": [],
       "globals": [],
@@ -3226,6 +3230,24 @@
       "globals": [],
       "storageKeys": [
         "adc-adjustments-tab-session"
+      ]
+    },
+    {
+      "file": "tests/admin-github-studio.test.cjs",
+      "bytes": 12247,
+      "lines": 201,
+      "generated": false,
+      "functions": [
+        "makeSession",
+        "setupPage"
+      ],
+      "globals": [
+        "adcConfig"
+      ],
+      "storageKeys": [
+        "fixture-seeded",
+        "adc-supabase-auth",
+        "adc-auth-local-owner"
       ]
     },
     {
@@ -4785,6 +4807,12 @@
     {
       "from": "assets/js/editor/ajustes-proyecto.js",
       "to": "assets/datos/ajustes-pagina.json",
+      "kind": "web-asset",
+      "exists": true
+    },
+    {
+      "from": "assets/js/editor/ajustes-proyecto.js",
+      "to": "assets/datos/ajustes-pagina.json",
       "kind": "literal-module",
       "exists": true
     },
@@ -5547,6 +5575,12 @@
     {
       "from": "tests/acceso-ajustes.test.cjs",
       "to": "tests/support/demo-config.cjs",
+      "kind": "literal-module",
+      "exists": true
+    },
+    {
+      "from": "tests/admin-github-studio.test.cjs",
+      "to": "assets/js/editor/ajustes-proyecto-datos.js",
       "kind": "literal-module",
       "exists": true
     },
@@ -12718,9 +12752,9 @@
     ]
   },
   "summary": {
-    "files": 354,
-    "ownTextModules": 277,
-    "ownJavaScript": 170,
+    "files": 355,
+    "ownTextModules": 278,
+    "ownJavaScript": 171,
     "vendorFiles": 35,
     "missingLiteralReferences": 0,
     "duplicateLoads": 0,
