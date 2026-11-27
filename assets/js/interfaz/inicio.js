@@ -1,6 +1,7 @@
 // Fachada en revisión: las rutas, los datos y los documentos pertenecen a ADC.
 (() => {
-  if(new URL(location.href).searchParams.get('adc-inicio')!=='1')return;
+  const inicioParam=new URL(location.href).searchParams.get('adc-inicio');
+  if(window.adcConfig?.authMode==='supabase'?inicioParam==='0':inicioParam!=='1')return;
   document.addEventListener('DOMContentLoaded',()=>{
     const wrap=document.querySelector('body > .wrap'),nav=wrap.querySelector('.adc-main-nav');
     const header=document.createElement('header');header.className='adc-start-header';

@@ -1,6 +1,6 @@
 # Estructura y ejecución
 
-La rama `inicio` conserva una [fachada local basada en el prototipo del propietario](inicio-fachada.md). Se habilita con `adc-inicio=1`, conserva el acceso habitual y añade Inicio y Mis trámites 2. El HTML original está preservado como referencia; sus guardados y datos simulados no se incorporan a ADC.
+La [fachada de Inicio y Mis trámites 2 basada en el prototipo del propietario](inicio-fachada.md) se activa por defecto en el entorno autenticado con Supabase (`adc-inicio=0` restablece la cabecera clásica) y con `adc-inicio=1` en el modo demo de pruebas. Conserva el acceso habitual y añade Inicio y Mis trámites 2. El HTML original está preservado como referencia; sus guardados y datos simulados no se incorporan a ADC.
 
 Mis trámites 2 dispone de un [registro independiente de aperturas y adaptadores del visor compartido](mt2-visor-compartido.md), sin leer tarjetas de la pantalla anterior. Los módulos de formularios siguen siendo compartidos por ADC. La eliminación del arranque histórico de Mis trámites y el contrato completo MOTOR-01 continúan pendientes.
 

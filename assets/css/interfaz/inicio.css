@@ -1,4 +1,4 @@
-/* Fachada Inicio. Sólo se aplica con adc-inicio=1; no alcanza los documentos PDF. */
+/* Fachada Inicio y Mis trámites 2; no alcanza los documentos PDF. */
 body.adc-inicio-shell{--start-navy:#0b192c;--start-card:#fff;--start-text:#17263c;--start-muted:#566579;--start-border:#dfe5ed;--start-orange:#d66824;--start-blue:#144d9c;background:#f2f5f9;color:var(--start-text);font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif}
 html[data-theme=dark] body.adc-inicio-shell{--start-card:#162c4b;--start-text:#f1f5fb;--start-muted:#c0cee1;--start-border:#294568;background-color:#0b192c;background-image:radial-gradient(circle at 15px 15px,#24416b55 1px,transparent 1px);background-size:36px 36px}
 body.adc-inicio-shell>.wrap{padding-top:32px!important}

@@ -220,7 +220,7 @@ Hojas de estilo en orden de carga:
 | `assets/js/interfaz/cuenta.js` | 37 | 1 | `adcAccount` |
 | `assets/js/interfaz/espacio-trabajo.js` | 92 | 3 |  |
 | `assets/js/interfaz/inicio-local.js` | 19 | 0 | `adcUserStorage` |
-| `assets/js/interfaz/inicio.js` | 94 | 0 | `tab` |
+| `assets/js/interfaz/inicio.js` | 95 | 0 | `tab` |
 | `assets/js/interfaz/navegacion.js` | 70 | 6 | `tab`, `adcNavigation` |
 | `assets/js/interfaz/sesion.js` | 45 | 2 |  |
 | `assets/js/interfaz/sincronizacion.js` | 83 | 2 | `adcSyncUI` |
@@ -259,7 +259,7 @@ Hojas de estilo en orden de carga:
 | `assets/js/tramites/formularios-oficiales-datos.js` | 1327 | 0 | `adcOfficialFormsData` |
 | `assets/js/tramites/formularios-oficiales.js` | 1525 | 57 | `adcOfficialForms`, `tab`, `adcMotor01Pilot` |
 | `assets/js/tramites/interinos-revision.js` | 60 | 5 | `adcInterinosReview` |
-| `assets/js/tramites/mis-tramites2-documentos.js` | 176 | 9 | `tab`, `adcMT2Documents` |
+| `assets/js/tramites/mis-tramites2-documentos.js` | 177 | 9 | `tab`, `adcMT2Documents` |
 | `assets/js/tramites/mis-tramites2.js` | 289 | 22 |  |
 | `assets/js/tramites/mnc-adaptadores.js` | 49 | 1 |  |
 | `assets/js/tramites/ol01.js` | 588 | 41 |  |
@@ -317,7 +317,7 @@ Hojas de estilo en orden de carga:
 | `tests/perfil-normal.test.cjs` | 70 | 0 | `adcAuth` |
 | `tests/publicacion.test.cjs` | 29 | 0 |  |
 | `tests/reubicacion-pdf.test.cjs` | 37 | 0 |  |
-| `tests/sincronizacion-browser.test.cjs` | 98 | 2 | `adcConfig` |
+| `tests/sincronizacion-browser.test.cjs` | 99 | 2 | `adcConfig` |
 | `tests/sincronizacion-rls.test.cjs` | 35 | 0 |  |
 | `tests/sincronizacion.test.cjs` | 73 | 2 |  |
 | `tests/sr01-pdf.test.cjs` | 28 | 1 | `srLines` |
@@ -332,7 +332,7 @@ Hojas de estilo en orden de carga:
 | `tests/support/ajustes.cjs` | 15 | 0 |  |
 | `tests/support/demo-config.cjs` | 10 | 1 | `adcConfig` |
 | `tests/support/md01-server.cjs` | 11 | 1 |  |
-| `tests/sync-sandbox.test.cjs` | 53 | 1 |  |
+| `tests/sync-sandbox.test.cjs` | 55 | 1 |  |
 | `tests/sync-staging.test.cjs` | 22 | 0 |  |
 | `tests/traslado-pdf.test.cjs` | 50 | 0 |  |
 | `tools/ajustes-store.cjs` | 39 | 5 |  |

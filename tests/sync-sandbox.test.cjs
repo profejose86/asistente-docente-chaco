@@ -17,6 +17,7 @@ test('Sandbox en Chrome: importación autorizada, segundo dispositivo y cuenta B
   const secondContext=await browser.newContext(),second=await secondContext.newPage();
   await second.goto(base+'/sandbox');await second.evaluate(s=>localStorage.setItem('adc-supabase-auth',s),await first.evaluate(()=>localStorage.getItem('adc-supabase-auth')));
   await second.goto(base+'/index.html');await second.waitForSelector('#adcSessionBar');assert.equal(await second.locator('#perfilNombres').inputValue(),'Ana');
+  assert.equal(await first.locator('#adcInicio').isVisible(),true);await first.locator('#tabP').click();
   await first.locator('#perfilNombres').fill('Anabella');
   assert.equal(await first.evaluate(()=>JSON.parse(adcUserStorage.getItem('adc_v08')).nombres),'Anabella');
   assert.equal(await first.evaluate(()=>adcSyncUI.engine.state().status),'pending');
@@ -24,6 +25,7 @@ test('Sandbox en Chrome: importación autorizada, segundo dispositivo y cuenta B
   await first.reload();await first.waitForSelector('#adcSessionBar');assert.equal(await first.locator('#perfilNombres').inputValue(),'Anabella');
   await first.waitForFunction(()=>adcSyncUI.engine.state().status==='saved');
   await second.reload();await second.waitForSelector('#adcSessionBar');assert.equal(await second.locator('#perfilNombres').inputValue(),'Anabella');
+  await first.locator('#tabP').click();
   await first.locator('#correo').fill('anabella@example.test');await first.locator('#correo').blur();
   await first.waitForFunction(()=>adcSyncUI.engine.state().status==='saved');
   await second.reload();await second.waitForSelector('#adcSessionBar');assert.equal(await second.locator('#correo').inputValue(),'anabella@example.test');

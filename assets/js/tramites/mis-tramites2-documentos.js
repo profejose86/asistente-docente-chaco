@@ -23,7 +23,8 @@
     if(!viewport){viewport=document.createElement('div');size.before(viewport);viewport.append(size);}
     const host=size.closest('#dj,#dj02,#adcOL,#adcSC01,#license,#adcMT2DL01Workspace');
     const oldZoom=size.style.zoom,oldWidth=size.style.width,isDJ02=definition.id==='dj02';
-    const dj02Trial=isDJ02&&new URL(location.href).searchParams.get('adc-dj02-vpi')==='1';
+    const dj02Param=new URL(location.href).searchParams.get('adc-dj02-vpi');
+    const dj02Trial=isDJ02&&(window.adcConfig?.authMode==='supabase'?dj02Param!=='0':dj02Param==='1');
     const minScale=dj02Trial ? .25 : isDJ02 ? .05 : .25;let scale=1,naturalWidth=1,fitMode='width';
     function update(value){scale=value;size.style.zoom=String(scale);api.sync();}
     function measure(){

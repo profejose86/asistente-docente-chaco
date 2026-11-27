@@ -739,7 +739,7 @@
     },
     {
       "file": "assets/css/interfaz/inicio.css",
-      "bytes": 11994,
+      "bytes": 11978,
       "lines": 76,
       "generated": false,
       "functions": [],
@@ -1706,8 +1706,8 @@
     },
     {
       "file": "assets/js/interfaz/inicio.js",
-      "bytes": 11092,
-      "lines": 94,
+      "bytes": 11184,
+      "lines": 95,
       "generated": false,
       "functions": [],
       "globals": [
@@ -2395,7 +2395,7 @@
     },
     {
       "file": "assets/js/tramites/dl01-pdf.js",
-      "bytes": 17996,
+      "bytes": 18011,
       "lines": 232,
       "generated": false,
       "functions": [
@@ -2420,7 +2420,7 @@
     },
     {
       "file": "assets/js/tramites/dl01-reglas.js",
-      "bytes": 9461,
+      "bytes": 9569,
       "lines": 109,
       "generated": false,
       "functions": [
@@ -2544,8 +2544,8 @@
     },
     {
       "file": "assets/js/tramites/mis-tramites2-documentos.js",
-      "bytes": 16999,
-      "lines": 176,
+      "bytes": 17089,
+      "lines": 177,
       "generated": false,
       "functions": [
         "records",
@@ -2850,7 +2850,7 @@
     },
     {
       "file": "docs/estructura.md",
-      "bytes": 40168,
+      "bytes": 40289,
       "lines": 264,
       "generated": false,
       "functions": [],
@@ -2976,7 +2976,7 @@
     },
     {
       "file": "docs/mt2-visor-compartido.md",
-      "bytes": 10575,
+      "bytes": 10719,
       "lines": 40,
       "generated": false,
       "functions": [],
@@ -3766,7 +3766,7 @@
     },
     {
       "file": "tests/navegacion.test.cjs",
-      "bytes": 7557,
+      "bytes": 7735,
       "lines": 179,
       "generated": false,
       "functions": [
@@ -3862,8 +3862,8 @@
     },
     {
       "file": "tests/sincronizacion-browser.test.cjs",
-      "bytes": 11570,
-      "lines": 98,
+      "bytes": 11670,
+      "lines": 99,
       "generated": false,
       "functions": [
         "pageFor",
@@ -4042,8 +4042,8 @@
     },
     {
       "file": "tests/sync-sandbox.test.cjs",
-      "bytes": 5326,
-      "lines": 53,
+      "bytes": 5473,
+      "lines": 55,
       "generated": false,
       "functions": [
         "open"

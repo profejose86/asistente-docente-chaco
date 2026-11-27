@@ -46,6 +46,7 @@ test('Sync en Chrome y SDK: consentimiento, dos dispositivos, conflicto, red y c
   await p1.getByRole('button',{name:'Abrir los datos importados / recargar',exact:true}).click();await p1.waitForSelector('#adcSessionBar');
   const originalWrites=writes.length,p2=await pageFor(a);assert.equal(await p2.evaluate(()=>adcUserStorage.getItem('adc_v08')),raw);assert.equal(writes.length,originalWrites);assert.equal(await p2.locator('#perfilApellidos').inputValue(),'Gomez');
   await authorize(p2);await p2.waitForFunction(()=>adcSyncUI.engine.state().status==='saved');
+  assert.equal(await p1.locator('#adcInicio').isVisible(),true);await p1.locator('#tabP').click();
   await p1.locator('#perfilNacimiento').fill('25/08/1986');
   await p1.locator('#perfilCelular').fill('3624539175');
   await p1.waitForFunction(()=>adcSyncUI.engine.state().status==='saved');

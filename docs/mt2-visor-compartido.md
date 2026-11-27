@@ -1,6 +1,6 @@
 # MT2 — catálogo independiente y visor compartido
 
-La [primera prueba DJ02-VPI-01](dj02-vpi-01.md) se habilita únicamente con `adc-dj02-vpi=1` en Mis Trámites 2. Conserva el recorrido previo y espera revisión del propietario antes de sustituirlo.
+La [integración DJ02-VPI-01](dj02-vpi-01.md) está activa por defecto en el entorno autenticado con Supabase al abrir DJ-02 desde Mis Trámites 2 (`adc-dj02-vpi=0` permite desactivarla temporalmente; en modo demo de pruebas se habilita con `adc-dj02-vpi=1`). El acceso clásico a DJ-02 fuera de Mis Trámites 2 conserva su recorrido previo.
 
 23/11/2026. Autorizado por el propietario: todos los formularios solicitados desde MT2 deben usar el visor común, conservando una estructura propia de preguntas y preparando la eliminación futura de Mis trámites 1. Implementación local en `inicio`; sin commit, publicación ni cambios remotos.
 
