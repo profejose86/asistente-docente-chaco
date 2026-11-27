@@ -84,7 +84,7 @@
   }
   document.addEventListener('DOMContentLoaded',()=>{
     if(!document.getElementById('adcTramites2'))return;
-    back=document.createElement('button');back.type='button';back.className='adc-mt2-document-back';back.textContent='← Volver a Mis trámites 2';back.hidden=true;back.onclick=()=>{if(owned?.mounted)release();tab('tramites2')};
+    back=document.createElement('button');back.type='button';back.className='adc-mt2-document-back';back.textContent='← Volver a Mis trámites';back.hidden=true;back.onclick=()=>{if(owned?.mounted)release();tab('tramites2')};
     document.querySelector('body > .wrap').prepend(back);
     const onViewChange=next=>{if(owned&&next!==owned.view)release()};
     if(window.adcNavigation?.onNavigate)window.adcNavigation.onNavigate(onViewChange);

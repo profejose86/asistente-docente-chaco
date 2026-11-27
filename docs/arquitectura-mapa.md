@@ -298,7 +298,7 @@ Hojas de estilo en orden de carga:
 | `tests/geografia.test.cjs` | 60 | 0 |  |
 | `tests/incapacidad-pdf.test.cjs` | 373 | 0 | `incapacityDraws`, `savedIncapacityOpen`, `open`, `incapacityPrintRequested`, `adcPreparedPdfForms`, `originalIncapacityStore`, `adcUserStorage`, `incapacitySavingShown` |
 | `tests/ingreso.test.cjs` | 63 | 0 |  |
-| `tests/inicio.test.cjs` | 65 | 0 | `inicioStore`, `adcUserStorage` |
+| `tests/inicio.test.cjs` | 69 | 0 | `inicioStore`, `adcUserStorage` |
 | `tests/interinos-pdf.test.cjs` | 67 | 0 | `draws`, `open`, `printCalled`, `realStore`, `adcUserStorage` |
 | `tests/local-editor-bridge.test.cjs` | 40 | 0 |  |
 | `tests/local-editor-ui.test.cjs` | 45 | 0 |  |

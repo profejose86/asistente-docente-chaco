@@ -15,6 +15,8 @@ test('Inicio: fachada aislada, navegación real, temas, perfil y borrador preser
     assert.equal(await page.locator('#adcInicio').isVisible(),true);assert.equal(await page.locator('#profile').isVisible(),false);
     assert.match(await page.locator('#adcInicioTitle').innerText(),/Hola, profe/);
     assert.equal(await page.locator('#adcInicio .adc-start-card').count(),3);
+    assert.equal(await page.locator('#adcTramitesToggle').isVisible(),false);
+    assert.equal((await page.locator('#adcTabTramites2').innerText()).trim(),'Mis trámites');
     assert.equal(await page.evaluate(k=>localStorage.getItem(k),key),draft);
     const initialTheme=await page.locator('html').getAttribute('data-theme');
     await page.locator('#adcThemeSwitch').focus();await page.keyboard.press('Space');await page.keyboard.press('Space');
@@ -31,7 +33,8 @@ test('Inicio: fachada aislada, navegación real, temas, perfil y borrador preser
         assert.equal(await page.evaluate(()=>localStorage.getItem('adc-login-theme')),theme);
         assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false,`Sin desborde a ${width}/${theme}`);
         assert.equal(Math.round((await page.locator('.adc-start-header').boundingBox()).width),width);
-        const navButtons=await page.locator('.adc-start-header .adc-main-nav button').evaluateAll(nodes=>nodes.map(el=>{const r=el.getBoundingClientRect();return {x:r.x,y:r.y,right:r.right,bottom:r.bottom}}));
+        const navButtons=await page.locator('.adc-start-header .adc-main-nav button:not([hidden])').evaluateAll(nodes=>nodes.map(el=>{const r=el.getBoundingClientRect();return {x:r.x,y:r.y,right:r.right,bottom:r.bottom}}));
+        assert.equal(navButtons.length,4);
         for(let i=0;i<navButtons.length;i++)for(let j=i+1;j<navButtons.length;j++){
           const a=navButtons[i],b=navButtons[j];assert.equal(a.x<b.right&&b.x<a.right&&a.y<b.bottom&&b.y<a.bottom,false,'Pestañas sin superposición');
         }
@@ -43,7 +46,8 @@ test('Inicio: fachada aislada, navegación real, temas, perfil y borrador preser
     await page.setViewportSize({width:1440,height:1000});
     await page.locator('#adcInicio [data-adc-start-target=profile]').first().click();assert.equal(await page.locator('#profile').isVisible(),true);
     await page.locator('#perfilNombres').fill('Ana María');await page.locator('#adcTabInicio').click();assert.match(await page.locator('#adcInicioTitle').innerText(),/Hola, Ana/);
-    await page.locator('#adcInicio [data-adc-start-target=tramites]').last().click();assert.equal(await page.locator('#adcTramitesMenu').isVisible(),true);assert.equal(await page.locator('#adcInicio').isVisible(),false);
+    await page.locator('#adcInicio [data-adc-start-target=tramites2]').last().click();assert.equal(await page.locator('#adcTramites2').isVisible(),true);assert.equal(await page.locator('#adcTramitesMenu').isVisible(),false);assert.equal(await page.locator('#adcInicio').isVisible(),false);
+    await page.evaluate(()=>window.tab('tramites'));assert.equal(await page.locator('#adcTramites2').isVisible(),true);assert.equal(await page.locator('#adcTramitesMenu').isVisible(),false);
     await page.locator('#adcTabInicio').click();await page.locator('#adcInicio [data-adc-start-target=calendar]').click();assert.equal(await page.locator('#adcCalendar').isVisible(),true);
     await page.locator('#adcTabTramites2').click();assert.equal(await page.locator('#adcTramites2').isVisible(),true);assert.equal(await page.locator('#adcTramitesMenu').isVisible(),false);
     await page.locator('[data-adc-start-pilot]').click();assert.equal(await page.locator('#adcOfficialForm').getAttribute('data-adc-form-id'),'incapacidad');

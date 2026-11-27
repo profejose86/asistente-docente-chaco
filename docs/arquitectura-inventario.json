@@ -740,8 +740,8 @@
     },
     {
       "file": "assets/css/interfaz/inicio.css",
-      "bytes": 10818,
-      "lines": 68,
+      "bytes": 10923,
+      "lines": 69,
       "generated": false,
       "functions": [],
       "globals": [],
@@ -1709,7 +1709,7 @@
     },
     {
       "file": "assets/js/interfaz/inicio.js",
-      "bytes": 10737,
+      "bytes": 10462,
       "lines": 94,
       "generated": false,
       "functions": [],
@@ -2548,7 +2548,7 @@
     },
     {
       "file": "assets/js/tramites/mis-tramites2-documentos.js",
-      "bytes": 17089,
+      "bytes": 17087,
       "lines": 177,
       "generated": false,
       "functions": [
@@ -2570,7 +2570,7 @@
     },
     {
       "file": "assets/js/tramites/mis-tramites2.js",
-      "bytes": 29975,
+      "bytes": 29973,
       "lines": 289,
       "generated": false,
       "functions": [
@@ -2854,7 +2854,7 @@
     },
     {
       "file": "docs/estructura.md",
-      "bytes": 40289,
+      "bytes": 40643,
       "lines": 264,
       "generated": false,
       "functions": [],
@@ -2917,8 +2917,8 @@
     },
     {
       "file": "docs/inicio-fachada.md",
-      "bytes": 5588,
-      "lines": 40,
+      "bytes": 6105,
+      "lines": 42,
       "generated": false,
       "functions": [],
       "globals": [],
@@ -3649,8 +3649,8 @@
     },
     {
       "file": "tests/inicio.test.cjs",
-      "bytes": 7412,
-      "lines": 65,
+      "bytes": 7906,
+      "lines": 69,
       "generated": false,
       "functions": [],
       "globals": [
