@@ -30,6 +30,9 @@ test('MOTOR-01 Fase 1: VPI-01 experimental aislado, bajo demanda, tiradores, ges
     const url = `http://127.0.0.1:${server.address().port}/adc/index.html?adc-preview=1&adc-inicio=1&adc-motor01=incapacidad`;
     await page.goto(url);
     const initialStorage = await page.evaluate(() => ({ ...localStorage }));
+    await page.locator('#tabP').click();
+    const initialProfileWrapMaxWidth = await page.evaluate(() => getComputedStyle(document.querySelector('body > .wrap')).maxWidth);
+    const initialProfileWidth = Math.round((await page.locator('#profile').boundingBox()).width);
 
     // Entrar a Mis trámites y verificar que todavía no se descargó ningún PDF.
     await page.locator('#adcTabTramites2').click();
@@ -189,6 +192,63 @@ test('MOTOR-01 Fase 1: VPI-01 experimental aislado, bajo demanda, tiradores, ges
     const fitScaleAfter = await page.evaluate(() => adcMotor01Maestro.getDiagnostics().scale);
     assert.ok(fitScaleAfter > fitScaleBefore, 'Ajustar al ancho recalcula escala al ampliar contenedor');
 
+    // 5b. Tiradores inferiores de redimensionamiento vertical (↕): estirar hacia abajo, volver hacia arriba, teclado, doble clic y sin solapamiento.
+    const bottomLeft = shell.locator('.vpi-resize-bottom-left');
+    const bottomRight = shell.locator('.vpi-resize-bottom-right');
+    assert.equal(await bottomLeft.isVisible(), true);
+    assert.equal(await bottomRight.isVisible(), true);
+    await bottomRight.scrollIntoViewIfNeeded();
+
+    const overlapCheck = await page.evaluate(() => {
+      const bar = document.querySelector('[data-vpi-shell] .vpi-bottom-bar')?.getBoundingClientRect();
+      const bl = document.querySelector('.vpi-resize-bottom-left')?.getBoundingClientRect();
+      const br = document.querySelector('.vpi-resize-bottom-right')?.getBoundingClientRect();
+      const accBottom = document.querySelector('[data-acc1-bottom]')?.getBoundingClientRect();
+      const disjoint = (a, b) => !a || !b || a.bottom <= b.top + 1 || a.top >= b.bottom - 1 || a.right <= b.left + 1 || a.left >= b.right - 1;
+      return {
+        aboveBottomAcc: accBottom ? Math.max(bl.bottom, br.bottom) <= accBottom.top + 1 : true,
+        clearOfZoomBar: disjoint(bl, bar) && disjoint(br, bar)
+      };
+    });
+    assert.equal(overlapCheck.aboveBottomAcc, true, 'Tiradores inferiores no invaden la barra ACC1 inferior');
+    assert.equal(overlapCheck.clearOfZoomBar, true, 'Tiradores inferiores no tapan la barra inferior de zoom');
+
+    const defaultHeight = Math.round((await shell.boundingBox()).height);
+    await shell.locator('[data-vpi-zoom-slider]').evaluate(el => { el.value = '115'; el.dispatchEvent(new Event('input', { bubbles: true })); });
+    const brBox = await bottomRight.boundingBox();
+    await page.mouse.move(brBox.x + brBox.width / 2, brBox.y + brBox.height / 2);
+    await page.mouse.down();
+    await page.mouse.move(brBox.x + brBox.width / 2, brBox.y + brBox.height / 2 + 120, { steps: 6 });
+    await page.mouse.up();
+
+    const stretchedHeight = Math.round((await shell.boundingBox()).height);
+    assert.ok(stretchedHeight >= defaultHeight + 90, 'Arrastrar tirador inferior hacia abajo estira la caja del visor');
+    assert.equal(await page.evaluate(() => adcMotor01Maestro.getDiagnostics().percent), 115, 'Zoom manual conservado al estirar verticalmente');
+    assert.equal(await page.evaluate(() => adcMotor01Maestro.getDiagnostics().sessionHeight), stretchedHeight);
+
+    const blBox = await bottomLeft.boundingBox();
+    await page.mouse.move(blBox.x + blBox.width / 2, blBox.y + blBox.height / 2);
+    await page.mouse.down();
+    await page.mouse.move(blBox.x + blBox.width / 2, blBox.y + blBox.height / 2 - 80, { steps: 5 });
+    await page.mouse.up();
+    const reducedHeight = Math.round((await shell.boundingBox()).height);
+    assert.ok(reducedHeight <= stretchedHeight - 50 && reducedHeight > defaultHeight, 'Arrastrar tirador inferior hacia arriba achica progresivamente');
+
+    await page.locator('[data-vpi-doc="dp01"]').click();
+    await page.waitForFunction(() => window.adcMotor01Maestro?.getDiagnostics()?.activeId === 'dp01');
+    assert.equal(Math.round((await shell.boundingBox()).height), reducedHeight, 'Alto elegido conservado en sesión al cambiar de PDF');
+
+    await shell.locator('[data-vpi-action="page"]').click();
+    const pageScaleBefore = await page.evaluate(() => adcMotor01Maestro.getDiagnostics().scale);
+    await bottomLeft.focus();
+    await page.keyboard.press('Shift+ArrowDown');
+    await page.keyboard.press('Shift+ArrowDown');
+    const pageScaleAfter = await page.evaluate(() => adcMotor01Maestro.getDiagnostics().scale);
+    assert.ok(pageScaleAfter > pageScaleBefore, 'Ajustar a pantalla recalcula escala al estirar verticalmente');
+
+    await bottomLeft.dblclick();
+    assert.equal(await page.evaluate(() => adcMotor01Maestro.getDiagnostics().sessionHeight), null, 'Doble clic en tirador inferior restaura alto por defecto');
+
     // 6. Pantalla completa: barra inferior, Escape, doble clic, doble toque y botón flotante.
     await shell.evaluate(el => { el.requestFullscreen = () => Promise.reject(new Error('Fallback prueba')); });
     await shell.locator('[data-vpi-action="fullscreen"]').click();
@@ -253,6 +313,10 @@ test('MOTOR-01 Fase 1: VPI-01 experimental aislado, bajo demanda, tiradores, ges
 
     await page.locator('[data-vpi-doc="dp01"]').click();
     await page.waitForFunction(() => window.adcMotor01Maestro?.getDiagnostics()?.activeId === 'dp01');
+    await page.setViewportSize({ width: 1440, height: 1000 });
+    await page.locator('#tabP').click();
+    assert.equal(await page.evaluate(() => getComputedStyle(document.querySelector('body > .wrap')).maxWidth), initialProfileWrapMaxWidth, 'Salir de VPI Maestro hacia Mi perfil docente restaura max-width original');
+    assert.equal(Math.round((await page.locator('#profile').boundingBox()).width), initialProfileWidth, 'Mi perfil docente conserva exactamente su ancho original');
     await page.locator('#adcTabInicio').click();
     const afterNav = await page.evaluate(() => adcMotor01Maestro.getDiagnostics());
     assert.equal(afterNav.activeId, null);

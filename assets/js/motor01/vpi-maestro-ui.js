@@ -97,7 +97,7 @@
       }
       const entry = registry.byId(diag.activeId);
       const orientation = diag.widthPt > diag.heightPt ? 'Horizontal' : 'Vertical';
-      meta.textContent = `${entry?.code || diag.activeId} (${orientation} · ${Math.round(diag.widthPt)} × ${Math.round(diag.heightPt)} pt · ${diag.pageCount} pág.) · Zoom ${diag.percent} % (${diag.zoomMode}) · Ancho visor ${diag.containerWidth} px · Canvas activos: ${diag.activeCanvases} · Liberaciones: ${diag.releasedCount}`;
+      meta.textContent = `${entry?.code || diag.activeId} (${orientation} · ${Math.round(diag.widthPt)} × ${Math.round(diag.heightPt)} pt · ${diag.pageCount} pág.) · Zoom ${diag.percent} % (${diag.zoomMode}) · Visor ${diag.containerWidth} × ${diag.containerHeight} px · Canvas activos: ${diag.activeCanvases} · Liberaciones: ${diag.releasedCount}`;
       unloadBtn.disabled = false;
     }
 

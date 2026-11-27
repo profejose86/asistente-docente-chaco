@@ -1,5 +1,5 @@
 /* MOTOR-01 · Fase 1: entorno experimental VPI Maestro aislado bajo #adcTramites2. */
-body.adc-inicio-shell:has(#adcVpiMaestro:not([hidden])) > .wrap{max-width:1760px}
+body.adc-inicio-shell:not([data-adc-mt2-dl01-ready]):has(#adcTramites2:not(.hide) #adcVpiMaestro:not([hidden])) > .wrap{max-width:1760px}
 #adcTramites2 .vpi-maestro-subtabs{display:inline-flex;flex-wrap:wrap;gap:8px;margin-top:14px;padding:5px;border:1px solid var(--mt2-border,#d8e0eb);border-radius:11px;background:var(--mt2-card,#fff)}
 #adcTramites2 .vpi-maestro-subtabs[hidden],#adcTramites2 .vpi-maestro-panel[hidden],#adcTramites2 .mt2-layout[hidden]{display:none!important}
 #adcTramites2 .vpi-maestro-subtab{min-height:42px;margin:0;padding:8px 14px;border:0;border-radius:8px;background:transparent;color:var(--mt2-text,#17263c);font:600 14px/1.2 inherit;cursor:pointer}
@@ -35,8 +35,8 @@ html[data-theme=dark] #adcTramites2 .vpi-maestro-doc-btn[aria-pressed=true]{bord
 #adcTramites2 .vpi-maestro-meta{margin:0;padding:10px 12px;border-radius:10px;background:#eef3f9;color:#273b56;font-size:13px;line-height:1.4}
 html[data-theme=dark] #adcTramites2 .vpi-maestro-meta{background:#10223b;color:#d6e4f6}
 
-/* VPI-01: contenedor redimensionable horizontalmente con barras y controles flotantes */
-#adcTramites2 .vpi-maestro-host{width:100%;padding:0 18px;box-sizing:border-box}
+/* VPI-01: contenedor redimensionable horizontal y verticalmente con barras y controles flotantes */
+#adcTramites2 .vpi-maestro-host{width:100%;padding:0 18px 42px;box-sizing:border-box}
 [data-vpi-shell]{position:relative;box-sizing:border-box;max-width:100%;margin:0 auto;height:min(68vh,780px);min-height:360px;padding:10px 44px 76px 10px;border:1px solid #b8c6d6;border-radius:10px;background:#dde4ee;scroll-margin-top:100px}
 html[data-theme=dark] [data-vpi-shell]{border-color:#3a567b;background:#102138}
 [data-vpi-shell].vpi-resizing{outline:2px solid #d66824;user-select:none}
@@ -52,10 +52,13 @@ html[data-theme=dark] [data-vpi-shell] .vpi-empty-notice{background:#162c4b;colo
 [data-vpi-shell] .vpi-page:last-child{margin-bottom:0}
 [data-vpi-shell] .vpi-page-canvas{display:block;width:100%;height:100%}
 
-/* Tiradores superiores izquierdo y derecho */
+/* Tiradores superiores izquierdo y derecho e inferiores verticales */
 [data-vpi-shell] .vpi-resize-handle{position:absolute;top:10px;z-index:28;display:grid;place-items:center;width:32px;height:44px;min-height:44px;padding:0;margin:0;border:1px solid #7f94b0;border-radius:8px;background:#f4f7fc;color:#183857;font-size:15px;font-weight:700;cursor:ew-resize;box-shadow:0 2px 6px #0002;touch-action:none;scroll-margin-top:100px}
 [data-vpi-shell] .vpi-resize-left{left:-16px}
 [data-vpi-shell] .vpi-resize-right{right:-16px}
+[data-vpi-shell] .vpi-resize-bottom{top:auto;bottom:-36px;cursor:ns-resize}
+[data-vpi-shell] .vpi-resize-bottom-left{left:14px}
+[data-vpi-shell] .vpi-resize-bottom-right{right:14px}
 html[data-theme=dark] [data-vpi-shell] .vpi-resize-handle{background:#223b5e;color:#edf3fc;border-color:#5b789f}
 
 /* Única barra vertical derecha */
@@ -79,7 +82,7 @@ html[data-theme=dark] [data-vpi-shell] .vpi-bottom-bar{border-color:#3a567b;back
 [data-vpi-shell] .vpi-bottom-bar output{min-width:48px;text-align:center;font-variant-numeric:tabular-nums;font-size:13px;font-weight:600}
 
 /* Pantalla completa nativa o ampliada segura */
-[data-vpi-shell]:fullscreen,[data-vpi-shell].vpi-expanded{position:fixed;inset:0;width:100vw!important;max-width:none;height:100dvh;max-height:none;z-index:12000;border-radius:0}
+[data-vpi-shell]:fullscreen,[data-vpi-shell].vpi-expanded{position:fixed;inset:0;width:100vw!important;max-width:none;height:100dvh!important;max-height:none;z-index:12000;border-radius:0}
 [data-vpi-shell]:is(:fullscreen,.vpi-expanded) .vpi-resize-handle{display:none}
 [data-vpi-shell] :is(.vpi-bottom-bar,.vpi-vertical-scroll,.vpi-floating-fullscreen):focus-visible,[data-vpi-shell] .vpi-resize-handle:focus-visible{outline:2px solid #d66824;outline-offset:2px}
 
@@ -89,10 +92,13 @@ html[data-theme=dark] [data-vpi-shell] .vpi-bottom-bar{border-color:#3a567b;back
 }
 @media(max-width:650px){
   #adcTramites2 .vpi-maestro-stage-col{padding:14px}
-  #adcTramites2 .vpi-maestro-host{padding:0}
+  #adcTramites2 .vpi-maestro-host{padding:0 0 38px}
   [data-vpi-shell]{height:76dvh;min-height:320px;padding:8px 36px 134px 8px}
   [data-vpi-shell] .vpi-resize-left{left:4px}
   [data-vpi-shell] .vpi-resize-right{right:4px}
+  [data-vpi-shell] .vpi-resize-bottom{bottom:-32px;height:38px;min-height:38px}
+  [data-vpi-shell] .vpi-resize-bottom-left{left:8px}
+  [data-vpi-shell] .vpi-resize-bottom-right{right:8px}
   [data-vpi-shell] .vpi-vertical-scroll{top:60px;bottom:142px;height:calc(100% - 202px);width:26px}
   [data-vpi-shell] .vpi-floating-fullscreen{right:40px;opacity:.9}
   [data-vpi-shell] .vpi-bottom-bar{display:grid;grid-template-columns:44px minmax(50px,1fr) 48px 44px;gap:4px;padding:6px;opacity:1;pointer-events:auto}

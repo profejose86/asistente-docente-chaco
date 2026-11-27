@@ -50,6 +50,22 @@
     resizeRight.title = 'Arrastrá o usá flechas izquierda/derecha para ajustar el ancho';
     resizeRight.innerHTML = '<span aria-hidden="true">↔</span>';
 
+    const makeBottomHandle = (side, ariaLabel) => {
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = `vpi-resize-handle vpi-resize-bottom vpi-resize-${side}`;
+      btn.dataset.vpiResize = side;
+      btn.dataset.vpiInteractive = '';
+      btn.setAttribute('role', 'slider');
+      btn.setAttribute('aria-orientation', 'vertical');
+      btn.setAttribute('aria-label', ariaLabel);
+      btn.title = 'Arrastrá hacia abajo o arriba para ajustar el alto (doble clic para volver al alto por defecto)';
+      btn.innerHTML = '<span aria-hidden="true">↕</span>';
+      return btn;
+    };
+    const resizeBottomLeft = makeBottomHandle('bottom-left', 'Alto del visor desde el borde inferior izquierdo');
+    const resizeBottomRight = makeBottomHandle('bottom-right', 'Alto del visor desde el borde inferior derecho');
+
     const floatingFullscreen = document.createElement('button');
     floatingFullscreen.type = 'button';
     floatingFullscreen.className = 'vpi-floating-fullscreen';
@@ -104,7 +120,7 @@
       <button type="button" data-vpi-action="page">Ajustar a pantalla</button>
       <button type="button" data-vpi-action="fullscreen" aria-pressed="false">Pantalla completa</button>`;
 
-    shell.append(resizeLeft, resizeRight, floatingFullscreen, viewport, verticalScroll, controls);
+    shell.append(resizeLeft, resizeRight, resizeBottomLeft, resizeBottomRight, floatingFullscreen, viewport, verticalScroll, controls);
     host.append(shell);
 
     const zoomSlider = controls.querySelector('[data-vpi-zoom-slider]');
@@ -124,6 +140,7 @@
     let scale = 1;
     let zoomMode = 'width';
     let sessionWidth = null;
+    let sessionHeight = null;
     let loadedCount = 0;
     let releasedCount = 0;
     let lastRenderedScale = 0;
@@ -134,6 +151,7 @@
     let controlsActive = false;
     let dragPan = null;
     let resizeDrag = null;
+    let verticalResizeDrag = null;
     let pinch = null;
     let tapStart = null;
     let lastTap = null;
@@ -175,6 +193,38 @@
       }
     }
 
+    function heightLimits() {
+      const minHeight = window.innerWidth <= 650 ? 320 : 360;
+      const defaultHeight = Math.round(
+        Math.max(minHeight, window.innerWidth <= 650 ? window.innerHeight * 0.76 : Math.min(window.innerHeight * 0.68, 780))
+      );
+      const maxHeight = Math.max(defaultHeight + 400, Math.min(2200, Math.round(window.innerHeight * 2)));
+      return { minHeight, defaultHeight, maxHeight };
+    }
+
+    function applyContainerHeight(nextHeight) {
+      const { minHeight, defaultHeight, maxHeight } = heightLimits();
+      if (expanded()) {
+        shell.style.height = '';
+        return;
+      }
+      if (nextHeight === null) {
+        sessionHeight = null;
+        shell.style.height = '';
+      } else {
+        const clamped = Math.round(Math.max(minHeight, Math.min(maxHeight, nextHeight)));
+        sessionHeight = clamped;
+        shell.style.height = clamped + 'px';
+      }
+      const current = Math.round(shell.getBoundingClientRect().height || defaultHeight);
+      for (const handle of [resizeBottomLeft, resizeBottomRight]) {
+        handle.setAttribute('aria-valuemin', String(minHeight));
+        handle.setAttribute('aria-valuemax', String(maxHeight));
+        handle.setAttribute('aria-valuenow', String(current));
+        handle.setAttribute('aria-valuetext', `${current} píxeles de alto`);
+      }
+    }
+
     function notifyState() {
       if (destroyed) return;
       onStateChange(getDiagnostics());
@@ -188,13 +238,16 @@
         if (
           dragPan ||
           resizeDrag ||
+          verticalResizeDrag ||
           pinch ||
           controlsActive ||
           controls.matches(':hover,:focus-within') ||
           verticalScroll.matches(':hover,:focus') ||
           floatingFullscreen.matches(':hover,:focus-visible') ||
           resizeLeft.matches(':hover,:focus-visible') ||
-          resizeRight.matches(':hover,:focus-visible')
+          resizeRight.matches(':hover,:focus-visible') ||
+          resizeBottomLeft.matches(':hover,:focus-visible') ||
+          resizeBottomRight.matches(':hover,:focus-visible')
         ) {
           return;
         }
@@ -434,6 +487,7 @@
         emptyNotice.hidden = true;
         // Regla VPI-01 C: nunca auto-expandir el contenedor por detectar orientación horizontal.
         applyContainerWidth(sessionWidth);
+        applyContainerHeight(sessionHeight);
         if (zoomMode === 'manual') applyScale(scale, { skipCrisp: true });
         else fit(zoomMode, { skipCrisp: true });
         viewport.scrollLeft = 0;
@@ -459,6 +513,7 @@
         document.body.style.overflow = previousBodyOverflow;
       }
       applyContainerWidth(sessionWidth);
+      applyContainerHeight(sessionHeight);
       if (zoomMode !== 'manual') fit(zoomMode);
       else syncUi();
     }
@@ -484,6 +539,7 @@
           shell.classList.add('vpi-expanded');
         }
         shell.style.width = '';
+        shell.style.height = '';
         if (zoomMode !== 'manual') fit(zoomMode);
         else syncUi();
         revealControls();
@@ -498,6 +554,16 @@
         syncUi();
       } else {
         fit(zoomMode);
+      }
+      revealControls();
+    }
+
+    function handleContainerHeightResized(newHeight) {
+      applyContainerHeight(newHeight);
+      if (zoomMode === 'page') {
+        fit('page');
+      } else {
+        syncUi();
       }
       revealControls();
     }
@@ -526,7 +592,7 @@
     shell.addEventListener('focusin', revealControls);
     shell.addEventListener('focusout', () => { hideTimer && clearTimeout(hideTimer); revealControls(); });
 
-    for (const bar of [controls, verticalScroll, floatingFullscreen, resizeLeft, resizeRight]) {
+    for (const bar of [controls, verticalScroll, floatingFullscreen, resizeLeft, resizeRight, resizeBottomLeft, resizeBottomRight]) {
       bar.addEventListener('pointerdown', () => { controlsActive = true; revealControls(); clearTimeout(hideTimer); });
       bar.addEventListener('pointerenter', () => { revealControls(); clearTimeout(hideTimer); });
       bar.addEventListener('pointerleave', revealControls);
@@ -680,6 +746,54 @@
       });
     }
 
+    // Tiradores inferiores de redimensionamiento vertical
+    for (const [handle, side] of [[resizeBottomLeft, 'bottom-left'], [resizeBottomRight, 'bottom-right']]) {
+      handle.addEventListener('pointerdown', event => {
+        if (event.button !== 0 || expanded()) return;
+        event.preventDefault();
+        event.stopPropagation();
+        const startHeight = shell.getBoundingClientRect().height;
+        verticalResizeDrag = { id: event.pointerId, startY: event.clientY, startHeight, side };
+        handle.setPointerCapture(event.pointerId);
+        shell.classList.add('vpi-resizing');
+        revealControls();
+      });
+      handle.addEventListener('pointermove', event => {
+        if (verticalResizeDrag?.id !== event.pointerId || verticalResizeDrag.side !== side) return;
+        const deltaY = event.clientY - verticalResizeDrag.startY;
+        handleContainerHeightResized(verticalResizeDrag.startHeight + deltaY);
+      });
+      const endVerticalResize = () => {
+        if (!verticalResizeDrag || verticalResizeDrag.side !== side) return;
+        verticalResizeDrag = null;
+        shell.classList.remove('vpi-resizing');
+        revealControls();
+      };
+      handle.addEventListener('pointerup', endVerticalResize);
+      handle.addEventListener('pointercancel', endVerticalResize);
+      handle.addEventListener('lostpointercapture', endVerticalResize);
+      handle.addEventListener('dblclick', event => {
+        if (expanded()) return;
+        event.preventDefault();
+        event.stopPropagation();
+        handleContainerHeightResized(null);
+      });
+      handle.addEventListener('keydown', event => {
+        if (expanded()) return;
+        const { minHeight, maxHeight } = heightLimits();
+        const current = sessionHeight ?? Math.round(shell.getBoundingClientRect().height);
+        const step = event.shiftKey ? 48 : 16;
+        let next = null;
+        if (event.key === 'ArrowDown') next = current + step;
+        if (event.key === 'ArrowUp') next = current - step;
+        if (event.key === 'Home') next = minHeight;
+        if (event.key === 'End') next = maxHeight;
+        if (next === null) return;
+        event.preventDefault();
+        handleContainerHeightResized(next);
+      });
+    }
+
     floatingFullscreen.addEventListener('click', toggleFullscreen);
 
     document.addEventListener('keydown', event => {
@@ -699,14 +813,16 @@
     }, { signal });
 
     const observer = new ResizeObserver(() => {
-      if (destroyed || resizeDrag) return;
+      if (destroyed || resizeDrag || verticalResizeDrag) return;
       applyContainerWidth(sessionWidth);
+      applyContainerHeight(sessionHeight);
       if (activeEntry && zoomMode !== 'manual') fit(zoomMode);
       else syncUi();
     });
     observer.observe(host);
 
     applyContainerWidth(null);
+    applyContainerHeight(null);
     syncUi();
 
     function getDiagnostics() {
@@ -721,7 +837,9 @@
         percent: Math.round(scale * 100),
         zoomMode,
         containerWidth: Math.round(shell.getBoundingClientRect().width || 0),
+        containerHeight: Math.round(shell.getBoundingClientRect().height || 0),
         sessionWidth,
+        sessionHeight,
         loadedCount,
         releasedCount,
         activeCanvases: stage.querySelectorAll('canvas').length,
@@ -750,6 +868,7 @@
       fit,
       setZoom: value => scaleAt(value),
       setContainerWidth: width => handleContainerResized(width),
+      setContainerHeight: height => handleContainerHeightResized(height),
       toggleFullscreen,
       getActiveBytes: () => (activeBytes ? activeBytes.slice() : null),
       getDiagnostics,
