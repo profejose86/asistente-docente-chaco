@@ -203,15 +203,10 @@
             event.preventDefault();if(!form.reportValidity())return;
             if(until.value<from.value){until.setCustomValidity('Hasta debe ser igual o posterior a Desde.');until.reportValidity();return;}
             submit.disabled=true;back.disabled=true;feedback.textContent='Preparando DL-01 con los datos de tu perfil docente…';
-            dialog.close();
             try{
-              if(!adcMT2Documents.open('dl01',{reason:record.reason,trigger}))throw Error('No se pudo abrir DL-01. Revisá los avisos de guardado.');
-              document.getElementById('escuelaSelect').value=school.value;
-              document.getElementById('desde').value=from.value;document.getElementById('hasta').value=until.value;
-              for(const id of ['escuelaSelect','desde','hasta'])document.getElementById(id).dispatchEvent(new Event('change',{bubbles:true}));
-              await generatePDF();adcMT2Documents.showDL01();
+              await adcMT2Documents.openIllness({institutionId:school.value,from:from.value,until:until.value,onStart:()=>dialog.close()});
               chosenForm=formById('dl01');renderCatalog();
-            }catch(error){root.querySelector('[data-adc-start-status]').textContent=error.message;document.getElementById('adcDL01GenerationStatus').textContent=error.message;}
+            }catch(error){feedback.textContent=error.message;root.querySelector('[data-adc-start-status]').textContent=error.message;}
             finally{submit.disabled=false;back.disabled=false;}
           };
           from.focus();

@@ -59,7 +59,7 @@
   function release(){
     document.body.removeAttribute('data-adc-mt2-dl01-ready');document.querySelectorAll('[data-mt2-dl01-aux]').forEach(node=>node.removeAttribute('data-mt2-dl01-aux'));
     if(owned?.adapter)owned.adapter.disable();
-    if(owned?.mounted){const {actions,actionsAnchor,pages,workspace}=owned.mounted;pages.replaceChildren();actionsAnchor.replaceWith(actions);workspace.hidden=true;if(back)document.querySelector('body > .wrap').prepend(back);}
+    if(owned?.mounted){const {actions,actionsAnchor,pages,workspace,printFrame,url}=owned.mounted;pages.replaceChildren();if(actionsAnchor)actionsAnchor.replaceWith(actions);else actions.remove();printFrame?.remove();if(url)URL.revokeObjectURL(url);workspace.hidden=true;if(back)document.querySelector('body > .wrap').prepend(back);}
     if(owned?.view==='official')adcOfficialForms.releaseViewer();owned=null;if(back)back.hidden=true;document.body.removeAttribute('data-adc-mt2-document');document.body.removeAttribute('data-adc-mt2-reason');
   }
   function open(id,{reason=null,trigger=null}={}){
@@ -126,5 +126,46 @@
     workspace.style.scrollMarginTop=((document.querySelector('.adc-start-header')?.offsetHeight||0)+16)+'px';
     title.focus({preventScroll:true});workspace.scrollIntoView({block:'start'});return true;
   }
-  window.adcMT2Documents=Object.freeze({records,open,showDL01});
+  async function openIllness({institutionId,from,until,onStart=()=>{}}){
+    const institution=inst.find(item=>String(item.id)===String(institutionId)),reason='Enfermedad o lesión común';
+    if(!institution?.name?.trim())throw Error('Elegí una institución del perfil docente.');
+    const profileField=id=>document.getElementById(id)?.value||'';
+    const fields={nombre:profileField('nombre'),dni:profileField('dni'),sexo:profileField('sexo'),desde:from,hasta:until,pago:'con',presentacion:'',disposicion:'',justifica:''};
+    if(!fields.nombre.trim()||!adcPersonalValid(fields.dni,7,8))throw Error('Completá el nombre y un DNI válido en Mi perfil docente.');
+    if(!date(from)||!date(until)||until<from)throw Error('Completá un período válido en Desde y Hasta.');
+    const rows=adcDL01Affected(institution,from,until);
+    if(!rows.length)throw Error('No hay cargos u horas del perfil con actividad en ese período. Revisá las fechas y los horarios de la institución.');
+    if(rows.some(({e})=>!mapping(e,reason,'con')[0]||!turnoNormalizado(e.turno)||turnoNormalizado(e.turno)==='Otro'||!dl01CodigoCargo(e,institution,reason)))throw Error('Completá turno, situación de revista y código de cargo/nivel en los cargos de esta institución del perfil docente.');
+    const snapshot=structuredClone({fields,institution,rows,reason});
+    if(window.tab('tramites2')===false)throw Error('No se pudo confirmar el guardado del documento anterior.');
+    if(owned)release();
+    onStart();
+    const root=document.getElementById('adcTramites2');let workspace=document.getElementById('adcMT2DL01Workspace');
+    if(!workspace){workspace=document.createElement('section');workspace.id='adcMT2DL01Workspace';workspace.className='adc-mt2-viewer-host';workspace.setAttribute('aria-labelledby','adcMT2DL01Title');workspace.innerHTML='<h2 id="adcMT2DL01Title" tabindex="-1">DL-01 · Enfermedad o lesión común</h2><p data-mt2-dl01-context></p><div id="adcMT2DL01Pages" class="mt2-dl01-pages"></div>';root.append(workspace);}
+    const pages=workspace.querySelector('.mt2-dl01-pages');pages.replaceChildren();workspace.hidden=false;
+    workspace.querySelector('[data-mt2-dl01-context]').textContent=`${snapshot.institution.name} · Desde ${fmt(from)} · Hasta ${fmt(until)}`;
+    const actions=document.createElement('div');actions.className='status';
+    const status=document.createElement('p');status.setAttribute('role','status');status.textContent='Preparando DL-01 con los datos del perfil docente…';
+    const download=document.createElement('a');download.textContent='Descargar DL-01 completado';download.download='DL-01-enfermedad-comun.pdf';download.hidden=true;
+    const print=document.createElement('button');print.type='button';print.textContent='Imprimir DL-01';print.disabled=true;print.dataset.mt2Dl01Print='';actions.append(download,print,status);
+    (workspace.querySelector('.adc-pdf-viewer')||pages).before(actions);
+    const printFrame=document.createElement('iframe');printFrame.hidden=true;printFrame.title='Copia de impresión DL-01';printFrame.dataset.mt2Dl01PrintFrame='';workspace.append(printFrame);
+    const mounted={actions,pages,workspace,printFrame,url:null},scope=window.adcUserStorage?.scope?.();
+    owned={id:'dl01',view:'tramites2',adapter:null,mounted};
+    const current=()=>owned?.mounted===mounted&&scope===window.adcUserStorage?.scope?.();
+    document.body.dataset.adcMt2Document='dl01';document.body.dataset.adcMt2Reason=reason;document.body.dataset.adcMt2Dl01Ready='loading';
+    if(back){back.hidden=false;workspace.prepend(back)}workspace.style.scrollMarginTop=((document.querySelector('.adc-start-header')?.offsetHeight||0)+16)+'px';workspace.scrollIntoView({block:'start'});
+    try{
+      const result=await adcDL01BuildPdf(snapshot);if(!current())return false;
+      for(const message of result.warnings){const warning=document.createElement('p');warning.className='warning';warning.textContent=message;actions.append(warning)}
+      mounted.url=URL.createObjectURL(new Blob([result.pdf],{type:'application/pdf'}));download.href=mounted.url;download.hidden=false;
+      const ready=await adcDL01ShowPreview(printFrame,result.pdf,mounted,print,status,{isCurrent:current});if(!current())return false;if(!ready)throw Error(status.textContent);
+      for(const [index,source] of [...printFrame.contentDocument.querySelectorAll('canvas')].entries()){
+        const canvas=document.createElement('canvas');canvas.width=source.width;canvas.height=source.height;canvas.style.width=source.style.width;canvas.style.height=source.style.height;canvas.setAttribute('role','img');canvas.setAttribute('aria-label',`DL-01 completado · página ${index+1} de ${result.pagesGenerated}`);canvas.getContext('2d').drawImage(source,0,0);pages.append(canvas);
+      }
+      try{adcDL01StorePending(adcPersonalDigits(snapshot.fields.dni),snapshot.rows.map(({e})=>{const [,ref]=mapping(e,reason,'con'),[articulo,inciso='']=ref.split('-');return {articulo,inciso,motivo:dj02Motivo(reason),desde:from,hasta:until,unidad:snapshot.institution.name,disposicion:''}}))}catch{status.textContent+=' El PDF está listo, pero no se pudo guardar su antecedente pendiente.'}
+      owned.adapter=attach({id:'dl01-mt2',size:'#adcMT2DL01Pages'});owned.adapter.enable();document.body.dataset.adcMt2Dl01Ready='true';workspace.querySelector('h2').focus({preventScroll:true});return true;
+    }catch(error){if(current())status.textContent=error.message;throw error;}
+  }
+  window.adcMT2Documents=Object.freeze({records,open,showDL01,openIllness});
 })();

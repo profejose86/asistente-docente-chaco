@@ -1,8 +1,8 @@
 // Conecta DL-01 con los datos existentes, sin copiar ni modificar el perfil.
 (() => {
   const pdfModuleURL = new URL('../../vendor/pdfjs/pdf.min.mjs',document.currentScript.src);
-  window.adcDL01ShowPreview = async function(frame,bytes,request,printButton,status) {
-    const current = () => frame.isConnected && adcPDFRequest === request;
+  window.adcDL01ShowPreview = async function(frame,bytes,request,printButton,status,{isCurrent}={}) {
+    const current = () => frame.isConnected && (isCurrent?isCurrent():adcPDFRequest === request);
     printButton.disabled = true;
     frame.dataset.adcPreviewState = 'loading';
     status.textContent = 'Preparando las páginas para vista previa e impresión…';

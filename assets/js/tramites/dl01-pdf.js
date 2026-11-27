@@ -14,56 +14,10 @@ function adcInvalidatePDF(force=false){
  $('pdfResult').replaceChildren();
 }
 
-let adcDLGuided;
-let adcDLPersonalEditor;
-async function generatePDF(){
- if(!adcDL01Ready.has(selected))return alert(selected?'Formulario por confirmar para este trámite.':'Elegí primero un trámite.');
- if(!adcDLPersonalEditor){
-  adcDLPersonalEditor=document.createElement('fieldset');
-  adcDLPersonalEditor.innerHTML='<legend>Datos del docente pendientes</legend>';
-  for(const [id,label] of [['perfilApellidos','Apellido'],['perfilNombres','Nombres'],['dni','DNI']]){
-   const wrapper=document.createElement('label'),input=document.createElement('input');
-   wrapper.textContent=label;input.dataset.dlProfile=id;input.setAttribute('aria-label',label);wrapper.append(input);adcDLPersonalEditor.append(wrapper);
-   input.addEventListener('input',()=>adcSetSharedField(id,input.value));
-  }
-  $('pdfResult').before(adcDLPersonalEditor);
- }
- for(const input of adcDLPersonalEditor.querySelectorAll('input'))input.value=$(input.dataset.dlProfile).value;
- adcDLPersonalEditor.hidden=Boolean($('nombre').value.trim()&&$('dni').value.trim());
- if(!adcDLGuided)adcDLGuided=adcGuidedValidation.create({root:$('license'),collect:()=>{
-  const controls=adcGuidedValidation.controls($('license'));
-  const dates=['desde','hasta'].filter(key=>!$(key).value).map(key=>({key,label:key==='desde'?'Fecha de inicio':'Fecha de finalización',controls:[$(key)]}));
-  const personal=[];
-  if(!$('nombre').value.trim())personal.push({key:'nombre',label:'Apellido y nombres del docente',controls:[...adcDLPersonalEditor.querySelectorAll('input')].slice(0,2)});
-  if(!$('dni').value.trim())personal.push({key:'dni',label:'DNI del docente',controls:[adcDLPersonalEditor.querySelector('[data-dl-profile=dni]')]});
-  return [...personal,...controls.filter(item=>!['desde','hasta'].includes(item.key)),...dates];
- }});
- if(!await adcDLGuided.review())return;
- if(classify()==='inasistencia'&&$('desde').value&&$('hasta').value&&(!date($('desde').value)||$('hasta').value!==$('desde').value))
-  return alert('La inasistencia justificada debe tener la misma fecha en Desde y Hasta.');
- if(!window.PDFLib)return alert('No se cargó la biblioteca PDF. Se necesita conexión para cargar pdf-lib.');
- if(classify()==='inasistencia'&&!$('justifica').value)$('justifica').value='si';
- const r=review();
- const calendarSnapshot=window.adcDateSnapshot?.();
- if(selected==='Asuntos particulares'&&r.messages.some(x=>x.includes('Asuntos particulares')))return alert('Asuntos particulares: corregí la situación de revista y la forma de pago antes de generar el DL-01.');
- if(($('dni').value&&!adcPersonalValid($('dni').value,7,8))||(['desde','hasta'].some(id=>$(id).value&&!date($(id).value)))||($('desde').value&&$('hasta').value&&$('hasta').value<$('desde').value))return alert('Corregí los datos inválidos indicados antes de generar.');
- r.i=r.i||{};
- const dueloRelation=selected==='Duelo'?adcDueloRelation():null;
- if(selected==='Duelo'&&(!dueloRelation||$('pago').value!=='con'||r.rows.some(({e})=>!adcDueloCode(e.revista,dueloRelation)[0])))
-  return alert('Revisá el parentesco, la situación de revista y la forma de pago antes de generar el permiso por Duelo.');
- if(adcPDFRequest?.url)URL.revokeObjectURL(adcPDFRequest.url);
- $('pdfResult').replaceChildren();
- const request={key:adcPDFRequestKey(),url:null};
- adcPDFRequest=request;
- const historyDni=adcPersonalDigits($('dni').value);
- const historyReason=selected, historyPay=$('pago').value;
- const historyUnit=(r.i?.name||'').trim();
- const historyDates={desde:$('desde').value,hasta:$('hasta').value};
- const historyRecords=r.rows.map(({e})=>{
-  const [,ref]=historyReason==='Duelo'?adcDueloCode(e.revista,dueloRelation):mapping(e,historyReason,historyPay), [articulo,inciso='']=ref.split('-');
-  return {articulo,inciso,motivo:dj02Motivo(historyReason),...historyDates,unidad:historyUnit,disposicion:''};
- });
- try{
+// Constructor compartido sin acceso al DOM: mantiene las plantillas y coordenadas calibradas.
+async function adcDL01BuildPdf({fields,institution,rows,reason,dueloRelation=null,calendarSnapshot=null}){
+ const $=key=>({value:String(fields[key]??'')});
+ const selected=reason,r={i:institution,rows};
   const {PDFDocument,StandardFonts,rgb}=PDFLib, ink=rgb(0,0,0);
   const out=await PDFDocument.create(),font=await out.embedFont(StandardFonts.HelveticaBold);
   const name=splitName($('nombre').value),clarification=[name.given,name.surname].filter(Boolean).join(' ');
@@ -98,9 +52,9 @@ async function generatePDF(){
    [day,mo,yr].forEach((v,i)=>{const [dx,dy,w,h]=cells[i];text(page,rect(x+dx,y+dy+0.5,w,h-0.5),v,10)});
   }
 
-  function fillSlot(page,two,slot,obj){const e=obj.e,c=window.adcAcademic.parts(e),legal=dueloRelation?adcDueloCode(e.revista,dueloRelation):mapping(e),kind=classify();
+  function fillSlot(page,two,slot,obj){const e=obj.e,c=window.adcAcademic.parts(e),legal=dueloRelation?adcDueloCode(e.revista,dueloRelation):mapping(e,selected,$('pago').value),kind=classify(selected);
    const description=kind==='inasistencia'?'Justificada':selected==='Exámenes'?'LIC. X EXAMEN':selected;
-   const cargo=e.type==='cargo',codigoCargo=dl01CodigoCargo(e,r.i);
+   const cargo=e.type==='cargo',codigoCargo=dl01CodigoCargo(e,r.i,selected);
    function courseField(box,value){
     if(cargo)dash(page,box);
     else text(page,box,value);
@@ -172,6 +126,66 @@ async function generatePDF(){
   }
   if($('sexo').value==='M')warnings.push('La leyenda impresa «Apellido de soltera» sigue en el PDF original. Se requiere una plantilla masculina limpia para eliminarla sin tapar otros elementos.');
   const pdf=await out.save();
+ return {pdf,pagesGenerated,warnings};
+}
+function adcDL01StorePending(dni,records){
+ const unique=records.filter((record,index)=>records.findIndex(other=>dj02SameRecord(record,other))===index);
+ const draft={id:JSON.stringify([dni,unique]),dni,records:unique},stored=dj02Stored(),pending=stored.pending||[];
+ if(!pending.some(item=>item.id===draft.id)&&!unique.every(record=>(stored.rows||[]).some(row=>dj02SameRecord(row,record)))){
+  (globalThis.adcUserStorage||localStorage).setItem('adc_dj02_v1',JSON.stringify({...stored,pending:[...pending,draft]}));
+ }
+}
+let adcDLGuided;
+let adcDLPersonalEditor;
+async function generatePDF(){
+ if(!adcDL01Ready.has(selected))return alert(selected?'Formulario por confirmar para este trámite.':'Elegí primero un trámite.');
+ if(!adcDLPersonalEditor){
+  adcDLPersonalEditor=document.createElement('fieldset');
+  adcDLPersonalEditor.innerHTML='<legend>Datos del docente pendientes</legend>';
+  for(const [id,label] of [['perfilApellidos','Apellido'],['perfilNombres','Nombres'],['dni','DNI']]){
+   const wrapper=document.createElement('label'),input=document.createElement('input');
+   wrapper.textContent=label;input.dataset.dlProfile=id;input.setAttribute('aria-label',label);wrapper.append(input);adcDLPersonalEditor.append(wrapper);
+   input.addEventListener('input',()=>adcSetSharedField(id,input.value));
+  }
+  $('pdfResult').before(adcDLPersonalEditor);
+ }
+ for(const input of adcDLPersonalEditor.querySelectorAll('input'))input.value=$(input.dataset.dlProfile).value;
+ adcDLPersonalEditor.hidden=Boolean($('nombre').value.trim()&&$('dni').value.trim());
+ if(!adcDLGuided)adcDLGuided=adcGuidedValidation.create({root:$('license'),collect:()=>{
+  const controls=adcGuidedValidation.controls($('license'));
+  const dates=['desde','hasta'].filter(key=>!$(key).value).map(key=>({key,label:key==='desde'?'Fecha de inicio':'Fecha de finalización',controls:[$(key)]}));
+  const personal=[];
+  if(!$('nombre').value.trim())personal.push({key:'nombre',label:'Apellido y nombres del docente',controls:[...adcDLPersonalEditor.querySelectorAll('input')].slice(0,2)});
+  if(!$('dni').value.trim())personal.push({key:'dni',label:'DNI del docente',controls:[adcDLPersonalEditor.querySelector('[data-dl-profile=dni]')]});
+  return [...personal,...controls.filter(item=>!['desde','hasta'].includes(item.key)),...dates];
+ }});
+ if(!await adcDLGuided.review())return;
+ if(classify()==='inasistencia'&&$('desde').value&&$('hasta').value&&(!date($('desde').value)||$('hasta').value!==$('desde').value))
+  return alert('La inasistencia justificada debe tener la misma fecha en Desde y Hasta.');
+ if(!window.PDFLib)return alert('No se cargó la biblioteca PDF. Se necesita conexión para cargar pdf-lib.');
+ if(classify()==='inasistencia'&&!$('justifica').value)$('justifica').value='si';
+ const r=review();
+ const calendarSnapshot=window.adcDateSnapshot?.();
+ if(selected==='Asuntos particulares'&&r.messages.some(x=>x.includes('Asuntos particulares')))return alert('Asuntos particulares: corregí la situación de revista y la forma de pago antes de generar el DL-01.');
+ if(($('dni').value&&!adcPersonalValid($('dni').value,7,8))||(['desde','hasta'].some(id=>$(id).value&&!date($(id).value)))||($('desde').value&&$('hasta').value&&$('hasta').value<$('desde').value))return alert('Corregí los datos inválidos indicados antes de generar.');
+ r.i=r.i||{};
+ const dueloRelation=selected==='Duelo'?adcDueloRelation():null;
+ if(selected==='Duelo'&&(!dueloRelation||$('pago').value!=='con'||r.rows.some(({e})=>!adcDueloCode(e.revista,dueloRelation)[0])))
+  return alert('Revisá el parentesco, la situación de revista y la forma de pago antes de generar el permiso por Duelo.');
+ if(adcPDFRequest?.url)URL.revokeObjectURL(adcPDFRequest.url);
+ $('pdfResult').replaceChildren();
+ const request={key:adcPDFRequestKey(),url:null};
+ adcPDFRequest=request;
+ const historyDni=adcPersonalDigits($('dni').value);
+ const historyReason=selected, historyPay=$('pago').value;
+ const historyUnit=(r.i?.name||'').trim();
+ const historyDates={desde:$('desde').value,hasta:$('hasta').value};
+ const historyRecords=r.rows.map(({e})=>{
+  const [,ref]=historyReason==='Duelo'?adcDueloCode(e.revista,dueloRelation):mapping(e,historyReason,historyPay), [articulo,inciso='']=ref.split('-');
+  return {articulo,inciso,motivo:dj02Motivo(historyReason),...historyDates,unidad:historyUnit,disposicion:''};
+ });
+ try{
+  const {pdf,pagesGenerated,warnings}=await adcDL01BuildPdf({fields:Object.fromEntries(adcPDFRequestFields.map(id=>[id,$(id).value])),institution:r.i,rows:r.rows,reason:selected,dueloRelation,calendarSnapshot});
   adcInvalidatePDF();
   if(adcPDFRequest!==request)return;
   const url=URL.createObjectURL(new Blob([pdf],{type:'application/pdf'}));
@@ -196,14 +210,8 @@ async function generatePDF(){
    note.textContent='Las inasistencias justificadas quedan fuera del registro del DJ-02.';
    $('downloadPDF').after(note);
   }else if(historyReason&&historyUnit&&historyRecords.length){
-   const unique=historyRecords.filter((record,index)=>historyRecords.findIndex(other=>dj02SameRecord(record,other))===index);
-   const draft={id:JSON.stringify([historyDni,unique]),dni:historyDni,records:unique};
    try{
-    const stored=dj02Stored();
-    const pending=stored.pending||[];
-    if(!pending.some(item=>item.id===draft.id)&&!unique.every(record=>(stored.rows||[]).some(row=>dj02SameRecord(row,record)))){
-     (globalThis.adcUserStorage||localStorage).setItem('adc_dj02_v1',JSON.stringify({...stored,pending:[...pending,draft]}));
-    }
+    adcDL01StorePending(historyDni,historyRecords);
    }catch(e){
     const warning=document.createElement('p');
     warning.textContent='El trámite no pudo guardarse como pendiente en este navegador.';

@@ -74,7 +74,7 @@ html[data-theme] #adcTramites2 dialog.mt2-dialog{border:2px solid var(--mt2-oran
 /* Adaptadores del visor compartido: sólo las aperturas realizadas desde MT2. */
 .adc-mt2-document-back{margin:0 0 16px}
 body[data-adc-mt2-document=dl01][data-adc-mt2-dl01-ready=true] [data-mt2-dl01-aux]{display:none!important}
-body[data-adc-mt2-dl01-ready=true] #adcTramites2>*:not(#adcMT2DL01Workspace){display:none!important}
+body[data-adc-mt2-dl01-ready] #adcTramites2>*:not(#adcMT2DL01Workspace){display:none!important}
 #adcMT2DL01Workspace{min-width:0}
 #adcMT2DL01Workspace[hidden]{display:none!important}
 #adcMT2DL01Workspace>h2{font-size:24px;margin:0 0 10px}

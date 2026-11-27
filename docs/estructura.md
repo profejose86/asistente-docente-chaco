@@ -4,6 +4,8 @@ La rama `inicio` conserva una [fachada local basada en el prototipo del propieta
 
 Mis trámites 2 dispone de un [registro independiente de aperturas y adaptadores del visor compartido](mt2-visor-compartido.md), sin leer tarjetas de la pantalla anterior. Los módulos de formularios siguen siendo compartidos por ADC. La eliminación del arranque histórico de Mis trámites y el contrato completo MOTOR-01 continúan pendientes.
 
+El paso final de Enfermedad común usa `adcMT2Documents.openIllness`: toma una copia de los datos del popup y perfil, calcula cargos con `adcDL01Affected` y genera mediante `adcDL01BuildPdf`, compartido con el recorrido histórico. No abre la pantalla de licencias anterior, no llama a su generador de interfaz ni escribe sus controles. El PDF y su impresión se presentan en el VPI de Mis Trámites 2.
+
 Para las auditorías individuales de formularios, consultar el criterio MNC aprobado y su estado real en [DP-01 — implementación por etapas](dp01-implementacion.md#criterio-aprobado-para-auditar-mnc). Comprobar confirmación al anular contenido, recuperación al desmarcar, persistencia y salidas. Distinguir capacidades implementadas y probadas de las aprobadas pendientes.
 
 ## Rondas de auditoría acordadas

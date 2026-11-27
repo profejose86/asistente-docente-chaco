@@ -945,7 +945,7 @@
     },
     {
       "file": "assets/css/tramites/mis-tramites2.css",
-      "bytes": 17636,
+      "bytes": 17631,
       "lines": 136,
       "generated": false,
       "functions": [],
@@ -2375,7 +2375,7 @@
     },
     {
       "file": "assets/js/tramites/dl01-interfaz.js",
-      "bytes": 10054,
+      "bytes": 10093,
       "lines": 189,
       "generated": false,
       "functions": [
@@ -2390,13 +2390,13 @@
     },
     {
       "file": "assets/js/tramites/dl01-pdf.js",
-      "bytes": 17380,
-      "lines": 224,
+      "bytes": 17996,
+      "lines": 232,
       "generated": false,
       "functions": [
         "adcPDFRequestKey",
         "adcInvalidatePDF",
-        "generatePDF",
+        "adcDL01BuildPdf",
         "text",
         "crossBox",
         "dash",
@@ -2404,7 +2404,9 @@
         "rect",
         "dateCells",
         "fillSlot",
-        "courseField"
+        "courseField",
+        "adcDL01StorePending",
+        "generatePDF"
       ],
       "globals": [],
       "storageKeys": [
@@ -2413,13 +2415,14 @@
     },
     {
       "file": "assets/js/tramites/dl01-reglas.js",
-      "bytes": 9377,
-      "lines": 108,
+      "bytes": 9461,
+      "lines": 109,
       "generated": false,
       "functions": [
         "date",
         "fmt",
         "affected",
+        "adcDL01Affected",
         "classify",
         "mapping",
         "adcDueloRelation",
@@ -2536,8 +2539,8 @@
     },
     {
       "file": "assets/js/tramites/mis-tramites2-documentos.js",
-      "bytes": 11183,
-      "lines": 131,
+      "bytes": 16831,
+      "lines": 172,
       "generated": false,
       "functions": [
         "records",
@@ -2547,7 +2550,8 @@
         "fit",
         "release",
         "open",
-        "showDL01"
+        "showDL01",
+        "openIllness"
       ],
       "globals": [
         "tab",
@@ -2557,8 +2561,8 @@
     },
     {
       "file": "assets/js/tramites/mis-tramites2.js",
-      "bytes": 30456,
-      "lines": 294,
+      "bytes": 29975,
+      "lines": 289,
       "generated": false,
       "functions": [
         "hideSuggestions",
@@ -2841,8 +2845,8 @@
     },
     {
       "file": "docs/estructura.md",
-      "bytes": 39104,
-      "lines": 260,
+      "bytes": 39510,
+      "lines": 262,
       "generated": false,
       "functions": [],
       "globals": [],
@@ -2967,7 +2971,7 @@
     },
     {
       "file": "docs/mt2-visor-compartido.md",
-      "bytes": 10164,
+      "bytes": 10575,
       "lines": 40,
       "generated": false,
       "functions": [],
@@ -3745,11 +3749,14 @@
     },
     {
       "file": "tests/mt2-enfermedad.test.cjs",
-      "bytes": 11330,
-      "lines": 102,
+      "bytes": 12481,
+      "lines": 113,
       "generated": false,
       "functions": [],
-      "globals": [],
+      "globals": [
+        "mt2Navigation",
+        "tab"
+      ],
       "storageKeys": []
     },
     {

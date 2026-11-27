@@ -254,13 +254,13 @@ Hojas de estilo en orden de carga:
 | `assets/js/tramites/dj02-plantilla.js` | 48 | 7 |  |
 | `assets/js/tramites/dj02-registro.js` | 386 | 27 |  |
 | `assets/js/tramites/dl01-interfaz.js` | 189 | 2 | `adcDL01ShowPreview`, `adcDL01Open` |
-| `assets/js/tramites/dl01-pdf.js` | 224 | 11 |  |
-| `assets/js/tramites/dl01-reglas.js` | 108 | 14 |  |
+| `assets/js/tramites/dl01-pdf.js` | 232 | 13 |  |
+| `assets/js/tramites/dl01-reglas.js` | 109 | 15 |  |
 | `assets/js/tramites/formularios-oficiales-datos.js` | 1327 | 0 | `adcOfficialFormsData` |
 | `assets/js/tramites/formularios-oficiales.js` | 1520 | 57 | `adcOfficialForms`, `tab`, `adcMotor01Pilot` |
 | `assets/js/tramites/interinos-revision.js` | 60 | 5 | `adcInterinosReview` |
-| `assets/js/tramites/mis-tramites2-documentos.js` | 131 | 8 | `tab`, `adcMT2Documents` |
-| `assets/js/tramites/mis-tramites2.js` | 294 | 22 |  |
+| `assets/js/tramites/mis-tramites2-documentos.js` | 172 | 9 | `tab`, `adcMT2Documents` |
+| `assets/js/tramites/mis-tramites2.js` | 289 | 22 |  |
 | `assets/js/tramites/mnc-adaptadores.js` | 49 | 1 |  |
 | `assets/js/tramites/ol01.js` | 588 | 41 |  |
 | `assets/js/tramites/sc01.js` | 745 | 26 | `adcSC01Open` |
@@ -307,7 +307,7 @@ Hojas de estilo en orden de carga:
 | `tests/mis-tramites2-documentos.test.cjs` | 89 | 0 |  |
 | `tests/mis-tramites2.test.cjs` | 83 | 0 |  |
 | `tests/motor01-piloto.test.cjs` | 116 | 0 | `originalPilotStore`, `adcUserStorage` |
-| `tests/mt2-enfermedad.test.cjs` | 102 | 0 |  |
+| `tests/mt2-enfermedad.test.cjs` | 113 | 0 | `mt2Navigation`, `tab` |
 | `tests/ol01-guia.test.cjs` | 156 | 1 | `olPrintCalls` |
 | `tests/ol01-interfaz.test.cjs` | 64 | 0 |  |
 | `tests/ol01-perfil.test.cjs` | 55 | 1 |  |
