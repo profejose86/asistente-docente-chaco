@@ -953,6 +953,266 @@
         },
         {
           "kind": "front",
+          "target": "project:#adcTabTramites2",
+          "level": 605
+        },
+        {
+          "kind": "front",
+          "target": "project:#tabCalendar",
+          "level": 606
+        },
+        {
+          "kind": "front",
+          "target": "project:#adcTramites2Title",
+          "level": 607
+        },
+        {
+          "kind": "button",
+          "target": "project:#adcTramites2",
+          "id": "new-mwyijz1a-r3lu0o82",
+          "title": "VPI Maestro",
+          "left": 969.5,
+          "top": 22,
+          "tone": "azul"
+        },
+        {
+          "kind": "front",
+          "target": "new-mwyijz1a-r3lu0o82",
+          "level": 608
+        },
+        {
+          "kind": "style",
+          "target": "new-mwyijz1a-r3lu0o82",
+          "x": 8.994179063106348,
+          "y": -125.5
+        },
+        {
+          "kind": "style",
+          "target": "new-mwyijz1a-r3lu0o82",
+          "x": 0,
+          "y": 0,
+          "width": 130.0252240598725,
+          "height": 39
+        },
+        {
+          "kind": "front",
+          "target": "project:#adcTabInicio",
+          "level": 609
+        },
+        {
+          "kind": "style",
+          "target": "project:#adcTabInicio",
+          "x": -60.310421286031044,
+          "y": -0.5
+        },
+        {
+          "kind": "front",
+          "target": "project:#tabP",
+          "level": 610
+        },
+        {
+          "kind": "style",
+          "target": "project:#tabP",
+          "x": -58.89774696707106,
+          "y": -0.5
+        },
+        {
+          "kind": "front",
+          "target": "project:#adcTabTramites2",
+          "level": 611
+        },
+        {
+          "kind": "style",
+          "target": "project:#adcTabTramites2",
+          "x": -57.160088691796005,
+          "y": -0.5
+        },
+        {
+          "kind": "front",
+          "target": "project:#tabCalendar",
+          "level": 612
+        },
+        {
+          "kind": "style",
+          "target": "project:#tabCalendar",
+          "x": -50.903914590747334,
+          "y": 0
+        },
+        {
+          "kind": "front",
+          "target": "project:html > body:nth-of-type(1) > header:nth-of-type(1) > div:nth-of-type(1)",
+          "level": 613
+        },
+        {
+          "kind": "button",
+          "target": "project:#adcTramites2",
+          "id": "new-mwyilvfq-jxgb207e",
+          "title": "VPI Maestro",
+          "left": 924.5,
+          "top": 26,
+          "tone": "azul"
+        },
+        {
+          "kind": "front",
+          "target": "new-mwyilvfq-jxgb207e",
+          "level": 614
+        },
+        {
+          "kind": "studioLayer",
+          "target": "new-mwyilvfq-jxgb207e",
+          "direction": "front",
+          "level": 615
+        },
+        {
+          "kind": "front",
+          "target": "project:#tabP",
+          "level": 615
+        },
+        {
+          "kind": "front",
+          "target": "project:html > body:nth-of-type(1) > header:nth-of-type(1) > div:nth-of-type(1)",
+          "level": 616
+        },
+        {
+          "kind": "front",
+          "target": "new-mwyilvfq-jxgb207e",
+          "level": 617
+        },
+        {
+          "kind": "studioFormat",
+          "target": "new-mwyilvfq-jxgb207e",
+          "backgroundColor": "rgba(0, 0, 0, 0)",
+          "color": "rgb(229, 237, 248)",
+          "fontFamily": "Arial",
+          "fontSize": "14px",
+          "fontWeight": "600",
+          "fontStyle": "normal",
+          "textAlign": "center",
+          "borderColor": "rgb(75, 96, 124)",
+          "borderStyle": "none",
+          "borderWidth": "0px",
+          "borderRadius": "8px"
+        },
+        {
+          "kind": "studioLayer",
+          "target": "new-mwyilvfq-jxgb207e",
+          "direction": "front",
+          "level": 618
+        },
+        {
+          "kind": "style",
+          "target": "new-mwyilvfq-jxgb207e",
+          "x": 7.8791696238467,
+          "y": -128.5
+        },
+        {
+          "kind": "front",
+          "target": "new-mwyilvfq-jxgb207e",
+          "level": 618
+        },
+        {
+          "kind": "style",
+          "target": "new-mwyilvfq-jxgb207e",
+          "x": 0.00561124911284599,
+          "y": 5.5
+        },
+        {
+          "kind": "front",
+          "target": "new-mwyilvfq-jxgb207e",
+          "level": 619
+        },
+        {
+          "kind": "style",
+          "target": "new-mwyilvfq-jxgb207e",
+          "x": 0,
+          "y": 0,
+          "width": 127.03477643718949,
+          "height": 40
+        },
+        {
+          "kind": "style",
+          "target": "new-mwyilvfq-jxgb207e",
+          "x": 23.99409594095941,
+          "y": 9.5
+        },
+        {
+          "kind": "front",
+          "target": "new-mwyilvfq-jxgb207e",
+          "level": 620
+        },
+        {
+          "kind": "style",
+          "target": "new-mwyilvfq-jxgb207e",
+          "x": -0.9997539975399754,
+          "y": -7.5018310546875
+        },
+        {
+          "kind": "style",
+          "target": "new-mwyilvfq-jxgb207e",
+          "x": 0,
+          "y": -13,
+          "width": 127,
+          "height": 53
+        },
+        {
+          "kind": "style",
+          "target": "new-mwyilvfq-jxgb207e",
+          "x": 0,
+          "y": 0,
+          "width": 153.130615234375,
+          "height": 53
+        },
+        {
+          "kind": "style",
+          "target": "new-mwyilvfq-jxgb207e",
+          "x": 0,
+          "y": 0,
+          "width": 177.97544483418366,
+          "height": 53
+        },
+        {
+          "kind": "style",
+          "target": "new-mwyilvfq-jxgb207e",
+          "x": -18.003160667251976,
+          "y": 0,
+          "width": 196.00316066725196,
+          "height": 53
+        },
+        {
+          "kind": "front",
+          "target": "new-mwyilvfq-jxgb207e",
+          "level": 621
+        },
+        {
+          "kind": "style",
+          "target": "new-mwyilvfq-jxgb207e",
+          "x": -12,
+          "y": -1.9981689453125
+        },
+        {
+          "kind": "front",
+          "target": "new-mwyilvfq-jxgb207e",
+          "level": 622
+        },
+        {
+          "kind": "style",
+          "target": "new-mwyilvfq-jxgb207e",
+          "x": 0,
+          "y": 6.5
+        },
+        {
+          "kind": "front",
+          "target": "new-mwyilvfq-jxgb207e",
+          "level": 623
+        },
+        {
+          "kind": "style",
+          "target": "new-mwyilvfq-jxgb207e",
+          "x": -4,
+          "y": 0
+        },
+        {
+          "kind": "front",
           "target": "project:#dj02Preview > div:nth-of-type(1)",
           "level": 512
         },
@@ -1239,6 +1499,28 @@
           "tag": "button",
           "id": "tabCalendar",
           "type": "button"
+        },
+        "project:#adcTabTramites2": {
+          "tag": "button",
+          "id": "adcTabTramites2",
+          "type": "button"
+        },
+        "project:#adcTramites2Title": {
+          "tag": "h1",
+          "id": "adcTramites2Title"
+        },
+        "project:#adcTramites2": {
+          "tag": "section",
+          "id": "adcTramites2"
+        },
+        "project:#adcTabInicio": {
+          "tag": "button",
+          "id": "adcTabInicio",
+          "type": "button"
+        },
+        "project:#tabP": {
+          "tag": "button",
+          "id": "tabP"
         },
         "project:#dj02Preview > div:nth-of-type(1)": {
           "tag": "div"
