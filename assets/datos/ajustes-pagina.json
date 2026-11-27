@@ -119,17 +119,6 @@
         },
         {
           "kind": "front",
-          "target": "project:#dj02Preview > div:nth-of-type(1)",
-          "level": 512
-        },
-        {
-          "kind": "style",
-          "target": "project:#dj02Preview > div:nth-of-type(1)",
-          "x": -2,
-          "y": 38
-        },
-        {
-          "kind": "front",
           "target": "project:#dj02 > section:nth-of-type(1)",
           "level": 513
         },
@@ -381,24 +370,8 @@
         },
         {
           "kind": "front",
-          "target": "project:#dj02Preview > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(4)",
-          "level": 528
-        },
-        {
-          "kind": "front",
           "target": "project:#dj02 > section:nth-of-type(1)",
           "level": 529
-        },
-        {
-          "kind": "front",
-          "target": "project:#dj02Preview > div:nth-of-type(1) > div:nth-of-type(1)",
-          "level": 530
-        },
-        {
-          "kind": "style",
-          "target": "project:#dj02Preview > div:nth-of-type(1) > div:nth-of-type(1)",
-          "x": -76,
-          "y": -23
         },
         {
           "kind": "front",
@@ -407,45 +380,8 @@
         },
         {
           "kind": "front",
-          "target": "project:#dj02Preview > div:nth-of-type(1)",
-          "level": 532
-        },
-        {
-          "kind": "front",
           "target": "project:#dj02 > section:nth-of-type(1)",
           "level": 533
-        },
-        {
-          "kind": "front",
-          "target": "project:#dj02Preview > div:nth-of-type(1)",
-          "level": 534
-        },
-        {
-          "kind": "front",
-          "target": "project:#dj02Preview > div:nth-of-type(1) > div:nth-of-type(1)",
-          "level": 535
-        },
-        {
-          "kind": "style",
-          "target": "project:#dj02Preview > div:nth-of-type(1) > div:nth-of-type(1)",
-          "x": -35,
-          "y": -9
-        },
-        {
-          "kind": "style",
-          "target": "project:#dj02Preview > div:nth-of-type(1) > div:nth-of-type(1)",
-          "x": 0,
-          "y": 0,
-          "width": 891.46875,
-          "height": 525.265625
-        },
-        {
-          "kind": "style",
-          "target": "project:#dj02Preview > div:nth-of-type(1) > div:nth-of-type(1)",
-          "x": 0,
-          "y": 0,
-          "width": 891.46875,
-          "height": 503.265625
         },
         {
           "kind": "front",
@@ -486,43 +422,6 @@
         },
         {
           "kind": "front",
-          "target": "project:#dj02Preview > div:nth-of-type(1) > div:nth-of-type(1)",
-          "level": 539
-        },
-        {
-          "kind": "style",
-          "target": "project:#dj02Preview > div:nth-of-type(1) > div:nth-of-type(1)",
-          "x": 0,
-          "y": 0,
-          "width": 968.46875,
-          "height": 541.265625
-        },
-        {
-          "kind": "style",
-          "target": "project:#dj02Preview > div:nth-of-type(1) > div:nth-of-type(1)",
-          "x": 0,
-          "y": 0,
-          "width": 932.46875,
-          "height": 541.265625
-        },
-        {
-          "kind": "style",
-          "target": "project:#dj02Preview > div:nth-of-type(1) > div:nth-of-type(1)",
-          "x": 0,
-          "y": 0,
-          "width": 955.46875,
-          "height": 541.265625
-        },
-        {
-          "kind": "style",
-          "target": "project:#dj02Preview > div:nth-of-type(1) > div:nth-of-type(1)",
-          "x": -11,
-          "y": 0,
-          "width": 902.46875,
-          "height": 541.265625
-        },
-        {
-          "kind": "front",
           "target": "project:#dj02 > section:nth-of-type(1)",
           "level": 540
         },
@@ -530,27 +429,6 @@
           "kind": "front",
           "target": "project:#dj02 > section:nth-of-type(1)",
           "level": 541
-        },
-        {
-          "kind": "front",
-          "target": "project:#dj02Preview > div:nth-of-type(1) > div:nth-of-type(1)",
-          "level": 542
-        },
-        {
-          "kind": "style",
-          "target": "project:#dj02Preview > div:nth-of-type(1) > div:nth-of-type(1)",
-          "x": 0,
-          "y": 0,
-          "width": 970.4686889648438,
-          "height": 541.265625
-        },
-        {
-          "kind": "style",
-          "target": "project:#dj02Preview > div:nth-of-type(1) > div:nth-of-type(1)",
-          "x": 0,
-          "y": 0,
-          "width": 961.4686889648438,
-          "height": 541.265625
         },
         {
           "kind": "front",
@@ -567,18 +445,8 @@
         },
         {
           "kind": "front",
-          "target": "project:#dj02Preview > div:nth-of-type(1)",
-          "level": 544
-        },
-        {
-          "kind": "front",
           "target": "project:#dj02 > section:nth-of-type(1)",
           "level": 545
-        },
-        {
-          "kind": "front",
-          "target": "project:#dj02Preview > div:nth-of-type(1)",
-          "level": 546
         },
         {
           "kind": "front",
@@ -600,44 +468,13 @@
         },
         {
           "kind": "front",
-          "target": "project:#dj02Preview > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2)",
-          "level": 549
-        },
-        {
-          "kind": "front",
           "target": "project:#dj02 > section:nth-of-type(1)",
           "level": 550
         },
         {
           "kind": "front",
-          "target": "project:#dj02Preview > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2)",
-          "level": 551
-        },
-        {
-          "kind": "front",
           "target": "project:#dj02 > section:nth-of-type(1)",
           "level": 552
-        },
-        {
-          "kind": "front",
-          "target": "project:#dj02Preview > div:nth-of-type(1) > div:nth-of-type(1)",
-          "level": 553
-        },
-        {
-          "kind": "style",
-          "target": "project:#dj02Preview > div:nth-of-type(1) > div:nth-of-type(1)",
-          "x": 0,
-          "y": 0,
-          "width": 1065.4686889648438,
-          "height": 541.265625
-        },
-        {
-          "kind": "style",
-          "target": "project:#dj02Preview > div:nth-of-type(1) > div:nth-of-type(1)",
-          "x": 0,
-          "y": 0,
-          "width": 1063.4686889648438,
-          "height": 541.265625
         },
         {
           "kind": "front",
@@ -699,19 +536,6 @@
         },
         {
           "kind": "front",
-          "target": "project:#dj02Preview > div:nth-of-type(1)",
-          "level": 560
-        },
-        {
-          "kind": "style",
-          "target": "project:#dj02Preview > div:nth-of-type(1)",
-          "x": 0,
-          "y": 0,
-          "width": 1074.390625,
-          "height": 535.265625
-        },
-        {
-          "kind": "front",
           "target": "project:#dj02 > section:nth-of-type(1)",
           "level": 561
         },
@@ -727,6 +551,327 @@
           "y": 0,
           "width": 1219,
           "height": 587.09375
+        },
+        {
+          "kind": "front",
+          "target": "project:#dj02 > section:nth-of-type(1)",
+          "level": 564
+        },
+        {
+          "kind": "front",
+          "target": "project:#adcThemeSwitch > span:nth-of-type(1)",
+          "level": 565
+        },
+        {
+          "kind": "front",
+          "target": "project:#adcProfileBtn > span:nth-of-type(1)",
+          "level": 566
+        },
+        {
+          "kind": "style",
+          "target": "project:#adcProfileBtn > span:nth-of-type(1)",
+          "width": 34.39370078740157
+        },
+        {
+          "kind": "style",
+          "target": "project:#adcProfileBtn > span:nth-of-type(1)",
+          "width": 34.37670064072522
+        },
+        {
+          "kind": "style",
+          "target": "project:#adcProfileBtn > span:nth-of-type(1)",
+          "width": 34.76615604867574
+        },
+        {
+          "kind": "style",
+          "target": "project:#adcProfileBtn > span:nth-of-type(1)",
+          "width": 35.76707068919755
+        },
+        {
+          "kind": "style",
+          "target": "project:#adcProfileBtn > span:nth-of-type(1)",
+          "width": 38.042951053136704
+        },
+        {
+          "kind": "style",
+          "target": "project:#adcProfileBtn > span:nth-of-type(1)",
+          "height": 37.79527559055118
+        },
+        {
+          "kind": "style",
+          "target": "project:#adcProfileBtn > span:nth-of-type(1)",
+          "x": 34.97124075595727,
+          "y": 1.0057899090157154
+        },
+        {
+          "kind": "front",
+          "target": "project:#adcProfileBtn > span:nth-of-type(1)",
+          "level": 567
+        },
+        {
+          "kind": "style",
+          "target": "project:#adcProfileBtn > span:nth-of-type(1)",
+          "x": -33.92766536565325,
+          "y": 2.011579818031431
+        },
+        {
+          "kind": "front",
+          "target": "project:#adcThemeSwitch",
+          "level": 568
+        },
+        {
+          "kind": "style",
+          "target": "project:#adcThemeSwitch",
+          "x": -55.82807703042144,
+          "y": 6
+        },
+        {
+          "kind": "front",
+          "target": "project:#adcProfileBtn > span:nth-of-type(1)",
+          "level": 569
+        },
+        {
+          "kind": "style",
+          "target": "project:#adcProfileBtn > span:nth-of-type(1)",
+          "x": -47.960558751027115,
+          "y": 7.91884020481157
+        },
+        {
+          "kind": "style",
+          "target": "project:#adcProfileBtn > span:nth-of-type(1)",
+          "x": 9.893231306491373,
+          "y": -0.045849568987799835
+        },
+        {
+          "kind": "front",
+          "target": "project:#adcProfileBtn",
+          "level": 570
+        },
+        {
+          "kind": "front",
+          "target": "project:#adcProfileBtn > span:nth-of-type(2)",
+          "level": 571
+        },
+        {
+          "kind": "style",
+          "target": "project:#adcProfileBtn > span:nth-of-type(2)",
+          "x": 0,
+          "y": 0,
+          "width": 24,
+          "height": 30.65625
+        },
+        {
+          "kind": "hideOriginal",
+          "target": "project:#adcProfileBtn > span:nth-of-type(2)"
+        },
+        {
+          "kind": "front",
+          "target": "project:#adcProfileBtn > span:nth-of-type(1)",
+          "level": 572
+        },
+        {
+          "kind": "style",
+          "target": "project:#adcProfileBtn > span:nth-of-type(1)",
+          "x": 0.0081719905505341,
+          "y": -4.918676039054015
+        },
+        {
+          "kind": "front",
+          "target": "project:#adcProfileBtn > span:nth-of-type(1)",
+          "level": 573
+        },
+        {
+          "kind": "studioFormat",
+          "target": "project:#adcProfileBtn > span:nth-of-type(1)",
+          "backgroundColor": "#2453a3"
+        },
+        {
+          "kind": "studioFormat",
+          "target": "project:#adcProfileBtn > span:nth-of-type(1)",
+          "color": "#d9822b"
+        },
+        {
+          "kind": "studioFormat",
+          "target": "project:#adcProfileBtn > span:nth-of-type(1)",
+          "borderColor": "#23b5d3",
+          "borderStyle": "solid",
+          "borderWidth": "1px"
+        },
+        {
+          "kind": "front",
+          "target": "project:#dj02Preview > div:nth-of-type(1)",
+          "level": 512
+        },
+        {
+          "kind": "style",
+          "target": "project:#dj02Preview > div:nth-of-type(1)",
+          "x": -2,
+          "y": 38
+        },
+        {
+          "kind": "front",
+          "target": "project:#dj02Preview > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(4)",
+          "level": 528
+        },
+        {
+          "kind": "front",
+          "target": "project:#dj02Preview > div:nth-of-type(1) > div:nth-of-type(1)",
+          "level": 530
+        },
+        {
+          "kind": "style",
+          "target": "project:#dj02Preview > div:nth-of-type(1) > div:nth-of-type(1)",
+          "x": -76,
+          "y": -23
+        },
+        {
+          "kind": "front",
+          "target": "project:#dj02Preview > div:nth-of-type(1)",
+          "level": 532
+        },
+        {
+          "kind": "front",
+          "target": "project:#dj02Preview > div:nth-of-type(1)",
+          "level": 534
+        },
+        {
+          "kind": "front",
+          "target": "project:#dj02Preview > div:nth-of-type(1) > div:nth-of-type(1)",
+          "level": 535
+        },
+        {
+          "kind": "style",
+          "target": "project:#dj02Preview > div:nth-of-type(1) > div:nth-of-type(1)",
+          "x": -35,
+          "y": -9
+        },
+        {
+          "kind": "style",
+          "target": "project:#dj02Preview > div:nth-of-type(1) > div:nth-of-type(1)",
+          "x": 0,
+          "y": 0,
+          "width": 891.46875,
+          "height": 525.265625
+        },
+        {
+          "kind": "style",
+          "target": "project:#dj02Preview > div:nth-of-type(1) > div:nth-of-type(1)",
+          "x": 0,
+          "y": 0,
+          "width": 891.46875,
+          "height": 503.265625
+        },
+        {
+          "kind": "front",
+          "target": "project:#dj02Preview > div:nth-of-type(1) > div:nth-of-type(1)",
+          "level": 539
+        },
+        {
+          "kind": "style",
+          "target": "project:#dj02Preview > div:nth-of-type(1) > div:nth-of-type(1)",
+          "x": 0,
+          "y": 0,
+          "width": 968.46875,
+          "height": 541.265625
+        },
+        {
+          "kind": "style",
+          "target": "project:#dj02Preview > div:nth-of-type(1) > div:nth-of-type(1)",
+          "x": 0,
+          "y": 0,
+          "width": 932.46875,
+          "height": 541.265625
+        },
+        {
+          "kind": "style",
+          "target": "project:#dj02Preview > div:nth-of-type(1) > div:nth-of-type(1)",
+          "x": 0,
+          "y": 0,
+          "width": 955.46875,
+          "height": 541.265625
+        },
+        {
+          "kind": "style",
+          "target": "project:#dj02Preview > div:nth-of-type(1) > div:nth-of-type(1)",
+          "x": -11,
+          "y": 0,
+          "width": 902.46875,
+          "height": 541.265625
+        },
+        {
+          "kind": "front",
+          "target": "project:#dj02Preview > div:nth-of-type(1) > div:nth-of-type(1)",
+          "level": 542
+        },
+        {
+          "kind": "style",
+          "target": "project:#dj02Preview > div:nth-of-type(1) > div:nth-of-type(1)",
+          "x": 0,
+          "y": 0,
+          "width": 970.4686889648438,
+          "height": 541.265625
+        },
+        {
+          "kind": "style",
+          "target": "project:#dj02Preview > div:nth-of-type(1) > div:nth-of-type(1)",
+          "x": 0,
+          "y": 0,
+          "width": 961.4686889648438,
+          "height": 541.265625
+        },
+        {
+          "kind": "front",
+          "target": "project:#dj02Preview > div:nth-of-type(1)",
+          "level": 544
+        },
+        {
+          "kind": "front",
+          "target": "project:#dj02Preview > div:nth-of-type(1)",
+          "level": 546
+        },
+        {
+          "kind": "front",
+          "target": "project:#dj02Preview > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2)",
+          "level": 549
+        },
+        {
+          "kind": "front",
+          "target": "project:#dj02Preview > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2)",
+          "level": 551
+        },
+        {
+          "kind": "front",
+          "target": "project:#dj02Preview > div:nth-of-type(1) > div:nth-of-type(1)",
+          "level": 553
+        },
+        {
+          "kind": "style",
+          "target": "project:#dj02Preview > div:nth-of-type(1) > div:nth-of-type(1)",
+          "x": 0,
+          "y": 0,
+          "width": 1065.4686889648438,
+          "height": 541.265625
+        },
+        {
+          "kind": "style",
+          "target": "project:#dj02Preview > div:nth-of-type(1) > div:nth-of-type(1)",
+          "x": 0,
+          "y": 0,
+          "width": 1063.4686889648438,
+          "height": 541.265625
+        },
+        {
+          "kind": "front",
+          "target": "project:#dj02Preview > div:nth-of-type(1)",
+          "level": 560
+        },
+        {
+          "kind": "style",
+          "target": "project:#dj02Preview > div:nth-of-type(1)",
+          "x": 0,
+          "y": 0,
+          "width": 1074.390625,
+          "height": 535.265625
         },
         {
           "kind": "front",
@@ -768,11 +913,6 @@
           "y": -274,
           "width": 824.0000610351562,
           "height": 528.765625
-        },
-        {
-          "kind": "front",
-          "target": "project:#dj02 > section:nth-of-type(1)",
-          "level": 564
         }
       ],
       "targets": {
@@ -793,9 +933,6 @@
         "project:#dj02 > section:nth-of-type(1) > div:nth-of-type(1) > label:nth-of-type(1)": {
           "tag": "label"
         },
-        "project:#dj02Preview > div:nth-of-type(1)": {
-          "tag": "div"
-        },
         "project:#dj02 > section:nth-of-type(1) > div:nth-of-type(4)": {
           "tag": "div"
         },
@@ -810,6 +947,31 @@
         "project:html > body:nth-of-type(1) > div:nth-of-type(1) > footer:nth-of-type(1)": {
           "tag": "footer"
         },
+        "project:#dj02 > section:nth-of-type(1) > p:nth-of-type(2)": {
+          "tag": "p"
+        },
+        "project:#adcThemeSwitch > span:nth-of-type(1)": {
+          "tag": "span"
+        },
+        "project:#adcProfileBtn > span:nth-of-type(1)": {
+          "tag": "span"
+        },
+        "project:#adcThemeSwitch": {
+          "tag": "button",
+          "id": "adcThemeSwitch",
+          "type": "button"
+        },
+        "project:#adcProfileBtn": {
+          "tag": "button",
+          "id": "adcProfileBtn",
+          "type": "button"
+        },
+        "project:#adcProfileBtn > span:nth-of-type(2)": {
+          "tag": "span"
+        },
+        "project:#dj02Preview > div:nth-of-type(1)": {
+          "tag": "div"
+        },
         "project:#dj02Preview > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(4)": {
           "tag": "div"
         },
@@ -821,9 +983,6 @@
         },
         "project:#dj02Preview > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2)": {
           "tag": "div"
-        },
-        "project:#dj02 > section:nth-of-type(1) > p:nth-of-type(2)": {
-          "tag": "p"
         }
       }
     },
