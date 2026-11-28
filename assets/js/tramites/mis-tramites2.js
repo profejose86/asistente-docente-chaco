@@ -17,6 +17,7 @@
     const input=root.querySelector('#adcMT2Search'),suggestions=root.querySelector('#adcMT2Suggestions'),count=root.querySelector('[data-mt2-count]'),clear=root.querySelector('[data-mt2-clear]'),selected=root.querySelector('[data-mt2-selected]'),grid=root.querySelector('#adcMT2Catalog');
     const total=root.querySelector('.mt2-total');total.textContent=`${forms.length} formularios`;
     let results=[],active=-1,category=groups[0],chosenForm=null;
+    const preview=window.adcMT2Preview?.create({root,openForm:record=>openForm(record),startAssistant:(record,trigger)=>startAssistant(record,trigger)})||null;
     const firstStep=el('span','Primer paso: escribí acá','mt2-first-step-note');firstStep.id='adcMT2FirstStep';firstStep.hidden=true;
     input.closest('.mt2-input-wrap').before(firstStep);input.setAttribute('aria-describedby',firstStep.id);
     const stopAttention=()=>{input.classList.remove('mt2-search-start');firstStep.hidden=true;};
@@ -25,10 +26,12 @@
     new MutationObserver(()=>{
       const next=!root.classList.contains('hide');
       if(next&&!visible){input.classList.remove('mt2-search-start');void input.offsetWidth;input.classList.add('mt2-search-start');firstStep.hidden=false;}
-      if(!next)stopAttention();visible=next;
+      if(!next){stopAttention();preview?.hide();}
+      visible=next;
     }).observe(root,{attributes:true,attributeFilter:['class']});
-    function hideSuggestions(){suggestions.hidden=true;input.setAttribute('aria-expanded','false');input.removeAttribute('aria-activedescendant');active=-1;}
+    function hideSuggestions(){preview?.hide();suggestions.hidden=true;input.setAttribute('aria-expanded','false');input.removeAttribute('aria-activedescendant');active=-1;}
     function openForm(record){
+      preview?.hide();
       if(record.status==='pending')return;
       if(record.nativeId==='dl01'){
         hideSuggestions();
@@ -42,6 +45,7 @@
     }
     function actionFor(record){const action=button(record.source.actionLabel||'Abrir formulario','mt2-open');action.addEventListener('click',event=>{event.stopPropagation();openForm(record)});return action;}
     function chooseForm(record){
+      preview?.hide();
       hideSuggestions();selected.replaceChildren();chosenForm=record;renderCatalog();
       const card=el('div',undefined,'mt2-choice');card.append(el('small','Formulario seleccionado'),el('h3',`${record.displayCode||record.code} · ${record.officialName||record.title}`),actionFor(record));selected.append(card);
     }
@@ -71,12 +75,13 @@
     }
     function renderCatalog(){
       const highlighted=priorityForms();priority.hidden=!highlighted.size;
-      priorityGrid.replaceChildren(...[...highlighted.values()].map(({record,note})=>{const card=cardFor(record);card.classList.add('mt2-card-gold');card.insertBefore(el('span',note,'mt2-match-note'),card.querySelector('.mt2-card-action'));return card;}));
-      const entries=forms.filter(item=>item.group===category&&!highlighted.has(item.nativeId));grid.replaceChildren(...entries.map(cardFor));
+      priorityGrid.replaceChildren(...[...highlighted.values()].map(({record,note})=>{const card=cardFor(record);card.classList.add('mt2-card-gold');card.insertBefore(el('span',note,'mt2-match-note'),card.querySelector('.mt2-card-action'));return preview?preview.wrapPriorityCard(card,record):card;}));
+      const entries=forms.filter(item=>item.group===category&&!highlighted.has(item.nativeId));
+      grid.replaceChildren(...entries.map(record=>{const card=cardFor(record);return preview?preview.wrapCatalogCard(card,record):card;}));
       for(const tab of tabs.children){const current=tab.dataset.group===category;tab.setAttribute('aria-selected',String(current));tab.tabIndex=current?0:-1;}
       grid.setAttribute('aria-labelledby',tabs.querySelector('[aria-selected=true]').id);
     }
-    groups.forEach((name,index)=>{const tab=button(name);tab.id=`adcMT2Category${index}`;tab.dataset.group=name;tab.setAttribute('role','tab');tab.setAttribute('aria-controls',grid.id);tab.onclick=()=>{category=name;renderCatalog()};tab.addEventListener('keydown',event=>{if(!['ArrowLeft','ArrowRight','Home','End'].includes(event.key))return;event.preventDefault();const next=event.key==='Home'?0:event.key==='End'?groups.length-1:(index+(event.key==='ArrowRight'?1:-1)+groups.length)%groups.length;category=groups[next];renderCatalog();tabs.children[next].focus()});tabs.append(tab)});
+    groups.forEach((name,index)=>{const tab=button(name);tab.id=`adcMT2Category${index}`;tab.dataset.group=name;tab.setAttribute('role','tab');tab.setAttribute('aria-controls',grid.id);tab.onclick=()=>{preview?.hide();category=name;renderCatalog()};tab.addEventListener('keydown',event=>{if(!['ArrowLeft','ArrowRight','Home','End'].includes(event.key))return;event.preventDefault();const next=event.key==='Home'?0:event.key==='End'?groups.length-1:(index+(event.key==='ArrowRight'?1:-1)+groups.length)%groups.length;preview?.hide();category=groups[next];renderCatalog();tabs.children[next].focus()});tabs.append(tab)});
     renderCatalog();
     function renderFrequent(){
       const host=root.querySelector('[data-mt2-frequent]');
@@ -89,9 +94,10 @@
     }
     renderFrequent();    function highlight(){
       const options=[...suggestions.children];options.forEach((option,index)=>option.setAttribute('aria-selected',String(index===active)));
-      if(options[active]){input.setAttribute('aria-activedescendant',options[active].id);options[active].scrollIntoView({block:'nearest'})}else input.removeAttribute('aria-activedescendant');
+      if(options[active]){input.setAttribute('aria-activedescendant',options[active].id);options[active].scrollIntoView({block:'nearest'});preview?.showForKeyboard(results[active],options[active]);}else{input.removeAttribute('aria-activedescendant');preview?.hide();}
     }
     function predict(){
+      preview?.hide();
       clear.hidden=!input.value;active=-1;input.removeAttribute('aria-activedescendant');
       renderCatalog();
       if(!input.value.trim()){results=[];suggestions.replaceChildren();count.textContent='';hideSuggestions();return;}
@@ -99,11 +105,12 @@
       suggestions.replaceChildren(...results.map((record,index)=>{
         const option=button('','mt2-option');option.id=`adcMT2Option${index}`;option.setAttribute('role','option');option.setAttribute('aria-selected','false');option.tabIndex=-1;
         option.append(el('span',record.title),el('small',record.kind==='reason'?'Motivo · revisar recorrido':`Formulario · ${record.displayCode||record.code}`));
-        option.addEventListener('click',()=>selectSuggestion(record,option));return option;
+        option.addEventListener('click',()=>selectSuggestion(record,option));preview?.bindOption(option,record);return option;
       }));
       count.textContent=results.length?`${results.length} sugerencias. Elegí una para continuar.`:'No encontramos coincidencias. Probá con otra palabra o usá el catálogo.';
       suggestions.hidden=!results.length;input.setAttribute('aria-expanded',String(Boolean(results.length)));
     }
+    suggestions.addEventListener('scroll',()=>preview?.hide(),{passive:true});
     function selectSuggestion(record,trigger){if(record.kind==='form')chooseForm(record);else startAssistant(record,trigger);}
     input.addEventListener('input',()=>{stopAttention();chosenForm=null;selected.replaceChildren();predict()});
     input.addEventListener('keydown',event=>{
@@ -173,6 +180,7 @@
       body.querySelector('h3').focus({preventScroll:true});
     }
     function startAssistant(record,trigger){
+      preview?.hide();
       if(record.reason==='Enfermedad o lesión común'){
         startIllness(record,trigger);
         return;

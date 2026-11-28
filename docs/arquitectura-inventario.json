@@ -92,6 +92,21 @@
     "assets/formularios/Interinos-Expectativas.pdf",
     "assets/formularios/MD-01-pagina-1.png",
     "assets/formularios/MD-01.pdf",
+    "assets/formularios/miniaturas/acta-designacion.png",
+    "assets/formularios/miniaturas/ba01.png",
+    "assets/formularios/miniaturas/bd01.png",
+    "assets/formularios/miniaturas/beneficiarios.png",
+    "assets/formularios/miniaturas/df01.png",
+    "assets/formularios/miniaturas/dj01-pagina-2.png",
+    "assets/formularios/miniaturas/dj01.png",
+    "assets/formularios/miniaturas/dj02.png",
+    "assets/formularios/miniaturas/dl01.png",
+    "assets/formularios/miniaturas/form-1.png",
+    "assets/formularios/miniaturas/form-5.png",
+    "assets/formularios/miniaturas/form-7.png",
+    "assets/formularios/miniaturas/ol01.png",
+    "assets/formularios/miniaturas/si01.png",
+    "assets/formularios/miniaturas/tp01.png",
     "assets/formularios/Reubicacion-pagina-1.png",
     "assets/formularios/Reubicacion.pdf",
     "assets/formularios/SC-01-plantilla.png",
@@ -188,6 +203,7 @@
     "assets/js/tramites/formularios-oficiales.js",
     "assets/js/tramites/interinos-revision.js",
     "assets/js/tramites/mis-tramites2-documentos.js",
+    "assets/js/tramites/mis-tramites2-vista-previa.js",
     "assets/js/tramites/mis-tramites2.js",
     "assets/js/tramites/mnc-adaptadores.js",
     "assets/js/tramites/ol01.js",
@@ -325,6 +341,7 @@
     "tests/md01-mnc.test.cjs",
     "tests/md01-vpi.test.cjs",
     "tests/mis-tramites2-documentos.test.cjs",
+    "tests/mis-tramites2-vista-previa.test.cjs",
     "tests/mis-tramites2.test.cjs",
     "tests/motor01-acc1-fase2.test.cjs",
     "tests/motor01-piloto.test.cjs",
@@ -503,6 +520,7 @@
         "assets/js/perfil/presentacion.js",
         "assets/js/interfaz/inicio.js",
         "assets/js/tramites/mis-tramites2-documentos.js",
+        "assets/js/tramites/mis-tramites2-vista-previa.js",
         "assets/js/tramites/mis-tramites2.js",
         "assets/js/motor01/registro-experimental.js",
         "assets/js/motor01/estado-borrador.js",
@@ -974,8 +992,8 @@
     },
     {
       "file": "assets/css/tramites/mis-tramites2.css",
-      "bytes": 17631,
-      "lines": 136,
+      "bytes": 29450,
+      "lines": 234,
       "generated": false,
       "functions": [],
       "globals": [],
@@ -1613,8 +1631,8 @@
     },
     {
       "file": "assets/js/editor/studio-guias.js",
-      "bytes": 4389,
-      "lines": 38,
+      "bytes": 4679,
+      "lines": 41,
       "generated": false,
       "functions": [
         "attach",
@@ -2746,9 +2764,42 @@
       "storageKeys": []
     },
     {
+      "file": "assets/js/tramites/mis-tramites2-vista-previa.js",
+      "bytes": 29944,
+      "lines": 743,
+      "generated": false,
+      "functions": [
+        "resolveImages",
+        "resolveSections",
+        "buildStructuredSheet",
+        "createModalZoomController",
+        "applyScale",
+        "fitTo",
+        "reset",
+        "attach",
+        "buildVisualForForm",
+        "buildReasonVisual",
+        "create",
+        "hide",
+        "scheduleClose",
+        "openModal",
+        "closeModal",
+        "positionCard",
+        "renderRecord",
+        "showDelayed",
+        "showForKeyboard",
+        "attachTarget",
+        "wrapCard"
+      ],
+      "globals": [
+        "adcMT2Preview"
+      ],
+      "storageKeys": []
+    },
+    {
       "file": "assets/js/tramites/mis-tramites2.js",
-      "bytes": 29973,
-      "lines": 289,
+      "bytes": 30636,
+      "lines": 297,
       "generated": false,
       "functions": [
         "hideSuggestions",
@@ -3337,7 +3388,7 @@
     },
     {
       "file": "index.html",
-      "bytes": 47152,
+      "bytes": 47224,
       "lines": 164,
       "generated": false,
       "functions": [],
@@ -3689,7 +3740,7 @@
     },
     {
       "file": "tests/editor-herramientas.test.cjs",
-      "bytes": 9862,
+      "bytes": 9971,
       "lines": 48,
       "generated": false,
       "functions": [
@@ -3929,6 +3980,15 @@
       "storageKeys": [
         "adc-sc01-borrador-v1"
       ]
+    },
+    {
+      "file": "tests/mis-tramites2-vista-previa.test.cjs",
+      "bytes": 19900,
+      "lines": 343,
+      "generated": false,
+      "functions": [],
+      "globals": [],
+      "storageKeys": []
     },
     {
       "file": "tests/mis-tramites2.test.cjs",
@@ -5165,6 +5225,114 @@
       "exists": true
     },
     {
+      "from": "assets/js/tramites/mis-tramites2-vista-previa.js",
+      "to": "assets/formularios/miniaturas/dj01.png",
+      "kind": "web-asset",
+      "exists": true
+    },
+    {
+      "from": "assets/js/tramites/mis-tramites2-vista-previa.js",
+      "to": "assets/formularios/miniaturas/dj01-pagina-2.png",
+      "kind": "web-asset",
+      "exists": true
+    },
+    {
+      "from": "assets/js/tramites/mis-tramites2-vista-previa.js",
+      "to": "assets/formularios/miniaturas/dj02.png",
+      "kind": "web-asset",
+      "exists": true
+    },
+    {
+      "from": "assets/js/tramites/mis-tramites2-vista-previa.js",
+      "to": "assets/formularios/miniaturas/ol01.png",
+      "kind": "web-asset",
+      "exists": true
+    },
+    {
+      "from": "assets/js/tramites/mis-tramites2-vista-previa.js",
+      "to": "assets/formularios/SC-01-plantilla.png",
+      "kind": "web-asset",
+      "exists": true
+    },
+    {
+      "from": "assets/js/tramites/mis-tramites2-vista-previa.js",
+      "to": "assets/formularios/miniaturas/dl01.png",
+      "kind": "web-asset",
+      "exists": true
+    },
+    {
+      "from": "assets/js/tramites/mis-tramites2-vista-previa.js",
+      "to": "assets/formularios/BD-02-pagina-1.png",
+      "kind": "web-asset",
+      "exists": true
+    },
+    {
+      "from": "assets/js/tramites/mis-tramites2-vista-previa.js",
+      "to": "assets/formularios/BD-02-pagina-2.png",
+      "kind": "web-asset",
+      "exists": true
+    },
+    {
+      "from": "assets/js/tramites/mis-tramites2-vista-previa.js",
+      "to": "assets/formularios/miniaturas/form-1.png",
+      "kind": "web-asset",
+      "exists": true
+    },
+    {
+      "from": "assets/js/tramites/mis-tramites2-vista-previa.js",
+      "to": "assets/formularios/miniaturas/form-5.png",
+      "kind": "web-asset",
+      "exists": true
+    },
+    {
+      "from": "assets/js/tramites/mis-tramites2-vista-previa.js",
+      "to": "assets/formularios/miniaturas/form-7.png",
+      "kind": "web-asset",
+      "exists": true
+    },
+    {
+      "from": "assets/js/tramites/mis-tramites2-vista-previa.js",
+      "to": "assets/formularios/miniaturas/df01.png",
+      "kind": "web-asset",
+      "exists": true
+    },
+    {
+      "from": "assets/js/tramites/mis-tramites2-vista-previa.js",
+      "to": "assets/formularios/miniaturas/tp01.png",
+      "kind": "web-asset",
+      "exists": true
+    },
+    {
+      "from": "assets/js/tramites/mis-tramites2-vista-previa.js",
+      "to": "assets/formularios/miniaturas/si01.png",
+      "kind": "web-asset",
+      "exists": true
+    },
+    {
+      "from": "assets/js/tramites/mis-tramites2-vista-previa.js",
+      "to": "assets/formularios/miniaturas/ba01.png",
+      "kind": "web-asset",
+      "exists": true
+    },
+    {
+      "from": "assets/js/tramites/mis-tramites2-vista-previa.js",
+      "to": "assets/formularios/miniaturas/bd01.png",
+      "kind": "web-asset",
+      "exists": true
+    },
+    {
+      "from": "assets/js/tramites/mis-tramites2-vista-previa.js",
+      "to": "assets/formularios/miniaturas/beneficiarios.png",
+      "kind": "web-asset",
+      "exists": true
+    },
+    {
+      "from": "assets/js/tramites/mis-tramites2-vista-previa.js",
+      "to": "assets/formularios/miniaturas/acta-designacion.png",
+      "kind": "web-asset",
+      "exists": true
+    },
+    {
       "from": "assets/js/tramites/sc01.js",
       "to": "assets/formularios/SC-01-plantilla.png",
       "kind": "web-asset",
@@ -5892,6 +6060,12 @@
     },
     {
       "from": "index.html",
+      "to": "assets/js/tramites/mis-tramites2-vista-previa.js",
+      "kind": "script",
+      "exists": true
+    },
+    {
+      "from": "index.html",
       "to": "assets/js/tramites/mis-tramites2.js",
       "kind": "script",
       "exists": true
@@ -6510,6 +6684,24 @@
     },
     {
       "from": "tests/mis-tramites2-documentos.test.cjs",
+      "to": "assets/js/editor/ajustes-proyecto-datos.js",
+      "kind": "literal-module",
+      "exists": true
+    },
+    {
+      "from": "tests/mis-tramites2-vista-previa.test.cjs",
+      "to": "tools/motor01-preview.cjs",
+      "kind": "literal-module",
+      "exists": true
+    },
+    {
+      "from": "tests/mis-tramites2-vista-previa.test.cjs",
+      "to": "assets/js/editor/ajustes-proyecto-datos.js",
+      "kind": "literal-module",
+      "exists": true
+    },
+    {
+      "from": "tests/mis-tramites2-vista-previa.test.cjs",
       "to": "assets/js/editor/ajustes-proyecto-datos.js",
       "kind": "literal-module",
       "exists": true
@@ -12632,9 +12824,9 @@
     ]
   },
   "summary": {
-    "files": 366,
-    "ownTextModules": 288,
-    "ownJavaScript": 180,
+    "files": 383,
+    "ownTextModules": 290,
+    "ownJavaScript": 182,
     "vendorFiles": 35,
     "missingLiteralReferences": 0,
     "duplicateLoads": 0,

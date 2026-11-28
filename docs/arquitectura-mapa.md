@@ -129,6 +129,7 @@ Scripts en orden de carga:
 - `assets/js/perfil/presentacion.js`
 - `assets/js/interfaz/inicio.js`
 - `assets/js/tramites/mis-tramites2-documentos.js`
+- `assets/js/tramites/mis-tramites2-vista-previa.js`
 - `assets/js/tramites/mis-tramites2.js`
 - `assets/js/motor01/registro-experimental.js`
 - `assets/js/motor01/estado-borrador.js`
@@ -219,7 +220,7 @@ Hojas de estilo en orden de carga:
 | `assets/js/editor/puente-local.js` | 31 | 2 | `adcLocalEditorBridge` |
 | `assets/js/editor/studio-alineacion.js` | 53 | 5 |  |
 | `assets/js/editor/studio-directo.js` | 98 | 5 | `adcStudioDirect` |
-| `assets/js/editor/studio-guias.js` | 38 | 3 | `adcStudioGuides` |
+| `assets/js/editor/studio-guias.js` | 41 | 3 | `adcStudioGuides` |
 | `assets/js/editor/studio-operaciones.js` | 81 | 3 | `adcStudioOperations` |
 | `assets/js/editor/studio-politicas.js` | 28 | 2 | `adcStudioPolicy` |
 | `assets/js/editor/studio-texto.js` | 74 | 3 | `adcStudioText` |
@@ -273,7 +274,8 @@ Hojas de estilo en orden de carga:
 | `assets/js/tramites/formularios-oficiales.js` | 1525 | 57 | `adcOfficialForms`, `tab`, `adcMotor01Pilot` |
 | `assets/js/tramites/interinos-revision.js` | 60 | 5 | `adcInterinosReview` |
 | `assets/js/tramites/mis-tramites2-documentos.js` | 177 | 9 | `tab`, `adcMT2Documents` |
-| `assets/js/tramites/mis-tramites2.js` | 289 | 22 |  |
+| `assets/js/tramites/mis-tramites2-vista-previa.js` | 743 | 21 | `adcMT2Preview` |
+| `assets/js/tramites/mis-tramites2.js` | 297 | 22 |  |
 | `assets/js/tramites/mnc-adaptadores.js` | 49 | 1 |  |
 | `assets/js/tramites/ol01.js` | 588 | 41 |  |
 | `assets/js/tramites/sc01.js` | 745 | 26 | `adcSC01Open` |
@@ -319,6 +321,7 @@ Hojas de estilo en orden de carga:
 | `tests/md01-mnc.test.cjs` | 44 | 0 | `drawLines`, `drawTexts`, `open`, `mdPrint`, `mdOriginalStore`, `adcUserStorage` |
 | `tests/md01-vpi.test.cjs` | 47 | 0 |  |
 | `tests/mis-tramites2-documentos.test.cjs` | 89 | 0 |  |
+| `tests/mis-tramites2-vista-previa.test.cjs` | 343 | 0 |  |
 | `tests/mis-tramites2.test.cjs` | 83 | 0 |  |
 | `tests/motor01-acc1-fase2.test.cjs` | 151 | 0 | `__acc1BackupStore`, `adcUserStorage` |
 | `tests/motor01-piloto.test.cjs` | 116 | 0 | `originalPilotStore`, `adcUserStorage` |
@@ -426,6 +429,8 @@ Hojas de estilo en orden de carga:
 | `assets/datos/config-publica.js` | `ADC_Ingreso_Editable.html`, `index.html` |
 | `assets/datos/escuelas-chaco.js` | `index.html` |
 | `assets/datos/formularios-pdf.js` | `index.html` |
+| `assets/formularios/BD-02-pagina-1.png` | `assets/js/tramites/mis-tramites2-vista-previa.js` |
+| `assets/formularios/BD-02-pagina-2.png` | `assets/js/tramites/mis-tramites2-vista-previa.js` |
 | `assets/formularios/BD-02.pdf` | `assets/js/motor01/registro-experimental.js`, `assets/js/tramites/bd02.js` |
 | `assets/formularios/BD-07-pagina-1.png` | `assets/datos/formularios-pdf.js` |
 | `assets/formularios/BD-07.pdf` | `assets/datos/formularios-pdf.js`, `assets/js/motor01/registro-experimental.js` |
@@ -449,9 +454,24 @@ Hojas de estilo en orden de carga:
 | `assets/formularios/Interinos-Expectativas.pdf` | `assets/datos/formularios-pdf.js`, `assets/js/motor01/registro-experimental.js` |
 | `assets/formularios/MD-01-pagina-1.png` | `assets/datos/formularios-pdf.js` |
 | `assets/formularios/MD-01.pdf` | `assets/datos/formularios-pdf.js`, `assets/js/motor01/registro-experimental.js` |
+| `assets/formularios/miniaturas/acta-designacion.png` | `assets/js/tramites/mis-tramites2-vista-previa.js` |
+| `assets/formularios/miniaturas/ba01.png` | `assets/js/tramites/mis-tramites2-vista-previa.js` |
+| `assets/formularios/miniaturas/bd01.png` | `assets/js/tramites/mis-tramites2-vista-previa.js` |
+| `assets/formularios/miniaturas/beneficiarios.png` | `assets/js/tramites/mis-tramites2-vista-previa.js` |
+| `assets/formularios/miniaturas/df01.png` | `assets/js/tramites/mis-tramites2-vista-previa.js` |
+| `assets/formularios/miniaturas/dj01-pagina-2.png` | `assets/js/tramites/mis-tramites2-vista-previa.js` |
+| `assets/formularios/miniaturas/dj01.png` | `assets/js/tramites/mis-tramites2-vista-previa.js` |
+| `assets/formularios/miniaturas/dj02.png` | `assets/js/tramites/mis-tramites2-vista-previa.js` |
+| `assets/formularios/miniaturas/dl01.png` | `assets/js/tramites/mis-tramites2-vista-previa.js` |
+| `assets/formularios/miniaturas/form-1.png` | `assets/js/tramites/mis-tramites2-vista-previa.js` |
+| `assets/formularios/miniaturas/form-5.png` | `assets/js/tramites/mis-tramites2-vista-previa.js` |
+| `assets/formularios/miniaturas/form-7.png` | `assets/js/tramites/mis-tramites2-vista-previa.js` |
+| `assets/formularios/miniaturas/ol01.png` | `assets/js/tramites/mis-tramites2-vista-previa.js` |
+| `assets/formularios/miniaturas/si01.png` | `assets/js/tramites/mis-tramites2-vista-previa.js` |
+| `assets/formularios/miniaturas/tp01.png` | `assets/js/tramites/mis-tramites2-vista-previa.js` |
 | `assets/formularios/Reubicacion-pagina-1.png` | `assets/datos/formularios-pdf.js` |
 | `assets/formularios/Reubicacion.pdf` | `assets/datos/formularios-pdf.js`, `assets/js/motor01/registro-experimental.js` |
-| `assets/formularios/SC-01-plantilla.png` | `assets/js/tramites/sc01.js` |
+| `assets/formularios/SC-01-plantilla.png` | `assets/js/tramites/mis-tramites2-vista-previa.js`, `assets/js/tramites/sc01.js` |
 | `assets/formularios/SC-01.pdf` | `assets/js/motor01/registro-experimental.js`, `assets/js/tramites/sc01.js` |
 | `assets/formularios/SR-01-pagina-1.png` | `assets/datos/formularios-pdf.js` |
 | `assets/formularios/SR-01.pdf` | `assets/datos/formularios-pdf.js`, `assets/js/motor01/registro-experimental.js` |
@@ -478,7 +498,7 @@ Hojas de estilo en orden de carga:
 | `assets/js/documentos/plantillas-dl01.js` | `index.html` |
 | `assets/js/documentos/visor-pdf.js` | `index.html` |
 | `assets/js/editor/acceso-ajustes.js` | `ADC_Ingreso_Editable.html`, `index.html` |
-| `assets/js/editor/ajustes-proyecto-datos.js` | `ADC_Ingreso_Editable.html`, `index.html`, `tests/admin-github-studio.test.cjs`, `tests/ajustes-proyecto.test.cjs`, `tests/bd02-estandares.test.cjs`, `tests/bd07-pdf.test.cjs`, `tests/cf01-pdf.test.cjs`, `tests/descuento-seguro-pdf.test.cjs`, `tests/dj02-vpi-prueba.test.cjs`, `tests/dl02-pdf.test.cjs`, `tests/documento-fondo.test.cjs`, `tests/dp01-experiencia.test.cjs`, `tests/editor-elementos.test.cjs`, `tests/editor-herramientas.test.cjs`, `tests/form3-pdf.test.cjs`, `tests/form6-pdf.test.cjs`, `tests/incapacidad-pdf.test.cjs`, `tests/inicio.test.cjs`, `tests/interinos-pdf.test.cjs`, `tests/local-editor-bridge.test.cjs`, `tests/local-editor-ui.test.cjs`, `tests/md01-mnc.test.cjs`, `tests/md01-vpi.test.cjs`, `tests/mis-tramites2-documentos.test.cjs`, `tests/mis-tramites2.test.cjs`, `tests/motor01-acc1-fase2.test.cjs`, `tests/motor01-piloto.test.cjs`, `tests/motor01-tij01.test.cjs`, `tests/motor01-vpi-fase1.test.cjs`, `tests/mt2-enfermedad.test.cjs`, `tests/navegacion.test.cjs`, `tests/reubicacion-pdf.test.cjs`, `tests/sr01-pdf.test.cjs`, `tests/studio-contrato.test.cjs`, `tests/studio-inplace.test.cjs`, `tests/studio.test.cjs`, `tests/traslado-pdf.test.cjs`, `tools/ajustes-store.cjs`, `tools/importar-ajustes.cjs` |
+| `assets/js/editor/ajustes-proyecto-datos.js` | `ADC_Ingreso_Editable.html`, `index.html`, `tests/admin-github-studio.test.cjs`, `tests/ajustes-proyecto.test.cjs`, `tests/bd02-estandares.test.cjs`, `tests/bd07-pdf.test.cjs`, `tests/cf01-pdf.test.cjs`, `tests/descuento-seguro-pdf.test.cjs`, `tests/dj02-vpi-prueba.test.cjs`, `tests/dl02-pdf.test.cjs`, `tests/documento-fondo.test.cjs`, `tests/dp01-experiencia.test.cjs`, `tests/editor-elementos.test.cjs`, `tests/editor-herramientas.test.cjs`, `tests/form3-pdf.test.cjs`, `tests/form6-pdf.test.cjs`, `tests/incapacidad-pdf.test.cjs`, `tests/inicio.test.cjs`, `tests/interinos-pdf.test.cjs`, `tests/local-editor-bridge.test.cjs`, `tests/local-editor-ui.test.cjs`, `tests/md01-mnc.test.cjs`, `tests/md01-vpi.test.cjs`, `tests/mis-tramites2-documentos.test.cjs`, `tests/mis-tramites2-vista-previa.test.cjs`, `tests/mis-tramites2.test.cjs`, `tests/motor01-acc1-fase2.test.cjs`, `tests/motor01-piloto.test.cjs`, `tests/motor01-tij01.test.cjs`, `tests/motor01-vpi-fase1.test.cjs`, `tests/mt2-enfermedad.test.cjs`, `tests/navegacion.test.cjs`, `tests/reubicacion-pdf.test.cjs`, `tests/sr01-pdf.test.cjs`, `tests/studio-contrato.test.cjs`, `tests/studio-inplace.test.cjs`, `tests/studio.test.cjs`, `tests/traslado-pdf.test.cjs`, `tools/ajustes-store.cjs`, `tools/importar-ajustes.cjs` |
 | `assets/js/editor/ajustes-proyecto.js` | `ADC_Ingreso_Editable.html`, `index.html` |
 | `assets/js/editor/comun.js` | `ADC_Ingreso_Editable.html`, `index.html` |
 | `assets/js/editor/documento-fondo.js` | `ADC_Ingreso_Editable.html`, `index.html` |
@@ -542,6 +562,7 @@ Hojas de estilo en orden de carga:
 | `assets/js/tramites/formularios-oficiales.js` | `index.html` |
 | `assets/js/tramites/interinos-revision.js` | `index.html` |
 | `assets/js/tramites/mis-tramites2-documentos.js` | `index.html` |
+| `assets/js/tramites/mis-tramites2-vista-previa.js` | `index.html` |
 | `assets/js/tramites/mis-tramites2.js` | `index.html` |
 | `assets/js/tramites/ol01.js` | `index.html` |
 | `assets/js/tramites/sc01.js` | `index.html` |
@@ -561,7 +582,7 @@ Hojas de estilo en orden de carga:
 | `tools/dev-server.cjs` | `tests/dev-server.test.cjs`, `tests/support/md01-server.cjs`, `tools/motor01-preview.cjs` |
 | `tools/env.cjs` | `tests/supabase-config.test.cjs`, `tools/build.cjs`, `tools/configurar-supabase.cjs`, `tools/publicar.cjs`, `tools/sync-staging.cjs` |
 | `tools/local-editor-bridge.cjs` | `tests/documento-fondo.test.cjs`, `tests/local-editor-bridge.test.cjs`, `tests/local-editor-ui.test.cjs`, `tools/dev-server.cjs` |
-| `tools/motor01-preview.cjs` | `tests/dj02-vpi-prueba.test.cjs`, `tests/inicio.test.cjs`, `tests/mis-tramites2-documentos.test.cjs`, `tests/mis-tramites2.test.cjs`, `tests/motor01-acc1-fase2.test.cjs`, `tests/motor01-piloto.test.cjs`, `tests/motor01-tij01.test.cjs`, `tests/motor01-vpi-fase1.test.cjs`, `tests/mt2-enfermedad.test.cjs`, `tests/navegacion.test.cjs`, `tools/inicio-preview.cjs` |
+| `tools/motor01-preview.cjs` | `tests/dj02-vpi-prueba.test.cjs`, `tests/inicio.test.cjs`, `tests/mis-tramites2-documentos.test.cjs`, `tests/mis-tramites2-vista-previa.test.cjs`, `tests/mis-tramites2.test.cjs`, `tests/motor01-acc1-fase2.test.cjs`, `tests/motor01-piloto.test.cjs`, `tests/motor01-tij01.test.cjs`, `tests/motor01-vpi-fase1.test.cjs`, `tests/mt2-enfermedad.test.cjs`, `tests/navegacion.test.cjs`, `tools/inicio-preview.cjs` |
 | `tools/publicar.cjs` | `tests/publicacion.test.cjs` |
 | `tools/supabase-auth-settings.cjs` | `tests/publicacion.test.cjs`, `tools/configurar-supabase.cjs`, `tools/sync-staging.cjs` |
 | `tools/sync-sandbox.cjs` | `tests/sync-sandbox.test.cjs` |
