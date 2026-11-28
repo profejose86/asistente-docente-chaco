@@ -42,9 +42,9 @@
     ]
   });
 
-  const OPEN_DELAY_MS = 220;
-  const SWITCH_DELAY_MS = 60;
-  const CLOSE_DELAY_MS = 260;
+  const OPEN_DELAY_MS = 35;
+  const SWITCH_DELAY_MS = 0;
+  const CLOSE_DELAY_MS = 180;
 
   const node = (tag, text, cls) => {
     const el = document.createElement(tag);
@@ -401,10 +401,12 @@
 
     let activeRecord = null;
     let activeAnchor = null;
+    let activeVerticalOnly = false;
     let modalReturnFocus = null;
     let openTimer = null;
     let closeTimer = null;
     let suppressFocusPreview = false;
+    let lastTouchTs = 0;
 
     const restoreFocusSafely = target => {
       if (!target?.isConnected) return;
@@ -430,9 +432,11 @@
       const targetAnchor = activeAnchor;
       activeRecord = null;
       activeAnchor = null;
+      activeVerticalOnly = false;
       if (!card.hidden) {
         card.hidden = true;
         card.removeAttribute('data-side');
+        card.removeAttribute('data-mode');
       }
       if (restoreFocus && targetAnchor?.isConnected) {
         restoreFocusSafely(targetAnchor);
@@ -510,7 +514,7 @@
       modalReturnFocus = null;
     }
 
-    function positionCard(anchor) {
+    function positionCard(anchor, verticalOnly = activeVerticalOnly) {
       if (!anchor?.isConnected) return;
       const rect = anchor.getBoundingClientRect();
       if (!rect.width && !rect.height) {
@@ -525,28 +529,44 @@
       const vw = window.innerWidth;
       const vh = window.innerHeight;
       const margin = 12;
-      const gap = 14;
+      const gap = 10;
       const headerBottom = (document.querySelector('.adc-start-header')?.getBoundingClientRect().bottom || 0) + 8;
       const minTop = Math.max(margin, headerBottom);
       const maxTop = Math.max(minTop, vh - h - margin);
       const clamp = (val, min, max) => Math.max(min, Math.min(val, max));
 
-      let side = 'right';
-      let left = rect.right + gap;
-      let top = clamp(rect.top + rect.height / 2 - Math.min(h * 0.35, 90), minTop, maxTop);
+      let side;
+      let left;
+      let top;
 
-      if (left + w > vw - margin) {
-        if (rect.left - gap - w >= margin) {
-          side = 'left';
-          left = rect.left - gap - w;
-        } else if (rect.bottom + 10 + h <= vh - margin) {
+      if (verticalOnly) {
+        const spaceBelow = vh - margin - rect.bottom - gap;
+        const spaceAbove = rect.top - minTop - gap;
+        if (h <= spaceBelow || spaceBelow >= spaceAbove) {
           side = 'bottom';
-          top = rect.bottom + 10;
-          left = clamp(rect.left + (rect.width - w) / 2, margin, vw - w - margin);
+          top = clamp(rect.bottom + gap, minTop, maxTop);
         } else {
-          side = rect.top - 10 - h >= minTop ? 'top' : 'bottom';
-          top = side === 'top' ? rect.top - 10 - h : clamp(rect.bottom + 10, minTop, maxTop);
-          left = clamp(rect.left + (rect.width - w) / 2, margin, vw - w - margin);
+          side = 'top';
+          top = clamp(rect.top - gap - h, minTop, maxTop);
+        }
+        left = clamp(rect.left + (rect.width - w) / 2, margin, vw - w - margin);
+      } else {
+        side = 'right';
+        left = rect.right + 14;
+        top = clamp(rect.top + rect.height / 2 - Math.min(h * 0.35, 90), minTop, maxTop);
+        if (left + w > vw - margin) {
+          if (rect.left - 14 - w >= margin) {
+            side = 'left';
+            left = rect.left - 14 - w;
+          } else if (rect.bottom + gap + h <= vh - margin) {
+            side = 'bottom';
+            top = rect.bottom + gap;
+            left = clamp(rect.left + (rect.width - w) / 2, margin, vw - w - margin);
+          } else {
+            side = rect.top - gap - h >= minTop ? 'top' : 'bottom';
+            top = side === 'top' ? rect.top - gap - h : clamp(rect.bottom + gap, minTop, maxTop);
+            left = clamp(rect.left + (rect.width - w) / 2, margin, vw - w - margin);
+          }
         }
       }
 
@@ -563,14 +583,16 @@
       card.style.visibility = '';
     }
 
-    function renderRecord(record, anchor) {
+    function renderRecord(record, anchor, { verticalOnly = false, mode = 'hover' } = {}) {
       activeRecord = record;
       activeAnchor = anchor;
+      activeVerticalOnly = verticalOnly;
+      card.dataset.mode = mode;
       cardBody.replaceChildren();
       cardFooter.replaceChildren();
       const onMediaLoad = () => {
         if (!card.hidden && activeRecord === record && activeAnchor === anchor) {
-          positionCard(anchor);
+          positionCard(anchor, verticalOnly);
         }
       };
 
@@ -627,27 +649,35 @@
       positionCard(anchor);
     }
 
-    function showDelayed(record, anchor) {
+    function showDelayed(record, anchor, { verticalOnly = false } = {}) {
       if (!supportsFineHover() || !record || !anchor) return;
       clearTimers();
       if (!card.hidden && activeRecord === record && activeAnchor === anchor) return;
       const delay = card.hidden ? OPEN_DELAY_MS : SWITCH_DELAY_MS;
       openTimer = setTimeout(() => {
         if (!anchor.isConnected || root.classList.contains('hide') || modal.open) return;
-        renderRecord(record, anchor);
+        renderRecord(record, anchor, { verticalOnly, mode: verticalOnly ? 'hover' : 'suggestion' });
       }, delay);
     }
 
     function showForKeyboard(record, anchor) {
       if (!record || !anchor || !anchor.isConnected || root.classList.contains('hide') || modal.open) return;
       clearTimers();
-      renderRecord(record, anchor);
+      const verticalOnly = anchor.classList.contains('mt2-card');
+      renderRecord(record, anchor, { verticalOnly, mode: 'keyboard' });
     }
 
-    function attachTarget(element, record, { onFocusVisible = false } = {}) {
+    function showForTouch(record, anchor) {
+      if (!record || !anchor || !anchor.isConnected || root.classList.contains('hide') || modal.open) return;
+      clearTimers();
+      renderRecord(record, anchor, { verticalOnly: true, mode: 'touch' });
+    }
+
+    function attachTarget(element, record, { onFocusVisible = false, verticalOnly = false } = {}) {
       element.addEventListener('pointerenter', event => {
         if (event.pointerType === 'touch') return;
-        showDelayed(record, element);
+        lastTouchTs = 0;
+        showDelayed(record, element, { verticalOnly });
       });
       element.addEventListener('pointerleave', event => {
         if (event.pointerType === 'touch') return;
@@ -691,7 +721,9 @@
     });
 
     window.addEventListener('scroll', () => {
-      if (!card.hidden) hide();
+      if (card.hidden) return;
+      if (card.dataset.mode === 'touch') positionCard(activeAnchor, activeVerticalOnly);
+      else hide();
     }, { passive: true });
     window.addEventListener('resize', () => {
       if (!card.hidden) hide();
@@ -703,23 +735,31 @@
       }
     });
     document.addEventListener('pointerdown', event => {
+      if (event.pointerType === 'touch') lastTouchTs = Date.now();
+      else if (event.pointerType === 'mouse') lastTouchTs = 0;
       if (card.hidden) return;
       if (card.contains(event.target) || activeAnchor?.contains(event.target)) return;
       hide();
     });
+    root.addEventListener('touchstart', () => { lastTouchTs = Date.now(); }, { passive: true });
 
     function wrapCard(targetCard, record, itemClass) {
-      attachTarget(targetCard, record, { onFocusVisible: true });
+      attachTarget(targetCard, record, { onFocusVisible: true, verticalOnly: true });
       const item = node('div', undefined, itemClass);
-      const touchBtn = node('button', 'Vista previa', 'mt2-touch-preview-btn');
-      touchBtn.type = 'button';
-      const code = record.displayCode || record.code || record.title || '';
-      touchBtn.setAttribute('aria-label', `Vista previa de ${code}`);
-      touchBtn.addEventListener('click', event => {
-        event.stopPropagation();
-        openModal(record, touchBtn);
-      });
-      item.append(targetCard, touchBtn);
+
+      item.addEventListener('click', event => {
+        const fromTouch = Date.now() - lastTouchTs < 900 || !supportsFineHover();
+        if (!fromTouch) return;
+        if (card.hidden || activeAnchor !== targetCard) {
+          event.preventDefault();
+          event.stopPropagation();
+          showForTouch(record, targetCard);
+          return;
+        }
+        hide();
+      }, { capture: true });
+
+      item.append(targetCard);
       return item;
     }
 
